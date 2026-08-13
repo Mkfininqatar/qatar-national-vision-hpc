@@ -144,3 +144,28 @@ if __name__ == '__main__':
         telemetry_logger.critical(f"Unhandled exception caused service termination: {e}")
         # In a production setup, a systemd service would restart the script here
         exit(1)
+# --- QNV HPC Digital Twin Telemetry Log ---
+# Month: May 2026
+# Focus: Cardio-Neural Axis Infrastructure Health
+# Status: Initial Baseline (Zero Cumulative Drift Initiated)
+
+[ENTRY_ID: QNV_HPC_MAY_001]
+TIMESTAMP: 2026-05-01T00:00:00+03:00
+NODE_ID: HPC_NODE_GRC_QATAR_01
+CORRELATION_ID: MIT_ISACA_BASELINE_01
+
+-- METRICS --
+cpu_load_percent: 15.2
+mem_used_gb: 2.1
+temp_celsius: 45.8
+voltage_v: 1.19
+ambient_temp_celsius: 22.0
+
+-- GOVERNANCE & COMPLIANCE --
+status: NOMINAL
+mit_security_check: PASSED
+isaca_compliance_check: PASSED
+
+-- SPATIAL-TEMPORAL CONTEXT --
+location: Doha, Qatar (Latitude: 25.2854, Longitude: 51.5310)
+twin_sync_status: SYNCED (0ms drift)
