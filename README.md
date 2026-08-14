@@ -260,3 +260,6 @@ Aligned with the **Qatar National Vision 2030 (QNV 2030)**, this high-performanc
 | **05:02** | Full Power Execution (S0) | Dawn Ionospheric Shift | `SUCCESS` |
 | **05:10** | Steady-State Operating Lock | Convection Equilibrium | `LOCKED` |
 | **10:00** | Thermal Equilibrium Plateau | Ionospheric Saturation | `OPTIMIZED` |
+### 🎬 Visual Simulation & Architecture Asset
+* **Asset File:** `assets/sci_animation_video_koro.mp4`
+* **Concept Mapping:** Visualizes the real-time translation of cardio-neural physiological signals into binary spatial-temporal data streams with zero cumulative drift ($0.00\,\mu\text{s}$).
