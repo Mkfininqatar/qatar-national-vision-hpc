@@ -436,3 +436,18 @@ The AROS (Advanced Rotational Orthant System) project represents a comprehensive
 ---
 
 ## 📊 Visual Blueprint
+# Why We Cannot See God?
+
+> "When a child is resting in his mother's womb, he cannot see his mother and cannot cry for his mother to come. They both are present but cannot see each-other. We are all in the womb of THAT Infinite truth."[cite: 1]
+
+## 1. Decoding the Core Metaphor
+* **Mother & Child in Womb:** A child in the womb is completely surrounded, protected, and nourished by the mother, yet cannot look upon her face[cite: 1].
+* **The Infinite Truth:** We exist within the ultimate reality and cannot look at it from an outside vantage point because we are entirely immersed inside God[cite: 1].
+
+## 2. Visual and Symbolic Breakdown
+* **Left Panel (The Primordial Womb of Nature):** Features a meditative, cosmic mother figure with tree roots, glowing caverns, and a resting newborn inside, symbolizing universal mother nature[cite: 1].
+* **Right Panel (The Divine Transcendence):** Features Lord Krishna or the Supreme Being with a peacock feather, 'Om' symbol, and an infant resting on a blooming lotus petal[cite: 1].
+
+## 3. Deep Philosophical Foundations
+* **Immanence vs. Transcendence:** The Creator is present inside every atom, much like a fish cannot find the ocean because it is already swimming inside it[cite: 1].
+* **Limitation of Senses:** Human senses perceive localized, bounded objects, requiring inner realization to perceive an infinite truth[cite: 1].
