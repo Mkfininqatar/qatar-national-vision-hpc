@@ -451,3 +451,30 @@ The AROS (Advanced Rotational Orthant System) project represents a comprehensive
 ## 3. Deep Philosophical Foundations
 * **Immanence vs. Transcendence:** The Creator is present inside every atom, much like a fish cannot find the ocean because it is already swimming inside it[cite: 1].
 * **Limitation of Senses:** Human senses perceive localized, bounded objects, requiring inner realization to perceive an infinite truth[cite: 1].
+Qatar National Vision HPC - Enterprise Zero-Drift Telemetry & Compute Engine
+An advanced High-Performance Computing (HPC) infrastructure and spatial-temporal telemetry engine designed to align with smart city digital twin initiatives and high-reliability operational standards.
+
+🚀 Key Features
+Automated CI/CD Diagnostics: Multi-version Python matrix testing (3.9, 3.10, 3.11) and 30-minute interval stability checks via GitHub Actions (hpc_diag.yml).
+
+Real-Time Telemetry & Resource Monitoring: Robust compute diagnostics leveraging psutil for precise CPU, memory, and latency tracking.
+
+Spatial-Temporal & Digital Twin Integration: Built to interface seamlessly with advanced 3D medical spatial-neural topologies and smart urban infrastructure grids.
+
+Zero-Drift Operational Standard: Ensures high availability, strict fault tolerance, and absolute data consistency across critical nodes.
+
+🛠️ Architecture & Workflow
+Trigger & Validation: Automated code push/PR hooks trigger rigorous linting (pylint), testing (pytest), and matrix compatibility suites.
+
+Compute & Telemetry Execution (hpc_telemetry.py): Continuously monitors host health metrics, executes threshold safety checks, and generates live telemetry data streams.
+
+Digital Twin Synchronization: Feeds live metrics directly into regional smart infrastructure twins and analytical dashboards.
+
+📂 Repository Structure
+hpc_telemetry.py - Core telemetry tracking and compute health diagnostic engine.
+
+.github/workflows/hpc_diag.yml - Automated CI/CD pipeline and diagnostic scheduler.
+
+python-logger/ & python-logger2/ - Spatial-temporal system state logging modules.
+
+3d-medical-spatial-twin-topology/ - Advanced simulation architecture.
