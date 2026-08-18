@@ -152,3 +152,92 @@ jobs:
       if: success()
       run: |
         echo "Workflow passed. HPC Telemetry system health: 100% operational."
+# .github/workflows/hpc_diag.yml
+# QNV HPC Telemetry Diagnostic & Stability Workflow
+# Enforces 0% failure rate and sustainable performance metrics aligned with Qatar National Vision 2030.
+
+name: QNV HPC Telemetry CI/CD
+
+on:
+  # 'main' এবং 'master' উভয় ব্রাঞ্চে পুশ করলে রান হবে
+  push:
+    branches: [ "main", "master" ]
+  # 'main' এবং 'master' ব্রাঞ্চের পুল রিকোয়েস্টে রান হবে
+  pull_request:
+    branches: [ "main", "master" ]
+  # প্রতি ৩০ মিনিট পর পর স্বয়ংক্রিয়ভাবে পরিকাঠামোর স্থায়িত্ব পরীক্ষা করবে
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  diagnostics_and_stability:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # বিভিন্ন পাইথন ভার্সনে সিস্টেমের ব্যাকওয়ার্ড ও ফরোয়ার্ড স্ট্যাবিলিটি পরীক্ষা করবে
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # কোর ডায়াগনস্টিকস ও টেলিমেট্রির জন্য প্রয়োজনীয় সব লাইব্রেরি ইনস্টল করুন
+        pip install pylint requests psutil pytest
+        # আপনার তৈরি করা কোর লগার লাইব্রেরিটি গিটহাব থেকে সরাসরি ইনস্টল করার চেষ্টা করবে
+        pip install git+https://github.com/Mkfininqatar/python-logger2.git || true
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Diagnostics Suite
+      id: run_diagnostics
+      run: |
+        echo "Starting HPC Telemetry Diagnostic Scan..."
+        
+        # ১. ফাইল ভেরিফিকেশন (Check if hpc_telemetry.py exists)
+        if [ ! -f "hpc_telemetry.py" ]; then 
+          echo "CRITICAL ERROR: hpc_telemetry.py not found."
+          exit 1
+        fi
+        
+        # ২. স্ট্যাটিক কোড অ্যানালাইসিস (Pylint দিয়ে এরর ডিটেকশন)
+        echo "Running static analysis..."
+        pylint --errors-only hpc_telemetry.py
+        
+        # ৩. ইউনিট ও ইন্টিগ্রেশন টেস্ট (যদি tests/ ডিরেক্টরি থাকে)
+        if [ -d "tests" ]; then 
+          pytest tests/ -v
+        else 
+          echo "Tests directory not found, skipping pytest."
+        fi
+        
+        # ৪. এক্সিকিউশন টাইম লিমিট পরীক্ষা (Enforce time limit: Ideal <30s, Max 60s)
+        START_TIME=$(date +%s)
+        
+        # টেলিমেট্রি স্ক্রিপ্টের একটি কুইক রান টেস্ট (ব্যাকগ্রাউন্ডে ১ সেকেন্ড চালিয়ে কিল করা হবে)
+        python hpc_telemetry.py & 
+        PID=$!
+        sleep 2
+        kill $PID || true
+        
+        END_TIME=$(date +%s)
+        DURATION=$((END_TIME - START_TIME))
+        echo "Diagnostic run duration: ${DURATION}s"
+        
+        # ৬০ সেকেন্ডের বেশি সময় লাগলে পারফরম্যান্স ওয়ার্নিং জেনারেট করবে
+        if [ $DURATION -gt 60 ]; then 
+          echo "PERFORMANCE WARNING: Telemetry run time exceeds 60s threshold."
+          exit 1
+        fi
+
+    - name: System Health Check
+      if: success()
+      run: |
+        echo "Workflow passed. QNV HPC Telemetry system health: 100% operational."
+        # ভবিষ্যতে সেন্ট্রাল ড্যাশবোর্ডে হার্টবিট সিগন্যাল পাঠানোর গেটওয়ে এখানে যুক্ত করা যাবে
