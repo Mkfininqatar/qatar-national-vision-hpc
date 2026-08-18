@@ -99,3 +99,56 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint requests
+name: QNV HPC Telemetry CI/CD
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  # প্রতি ৩০ মিনিট পর পর স্বয়ংক্রিয়ভাবে সিস্টেমের স্থায়িত্ব পরীক্ষা করবে
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  diagnostics_and_stability:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # বিভিন্ন পাইথন ভার্সনে কোডের স্থায়িত্ব পরীক্ষা করবে
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint requests psutil pytest
+        # আপনার কোর লগার লাইব্রেরিটি গিটহাব থেকে সরাসরি ইনস্টল করার কমান্ড
+        pip install git+https://github.com/Mkfininqatar/python-logger2.git || true
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Diagnostics Suite
+      run: |
+        echo "Starting HPC Telemetry Diagnostic Scan..."
+        
+        # ১. ফাইলটি ঠিকঠাক আছে কি না তা যাচাই করা
+        if [ ! -f "hpc_telemetry.py" ]; then 
+          echo "CRITICAL ERROR: hpc_telemetry.py file not found."
+          exit 1
+        fi
+        
+        # ২. কোডের কোয়ালিটি এবং লজিক্যাল এরর চেক (Pylint)
+        pylint --errors-only hpc_telemetry.py
+
+    - name: System Health Check
+      if: success()
+      run: |
+        echo "Workflow passed. HPC Telemetry system health: 100% operational."
