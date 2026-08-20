@@ -539,3 +539,33 @@ GitHub Readme & Social Post Template📌 Post Title / Headline:🚀 QNV HPC Tele
     |      * Regional Smart Infrastructure Digital Twin Sync       |
     +--------------------------------------------------------------+
 ========================================================================
+graph TD
+    classDef cosmic fill:#1a1a2e,stroke:#0f3460,stroke-width:2px,color:#e94560;
+    classDef hpc fill:#0f3460,stroke:#e94560,stroke-width:2px,color:#fff;
+    classDef compliance fill:#16213e,stroke:#4ecca3,stroke-width:2px,color:#4ecca3;
+
+    subgraph Cosmic_Layer ["Cosmic & Environmental Input Layer"]
+        A1["100+ Real Moon Image Captures<br/>(Albedo & Shadow Scan)"]:::cosmic
+        A2["2.47s Video Stream<br/>(Dynamic Wave Modulation)"]:::cosmic
+    end
+
+    subgraph Processing_Layer ["Doha Core Processing & AROS OS"]
+        B["src/cosmic_data_pipeline.py<br/>Batch Ingestion & Decoding Engine"]:::hpc
+        C["Cardio-Neural Axis<br/>Coupled ODE Topology Solver"]:::hpc
+    end
+
+    subgraph Telemetry_Layer ["Spatial-Temporal Telemetry (0.00µs Drift)"]
+        D["python-logger2<br/>Golden Synchronization Engine"]:::hpc
+    end
+
+    subgraph Governance_Layer ["Eye of Mind & Compliance Matrix"]
+        E["MIT Security & ISACA Governance<br/>(Audit Status: PASSED)"]:::compliance
+        F["Qatar National Vision 2030<br/>Smart Infrastructure Digital Twin"]:::compliance
+    end
+
+    A1 --> B
+    A2 --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
