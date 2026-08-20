@@ -478,3 +478,26 @@ hpc_telemetry.py - Core telemetry tracking and compute health diagnostic engine.
 python-logger/ & python-logger2/ - Spatial-temporal system state logging modules.
 
 3d-medical-spatial-twin-topology/ - Advanced simulation architecture.
+# Abdul Majeed
+**Technical Consultant | High-Performance Computing & Digital Twin Architect**
+🌐 **Organization:** Qatar National Vision - HPC & Digital Twin Division
+📍 **Location:** Doha, Qatar 
+✍️ **Official Signature:** [Authenticated - 26.07.26]
+
+---
+
+## 🇶🇦 Project Overview: Qatar National Vision 2030 Integration
+This repository hosts the core architecture of the **Cardio-Neural Axis Digital Twin Simulation**, developed as a culmination of 17 years of technical research, system auditing, and high-performance computing (HPC) innovations in Doha.
+
+---
+
+## ⚙️ Core Modules & System Architecture
+* **Digital Twin Core:** Real-time physiological and neural network modeling.
+* **System Audit & Technical Report:** 17 Years of R&D Experience in Qatar infrastructure.
+* **Strategic Alignment:** Directly supports advanced healthcare analytics under Qatar National Vision objectives.
+
+---
+
+### 🛡️ Verification & Sign-off
+* **Project Status:** Active / Government Table Verification Ready.
+* **Authorized Sign-off:** Verified under official system protocol.
