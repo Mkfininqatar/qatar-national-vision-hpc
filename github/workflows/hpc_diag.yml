@@ -241,3 +241,7 @@ jobs:
       run: |
         echo "Workflow passed. QNV HPC Telemetry system health: 100% operational."
         # ভবিষ্যতে সেন্ট্রাল ড্যাশবোর্ডে হার্টবিট সিগন্যাল পাঠানোর গেটওয়ে এখানে যুক্ত করা যাবে
+- name: Run Pytest Suite
+      run: |
+        pip install pytest
+        pytest
