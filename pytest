@@ -1,0 +1,32 @@
+# tests/test_hpc.py
+import pytest
+import os
+import sys
+
+# Root directory path add
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from python_logger2 import SpatialTemporalLogger
+from hpc_telemetry import get_hpc_metrics
+
+def test_logger_initialization(tmp_path):
+    log_file = tmp_path / "test_telemetry.log"
+    logger = SpatialTemporalLogger(
+        project="QNV_Test",
+        node="TEST_NODE",
+        log_path=str(log_file),
+        golden_sync_enabled=True
+    )
+    assert logger is not None
+
+def test_hpc_metrics_structure():
+    metrics = get_hpc_metrics()
+    assert metrics is not None
+    assert "cpu_load_percent" in metrics
+    assert "mem_used_gb" in metrics
+    assert "temp_celsius" in metrics
+    assert metrics["system_status"] == "OPERATIONAL"
+
+def test_peak_memory_footprint():
+    metrics = get_hpc_metrics()
+    assert metrics["mem_used_gb"] == 8.37
