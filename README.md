@@ -706,3 +706,40 @@ graph TD
         GitSummary -.-> MetricStatus
         MetricMath -.-> Dashboard
     end
+# Qatar National Vision HPC & Cardio-Neural Digital Twin Simulation
+
+> A high-performance computing (HPC) initiative designed to simulate complex cardio-neural axis dynamics, aligning with advanced healthcare and national digital transformation goals.
+
+---
+
+## 🚀 Project Overview
+This repository houses an advanced High-Performance Computing (HPC) simulation framework. It models intricate cardio-neural interactions to provide high-precision analytical data. Built with rigorous architecture, automated testing, and clean code principles, this project bridges deep scientific research with real-world technological infrastructure.
+
+---
+
+## 🛠️ Technology Stack & Architecture
+* **Core Language:** Python
+* **Performance & Simulation:** Advanced numerical modeling & HPC pipelines
+* **Automation & CI/CD:** GitHub Actions (Automated code linting and quality checks via `pylint`)
+* **Architecture:** Modular, scalable, and optimized for real-time telemetry processing
+
+---
+
+## 📊 Key Features & Engineering Standards
+* **High-Performance Processing:** Optimized algorithms capable of handling heavy data loads efficiently.
+* **Automated Code Quality:** Integrated GitHub Actions workflow (`pylint.yml`) ensuring rigorous code standards and error-free deployments.
+* **Scalable Framework:** Designed with extensibility in mind, making it adaptable for web, mobile, and enterprise-level tracking systems.
+
+---
+
+## 🔄 CI/CD & Workflows
+The repository utilizes robust automation to maintain top-tier code hygiene:
+* **`pylint.yml`:** Automated static code analysis running on every commit to enforce PEP8 standards and prevent runtime defects.
+* **`update-graph`:** Automated telemetry and visual data generation pipelines.
+
+---
+
+## 👤 Author
+**Majed**  
+* High-Performance Computing & Software Developer  
+* [GitHub Profile](https://github.com/Mkfininqatar)
