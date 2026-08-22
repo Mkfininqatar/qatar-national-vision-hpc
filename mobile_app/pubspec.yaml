@@ -1,4 +1,5 @@
-
+assets:
+  - assets/
 name: mobile_app
 description: "QNV 2030 Cardio-Neural Digital Twin Mobile Console"
 publish_to: 'none'
