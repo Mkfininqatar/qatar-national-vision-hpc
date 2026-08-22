@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() {
   runApp(const CardioNeuralApp());
@@ -104,7 +106,7 @@ class HomeTelemetryView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: Main         MainAxisAlignment.spaceBetween,
           children: [
             Text(title, style: const TextStyle(fontSize: 16)),
             Chip(
@@ -146,8 +148,7 @@ class SystemConfigView extends StatelessWidget {
       ),
     );
   }
-} import 'dart:convert';
-import 'package:web_socket_channel/web_socket_channel.dart';
+}
 
 class TelemetryService {
   late WebSocketChannel _channel;
@@ -174,5 +175,3 @@ class TelemetryService {
     _channel.sink.close();
   }
 }
-} import 'dart:convert';
-import 'package:web_socket_channel/web_socket_channel.dart';
