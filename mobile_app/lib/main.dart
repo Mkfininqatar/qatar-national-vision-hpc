@@ -153,7 +153,6 @@ class SystemConfigView extends StatelessWidget {
 class TelemetryService {
   late WebSocketChannel _channel;
   
-  // দোহা কোর নোড বা HPC ক্লাস্টারের লাইভ স্ট্রিম এন্ডপয়েন্ট
   void connectToDohaCore() {
     _channel = WebSocketChannel.connect(
       Uri.parse('wss://doha-core-telemetry.qnv2030.internal/ws'),
