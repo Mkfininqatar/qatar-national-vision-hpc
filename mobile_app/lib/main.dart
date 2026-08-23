@@ -287,3 +287,32 @@ Widget _buildMobileLayout() {
     ),
   );
 }
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong2.dart';
+
+class NetworkMapView extends StatelessWidget {
+  const NetworkMapView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FlutterMap(
+      options: MapOptions(
+        initialCenter: LatLng(25.2854, 51.5310), // দোহার লোকেশন
+        initialZoom: 11.0,
+      ),
+      children: [
+        TileLayer(
+          urlTemplate: 'https://openstreetmap.org{z}/{x}/{y}.png',
+        ),
+        MarkerLayer(
+          markers: [
+            Marker(
+              point: LatLng(25.2854, 51.5310), // Doha Core Node
+              child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
