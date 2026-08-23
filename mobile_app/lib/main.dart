@@ -1,318 +1,239 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() {
-  runApp(const QatarNationalVisionApp());
+  runApp(const CardioNeuralApp());
 }
 
-class QatarNationalVisionApp extends StatelessWidget {
-  const QatarNationalVisionApp({Key? key}) : super(key: key);
+class CardioNeuralApp extends StatelessWidget {
+  const CardioNeuralApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Qatar National Vision HPC - Digital Twin',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: const Color(0xFF8A1538),
-        scaffoldBackgroundColor: const Color(0xFF121212),
-        cardColor: const Color(0xFF1E1E1E),
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF8A1538),
-          secondary: Color(0xFFD4AF37),
-        ),
+      title: 'QNV Digital Twin Mobile',
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.blueAccent,
+        scaffoldBackgroundColor: const Color(0xFF0B0F19),
       ),
       home: const DashboardScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({super.key});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    const HomeTelemetryView(),
+    const DigitalTwinView(),
+    const SystemConfigView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    // LayoutBuilder এর মাধ্যমে স্ক্রিনের সাইজ চেক করা হচ্ছে
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF8A1538),
-        title: const Text('QNV 2030 | Cardio-Neural Digital Twin Console'),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Center(
-              child: Text(
-                'HPC Cluster: Online',
-                style: TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Row(
-        children: [
-          // Sidebar
-          Container(
-            width: 250,
-            color: const Color(0xFF181818),
-            child: ListView(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // যদি স্ক্রিনের চওড়া (Width) ৮০০ পিক্সেলের বেশি হয় (যেমন: মনিটর/ল্যাপটপ)
+          if (constraints.maxWidth > 800) {
+            return Row(
               children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(color: Color(0xFF8A1538)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'QNV 2030',
-                        style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Digital Twin Console',
-                        style: TextStyle(color: Colors.white70, fontSize: 13),
-                      ),
-                    ],
+                // বামপাশে সাইডবার বা NavigationRail যুক্ত করা হলো
+                NavigationRail(
+                  selectedIndex: _currentIndex,
+                  backgroundColor: const Color(0xFF1E293B),
+                  selectedIconTheme: const IconThemeData(color: Colors.blueAccent),
+                  unselectedIconTheme: const IconThemeData(color: Colors.grey),
+                  selectedLabelTextStyle: const TextStyle(color: Colors.blueAccent),
+                  unselectedLabelTextStyle: const TextStyle(color: Colors.grey),
+                  labelType: NavigationRailLabelType.all,
+                  onDestinationSelected: (int index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  leading: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blueAccent,
+                      child: Icon(Icons.hub, color: Colors.white),
+                    ),
                   ),
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.dashboard),
+                      label: Text('Telemetry'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.monitor_heart),
+                      label: Text('Cardio-Neural'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.settings_ethernet),
+                      label: Text('Nodes'),
+                    ),
+                  ],
                 ),
-                ListTile(
-                  leading: const Icon(Icons.dashboard),
-                  title: const Text('Telemetry'),
-                  selected: _selectedIndex == 0,
-                  selectedTileColor: Colors.white10,
-                  onTap: () => setState(() => _selectedIndex = 0),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.monitor_heart),
-                  title: const Text('Cardio-Neural'),
-                  selected: _selectedIndex == 1,
-                  selectedTileColor: Colors.white10,
-                  onTap: () => setState(() => _selectedIndex = 1),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.hub),
-                  title: const Text('Nodes'),
-                  selected: _selectedIndex == 2,
-                  selectedTileColor: Colors.white10,
-                  onTap: () => setState(() => _selectedIndex = 2),
+                // ডানপাশের মেইন স্ক্রিন এরিয়া
+                Expanded(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: const Text('QNV 2030 | Digital Twin Console (Desktop Mode)'),
+                      backgroundColor: const Color(0xFF1E293B),
+                      elevation: 0,
+                    ),
+                    body: _pages[_currentIndex],
+                  ),
                 ),
               ],
-            ),
-          ),
-          // Main Content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Doha Core Node Status & Metrics',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            );
+          } else {
+            // যদি স্ক্রিনের সাইজ ছোট বা মোবাইল সাইজ হয়
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('QNV 2030 | Digital Twin Console'),
+                backgroundColor: const Color(0xFF1E293B),
+                elevation: 0,
+              ),
+              body: _pages[_currentIndex],
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: _currentIndex,
+                backgroundColor: const Color(0xFF1E293B),
+                selectedItemColor: Colors.blueAccent,
+                unselectedItemColor: Colors.grey,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.dashboard),
+                    label: 'Telemetry',
                   ),
-                  const SizedBox(height: 20),
-                  GridView.count(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics,
-                    childAspectRatio: 2.2,
-                    children: const [
-                      MetricCard(
-                        title: 'Zero-Drift Pipeline',
-                        value: 'Active',
-                        subtitle: '0.00 µs',
-                        icon: Icons.bolt,
-                        color: Colors.greenAccent,
-                      ),
-                      MetricCard(
-                        title: 'Coupled ODE Solver',
-                        value: 'Running',
-                        subtitle: 'Stable',
-                        icon: Icons.settings_accessibility,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      MetricCard(
-                        title: 'HPC Cluster Load',
-                        value: '89.4%',
-                        subtitle: 'Optimal Flow',
-                        icon: Icons.memory,
-                        color: Colors.orangeAccent,
-                      ),
-                    ],
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.monitor_heart),
+                    label: 'Cardio-Neural',
                   ),
-                  const SizedBox(height: 32),
-                  Container(
-                    height: 320,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1E1E1E),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.white10),
-                    ),
-                    child: const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.analytics_outlined, size: 64, color: Color(0xFFD4AF37)),
-                          SizedBox(height: 16),
-                          Text(
-                            'Real-Time Cardio-Neural Axis Simulation Feed',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Telemetry stream connected successfully via WebSocket.',
-                            style: TextStyle(color: Colors.white54, fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings_ethernet),
+                    label: 'Nodes',
                   ),
                 ],
               ),
-            ),
-          ),
-        ],
+            );
+          }
+        },
       ),
     );
   }
 }
 
-class MetricCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-
-  const MetricCard({
-    Key? key,
-    required this.title,
-    required this.value,
-    required this.subtitle,
-    required this.icon,
-    required this.color,
-  }) : super(key: key);
+class HomeTelemetryView extends StatelessWidget {
+  const HomeTelemetryView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.between,
-            children: [
-              Text(title, style: const TextStyle(color: Colors.white70, fontSize: 14)),
-              Icon(icon, color: color, size: 22),
-            ],
+          const Text(
+            'Doha Core Node Status',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.between,
-            children: [
-              Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color)),
-              Text(subtitle, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-            ],
-          ),
+          const SizedBox(height: 16),
+          _buildStatusCard('Zero-Drift Pipeline', 'Active (0.00 µs)', Colors.green),
+          _buildStatusCard('Coupled ODE Solver', 'Running (Stable)', Colors.blue),
+          _buildStatusCard('HPC Cluster Load', '14.2%', Colors.orange),
         ],
       ),
     );
   }
-}
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    body: LayoutBuilder(
-      builder: (context, constraints) {
-        // স্ক্রিনের চওড়া বা উইডথ যদি ৯০০ পিক্সেলের বেশি হয় তবে ডেস্কটপ ভিউ দেখাবে
-        if (constraints.maxWidth > 900) {
-          return _buildDesktopLayout();
-        } else {
-          return _buildMobileLayout();
-        }
-      },
-    ),
-  );
-}
 
-// মনিটরের বড় স্ক্রিনের জন্য লেআউট (বামপাশে সাইডবার, ডানপাশে মেইন কনটেন্ট)
-Widget _buildDesktopLayout() {
-  return Row(
-    children: [
-      NavigationRail(
-        backgroundColor: const Color(0xFF1E293B),
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) => setState(() => _currentIndex = index),
-        labelType: NavigationRailLabelType.all,
-        destinations: const [
-          NavigationRailDestination(icon: Icon(Icons.dashboard), label: Text('Telemetry')),
-          NavigationRailDestination(icon: Icon(Icons.map), label: Text('Network Map')),
-          NavigationRailDestination(icon: Icon(Icons.settings), label: Text('Settings')),
-        ],
-      ),
-      Expanded(
-        child: _pages[_currentIndex],
-      ),
-    ],
-  );
-}
-
-// মোবাইলের জন্য সাধারণ বটম নেভিগেশন লেআউট
-Widget _buildMobileLayout() {
-  return Scaffold(
-    appBar: AppBar(title: const Text('QNV 2030 Console')),
-    body: _pages[_currentIndex],
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: _currentIndex,
-      onTap: (index) => setState(() => _currentIndex = index),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Telemetry'),
-        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Nodes'),
-      ],
-    ),
-  );
-}
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong2.dart';
-
-class NetworkMapView extends StatelessWidget {
-  const NetworkMapView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FlutterMap(
-      options: MapOptions(
-        initialCenter: LatLng(25.2854, 51.5310), // দোহার লোকেশন
-        initialZoom: 11.0,
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: 'https://openstreetmap.org{z}/{x}/{y}.png',
-        ),
-        MarkerLayer(
-          markers: [
-            Marker(
-              point: LatLng(25.2854, 51.5310), // Doha Core Node
-              child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+  Widget _buildStatusCard(String title, String status, Color color) {
+    return Card(
+      color: const Color(0xFF1E293B),
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: const TextStyle(fontSize: 16)),
+            Chip(
+              label: Text(status, style: const TextStyle(color: Colors.white)),
+              backgroundColor: color,
             ),
           ],
         ),
-      ],
+      ),
     );
+  }
+}
+
+class DigitalTwinView extends StatelessWidget {
+  const DigitalTwinView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Cardio-Neural Axis Simulation Feed\n[Live 3D/Graph Stream]',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 18, color: Colors.grey),
+      ),
+    );
+  }
+}
+
+class SystemConfigView extends StatelessWidget {
+  const SystemConfigView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Node Routing & ISACA Compliance Controls',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 18, color: Colors.grey),
+      ),
+    );
+  }
+}
+
+class TelemetryService {
+  late WebSocketChannel _channel;
+  
+  void connectToDohaCore() {
+    _channel = WebSocketChannel.connect(
+      Uri.parse('wss://doha-core-telemetry.qnv2030.internal/ws'),
+    );
+  }
+
+  Stream<Map<String, dynamic>> get telemetryStream {
+    return _channel.stream.map((message) {
+      final decoded = jsonDecode(message);
+      return {
+        'cpuLoad': decoded['cpu_load'] ?? 0.0,
+        'driftTime': decoded['drift_time'] ?? '0.00 µs',
+        'nodeStatus': decoded['status'] ?? 'Active',
+      };
+    });
+  }
+
+  void dispose() {
+    _channel.sink.close();
   }
 }
