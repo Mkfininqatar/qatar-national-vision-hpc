@@ -234,3 +234,56 @@ class MetricCard extends StatelessWidget {
     );
   }
 }
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: LayoutBuilder(
+      builder: (context, constraints) {
+        // স্ক্রিনের চওড়া বা উইডথ যদি ৯০০ পিক্সেলের বেশি হয় তবে ডেস্কটপ ভিউ দেখাবে
+        if (constraints.maxWidth > 900) {
+          return _buildDesktopLayout();
+        } else {
+          return _buildMobileLayout();
+        }
+      },
+    ),
+  );
+}
+
+// মনিটরের বড় স্ক্রিনের জন্য লেআউট (বামপাশে সাইডবার, ডানপাশে মেইন কনটেন্ট)
+Widget _buildDesktopLayout() {
+  return Row(
+    children: [
+      NavigationRail(
+        backgroundColor: const Color(0xFF1E293B),
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) => setState(() => _currentIndex = index),
+        labelType: NavigationRailLabelType.all,
+        destinations: const [
+          NavigationRailDestination(icon: Icon(Icons.dashboard), label: Text('Telemetry')),
+          NavigationRailDestination(icon: Icon(Icons.map), label: Text('Network Map')),
+          NavigationRailDestination(icon: Icon(Icons.settings), label: Text('Settings')),
+        ],
+      ),
+      Expanded(
+        child: _pages[_currentIndex],
+      ),
+    ],
+  );
+}
+
+// মোবাইলের জন্য সাধারণ বটম নেভিগেশন লেআউট
+Widget _buildMobileLayout() {
+  return Scaffold(
+    appBar: AppBar(title: const Text('QNV 2030 Console')),
+    body: _pages[_currentIndex],
+    bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: (index) => setState(() => _currentIndex = index),
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Telemetry'),
+        BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Nodes'),
+      ],
+    ),
+  );
+}
