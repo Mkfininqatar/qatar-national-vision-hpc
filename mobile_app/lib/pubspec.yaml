@@ -21,3 +21,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+dependencies:
+  flutter_map: ^6.0.0
+  latlong2: ^0.9.0
