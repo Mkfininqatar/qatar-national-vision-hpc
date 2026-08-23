@@ -1,4 +1,3 @@
-
 import os
 import cv2
 import numpy as np
@@ -53,7 +52,7 @@ class CosmicBatchIngestionEngine:
             logger.warning(f"Video file {self.video_path} not found. Using fallback dynamic modulation.")
             return 7.84
             
-        cap = cv2.VideoCapture(self.video_path}
+        cap = cv2.VideoCapture(self.video_path)
         frame_frequencies = []
         
         while cap.isOpened():
