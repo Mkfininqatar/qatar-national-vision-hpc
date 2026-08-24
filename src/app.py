@@ -69,3 +69,57 @@ if sim_mode:
         time.sleep(refresh_rate)
 else:
     st.info("Simulation paused. Enable 'Live Simulation Mode' from the sidebar to start streaming telemetry.")
+import streamlit as st
+import numpy as np
+import time
+
+# --- ১. ফ্রিকোয়েন্সি ও ভাইব্রেশন ক্যালকুলেশন ফাংশনসমূহ ---
+def calculate_wave_frequency(base_freq=7.83, harmonic_multiplier=1.601):
+    current_time = time.time()
+    omega = 2 * np.pi * base_freq * harmonic_multiplier
+    wave_amplitude = np.sin(current_time * omega * 0.01)
+    return {
+        "effective_frequency": round(base_freq * harmonic_multiplier, 4),
+        "instantaneous_amplitude": round(float(wave_amplitude), 4)
+    }
+
+def calculate_magnetic_frequency(geomagnetic_base=7.83, index_k=1.601):
+    current_time = time.time()
+    omega_m = 2 * np.pi * geomagnetic_base * index_k
+    magnetic_fluctuation = np.cos(current_time * omega_m * 0.005)
+    return {
+        "effective_magnetic_frequency": round(geomagnetic_base * index_k, 4),
+        "instantaneous_flux": round(float(magnetic_fluctuation), 4)
+    }
+
+def get_vibration_reading(base_acceleration=9.81, prime_factor=1.601):
+    noise = np.random.normal(0, 0.05)
+    vibration_amplitude = np.sin(time.time() * prime_factor) * 1.5 + noise
+    frequency_hz = round(base_acceleration * prime_factor * 0.5, 2)
+    return {
+        "acceleration_ms2": round(float(vibration_amplitude), 4),
+        "frequency_hz": frequency_hz,
+        "status": "স্বাভাবিক (NORMAL)" if abs(vibration_amplitude) < 2.0 else "সতর্কবার্তা (WARNING)"
+    }
+
+# --- ২. Streamlit UI ড্যাশবোর্ড সেকশন (বাংলায়) ---
+st.title("কাতার ন্যাশনাল ভিশন এইচপিসি - টেলিমেট্রি ও ডিজিটাল টুইন")
+
+st.subheader("📡 রিয়েল-টাইম ওয়েভ, ম্যাগনেটিক এবং ভাইব্রেশন মেট্রিক্স")
+
+# ডাটা ফেচ করা
+wave_data = calculate_wave_frequency()
+mag_data = calculate_magnetic_frequency()
+vib_data = get_vibration_reading()
+
+# ড্যাশবোর্ডে কলাম আকারে শো করা
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(label="ওয়েভ ফ্রিকোয়েন্সি (Wave Frequency)", value=f"{wave_data['effective_frequency']} Hz", delta=wave_data['instantaneous_amplitude'])
+
+with col2:
+    st.metric(label="ম্যাগনেটিক ফ্রিকোয়েন্সি (Magnetic Frequency)", value=f"{mag_data['effective_magnetic_frequency']} Hz", delta=mag_data['instantaneous_flux'])
+
+with col3:
+    st.metric(label="ভাইব্রেশন এক্সিলারেশন (Vibration)", value=f"{vib_data['acceleration_ms2']} m/s²", delta=vib_data['status'])
