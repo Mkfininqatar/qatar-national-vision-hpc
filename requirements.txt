@@ -14,7 +14,7 @@ paho-mqtt==1.6.1            # Telemetry streaming engine for Kafka & MQTT distri
 
 # System Audit, Compliance & Testing
 cryptography==50.0.0        # MIT Security Policy encryption and validation protocols
-pytest==9.0.3               # ISACA Governance Audit simulation suite and system verification tests
+pytest==9.1.1               # ISACA Governance Audit simulation suite and system verification tests
 
 # System Logging Foundation
 python-logger2==2.0.4       # Core microsecond-accurate zero-drift spatial logging subsystem
