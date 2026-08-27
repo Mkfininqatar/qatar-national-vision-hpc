@@ -10,7 +10,7 @@ scipy==1.10.1               # High-performance ODE solvers for Coupled Bio-Signa
 
 # Network Telemetry & Real-Time Data Streaming
 requests==2.33.0            # Synchronous push layer for Digital Twin State Delta API
-paho-mqtt==1.6.1            # Telemetry streaming engine for Kafka & MQTT distributed data bus
+paho-mqtt==2.1.0            # Telemetry streaming engine for Kafka & MQTT distributed data bus
 
 # System Audit, Compliance & Testing
 cryptography==50.0.0        # MIT Security Policy encryption and validation protocols
