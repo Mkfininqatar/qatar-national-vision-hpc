@@ -9,7 +9,7 @@ numpy==2.5.2               # Multi-dimensional arrays for Cardio-Neural spatial 
 scipy==1.10.1               # High-performance ODE solvers for Coupled Bio-Signal differential equations
 
 # Network Telemetry & Real-Time Data Streaming
-requests==2.33.0            # Synchronous push layer for Digital Twin State Delta API
+requests==2.34.2            # Synchronous push layer for Digital Twin State Delta API
 paho-mqtt==2.1.0            # Telemetry streaming engine for Kafka & MQTT distributed data bus
 
 # System Audit, Compliance & Testing
