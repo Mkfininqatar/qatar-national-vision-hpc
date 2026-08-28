@@ -982,3 +982,13 @@ When initialized across the Doha compute fabric, the runtime monitoring environm
 ------------------------------------------------------------------------
 [SUCCESS] MIT Security & ISACA Governance Audit: PASSED
 [SUCCESS] Digital Twin State Delta Synchronized. Zero Cumulative Drift.
+## Architectural Overview & Telemetry
+
+<p align="center">
+  <img src="image_6.png" alt="Cardio-Neural Axis Digital Twin & HPC Cognitive Link" width="100%">
+</p>
+
+### Key System Highlights
+* **HPC Cognitive Link**: Real-time cross-system telemetry bridge mapping high-performance spatial-temporal nodes.
+* **Spatial Topology Stream**: Continuous spatial data indexing for low-latency neural and cardiac grid synchronization.
+* **System Stability & Compliance**: Running live telemetry simulation streams under zero-drift secure parameters.
