@@ -992,3 +992,18 @@ When initialized across the Doha compute fabric, the runtime monitoring environm
 * **HPC Cognitive Link**: Real-time cross-system telemetry bridge mapping high-performance spatial-temporal nodes.
 * **Spatial Topology Stream**: Continuous spatial data indexing for low-latency neural and cardiac grid synchronization.
 * **System Stability & Compliance**: Running live telemetry simulation streams under zero-drift secure parameters.
+# Qatar National Vision HPC: Cardio-Neural Axis Digital Twin
+
+A high-performance computing (HPC) scientific demo framework designed to model spatial-temporal cardio-neural telemetry and system metrics in alignment with advanced digital twin architecture standards.
+
+## 🚀 Key Features
+- **Spatial-Temporal Telemetry:** Real-time logging of high-density grid metrics and simulation states.
+- **Python Telemetry Engine:** Built-in modular logging (`python-logger2`) for robust error tracking and performance profiling.
+- **Scalable Architecture:** Optimized for parallel execution nodes within HPC environments.
+
+## 🛠️ System Architecture
+```mermaid
+graph TD
+    A[Hardware Grid Metrics] -->|Raw Telemetry| B(Python Logger Engine)
+    B -->|Structured Logs| C{Digital Twin Core}
+    C -->|Spatial-Neural Simulation| D[QNV 2030 Dashboard / Output]
