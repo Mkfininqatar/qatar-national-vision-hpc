@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import streamlit as st
 import time
 import random
@@ -42,3 +43,6 @@ if sim_mode:
         time.sleep(refresh_rate)
 else:
     st.info("Simulation paused.")
+=======
+import streamlit as st 
+>>>>>>> Stashed changes
