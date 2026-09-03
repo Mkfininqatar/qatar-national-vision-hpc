@@ -13,7 +13,7 @@ requests==2.34.2            # Synchronous push layer for Digital Twin State Delt
 paho-mqtt==2.1.0            # Telemetry streaming engine for Kafka & MQTT distributed data bus
 
 # System Audit, Compliance & Testing
-cryptography==50.0.0        # MIT Security Policy encryption and validation protocols
+cryptography==50.0.1        # MIT Security Policy encryption and validation protocols
 pytest==9.1.1               # ISACA Governance Audit simulation suite and system verification tests
 
 # System Logging Foundation
