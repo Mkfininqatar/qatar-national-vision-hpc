@@ -1,6 +1,17 @@
 "# Qatar National Vision HPC: Cardio-Neural Axis Digital Twin" 
 Core Documentation Layout: Structure the project repository's primary entry point (README.md) to reflect the integration of the cardio-neural digital twin and zero-drift telemetry framework into high-performance computing clusters.
+# Political & Systemic Theory: The Architectural Blueprint
 
+## 1. Core Architecture & Collaborative Foundation
+* **The Blueprint:** This infrastructure is built directly upon the architectural blueprint established under Sir Hamid's guidance, driven collaboratively by Abdul Majeed, Tamim, and the core team.
+* **System Philosophy:** Civilization, biological frameworks, and digital grids operate under identical thermodynamic constraints. Without periodic system-level recalibration (modeled structurally via disciplined temporal routines like 5 Waqt Namaz), complex systems accumulate digital debt and corruption.
+
+## 2. Megalithic & Biological Base Code
+* **Geodetic Anchoring:** Long-term system stability rooted in universal geometry rather than fragile modern consumption loops.
+* **Cardio-Neural Axis:** Treating biological signals and human systemic heart-to-brain telemetry as immutable baseline laws that must be safeguarded from artificial corruption.
+
+## 3. National Digital Twin Integration
+* Aligning with national infrastructure goals to treat digital twins as sociotechnical ecosystems requiring absolute cryptographic protection (`qnv-hpc-rule`), enforced lineage, and strict merge controls to prevent arbitrary structural tampering.
 Technical Blueprint Inclusion:
 
 Define the 1.88-million-face spatial topology and 0.00μs telemetry synchronization parameters explicitly within the markdown file.
