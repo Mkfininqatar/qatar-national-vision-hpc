@@ -67,3 +67,115 @@ int main() {
 
     return 0;
 }
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <cmath>
+
+// ==========================================
+// 1. THE PRIMAL ROOT & BASE CODE
+// ==========================================
+struct BaseCode {
+    const int primordial_parents = 2; // Adam (a.) and Hawa (a.) - The true root leadership
+    const int initial_offspring = 4;   // 2 daughters, 2 sons
+    
+    void displayOrigin() {
+        std::cout << "[BASE_CODE] Initialized with Primordial Parents = " << primordial_parents 
+                  << ", Initial Offspring = " << initial_offspring << "\n";
+    }
+};
+
+// ==========================================
+// 2. SYSTEM CORRUPTION & SECTOR STATUS
+// ==========================================
+enum SectorStatus {
+    PRIME_INTEGRITY,
+    BAD_SECTOR_CORRUPTED, // Modern artificial political/economic corruptions
+    EMOTIONAL_DEATH       // Loss of internal soul/emotion via greed virus
+};
+
+class HumanSystem {
+private:
+    int total_nodes;
+    SectorStatus status;
+
+public:
+    HumanSystem(int nodes) : total_nodes(nodes), status(PRIME_INTEGRITY) {}
+
+    void applyMutation(int loss) {
+        total_nodes -= loss; // e.g., 6 - 1 = 5
+        status = EMOTIONAL_DEATH;
+        std::cout << "[SYSTEM_ALERT] Node hacked/corrupted. Remaining active nodes: " << total_nodes << "\n";
+    }
+
+    // ==========================================
+    // 3. MATHEMATICAL SEQUENCE & QUANTUM DYNAMICS
+    // ==========================================
+    void executeArithmeticSequence(const std::vector<double>& seq) {
+        double sum = 0;
+        double diff = seq[0];
+        double product = 1;
+        double division = seq[0];
+
+        // Basic arithmetic aggregation
+        for (size_t i = 0; i < seq.size(); ++i) {
+            sum += seq[i];
+            if (i > 0) {
+                diff -= seq[i];
+                product *= seq[i];
+                division /= seq[i];
+            }
+        }
+
+        std::cout << "--- Mathematical Matrix Evaluation ---\n";
+        std::cout << "Sequence Addition (1+2+3+4+5)      = " << sum << "\n";
+        std::cout << "Sequence Subtraction (1-2-3-4-5)   = " << diff << "\n";
+        std::cout << "Sequence Multiplication (1*2*3*4*5)= " << product << " (Maximum complexity peak)\n";
+        std::cout << "Sequence Division (1/2/3/4/5)      = " << division << " (Subtle quantum residue of lost soul)\n";
+    }
+};
+
+// ==========================================
+// 4. THE ULTIMATE USER MANUAL (5 WAQT NAMAZ)
+// ==========================================
+class UserManualCalibration {
+public:
+    void executeSystemReboot(int prayer_cycles) {
+        if (prayer_cycles == 5) {
+            std::cout << "--- Hardware & Soul Diagnostics ---\n";
+            std::cout << "[SYS_REBOOT] 5 Waqt Namaz protocol engaged.\n";
+            std::cout << "[SYS_REBOOT] Flushing artificial 'bad sectors', resetting telemetry to Base Code.\n";
+            std::cout << "[STATUS] System synchronized with multi-dimensional Quantum reality.\n";
+        }
+    }
+};
+
+// ==========================================
+// 5. MAIN EXECUTION PIPELINE
+// ==========================================
+int main() {
+    std::cout << "=== EXECUTING TOTAL SYSTEM ARCHITECTURE ===\n\n";
+
+    // Step 1: Establish Root
+    BaseCode origin;
+    origin.displayOrigin();
+
+    // Step 2: Initialize Civilization Nodes
+    HumanSystem civilization(origin.initial_offspring);
+
+    // Step 3: Account for structural shift (2 daughters + 1 son remaining after 1 emotional death)
+    civilization.applyMutation(1);
+
+    // Step 4: Run mathematical & quantum sequence (1, 2, 3, 4, 5)
+    std::vector<double> sequence = {1.0, 2.0, 3.0, 4.0, 5.0};
+    civilization.executeArithmeticSequence(sequence);
+
+    std::cout << "\n";
+
+    // Step 5: Execute User Manual Calibration (5 Waqt Namaz)
+    UserManualCalibration os_manual;
+    os_manual.executeSystemReboot(5);
+
+    std::cout << "\n=== EXECUTION COMPLETE: ZERO DATA LOST ===\n";
+    return 0;
+}
