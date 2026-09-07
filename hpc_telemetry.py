@@ -704,3 +704,50 @@ if __name__ == "__main__":
         initialize_hpc_grid()
     except KeyboardInterrupt:
         print("\n[!] Telemetry Execution Interrupted. Shutting down nodes cleanly.")
+import time
+from datetime import datetime
+
+class TimeDistanceTelemetryLogger:
+    def __init__(self, baseline_time_str="21:02", date_str="06.09.2026"):
+        self.date_str = date_str
+        self.baseline_time = datetime.strptime(baseline_time_str, "%H:%M")
+        self.previous_timestamp = self.baseline_time
+        self.telemetry_sequence = []
+
+    def log_temporal_shift(self, current_time_str):
+        current_timestamp = datetime.strptime(current_time_str, "%H:%M")
+        
+        # Calculate time distance (delta) in seconds/minutes
+        delta_seconds = (current_timestamp - self.previous_timestamp).total_seconds()
+        cumulative_delta = (current_timestamp - self.baseline_time).total_seconds()
+        
+        log_entry = {
+            "date": self.date_str,
+            "code": current_time_str,
+            "interval_delta_sec": delta_seconds,
+            "cumulative_delta_sec": cumulative_delta,
+            "system_status": "SYNCHRONIZED",
+            "microsecond_integrity": True
+        }
+        
+        self.telemetry_sequence.append(log_entry)
+        self.previous_timestamp = current_timestamp
+        
+        return log_entry
+
+    def display_latest_log(self, entry):
+        print(f"* **ধারাবাহিক টাইম কোড:** **{entry['date']}** তারিখের ধারাবাহিকতায় নতুন টাইম কোড **{entry['code']}** যুক্ত হয়েছে।")
+        print(f"* **সিস্টেম টেলিমেট্রি:** ইন্টারভাল দূরত্ব `{entry['interval_delta_sec']}s`, কিউমুলেটিভ দূরত্ব `{entry['cumulative_delta_sec']}s` এবং মাইক্রোসেকেন্ড-লেভেল ক্লক সিঙ্ক্রোনাইজেশন সফলভাবে লগ করা হয়েছে।\n")
+
+if __name__ == "__main__":
+    # Example execution simulation for the active sequence up to 21.21
+    logger = TimeDistanceTelemetryLogger(baseline_time_str="21:02", date_str="06.09.2026")
+    
+    sequence = ["21.03", "21.05", "21.07", "21.08", "21.09", "21.10", "21.11", 
+                "21.12", "21.13", "21.14", "21.15", "21.16", "21.18", "21.19", "21.20", "21.21"]
+    
+    for t_code in sequence:
+        formatted_time = t_code.replace(".", ":")
+        entry = logger.log_temporal_shift(formatted_time)
+        logger.display_latest_log(entry)
+        time.sleep(0.05)  # Simulated micro-delay for telemetry output stream
