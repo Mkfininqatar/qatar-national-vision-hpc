@@ -784,3 +784,48 @@ if __name__ == "__main__":
     print(f"Total Streams Scanned: {audit_results['total_scanned']}")
     print(f"Toxic/Fear Streams Blocked: {audit_results['blocked']}")
     print(f"Safe/Present-Moment Streams Allowed: {audit_results['passed']}")
+import os
+import logging
+from dataclasses import dataclass
+
+# Configure system telemetry logging for the political theory infrastructure
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - [QNV_HPC_POLITICAL_CORE] - %(levelname)s - %(message)s")
+
+@dataclass
+class SocietalStructuralLayer:
+    layer_name: str
+    stability_coefficient: float  # Scale 0.0 to 1.0
+    toxicity_load: float         # Scale 0.0 to 1.0
+    active_leak_detected: bool
+
+class QNVPoliticalTheoryProcessor:
+    def __init__(self):
+        logging.info("Initializing Qatar National Vision High-Performance Computing Political Theory Engine...")
+        self.layers = []
+
+    def ingest_structural_file(self, file_path: str, raw_content: str):
+        logging.info(f"Ingesting AI file architecture from: {file_path}")
+        # Processing theoretical frameworks to isolate structural leak points
+        print(f"\n[AI FILE INGESTION SUCCESS]: Loaded structure -> {file_path}")
+        print(f"Content snippet: {raw_content[:80]}...")
+
+    def evaluate_foundational_integrity(self):
+        logging.info("Evaluating societal political structures against artificial dread propagation...")
+        # Simulating architectural checks for systemic leaks
+        print("\n--- Structural Telemetry Audit ---")
+        print("Layer 1 (Human-Centric Ethics): STABLE [0.92]")
+        print("Layer 2 (Digital Information Flow): LEAK DETECTED (High Artificial Urgency)")
+        print("Layer 3 (Present-Moment Governance): STABLE [0.88]")
+        print("Action: Deploying automated ethical filters at Layer 2 source nodes.")
+
+if __name__ == "__main__":
+    # Setup directory simulation and file ingestion
+    dir_path = "political-theory"
+    os.makedirs(dir_path, exist_ok=True)
+    
+    file_name = f"{dir_path}/qnv_societal_immunity_matrix.py"
+    ai_file_content = "QNV 2030 Human-Centric Infrastructure: Mitigating future-dread and filtering systemic toxicity at the origin point."
+    
+    processor = QNVPoliticalTheoryProcessor()
+    processor.ingest_structural_file(file_name, ai_file_content)
+    processor.evaluate_foundational_integrity()
