@@ -576,3 +576,72 @@ if __name__ == "__main__":
     print("=== SYSTEM IDENTIFICATION LOG ===")
     for key, value in identity_log.items():
         print(f"{key}: {value}")
+import time
+from dataclasses import dataclass
+
+@dataclass
+class WorkerProfile:
+    name: str
+    location: str
+    status: str  # 'At Risk', 'Exploited', 'Secure'
+    salary_status: str # 'Delayed', 'Paid'
+
+class PrimaryRescueSystem:
+    def __init__(self):
+        self.emergency_hotline = "109-RESCUE-QATAR"
+        self.billboard_network = []
+        self.telecom_broadcasts = []
+
+    def deploy_billboard_notices(self, location: str, message: str):
+        """রাস্তার মোড়ের বিলবোর্ড এবং 'Give Way' সাইনে জরুরি নীতিমালা প্রচার"""
+        notice = {
+            "channel": "Physical Billboard & Give-Way Sign",
+            "location": location,
+            "display_message": message,
+            "status": "Active & Visible"
+        }
+        self.billboard_network.append(notice)
+        print(f"[BILLBOARD DEPLOYED] -> {location}: {message}")
+
+    def execute_telecom_pivot(self, operator: str, worker: WorkerProfile):
+        """ভোদাফোন বা অন্যান্য টেলিকমের ফিশিং অফার বন্ধ করে সরকারি জরুরি রেসকিউ মেসেজ পাঠানো"""
+        if worker.status == 'At Risk' or worker.salary_status == 'Delayed':
+            alert_msg = (f"ATTENTION {worker.name}: Stop phishing scams! "
+                         f"Your rights are protected. Call Emergency Rescue: {self.emergency_hotline}")
+            self.telecom_broadcasts.append({"operator": operator, "recipient": worker.name, "msg": alert_msg})
+            print(f"[TELECOM PIVOT ACTIVATED] Sent via {operator} to {worker.name} -> \"{alert_msg}\"")
+        else:
+            print(f"[STATUS NORMAL] Worker {worker.name} is secure.")
+
+    def run_human_dignity_audit(self, workers: list):
+        """তৃণমূল স্তরে মানুষের মানসিক ও অর্থনৈতিক নিরাপত্তা অডিট করা"""
+        print("\n--- RUNNING HUMAN-CENTRIC DIGNITY AUDIT ---")
+        for worker in workers:
+            self.execute_telecom_pivot("Vodafone Qatar", worker)
+            time.sleep(0.5)
+
+# --- Execution ---
+if __name__ == "__main__":
+    # সিস্টেম ইনিশিয়ালাইজেশন
+    rescue_system = PrimaryRescueSystem()
+
+    # ১. জনবহুল মোড় ও বিলবোর্ডে অধিকারের বার্তা স্থাপন
+    rescue_system.deploy_billboard_notices(
+        location="Industrial Area Junction 4", 
+        message="DO NOT SUFFER IN SILENCE. Know Your Rights. Emergency Rescue Hotline: 109-RESCUE-QATAR"
+    )
+    
+    rescue_system.deploy_billboard_notices(
+        location="Corniche Main Road", 
+        message="Human Dignity Above All. Timely Wages & Fair Living Standards Guaranteed."
+    )
+
+    # ২. ঝুঁকিপূর্ণ অবস্থায় থাকা প্রবাসীদের প্রোফাইল
+    workers_in_field = [
+        WorkerProfile(name="Abdul Rahim", location="Industrial Area", status="At Risk", salary_status="Delayed"),
+        WorkerProfile(name="Farooq Ahmed", location="Doha Central", status="Secure", salary_status="Paid")
+    ]
+
+    # ৩. সিস্টেম রান করা
+    rescue_system.run_human_dignity_audit(workers_in_field)
+    print("\n[SYSTEM STATUS]: Global Human Dignity Model Initialized Successfully.")
