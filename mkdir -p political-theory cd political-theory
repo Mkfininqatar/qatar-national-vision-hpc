@@ -722,3 +722,65 @@ if __name__ == "__main__":
     # 3. Running the System
     rescue_system.run_human_dignity_audit(workers_in_field)
     print("\n[SYSTEM STATUS]: Political Theory & Primary Rescue Engine v1.0.1 Synchronized Successfully.")
+import time
+import logging
+from dataclasses import dataclass
+from typing import List, Dict
+
+# Configure system telemetry logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - [IMMUNE_CORE] - %(levelname)s - %(message)s")
+
+@dataclass
+class TelemetryPacket:
+    source_id: str
+    content: str
+    future_dread_index: float  # Scale 0.0 to 1.0 measuring induced anxiety/artificial urgency
+    artificial_urgency: bool
+    timestamp: float
+
+class SocietalImmuneFilter:
+    def __init__(self, dread_threshold: float = 0.65):
+        self.dread_threshold = dread_threshold
+        logging.info("Initializing Societal Immune Telemetry Engine...")
+
+    def analyze_packet(self, packet: TelemetryPacket) -> bool:
+        """
+        Filters incoming data streams. 
+        Returns False if the packet introduces toxic future-dread or artificial scarcity.
+        Returns True if the packet preserves present-moment stability and clarity.
+        """
+        if packet.artificial_urgency or packet.future_dread_index > self.dread_threshold:
+            logging.warning(f"BLOCKED: Toxic stream detected from [{packet.source_id}] | Dread Index: {packet.future_dread_index}")
+            return False
+        
+        logging.info(f"PASSED: Stable present-moment telemetry from [{packet.source_id}]")
+        return True
+
+    def run_diagnostics(self, inbound_stream: List[TelemetryPacket]) -> Dict[str, int]:
+        stats = {"total_scanned": len(inbound_stream), "blocked": 0, "passed": 0}
+        
+        for packet in inbound_stream:
+            is_safe = self.analyze_packet(packet)
+            if is_safe:
+                stats["passed"] += 1
+            else:
+                stats["blocked"] += 1
+                
+        return stats
+
+if __name__ == "__main__":
+    # Simulating data packets arriving from digital media, advertising, and information channels
+    incoming_stream = [
+        TelemetryPacket("ad_network_alpha", "Buy now before prices surge tomorrow!", 0.85, True, time.time()),
+        TelemetryPacket("present_awareness_node", "Breathe and anchor yourself in the current moment.", 0.05, False, time.time()),
+        TelemetryPacket("media_fear_stream", "Catastrophic future outlook guaranteed if you don't panic.", 0.92, True, time.time()),
+        TelemetryPacket("grounded_telemetry", "System stable. Small leaks patched at the source.", 0.10, False, time.time())
+    ]
+
+    immune_system = SocietalImmuneFilter(dread_threshold=0.60)
+    audit_results = immune_system.run_diagnostics(incoming_stream)
+    
+    print("\n--- Telemetry Audit Summary ---")
+    print(f"Total Streams Scanned: {audit_results['total_scanned']}")
+    print(f"Toxic/Fear Streams Blocked: {audit_results['blocked']}")
+    print(f"Safe/Present-Moment Streams Allowed: {audit_results['passed']}")
