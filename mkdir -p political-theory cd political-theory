@@ -645,3 +645,80 @@ if __name__ == "__main__":
     # ৩. সিস্টেম রান করা
     rescue_system.run_human_dignity_audit(workers_in_field)
     print("\n[SYSTEM STATUS]: Global Human Dignity Model Initialized Successfully.")
+# ==============================================================================
+# PRIMARY RESCUE & HUMAN-CENTRIC POLITICAL THEORY ENGINE (v1.0.1)
+# Author: Abdul Majeed (Technical Consultant & Digital Twin Architect)
+# Description: Telemetry & Policy Code embodying the Human Rights Political Theory.
+# ==============================================================================
+
+import time
+from dataclasses import dataclass
+from typing import List, Dict
+
+@dataclass
+class WorkerProfile:
+    name: str
+    location: str
+    status: str          # 'At Risk', 'Exploited', 'Secure'
+    salary_status: str   # 'Delayed', 'Paid'
+
+class PrimaryRescueSystem:
+    def __init__(self):
+        self.emergency_hotline = "109-RESCUE-QATAR"
+        self.billboard_network: List[Dict[str, str]] = []
+        self.telecom_broadcasts: List[Dict[str, str]] = []
+
+    def deploy_billboard_notices(self, location: str, message: str) -> None:
+        """Transforms 'Give Way' and physical intersections into Rescue Portals."""
+        notice = {
+            "channel": "Physical Billboard & Give-Way Sign",
+            "location": location,
+            "display_message": message,
+            "status": "Active & Visible"
+        }
+        self.billboard_network.append(notice)
+        print(f"[BILLBOARD DEPLOYED] -> {location}: {message}")
+
+    def execute_telecom_pivot(self, operator: str, worker: WorkerProfile) -> None:
+        """Blocks phishing/lottery scams and replaces them with emergency rescue alerts."""
+        if worker.status == 'At Risk' or worker.salary_status == 'Delayed':
+            alert_msg = (
+                f"POLITICAL THEORY ALERT {worker.name}: Scams blocked. "
+                f"Your dignity is absolute. Call Emergency Rescue: {self.emergency_hotline}"
+            )
+            self.telecom_broadcasts.append({"operator": operator, "recipient": worker.name, "msg": alert_msg})
+            print(f"[TELECOM PIVOT] {operator} -> {worker.name}: \"{alert_msg}\"")
+        else:
+            print(f"[STATUS NORMAL] Worker {worker.name} is secure under fair labor policy.")
+
+    def run_human_dignity_audit(self, workers: List[WorkerProfile]) -> None:
+        """Executes real-time telemetry auditing for grassroots human rights."""
+        print("\n--- RUNNING HUMAN-CENTRIC DIGNITY AUDIT ---")
+        for worker in workers:
+            self.execute_telecom_pivot("Vodafone Qatar", worker)
+            time.sleep(0.3)
+
+# --- Execution Entrypoint ---
+if __name__ == "__main__":
+    rescue_system = PrimaryRescueSystem()
+
+    # 1. Deploying the Theory into Physical Infrastructure (Billboards & Intersections)
+    rescue_system.deploy_billboard_notices(
+        location="Industrial Area Junction 4", 
+        message="GIVE WAY TO HUMAN DIGNITY. Stop Silent Suffering. Hotline: 109-RESCUE-QATAR"
+    )
+    
+    rescue_system.deploy_billboard_notices(
+        location="Corniche Main Road", 
+        message="True National Beauty Lies in Worker Security. Timely Wages Guaranteed."
+    )
+
+    # 2. Field Workers Telemetry Profile
+    workers_in_field = [
+        WorkerProfile(name="Abdul Rahim", location="Industrial Area", status="At Risk", salary_status="Delayed"),
+        WorkerProfile(name="Farooq Ahmed", location="Doha Central", status="Secure", salary_status="Paid")
+    ]
+
+    # 3. Running the System
+    rescue_system.run_human_dignity_audit(workers_in_field)
+    print("\n[SYSTEM STATUS]: Political Theory & Primary Rescue Engine v1.0.1 Synchronized Successfully.")
