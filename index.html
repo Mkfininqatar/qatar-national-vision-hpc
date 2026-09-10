@@ -649,3 +649,57 @@
     <option value="ne">नेपाली (Nepali)</option>
   </select>
 </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Golden Labor Sovereign Oversight Engine</title>
+    <style>
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #0f172a;
+            color: #fff;
+        }
+        .language-selector select {
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid #334155;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="logo">
+            <h2>🇶🇷 Golden Labor / গোল্ডেন লেবার</h2>
+        </div>
+        
+        <!-- ভাষা নির্বাচন অপশন (Language Selector) -->
+        <div class="language-selector">
+            <label for="lang-select">🌐 </label>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="en" selected>English</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="ne">नेपाली (Nepali)</option>
+            </select>
+        </div>
+    </header>
+
+    <script>
+        function changeLanguage(lang) {
+            // ভাষা পরিবর্তনের লজিক এখানে যুক্ত হবে
+            console.log("Selected Language: " + lang);
+        }
+    </script>
+
+</body>
+</html>
