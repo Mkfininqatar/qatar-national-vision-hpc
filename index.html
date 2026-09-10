@@ -703,3 +703,142 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Labor Sovereign Oversight Engine | গোল্ডেন লেবার সার্বভৌম তদারকি ইঞ্জিন</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #f8fafc;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #0f172a;
+            border-bottom: 1px solid #1e293b;
+        }
+        .logo h2 {
+            font-size: 20px;
+            color: #38bdf8;
+            letter-spacing: 0.5px;
+        }
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .language-selector select {
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid #334155;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .language-selector select:hover {
+            border-color: #38bdf8;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .main-container h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+        .main-container p {
+            font-size: 16px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Language Selector -->
+    <header class="top-bar">
+        <div class="logo">
+            <h2>🇶🇷 Golden Labor / গোল্ডেন লেবার</h2>
+        </div>
+        
+        <div class="language-selector">
+            <label for="lang-select">🌐</label>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="en" selected>English</option>
+                <option value="ar">العربية (Arabic)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="ne">नेपाली (Nepali)</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        <h1 id="page-title">Golden Labor Sovereign Oversight Engine</h1>
+        <p id="page-desc">Direct government oversight, real-time telemetry tracking, and transparent wage protection for all workers.</p>
+    </main>
+
+    <script>
+        // Multi-language translation data dictionary
+        const translations = {
+            en: {
+                title: "Golden Labor Sovereign Oversight Engine",
+                desc: "Direct government oversight, real-time telemetry tracking, and transparent wage protection for all workers."
+            },
+            bn: {
+                title: "গোল্ডেন লেবার সার্বভৌম তদারকি ইঞ্জিন",
+                desc: "সকল শ্রমিকের জন্য সরাসরি সরকারি তদারকি, রিয়েল-টাইম টেলিম্যাট্রি ট্র্যাকিং এবং স্বচ্ছ বেতন সুরক্ষা।"
+            },
+            ar: {
+                title: "محرك الرقابة السيادية للعمالة الذهبية",
+                desc: "إشراف حكومي مباشر، وتتبع القياس عن بعد في الوقت الفعلي، وحماية شفافة للأجور لجميع العمال."
+            },
+            hi: {
+                title: "गोल्डन लेबर संप्रभु निगरानी इंजन",
+                desc: "सभी श्रमिकों के लिए प्रत्यक्ष सरकारी निगरानी, ​​रीयल-टाइम टेलीमेट्री ट्रैकिंग और पारदर्शी वेतन सुरक्षा।"
+            },
+            ur: {
+                title: "گوڈن لیبر سوورین اوور سাইট انجن",
+                desc: "تمام کارکنوں کے لیے براہ راست حکومت کی نگرانی، ریئل ٹائم ٹیلی میٹری ٹریکنگ، اور شفاف اجرت کا تحفظ۔"
+            },
+            ne: {
+                title: "गोल्डेन लेबर सार्वभौम निगरानी इन्जिन",
+                desc: "सबै कामदारहरूको लागि प्रत्यक्ष सरकारको निगरानी, ​​वास्तविक-समय टेलिमेट्री ट्र्याकिङ, र पारदर्शी ज्याला सुरक्षा।"
+            }
+        };
+
+        function changeLanguage(lang) {
+            if (translations[lang]) {
+                document.getElementById('page-title').innerText = translations[lang].title;
+                document.getElementById('page-desc').innerText = translations[lang].desc;
+                
+                // Set text direction for Arabic/Urdu if needed
+                if (lang === 'ar' || lang === 'ur') {
+                    document.documentElement.setAttribute('dir', 'rtl');
+                } else {
+                    document.documentElement.setAttribute('dir', 'ltr');
+                }
+            }
+            console.log("Language switched to: " + lang);
+        }
+    </script>
+
+</body>
+</html>
