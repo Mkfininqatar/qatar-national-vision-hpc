@@ -109,3 +109,11 @@ def get_grievances():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+from fastapi import FastAPI
+import datetime
+
+app = FastAPI(
+    title="TrustFlow QNV Server",
+    description="High-Performance Computing & Digital Twin Telemetry",
+    version="1.0.0"
+)
