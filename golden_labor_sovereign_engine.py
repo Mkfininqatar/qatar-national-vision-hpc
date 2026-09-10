@@ -73,3 +73,60 @@ if __name__ == "__main__":
         historical_abuse_reported=False
     )
     print(json.dumps(report, indent=4))
+from datetime import datetime
+
+class SovereignEmergencyTracker:
+    def __init__(self):
+        self.active_calls = []
+
+    def receive_emergency_call(self, caller_id, phone_type, raw_location_data):
+        """
+        Processes incoming emergency calls from both feature phones and smartphones,
+        extracts location, and dispatches assistance.
+        """
+        call_event = {
+            "caller_id": caller_id,
+            "device_type": phone_type, # "feature_phone" or "smartphone"
+            "timestamp": datetime.now().isoformat(),
+            "location": self._resolve_location(phone_type, raw_location_data),
+            "status": "Dispatched"
+        }
+        self.active_calls.append(call_event)
+        return call_event
+
+    def _resolve_location(self, phone_type, data):
+        if phone_type == "feature_phone":
+            # Resolving location via Cell Tower ID / Triangulation
+            return {
+                "method": "Cell Tower Triangulation",
+                "tower_id": data.get("tower_id", "UNKNOWN_TOWER"),
+                "estimated_zone": data.get("zone", "Doha Industrial Area")
+            }
+        elif phone_type == "smartphone":
+            # Resolving precise GPS coordinates
+            return {
+                "method": "GPS Telemetry",
+                "latitude": data.get("lat"),
+                "longitude": data.get("lng")
+            }
+        return {"method": "Manual Input", "details": "Location requested via SMS/IVR"}
+
+# Example Usage:
+tracker = SovereignEmergencyTracker()
+
+# Scenario A: Call from a feature phone (Cell Tower tracking)
+feature_phone_alert = tracker.receive_emergency_call(
+    caller_id="+974-55123456",
+    phone_type="feature_phone",
+    raw_location_data={"tower_id": "DOHA_IND_SEC_03", "zone": "Street 23, Industrial Area"}
+)
+
+# Scenario B: Call/SOS from a smartphone (GPS tracking)
+smartphone_alert = tracker.receive_emergency_call(
+    caller_id="+974-66987654",
+    phone_type="smartphone",
+    raw_location_data={"lat": 25.2854, "lng": 51.5310}
+)
+
+print("Emergency Dispatch Logs Initialized Successfully.")
+SovereignEmergencyTracker
