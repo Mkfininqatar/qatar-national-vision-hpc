@@ -117,3 +117,6 @@ app = FastAPI(
     description="High-Performance Computing & Digital Twin Telemetry",
     version="1.0.0"
 )
+from fastapi import FastAPI
+
+app = FastAPI()
