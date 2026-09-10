@@ -2,14 +2,48 @@
 Core Documentation Layout: Structure the project repository's primary entry point (README.md) to reflect the integration of the cardio-neural digital twin and zero-drift telemetry framework into high-performance computing clusters.
 # Political & Systemic Theory: The Architectural Blueprint
 # The Hamid Blueprint: V1.0.0
+📊 Project Status & Alliance
+Operated under a collaborative national task-force model led by:
 
+Abdul Majeed (Technical Consultant & Digital Twin Architect)
+
+Tamim (Strategic & Operational Co-Lead)
+
+🤝 Contribution & Engagement
+Contributions, feedback, and institutional collaborations are welcome as we scale this framework toward a secure digital future for Qatar.
 A structural, technology-driven framework designed to automate labor rights enforcement, corporate governance transparency, and supply chain integrity.
 
 ## Core Architecture
 - **Trimonthly Oversight:** Automated 3-month verification cycles for all sub-contractors and corporate entities.
 - **Digital Complaint System:** Real-time, anonymous reporting channels for workers to flag violations securely.
 - **Market & Import Monitoring:** Algorithmic checks to prevent price-gouging syndicates and protect national economic stability.
+# Qatar National Vision HPC & Societal Immune System (SIS)
 
+> Aligning high-performance computing, digital telemetry, and human-centric ethics with Qatar National Vision 2030 (QNV 2030).
+
+---
+
+## 🌟 Overview
+The **Societal Immune System (SIS)** project is an official initiative designed to safeguard our digital infrastructure, youth, and community values against predatory algorithms, phishing loops, and digital toxicity. By leveraging High-Performance Computing (HPC) and real-time state-machine telemetry, this repository houses the core execution engine for automated national digital governance.
+
+---
+
+## 🏗️ Architectural Layers
+1. **Human-Centric Ethics:** Safeguarding community values and mental wellness against predatory digital manipulation.
+2. **Digital Flow Filtering:** Automated filtering of malicious content, phishing loops, and harmful exposure.
+3. **Present-Moment Governance:** Real-time state-machine routing and telemetry management for resilient community infrastructure.
+
+---
+
+## 🚀 Core Implementation (`hpc_telemetry.py`)
+The system moves beyond theoretical frameworks into robust, deployable code. The core telemetry execution engine manages state routing and security protocols under secure protocol guidelines.
+
+```bash
+# Core Telemetry Execution & Version Control Log
+git add hpc_telemetry.py
+git commit -m "feat: Initialize HPC telemetry routing engine under QNV2030 secure protocol"
+git tag -a v1.0.1 -m "Release v1.0.1: Stable telemetry resting engine"
+git push origin main --tags
 ## Repository Structure
 - `hamid_blueprint_v1.py`: Core execution script for compliance validation and complaint logging.
 - Documentation and policy schemas designed for seamless scaling and institutional adoption.
