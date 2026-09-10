@@ -400,3 +400,241 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustFlow QNV - National Labor Welfare Dashboard</title>
+    <style>
+        :root {
+            --qatar-maroon: #8A1538; /* কাতারের পতাকায় ব্যবহৃত মারুন কালার */
+            --qatar-maroon-dark: #640E27;
+            --bg-light: #F8F9FA;
+            --text-dark: #333333;
+            --white: #FFFFFF;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--qatar-maroon);
+            color: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid var(--qatar-maroon-dark);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            border-top: 4px solid var(--qatar-maroon);
+        }
+        h2 {
+            color: var(--qatar-maroon);
+            margin-top: 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: var(--qatar-maroon);
+            color: var(--white);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: var(--qatar-maroon-dark);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: var(--qatar-maroon);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>🇶🇦 TrustFlow QNV Dashboard</h1>
+            <p>State of Qatar - National Vision 2030 Labor Welfare & Telemetry System</p>
+        </div>
+        <div>
+            <span class="status-badge" id="system-status">Connecting to HPC...</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Telemetry Status Card -->
+        <div class="card">
+            <h2>System Telemetry Status</h2>
+            <p><strong>Platform:</strong> <span id="telemetry-platform">Loading...</span></p>
+            <p><strong>Clock Synchronization:</strong> <span id="telemetry-clock">Loading...</span></p>
+            <p><strong>Compliance:</strong> <span id="telemetry-compliance">Loading...</span></p>
+        </div>
+
+        <!-- Submit Grievance Card -->
+        <div class="card">
+            <h2>Secure Worker Grievance Portal</h2>
+            <form id="grievance-form">
+                <input type="text" id="worker_id" placeholder="Worker ID (e.g., QAT-9821)" required>
+                <input type="text" id="company_name" placeholder="Company Name" required>
+                <input type="text" id="issue_type" placeholder="Issue Type (e.g., Wage Delay, Safety)" required>
+                <textarea id="description" placeholder="Detailed Description of Grievance" rows="4" required></textarea>
+                <button type="submit">Submit Securely to Authorities</button>
+            </form>
+        </div>
+
+        <!-- Grievances Record Table -->
+        <div class="card">
+            <h2>Logged Grievances Overview</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Worker ID</th>
+                        <th>Company</th>
+                        <th>Issue</th>
+                        <th>Status</th>
+                    </tr>
+                ></thead>
+                <tbody id="grievance-table-body">
+                    <tr><td colspan="5" style="text-align: center;">No records loaded yet.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8000";
+
+        // Fetch System Status
+        async function fetchStatus() {
+            try {
+                const response = await fetch(`${API_URL}/`);
+                const data = await response.json();
+                document.getElementById('system-status').innerText = data.telemetry.status;
+                document.getElementById('telemetry-platform').innerText = data.platform;
+                document.getElementById('telemetry-clock').innerText = data.telemetry.zero_drift_clock_sync;
+                document.getElementById('telemetry-compliance').innerText = data.telemetry.national_vision_alignment;
+            } catch (error) {
+                document.getElementById('system-status').innerText = "Disconnected";
+                document.getElementById('system-status').style.background = "#f8d7da";
+                document.getElementById('system-status').style.color = "#721c24";
+            }
+        }
+
+        // Fetch Grievances
+        async function fetchGrievances() {
+            try {
+                const response = await fetch(`${API_URL}/api/v1/grievances`);
+                const data = await response.json();
+                const tbody = document.getElementById('grievance-table-body');
+                tbody.innerHTML = "";
+                
+                if (data.records.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">No records logged yet.</td></tr>`;
+                    return;
+                }
+
+                data.records.forEach(rec => {
+                    const row = `<tr>
+                        <td>${new Date(rec.timestamp).toLocaleTimeString()}</td>
+                        <td>${rec.worker_id}</td>
+                        <td>${rec.company_name}</td>
+                        <td>${rec.issue_type}</td>
+                        <td><span style="color: #8A1538; font-weight: bold;">${rec.status}</span></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching grievances:", error);
+            }
+        }
+
+        // Handle Form Submission
+        document.getElementById('grievance-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                worker_id: document.getElementById('worker_id').value,
+                company_name: document.getElementById('company_name').value,
+                issue_type: document.getElementById('issue_type').value,
+                description: document.getElementById('description').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/v1/grievance`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert("Grievance logged successfully!");
+                    document.getElementById('grievance-form').reset();
+                    fetchGrievances();
+                }
+            } catch (error) {
+                alert("Failed to connect to backend server.");
+            }
+        });
+
+        // Initial fetch
+        fetchStatus();
+        fetchGrievances();
+        setInterval(fetchStatus, 5000); // Refresh status every 5s
+    </script>
+</body>
+</html>
