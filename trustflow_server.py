@@ -33,3 +33,6 @@ def submit_grievance(record: GrievanceRecord):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("trustflow_server:app", host="0.0.0.0", port=8000, reload=True)
+from fastapi import FastAPI
+
+app = FastAPI()  # This must be named 'app'
