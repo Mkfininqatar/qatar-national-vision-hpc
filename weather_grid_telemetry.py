@@ -44,3 +44,60 @@ if __name__ == "__main__":
     for grid in sample_grids:
         result = analyze_eco_sensor_data(grid["grid_id"], grid["moisture"], grid["frequency"])
         print(result)
+import json
+import logging
+
+# Configure advanced environmental logger
+logging.basicConfig(
+    filename='advanced_eco_weather_telemetry.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def evaluate_tree_growth_resonance(grid_id, moisture, magnetic_freq, weather_wave_freq, earth_rhythm):
+    """
+    Analyzes the synergy between eco-sensors, magnetic frequency, 
+    weather wave frequency, and earth rhythm for optimal fruit tree growth.
+    """
+    # Calculating wave harmonization & rhythm score
+    # Weather frequency and earth rhythm alignment logic
+    resonance_index = (weather_wave_freq * earth_rhythm) / (abs(magnetic_freq - 150.0) + 1.0)
+    
+    # Growth viability threshold based on environmental harmony
+    is_growth_optimal = (40.0 <= moisture <= 75.0) and (resonance_index >= 5.0)
+    
+    status = "HARMONIZED_OPTIMAL" if is_growth_optimal else "DISSUN_ADJUSTMENT_NEEDED"
+    
+    telemetry_payload = {
+        "grid_id": grid_id,
+        "soil_moisture": moisture,
+        "magnetic_frequency": magnetic_freq,
+        "weather_wave_frequency": weather_wave_freq,
+        "earth_rhythm_factor": earth_rhythm,
+        "resonance_index": round(resonance_index, 2),
+        "growth_status": status
+    }
+    
+    if is_growth_optimal:
+        logging.info(f"OPTIMAL GROWTH ZONE: Grid {grid_id}. Data: {json.dumps(telemetry_payload)}")
+    else:
+        logging.warning(f"ADJUSTMENT REQUIRED: Grid {grid_id}. Data: {json.dumps(telemetry_payload)}")
+        
+    return telemetry_payload
+
+if __name__ == "__main__":
+    # Test simulation for Doha / regional grid nodes incorporating weather waves
+    test_nodes = [
+        {"grid_id": "DOHA-ECO-01", "moisture": 58.0, "mag_freq": 142.5, "weather_freq": 24.5, "rhythm": 3.2},
+        {"grid_id": "LUSAIL-ECO-02", "moisture": 32.0, "mag_freq": 110.0, "weather_freq": 12.0, "rhythm": 1.5}
+    ]
+    
+    for node in test_nodes:
+        result = evaluate_tree_growth_resonance(
+            node["grid_id"], 
+            node["moisture"], 
+            node["mag_freq"], 
+            node["weather_freq"], 
+            node["rhythm"]
+        )
+        print(result)
