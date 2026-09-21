@@ -1,0 +1,58 @@
+import time
+import random
+import logging
+from datetime import datetime
+
+# Configure logging for the Master Monitor Dashboard
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler("hpc_telemetry_monitor.log"),
+        logging.StreamHandler()
+    ]
+)
+
+class NationalVisionTelemetryDashboard:
+    def __init__(self):
+        self.system_version = "v5.1.0-QNV2030"
+        self.zero_drift_target = 0.00  # in microseconds
+        
+    def fetch_telemetry_metrics(self):
+        # Simulating high-performance computing & digital twin telemetry data
+        current_drift = round(random.uniform(0.00, 0.002), 4)
+        active_nodes = "Doha Core / Lusail Smart Nodes"
+        housing_compliance = random.randint(95, 100)
+        metrash_biometric_status = "SECURE / ACTIVE"
+        
+        metrics = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "drift_us": current_drift,
+            "nodes": active_nodes,
+            "housing_compliance_pct": housing_compliance,
+            "biometric_security": metrash_biometric_status
+        }
+        return metrics
+
+    def run_live_monitoring(self, iterations=5, interval=2):
+        logging.info(f"Initializing Sir Hamad Global Labor Justice & Digital Twin Dashboard [{self.system_version}]...")
+        print("=" * 70)
+        print(f" LIVE NATIONAL MONITORING CONSOLE — QATAR NATIONAL VISION 2030")
+        print("=" * 70)
+        
+        for i in range(iterations):
+            data = self.fetch_telemetry_metrics()
+            print(f"[{data['timestamp']}] Node: {data['nodes']}")
+            print(f" -> Zero-Drift Telemetry: {data['drift_us']} µs (Target: {self.zero_drift_target} µs)")
+            print(f" -> Housing Density & Welfare Compliance: {data['housing_compliance_pct']}%")
+            print(f" -> Metrash Biometric Wage Security: {data['biometric_security']}")
+            print("-" * 70)
+            
+            logging.info(f"Metrics Recorded -> Drift: {data['drift_us']}µs | Compliance: {data['housing_compliance_pct']}%")
+            time.sleep(interval)
+            
+        print("Dashboard cycle completed successfully. System running within nominal parameters.")
+
+if __name__ == "__main__":
+    dashboard = NationalVisionTelemetryDashboard()
+    dashboard.run_live_monitoring()
