@@ -1,0 +1,131 @@
+import time
+import logging
+from dataclasses import dataclass, field
+from typing import List, Dict, Any
+
+# Configure logging for the telemetry engine
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
+logger = logging.getLogger("HPC_Telemetry_AuditEngine")
+
+@dataclass
+class WorkerContractAudit:
+    worker_id: str
+    category: str
+    initial_debt_bdt: float
+    visa_cost_bdt: float
+    actual_job_vacancy: int
+    imported_visa_count: int
+    monthly_rent_qar: float
+    work_hours_daily: float
+    payment_card_held_by_subcontractor: bool
+    biometric_face_lock_active: bool
+    medical_card_utilized: bool
+
+@dataclass
+class AuditReportResult:
+    is_compliant: bool
+    violations: List[str] = field(default_factory=list)
+    mitigation_actions: List[str] = field(default_factory=list)
+
+
+class SystemicLaborAuditEngine:
+    """
+    Core Telemetry & Audit Engine to detect visa trafficking, opaque subcontracting,
+    payment card retention, and labor law violations.
+    """
+    def __init__(self, audit_id: str):
+        self.audit_id = audit_id
+
+    def evaluate_worker_node(self, audit: WorkerContractAudit) -> AuditReportResult:
+        violations = []
+        mitigation = []
+
+        # 1. Zero-Vacancy / Over-Quota Trafficking Check
+        if audit.imported_visa_count > audit.actual_job_vacancy:
+            diff = audit.imported_visa_count - audit.actual_job_vacancy
+            violations.append(
+                f"CRITICAL: Quota trafficking detected. Imported {audit.imported_visa_count} "
+                f"visas for only {audit.actual_job_vacancy} actual vacancies (Surplus/Abandoned: {diff})."
+            )
+            mitigation.append(
+                "Enforce heavy fines on temporary license agencies and mandate full "
+                "repatriation/compensation cost recovery from the sponsor."
+            )
+
+        # 2. Payment Card Confiscation & Financial Fraud Check
+        if audit.payment_card_held_by_subcontractor:
+            violations.append(
+                "FRAUD ALERT: Worker payment card / ATM card is held by the sub-contractor, "
+                "enabling unauthorized fund diversion and 'no bill' excuse loops."
+            )
+            if not audit.biometric_face_lock_active:
+                mitigation.append(
+                    "MANDATE SECURITY: Enforce mandatory Face Unlock / Biometric verification "
+                    "on ATM cards or issue direct personal check books to eliminate third-party theft."
+                )
+
+        # 3. Labor Law Violation (8h vs 10h shift & pressure)
+        if audit.work_hours_daily > 8.0:
+            violations.append(
+                f"LABOR LAW BREACH: Forced shift length of {audit.work_hours_daily} hours "
+                "without adequate rest, accompanied by threat-based termination culture."
+            )
+            mitigation.append(
+                "Enforce strict 8-hour legal caps, structured rest breaks, and heavy penalties "
+                "for intimidation-based 'don't come tomorrow' firings."
+            )
+
+        # 4. Medical Card Accessibility Failure
+        if not audit.medical_card_utilized:
+            violations.append(
+                "WELFARE FAILURE: Mandatory medical card remains unutilized due to language "
+                "barriers (Bengali exclusion) and digital complexity."
+            )
+            mitigation.append(
+                "Localize digital welfare systems into regional languages (Bengali) and "
+                "ensure institutional accident support."
+            )
+
+        is_compliant = len(violations) == 0
+        return AuditReportResult(
+            is_compliant=is_compliant,
+            violations=violations,
+            mitigation_actions=mitigation
+        )
+
+
+# --- Execution Example ---
+if __name__ == "__main__":
+    logger.info("Initializing HPC & Labor Telemetry Audit Engine...")
+
+    # Sample test case based on our refined discussion
+    worker_audit_node = WorkerContractAudit(
+        worker_id="QAR-W-99075",
+        category="Non-Skilled Helper",
+        initial_debt_bdt=450000.0,
+        visa_cost_bdt=450000.0,
+        actual_job_vacancy=5,
+        imported_visa_count=20,
+        monthly_rent_qar=300.0,
+        work_hours_daily=10.0,
+        payment_card_held_by_subcontractor=True,
+        biometric_face_lock_active=False,
+        medical_card_utilized=False
+    )
+
+    engine = SystemicLaborAuditEngine(audit_id="AUDIT-2026-Q09")
+    report = engine.evaluate_worker_node(worker_audit_node)
+
+    logger.info(f"--- Systemic Audit Report [{engine.audit_id}] ---")
+    logger.info(f"Compliance Status: {'PASS' if report.is_compliant else 'FAIL (Systemic Exploitation Detected)'}")
+    
+    logger.info("Detected Violations:")
+    for v in report.violations:
+        logger.error(f"  * {v}")
+
+    logger.info("Recommended Mitigations & Policy Fixes:")
+    for m in report.mitigation_actions:
+        logger.warning(f"  [FIX] -> {m}")
