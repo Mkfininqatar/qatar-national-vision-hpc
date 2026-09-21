@@ -9,7 +9,15 @@ Core Documentation Layout: Structure the project repository's primary entry poin
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Mkfininqatar%2Fqatar--national--vision--hpc-blue?style=for-the-badge&logo=github)](https://github.com/Mkfininqatar/qatar-national-vision-hpc)
 [![System Status](https://img.shields.io/badge/System-Production%20Ready%20(v5.3.0)-success?style=for-the-badge)]()
 [![Telemetry Target](https://img.shields.io/badge/Zero--Drift-0.00µs-informational?style=for-the-badge)]()
+# Qatar National Vision - HPC & Climate-Resilient Bio-Grid
 
+## Overview
+This repository houses advanced HPC telemetry and digital twin engines designed to evaluate subsurface magnetic frequencies, eco-sensor variations, and long-term climate shift indices. The primary objective is to transform vacant and barren lands into sustainable agricultural and green ecosystems, moving beyond traditional desert limitations.
+
+## Key Features
+- **Subsurface Magnetic & Eco-Sensor Analysis:** Evaluates soil moisture and electrical conductivity to generate automated soil upgrade formulas.
+- **Weather Wave Resonance Integration:** Computes long-term ecosystem viability by aligning atmospheric pressure trends and regional climate shift markers.
+- **Autonomous Biosphere Mapping:** Supports nationwide greening initiatives by pinpointing optimal locations for perennial forestry, fruit trees, and climate-adaptive flora.
 ---
 
 ## 🧭 Executive Summary
