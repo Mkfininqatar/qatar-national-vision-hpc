@@ -128,3 +128,65 @@ if __name__ == "__main__":
     dashboard = SirHamadMasterDashboard()
     # Running continuous live monitoring loop
     dashboard.run_continuous_monitoring(cycles=5, delay=2)
+import time
+import random
+import logging
+from datetime import datetime
+
+# Configure logging for Area and Street-by-Street Monitoring
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler("spatial_street_monitoring.log"),
+        logging.StreamHandler()
+    ]
+)
+
+class SpatialMapMonitor:
+    def __init__(self):
+        # Mapping specific operational zones / Map Codes in Qatar
+        self.map_zones = {
+            "Doha Core (Zone 13)": ["Al Corniche St", "Al Sadd St", "C-Ring Road"],
+            "Lusail Smart Nodes (Zone 69)": ["Marina Promenade", "Energy Street", "Fox Hills Main Rd"],
+            "Industrial Area (Zone 55)": ["Street 15", "Street 23", "Street 47"]
+        }
+
+    def audit_street_level(self, zone, street):
+        # Simulating street-by-street compliance, housing density, and worker welfare checks
+        occupancy = random.randint(85, 99)
+        compliance_status = "COMPLIANT" if occupancy < 95 else "VIOLATION DETECTED"
+        
+        # Determining automated solution based on findings
+        if compliance_status == "VIOLATION DETECTED":
+            solution = "Dispatch Municipal Inspection Unit & Enforce Quota Limit"
+        else:
+            solution = "Nominal Operations - Telemetry Stable"
+            
+        return occupancy, compliance_status, solution
+
+    def run_spatial_monitoring(self, cycles=1):
+        print("=" * 85)
+        print(" AREA-WISE & STREET-BY-STREET TELEMETRY MONITORING CONSOLE")
+        print("=" * 85)
+        
+        for cycle in range(1, cycles + 1):
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"\n[{timestamp}] --- MONITORING CYCLE #{cycle} ---")
+            
+            for zone, streets in self.map_zones.items():
+                print(f"\n 📍 Zone / Map Area: {zone}")
+                for street in streets:
+                    occupancy, status, solution = self.audit_street_level(zone, street)
+                    print(f"    ├── Street: {street}")
+                    print(f"    │   ├── Occupancy Rate : {occupancy}%")
+                    print(f"    │   ├── Status         : {status}")
+                    print(f"    │   └── Action/Solution: {solution}")
+                    
+                    logging.info(f"Zone: {zone} | Street: {street} | Occupancy: {occupancy}% | Status: {status} | Action: {solution}")
+            
+            print("-" * 85)
+
+if __name__ == "__main__":
+    monitor = SpatialMapMonitor()
+    monitor.run_spatial_monitoring()
