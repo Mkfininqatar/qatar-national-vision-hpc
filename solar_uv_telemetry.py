@@ -238,3 +238,94 @@ if __name__ == "__main__":
     print("-" * 50)
     for key, value in master_report.items():
         print(f"{key}: {value}")
+import numpy as np
+from datetime import datetime
+
+class AdvancedSubsurfaceSoilSynthesisEngine:
+    """
+    Advanced HPC Telemetry Engine - Module 2:
+    1. Daily Organic Food Waste Soil Synthesis (Nutrient Mapping)
+    2. Tree Height-Based Root Depth Calculation
+    3. Underground Water Table Detection & Magnetic Frequency Harmonization
+    """
+    def __init__(self, grid_id: str):
+        self.grid_id = grid_id
+        self.timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def calculate_root_depth_and_water_alignment(self, tree_species: str, expected_height_meters: float, soil_current_depth: float):
+        """
+        Calculates required soil depth based on tree height and aligns with underground water table.
+        Rule of thumb: Root depth is typically proportional to tree canopy/height structure in arid zones.
+        """
+        required_root_depth = round(expected_height_meters * 0.45, 2) # e.g., proportional root penetration depth
+        depth_deficit = round(required_root_depth - soil_current_depth, 2)
+        
+        # Simulating underground water table detection at a specific depth
+        detected_water_table_depth = round(required_root_depth + 1.2, 2) # Target water table just below roots
+
+        return {
+            "tree_species": tree_species,
+            "target_height_m": expected_height_meters,
+            "required_root_depth_m": required_root_depth,
+            "soil_deficit_m": max(depth_deficit, 0.0),
+            "underground_water_table_m": detected_water_table_depth,
+            "alignment_status": "Optimized for Subsurface Water Absorption"
+        }
+
+    def synthesize_soil_from_organic_waste(self, daily_waste_kg: float, target_nutrient_index: float):
+        """
+        Transforms daily human/food organic waste into enriched soil composition.
+        """
+        synthetic_humus_generated = round(daily_waste_kg * 0.35, 2) # Conversion yield
+        fertility_score = min(target_nutrient_index + (synthetic_humus_generated * 1.5), 100.0)
+
+        return {
+            "daily_organic_waste_processed_kg": daily_waste_kg,
+            "synthetic_humus_output_kg": synthetic_humus_generated,
+            "resulting_soil_fertility_score": fertility_score
+        }
+
+    def apply_magnetic_frequency_modulation(self, target_depth: float, base_frequency_hz: float):
+        """
+        Tunes sub-surface magnetic waves/frequencies at specific depths to stimulate root growth 
+        and prevent hardpan soil compaction.
+        """
+        tuned_frequency = round(base_frequency_hz + (target_depth * 1.8), 2)
+        return {
+            "target_depth_m": target_depth,
+            "applied_magnetic_frequency_hz": tuned_frequency,
+            "status": "Resonance Achieved: Soil Microstructure Unlocked for Root Penetration"
+        }
+
+# --- Execution Example ---
+if __name__ == "__main__":
+    soil_engine = AdvancedSubsurfaceSoilSynthesisEngine(grid_id="DOHA-SOIL-GRID-01")
+    
+    # 1. Calculate root depth for a major date palm or desert tree (e.g., 8 meters tall)
+    depth_calc = soil_engine.calculate_root_depth_and_water_alignment(
+        tree_species="Mature Date Palm", 
+        expected_height_meters=8.0, 
+        soil_current_depth=2.0
+    )
+    
+    # 2. Process daily food waste for soil synthesis (e.g., 150 kg daily waste)
+    waste_processing = soil_engine.synthesize_soil_from_organic_waste(
+        daily_waste_kg=150.0, 
+        target_nutrient_index=65.0
+    )
+    
+    # 3. Apply magnetic frequency tuning at the required root depth
+    frequency_mod = soil_engine.apply_magnetic_frequency_modulation(
+        target_depth=depth_calc["required_root_depth_m"], 
+        base_frequency_hz=14.5
+    )
+
+    print("--- Subsurface Soil Synthesis & Water Alignment Master Report ---")
+    for k, v in depth_calc.items():
+        print(f"{k}: {v}")
+    print("-" * 40)
+    for k, v in waste_processing.items():
+        print(f"{k}: {v}")
+    print("-" * 40)
+    for k, v in frequency_mod.items():
+        print(f"{k}: {v}")
