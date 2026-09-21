@@ -101,3 +101,70 @@ if __name__ == "__main__":
             node["rhythm"]
         )
         print(result)
+import json
+import logging
+
+# Configure advanced soil upgrade & crop recommendation logger
+logging.basicConfig(
+    filename='soil_upgrade_crop_telemetry.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+def generate_soil_upgrade_and_crop_recommendation(grid_id, moisture, magnetic_freq, weather_wave_freq, earth_rhythm):
+    """
+    Analyzes soil-weather resonance to derive a soil upgrade formula 
+    and recommend suitable fruit trees or vegetables for optimal yield.
+    """
+    resonance_index = (weather_wave_freq * earth_rhythm) / (abs(magnetic_freq - 150.0) + 1.0)
+    
+    # Determining soil upgrade prescription based on moisture and magnetic frequency gaps
+    upgrade_actions = []
+    if moisture < 40.0:
+        upgrade_actions.append("Increase subsurface water retention and organic compost layering.")
+    elif moisture > 75.0:
+        upgrade_actions.append("Enhance drainage grids to prevent waterlogging.")
+        
+    if magnetic_freq < 100.0:
+        upgrade_actions.append("Apply mineral-rich bio-char to boost subsurface magnetic conductivity.")
+    else:
+        upgrade_actions.append("Soil electromagnetic profile is stable.")
+        
+    # Crop and Fruit Tree Recommendation Matrix based on resonance and moisture
+    if moisture >= 50.0 and resonance_index >= 6.0:
+        recommended_crops = ["Dates Palm (Khajoor)", "Pomegranate", "Resilient Root Vegetables"]
+        soil_grade = "Grade-A Prime Agricultural Zone"
+    elif 35.0 <= moisture < 50.0:
+        recommended_crops = ["Fig Trees (Anjeer)", "Olives", "Hardy Shrubs"]
+        soil_grade = "Grade-B Conditioned Zone"
+    else:
+        recommended_crops = ["Desert-adapted Greenery", "Controlled Greenhouse Herbs"]
+        soil_grade = "Grade-C Requires Intensive Upgrade"
+        
+    payload = {
+        "grid_id": grid_id,
+        "soil_health_grade": soil_grade,
+        "resonance_score": round(resonance_index, 2),
+        "soil_upgrade_formula": upgrade_actions,
+        "recommended_vegetation": recommended_crops
+    }
+    
+    logging.info(f"GRID ANALYSIS COMPLETE: {grid_id}. Data: {json.dumps(payload)}")
+    return payload
+
+if __name__ == "__main__":
+    # Sample nodes for testing soil upgrade and crop output simulation
+    test_grids = [
+        {"grid_id": "DOHA-AGRI-01", "moisture": 58.5, "mag_freq": 145.0, "weather_freq": 22.0, "rhythm": 3.5},
+        {"grid_id": "PERIPHERY-AGRI-02", "moisture": 32.0, "mag_freq": 95.0, "weather_freq": 14.0, "rhythm": 1.8}
+    ]
+    
+    for grid in test_grids:
+        result = generate_soil_upgrade_and_crop_recommendation(
+            grid["grid_id"], 
+            grid["moisture"], 
+            grid["mag_freq"], 
+            grid["weather_freq"], 
+            grid["rhythm"]
+        )
+        print(result)
