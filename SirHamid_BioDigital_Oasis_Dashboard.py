@@ -818,3 +818,135 @@ if __name__ == "__main__":
         dashboard.render_dashboard(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
         
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class SirHamidUrbanOasisDashboard:
+    def __init__(self, location="Doha Urban Eco-Grid", area_hectares=50.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.trench_base_m = 4.5
+        self.soil_type = "Converted Loamy Soil (Bele Doash)"
+        
+        # Monitoring Telemetry with Urban Shadow Parameters
+        self.monitoring_grid = {
+            "Open_Sun_Surface_Temp_C": 36.5,
+            "Urban_Building_Shadow_Temp_C": 26.2,  # Cool zone created by building shadows
+            "Shadow_Zone_Moisture_pct": 72.0,      # Higher moisture retention in shadow areas
+            "Temperature_Absorption_Index": "High Thermal Flywheel Efficiency",
+            "Magnetic_Field_Wave_nT": 45.2,
+            "Eco_Wave_Mycorrhizal_Hz": 12.8,
+            "Closed_Loop_Efficiency": "97.2%"
+        }
+
+    def urban_shadow_and_greening_engine(self, hour, raw_temp, wind_ms):
+        """
+        Urban Climate Engine: Evaluates building shadow zones, temperature absorption, 
+        and allocates shade-loving flowering plants and greening crops for urban cooling.
+        """
+        # Urban Shadow Microclimate Calculation
+        shadow_zone_temp = raw_temp - 8.5  # Buildings and structures creating natural cool shade
+        shadow_zone_humidity = 75.0        # Trapped cool moisture in shaded pockets
+        
+        # Urban Greening & Flowering Allocation for Shadow Zones
+        shadow_flowering_plants = [
+            "রঙ্গন ও গন্ধরাজ (Shadow-Loving Flowering Shrubs - ছায়াযুক্ত স্থানে ফুল ও সৌন্দর্যের জন্য)",
+            "টগর ও বেলফুলের ঝোপ (Perennial Flowering Plants - কম রোদেও অবিরাম ফুল ফোটে)",
+            "পাতাবাহার ও ফার্ন জাতীয় উদ্ভিদ (Indoor/Shade Foliage - শহরের তাপমাত্রা শোষণে অত্যন্ত কার্যকর)"
+        ]
+        
+        shadow_shading_crops = [
+            "পুদিনা ও ধনিয়া পাতা (Shadow Herb Cultivation - ছায়ায় চমৎকার বাড়ে)",
+            "পান পাতা ও লতানো সবুজ গাছ (Vining Greenery - বিল্ডিংয়ের দেওয়ালে সবুজায়ন ও শীতলতা তৈরি করে)",
+            "আদা ও হলুদ (Shade-Tolerant Root Crops - মাটির নিচের ছায়াঘেরা আর্দ্রতায় সর্বোচ্চ ফলন)"
+        ]
+
+        subsurface_status = "Urban Subsurface Thermal Flywheel Locked at 22°C | Zero Heat Stress"
+        emf_status = "Urban Schumann Resonance Locked (7.83 Hz)"
+
+        return {
+            "Shadow_Temp": round(shadow_zone_temp, 2),
+            "Shadow_Humidity": shadow_zone_humidity,
+            "Subsurface_Status": subsurface_status,
+            "EMF_Status": emf_status,
+            "Shadow_Flowers": shadow_flowering_plants,
+            "Shadow_Crops": shadow_shading_crops
+        }
+
+    def render_dashboard(self, hour, solar_kw, wind_ms):
+        print("\n" + "="*105)
+        print(f" 🏙️ SIR HAMID'S URBAN SHADOW-ZONE & COOLING GREENING DASHBOARD")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*105)
+        print(f" ⏱️ Operational Time : {hour:02d}:00 HRS   |   📐 Trench Specs: {self.trench_depth_m}m x {self.trench_base_m}m")
+        print(f" 🌿 Soil Matrix        : {self.soil_type}   |   🛡️ Urban Strategy: Building Shadow Thermal Absorption")
+        print("-"*105)
+        
+        # Base Raw Weather Calculation
+        if 5.5 <= hour < 10.0:
+            phase = "🌅 Morning Urban Awakening & Shadow Cooling Phase"
+            raw_temp = 25.0
+        elif 11.0 <= hour <= 15.0:
+            phase = "☀️ Peak Zenith Urban Heat & Building Shadow-Zone Absorption Phase"
+            raw_temp = 38.0  # Open urban sun temperature
+        elif 15.0 < hour <= 18.0:
+            phase = "🌤️ Afternoon Cooling Transition & Shadow Expansion Phase"
+            raw_temp = 29.0
+        else:
+            phase = "🌙 Night Urban Thermal Blanket & Dew Condensation Phase"
+            raw_temp = 21.0
+            
+        # Run Urban Shadow Engine
+        metrics = self.urban_shadow_and_greening_engine(hour, raw_temp, wind_ms)
+            
+        print(f" 🔄 Current Operational Phase  : {phase}")
+        print(f" 🌡️ Open Sun Urban Temp        : {raw_temp}°C")
+        print(f" 🧊 Building Shadow Zone Temp  : {metrics['Shadow_Temp']}°C (Naturally Cooled & Absorbed)")
+        print(f" 💧 Shadow Zone Humidity       : {metrics['Shadow_Humidity']}%")
+        print("="*105)
+        
+        # Section A: Urban Telemetry & Shadow Monitoring Grid
+        print(" 📊 [SECTION A: URBAN SHADOW-ZONE MULTI-DIMENSIONAL MONITORING]")
+        print(f"   • Open Sun Temperature            : {raw_temp}°C")
+        print(f"   • Building Shadow Zone Temp       : {metrics['Shadow_Temp']}°C (Significant Heat Drop)")
+        print(f"   • Shadow Zone Soil Moisture       : {self.monitoring_grid['Shadow_Zone_Moisture_pct']}% (High Retention)")
+        print(f"   • Temperature Absorption Index    : {self.monitoring_grid['Temperature_Absorption_Index']}")
+        print(f"   • Eco-Wave & Magnetic Field       : {self.monitoring_grid['Eco_Wave_Mycorrhizal_Hz']} Hz / {self.monitoring_grid['Magnetic_Field_Wave_nT']} nT")
+        print("-"*105)
+        
+        # Section B: Urban Climate & Cooling Control
+        print(" ⚡ [SECTION B: URBAN MICRO-CLIMATE & THERMAL ABSORPTION CONTROL]")
+        print(f"   • Subsurface Thermal Flywheel     : {metrics['Subsurface_Status']}")
+        print(f"   • Electromagnetic Range Control   : {metrics['EMF_Status']}")
+        print(f"   • City Heat Island Mitigation     : Active (Shadow Zones Absorbing Excess Heat)")
+        print("-"*105)
+        
+        # Section C: Urban Shadow-Zone Greening & Flowering Matrix
+        print(" 🌸 [SECTION C: URBAN SHADOW-ZONE FLOWERING & GREENING ALLOCATION]")
+        print("   🌺 1. ছায়াযুক্ত স্থানে ফুল ও শোভাবর্ধনকারী গাছপালা (Shade Flowering Shrubs):")
+        for plant in metrics['Shadow_Flowers']:
+            print(f"      • {plant}")
+        print("\n   🌿 2. ছায়ার মাইক্রোক্লাইমেটে সবুজায়ন ও লতানো ফসল (Urban Shade-Tolerant Greens):")
+        for crop in metrics['Shadow_Crops']:
+            print(f"      • {crop}")
+        print("="*105)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print(f"   1. Urban Thermal Balance: Building shadows absorb and neutralize city heat, dropping temperatures naturally.")
+        print(f"   2. City Greening: Shaded zones bloom with flowers and lush greenery, turning concrete jungles into living, breathing oases.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    dashboard = SirHamidUrbanOasisDashboard(location="Doha Smart Urban Oasis", area_hectares=75.0)
+    
+    # Simulate urban daily timeline including peak afternoon heat where building shadows act as cooling anchors
+    urban_timeline = [8.0, 13.0, 17.0, 22.0]
+    for h in urban_timeline:
+        solar_rad = 0.9 if 6 <= h <= 18 else 0.0
+        dashboard.render_dashboard(hour=h, solar_kw=solar_rad, wind_ms=2.5)
+        
+    dashboard.execute_closed_loop_philosophy()
