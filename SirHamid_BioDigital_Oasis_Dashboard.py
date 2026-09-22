@@ -950,3 +950,87 @@ if __name__ == "__main__":
         dashboard.render_dashboard(hour=h, solar_kw=solar_rad, wind_ms=2.5)
         
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class SirHamidUrbanWasteToFruitDashboard:
+    def __init__(self, location="Doha Urban Eco & Park Grid", area_hectares=100.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.trench_base_m = 4.5
+        self.soil_type = "Converted Loamy Soil (Bele Doash from Processed Building Waste)"
+        
+        # Urban Park & Waste Upcycling Telemetry Grid
+        self.urban_waste_grid = {
+            "Processed_Building_Waste_Tons": 450.5,
+            "Deep_Trench_Refill_Status": "Active (4m Subsurface Bioreactor)",
+            "Park_Fruit_Trees_Monitored": ["Mango", "Jackfruit", "Guava", "Pomegranate"],
+            "Solar_Energy_to_Fruit_Conversion_pct": 94.2,
+            "CO2_Absorption_Rate_kg_day": 1250.0,
+            "Pure_Breeze_Oxygen_Index": "High Purity (Urban Air Cleansed)",
+            "Urban_Heat_Island_Reduction_C": -6.5  # Temperature drop in parks/zones
+        }
+
+    def calculate_triple_benefits(self, solar_kw, raw_temp):
+        """
+        Calculates the 3 major benefits:
+        1. Solar energy conversion to seasonal fruit nutrition.
+        2. CO2 absorption and oxygen/pure breeze generation.
+        3. Urban temperature reduction & cooling.
+        """
+        fruit_nutrition_yield = round(solar_kw * 125.4, 2)  # kg/day equivalent
+        co2_absorbed = round(self.urban_waste_grid["CO2_Absorption_Rate_kg_day"] * (solar_kw + 0.5), 2)
+        urban_cooling_effect = round(raw_temp + self.urban_waste_grid["Urban_Heat_Island_Reduction_C"], 2)
+        
+        return {
+            "Fruit_Yield": fruit_nutrition_yield,
+            "CO2_Absorbed": co2_absorbed,
+            "Cooled_Temp": urban_cooling_effect
+        }
+
+    def render_dashboard(self, hour, solar_kw, raw_temp):
+        print("\n" + "="*105)
+        print(f" 🏙️ SIR HAMID'S URBAN WASTE-TO-FRUIT REGENERATION & COOLING DASHBOARD")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*105)
+        print(f" ⏱️ Operational Time : {hour:02d}:00 HRS   |   📐 Deep Trenching: {self.trench_depth_m}m Depth")
+        print(f" ♻️ Soil Transformation: {self.soil_type}")
+        print("-"*105)
+        
+        # Calculate Triple Benefits
+        benefits = self.calculate_triple_benefits(solar_kw, raw_temp)
+        
+        print(f" 🌡️ Raw Urban City Temperature : {raw_temp}°C")
+        print(f" 🧊 Cooled Urban Park Climate  : {benefits['Cooled_Temp']}°C (Natural Urban Cooling Active)")
+        print("="*105)
+        
+        # Section A: Urban Park & Waste Processing Telemetry
+        print(" 📊 [SECTION A: PARK CONVERSION & BUILDING WASTE UPCYCLING TELEMETRY]")
+        print(f"   • Processed Building Waste Refill : {self.urban_waste_grid['Processed_Building_Waste_Tons']} Tons (Converted to Loamy Soil)")
+        print(f"   • Subsurface Bioreactor Status    : {self.urban_waste_grid['Deep_Trench_Refill_Status']}")
+        print(f"   • Monitored Park Fruit Trees      : {', '.join(self.urban_waste_grid['Park_Fruit_Trees_Monitored'])}")
+        print(f"   • Closed-Loop Efficiency          : {self.urban_waste_grid['Closed_Loop_Efficiency'] if 'Closed_Loop_Efficiency' in self.urban_waste_grid else '98.5%'}")
+        print("-"*105)
+        
+        # Section B: The Triple Benefits (ত্রিবিধ লাভ)
+        print(" 🌟 [SECTION B: THE TRIPLE BENEFITS (ত্রিবিধ লাভ) - ECO-ENGINEERING IMPACT]")
+        print(f"   🍎 1. Solar-to-Fruit Energy Conversion : {benefits['Fruit_Yield']} Units of Seasonal Nutrition Generated")
+        print(f"   🍃 2. CO2 Absorption & Pure Breeze     : {benefits['CO2_Absorbed']} kg CO2 Absorbed | Generating Pure Oxygen Breeze")
+        print(f"   ❄️ 3. Urban Cooling & Heat Reduction   : City Temperature Dropped by 6.5°C (Eliminating Urban Heat Islands)")
+        print("="*105)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print("   1. Waste to Life: Building and urban waste is deeply trenched and transmuted into fertile loamy soil.")
+        print("   2. Park Transformation: Open parks become thriving fruit forests, feeding the city with natural nutrition.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    dashboard = HamidUrbanWasteToFruitDashboard(location="Doha Smart Park & Urban Grid", area_hectares=120.0)
+    
+    # Simulate peak afternoon conditions where urban heat and waste conversion peak
+    dashboard.render_dashboard(hour=13.0, solar_kw=0.95, raw_temp=38.5)
+    dashboard.execute_closed_loop_philosophy()
