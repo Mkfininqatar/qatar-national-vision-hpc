@@ -483,3 +483,171 @@ if __name__ == "__main__":
         dashboard.render_advanced_monitoring_grid(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
         
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class SirHamidBioDigitalOasisDashboard:
+    def __init__(self, location="Doha Smart Eco-Oasis", area_hectares=150.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.trench_base_m = 4.5
+        self.soil_type = "Converted Loamy Soil (Bele Doash)"
+        
+        # 1. Base Monitoring Grid Telemetry
+        self.monitoring_grid = {
+            "Surface_Soil_Moisture_pct": 58.5,
+            "Surface_Soil_Temp_C": 28.4,
+            "Deep_Subsurface_Moisture_4m_pct": 84.0,
+            "Deep_Subsurface_Temp_4m_C": 22.1,
+            "Potassium_NPK_Nutrient_Index": "Optimal (High Bio-Enriched)",
+            "Magnetic_Field_Wave_nT": 45.2,
+            "Eco_Wave_Mycorrhizal_Hz": 12.8,
+            "Sky_Wave_Atmospheric_MHz": 14.2,
+            "Piezoelectric_Stone_Voltage_mV": 185.4,
+            "Microbial_Composting_Stage": "Active Stage 4 (High Humus Conversion)",
+            "Closed_Loop_Efficiency": "96.4%",
+            "Biomass_Conversion_Rate": "Stable & Expanding"
+        }
+        
+        self.climate_feedback_status = "Optimal Equilibrium"
+
+    def dynamic_weather_emf_and_crop_engine(self, hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=0.0):
+        """
+        Advanced Engine: Handles weather anomalies, upper/subsurface climate, 
+        EMF range control, and dynamic seasonal crop recommendations.
+        """
+        adjusted_temp = raw_temp + weather_anomaly_factor
+        adjusted_humidity = max(10.0, raw_humidity - (weather_anomaly_factor * 1.2))
+        
+        # 1. Upper Weather Modulation & Season Determination
+        if adjusted_temp > 35.0:
+            season_mode = "Summer / Extreme Heat Adaptation Mode"
+            upper_status = "CRITICAL HEAT SPIKE: Deploying Max Canopy Misting & Shade Arrays"
+            controlled_temp = adjusted_temp - 7.0
+            controlled_humidity = min(adjusted_humidity + 18.0, 70.0)
+            
+            # Recommended Crops for Summer / High Heat
+            recommended_trees = ["Date Palm (Desert Shield)", "Neem", "Koroi", "Mango", "Jackfruit"]
+            recommended_veggies = ["Okra (ঢেঁড়স)", "Gourds (চিচিঙ্গা, ধুন্দুল, লাউ)", "Eggplant (বেগুন)", "Green Chili (কাঁচা মরিচ)"]
+            
+        elif adjusted_temp < 24.0:
+            season_mode = "Winter / Cool Mild Season Mode"
+            upper_status = "MILD CLIMATE: Natural Open Canopy & Solar Photon Absorption"
+            controlled_temp = adjusted_temp
+            controlled_humidity = adjusted_humidity
+            
+            # Recommended Crops for Winter / Cool Season
+            recommended_trees = ["Jujube / Kul (বরই)", "Banyan", "Neem"]
+            recommended_veggies = ["Tomato (টমেটো)", "Cucumber (শসা)", "Leafy Greens (পালং ও লাল শাক)", "Root Vegetables (গাজর ও মূলা)"]
+            
+        else:
+            season_mode = "Transition / Spring-Autumn Balance Mode"
+            upper_status = "STABLE EQUILIBRIUM: Microclimate Flow Normal"
+            controlled_temp = adjusted_temp
+            controlled_humidity = adjusted_humidity
+            
+            recommended_trees = ["Date Palm", "Mango", "Banana", "Neem"]
+            recommended_veggies = ["Seasonal Mixed Vegetables", "Tomato", "Cucumber", "Eggplant"]
+
+        # 2. Subsurface Eco Under-Control Weather (4m Depth Flywheel)
+        subsurface_temp = 22.0 + (weather_anomaly_factor * 0.15)
+        subsurface_moisture = 84.0 - (weather_anomaly_factor * 0.2)
+        subsurface_status = "Subsurface Air Vents Auto-Adjusted | 4m Thermal Flywheel Stable"
+
+        # 3. Electromagnetic Range Auto-Tuning (Schumann Base 7.83 Hz)
+        base_schumann = 7.83
+        adaptive_emf = base_schumann + (weather_anomaly_factor * 0.05) + random.uniform(-0.1, 0.1)
+        emf_status = "Locked in Biological Growth Window (0.5Hz - 45Hz Safe Spectrum)"
+
+        return {
+            "Season_Mode": season_mode,
+            "Controlled_Temp": round(controlled_temp, 2),
+            "Controlled_Humidity": round(controlled_humidity, 2),
+            "Upper_Status": upper_status,
+            "Subsurface_Temp": round(subsurface_temp, 2),
+            "Subsurface_Moisture": round(subsurface_moisture, 2),
+            "Subsurface_Status": subsurface_status,
+            "Tuned_EMF_Hz": round(adaptive_emf, 2),
+            "EMF_Status": emf_status,
+            "Recommended_Trees": recommended_trees,
+            "Recommended_Veggies": recommended_veggies
+        }
+
+    def render_dashboard(self, hour, solar_kw, wind_ms, anomaly=0.0):
+        print("\n" + "="*95)
+        print(f" 🛰️ SIR HAMID'S BIO-DIGITAL OASIS & DYNAMIC CROP MONITORING DASHBOARD")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*95)
+        print(f" ⏱️ Operational Time : {hour:02d}:00 HRS   |   📐 Trench Specs: {self.trench_depth_m}m x {self.trench_base_m}m")
+        print(f" 🌿 Soil Matrix        : {self.soil_type}")
+        print("-"*95)
+        
+        # Raw Weather Calculation
+        if 5.5 <= hour < 10.0:
+            phase = "🌅 Morning Golden Solar & Fog Harvesting Phase"
+            raw_temp, raw_humidity = 22.5 + (solar_kw * 2.0), 68.0
+        elif 11.0 <= hour <= 15.0:
+            phase = "☀️ Peak Zenith Solar & Piezoelectric Baffle Phase"
+            raw_temp, raw_humidity = 34.0 + (solar_kw * 4.0), 40.0
+        elif 15.0 < hour <= 18.0:
+            phase = "🌤️ Cooling Transition & Canopy Transpiration Phase"
+            raw_temp, raw_humidity = 27.5, 60.0
+        else:
+            phase = "🌙 Night Condensation & Deep Thermal Blanket Phase"
+            raw_temp, raw_humidity = 18.5, 92.0
+            
+        # Run Control & Crop Recommendation Engine
+        metrics = self.dynamic_weather_emf_and_crop_engine(hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=anomaly)
+            
+        print(f" 🔄 Current Operational Phase  : {phase}")
+        print(f" 🌍 Active Climate Mode        : {metrics['Season_Mode']}")
+        print(f" 🌡️ Controlled Climate (Upper) : {metrics['Controlled_Temp']}°C | Humidity: {metrics['Controlled_Humidity']}%")
+        print("="*95)
+        
+        # Section A: Monitoring Grid Telemetry
+        print(" 📊 [SECTION A: LIVE MULTI-DIMENSIONAL MONITORING GRID]")
+        print(f"   • Surface Soil Temp / Moisture    : {self.monitoring_grid['Surface_Soil_Temp_C']}°C / {self.monitoring_grid['Surface_Soil_Moisture_pct']}%")
+        print(f"   • 4m Subsurface Temp / Moisture   : {metrics['Subsurface_Temp']}°C / {metrics['Subsurface_Moisture']}%")
+        print(f"   • Potassium & NPK Nutrient Index  : {self.monitoring_grid['Potassium_NPK_Nutrient_Index']}")
+        print(f"   • Magnetic Field / Piezo Voltage  : {self.monitoring_grid['Magnetic_Field_Wave_nT']} nT / {self.monitoring_grid['Piezoelectric_Stone_Voltage_mV']} mV")
+        print(f"   • Eco-Wave / Sky-Wave Spectrum    : {self.monitoring_grid['Eco_Wave_Mycorrhizal_Hz']} Hz / {self.monitoring_grid['Sky_Wave_Atmospheric_MHz']} MHz")
+        print("-"*95)
+        
+        # Section B: Active Climate & EMF Control
+        print(" ⚡ [SECTION B: ACTIVE WEATHER & EMF SPECTRUM RANGE CONTROL]")
+        print(f"   • Upper Weather Control Status    : {metrics['Upper_Status']}")
+        print(f"   • Eco Under-Control Weather (4m)  : {metrics['Subsurface_Status']}")
+        print(f"   • Electromagnetic Range Control   : Tuned @ {metrics['Tuned_EMF_Hz']} Hz [{metrics['EMF_Status']}]")
+        print("-"*95)
+        
+        # Section C: Dynamic Seasonal Crop & Flora Recommendation Matrix
+        print(" 🌱 [SECTION C: DYNAMIC SEASONAL CROP & FLORA RECOMMENDATION MATRIX]")
+        print(f"   • Recommended Pioneer Trees       : {', '.join(metrics['Recommended_Trees'])}")
+        print(f"   • Recommended Cultivation Veggies : {', '.join(metrics['Recommended_Veggies'])}")
+        print(f"   • Closed-Loop Process Status      : {self.monitoring_grid['Microbial_Composting_Stage']}")
+        print("="*95)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print(f"   1. Subsurface Stratum ({self.trench_depth_m}m): Continuous microbial composting and nutrient cycling.")
+        print(f"   2. Ecosystem Harmony: Weather modulation, EMF range control, and crop selection perfectly synchronized.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    # Launch Dashboard
+    dashboard = SirHamidBioDigitalOasisDashboard(location="Doha Smart Eco-Oasis", area_hectares=150.0)
+    
+    # Simulate scenarios: Normal morning, Extreme midday heat anomaly, and Mild evening
+    scenarios = [
+        (8.0, 0.8, 3.5, 0.0),   # Morning Normal
+        (13.0, 0.9, 0.7, 7.5),  # Midday Extreme Heat Spike (+7.5°C Anomaly)
+        (20.0, 0.1, 4.0, -4.0)  # Cool Night Transition (-4°C Mild Shift)
+    ]
+    
+    for h, solar, wind, anomaly in scenarios:
+        dashboard.render_dashboard(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
+        
+    dashboard.execute_closed_loop_philosophy()
