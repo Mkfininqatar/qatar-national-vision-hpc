@@ -324,3 +324,162 @@ if __name__ == "__main__":
         dashboard.render_advanced_monitoring_grid(hour=h, solar_kw=solar, wind_ms=wind)
         
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class RefinedSirHamidOasisDashboard:
+    def __init__(self, location="Global Arid Desert Super-Oasis", area_hectares=100.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.trench_base_m = 4.5
+        self.soil_type = "Converted Loamy Soil (Bele Doash)"
+        
+        # 1. Base Monitoring Grid Telemetry
+        self.monitoring_grid = {
+            "Surface_Soil_Moisture_pct": 58.5,
+            "Surface_Soil_Temp_C": 28.4,
+            "Deep_Subsurface_Moisture_4m_pct": 84.0,
+            "Deep_Subsurface_Temp_4m_C": 22.1,
+            "Potassium_NPK_Nutrient_Index": "Optimal (High Bio-Enriched)",
+            "Magnetic_Field_Wave_nT": 45.2,
+            "Eco_Wave_Mycorrhizal_Hz": 12.8,
+            "Sky_Wave_Atmospheric_MHz": 14.2,
+            "Piezoelectric_Stone_Voltage_mV": 185.4,
+            "Microbial_Composting_Stage": "Active Stage 4 (High Humus Conversion)",
+            "Closed_Loop_Efficiency": "96.4%",
+            "Biomass_Conversion_Rate": "Stable & Expanding"
+        }
+        
+        # 2. Dynamic Adaptive Control Parameters
+        self.climate_feedback_status = "Optimal Equilibrium"
+
+    def dynamic_weather_and_emf_control_engine(self, hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=0.0):
+        """
+        Refined Dynamic Weather & Electromagnetic Feedback Control Engine.
+        Handles sudden weather shifts, thermal spikes, wind turbulence, and auto-tunes EMF/Eco waves.
+        """
+        # Simulating external weather variability (e.g., unexpected heat waves or dry winds)
+        adjusted_temp = raw_temp + weather_anomaly_factor
+        adjusted_humidity = max(10.0, raw_humidity - (weather_anomaly_factor * 1.2))
+        
+        # Upper Weather Modulation & Adaptive Control
+        if adjusted_temp > 38.0:
+            upper_status = "CRITICAL HEAT SPIKE: Deploying Max Canopy Misting & High-Density Shade Nets"
+            controlled_temp = adjusted_temp - 7.5
+            controlled_humidity = min(adjusted_humidity + 20.0, 70.0)
+            self.climate_feedback_status = "Emergency Thermal Mitigation Active"
+        elif adjusted_temp > 30.0:
+            upper_status = "ELEVATED TEMP: Activating Standard Canopy Transpiration & Fog Arrays"
+            controlled_temp = adjusted_temp - 5.0
+            controlled_humidity = min(adjusted_humidity + 12.0, 65.0)
+            self.climate_feedback_status = "Active Cooling Stabilization"
+        else:
+            upper_status = "STABLE EQUILIBRIUM: Natural Microclimate Flow"
+            controlled_temp = adjusted_temp
+            controlled_humidity = adjusted_humidity
+            self.climate_feedback_status = "Nominal Operation"
+
+        # Wind & Vapor Stagnation Control
+        if wind_ms < 1.2 and adjusted_temp > 32.0:
+            wind_action = "LOW WIND ALERT: Sub-surface & Surface Micro-Circulators Forced-ON"
+        else:
+            wind_action = "Normal Air Circulation (Natural Convection)"
+
+        # Eco Under-Control Weather Modulation (4m Subsurface Depth)
+        # Deep soil thermal inertia protects against sudden surface shifts
+        subsurface_temp = 22.0 + (weather_anomaly_factor * 0.15)
+        subsurface_moisture = 84.0 - (weather_anomaly_factor * 0.2)
+        subsurface_status = "Subsurface Air Vents Auto-Adjusted | Thermal Flywheel Balanced"
+
+        # Electromagnetic & Bio-Wave Range Auto-Tuning
+        # Tuning to biological resonance window (7.83 Hz Schumann base + adaptive offset)
+        base_schumann = 7.83
+        adaptive_emf = base_schumann + (weather_anomaly_factor * 0.05) + random.uniform(-0.1, 0.1)
+        emf_status = "Locked in Biological Growth Window (0.5Hz - 45Hz Safe Spectrum)"
+
+        return {
+            "Controlled_Temp": round(controlled_temp, 2),
+            "Controlled_Humidity": round(controlled_humidity, 2),
+            "Upper_Status": upper_status,
+            "Wind_Action": wind_action,
+            "Subsurface_Temp": round(subsurface_temp, 2),
+            "Subsurface_Moisture": round(subsurface_moisture, 2),
+            "Subsurface_Status": subsurface_status,
+            "Tuned_EMF_Hz": round(adaptive_emf, 2),
+            "EMF_Status": emf_status
+        }
+
+    def render_advanced_monitoring_grid(self, hour, solar_kw, wind_ms, anomaly=0.0):
+        print("\n" + "="*90)
+        print(f" 🛰️ SIR HAMID'S REFINED BIO-DIGITAL COMMAND & DYNAMIC WEATHER CONTROL CENTER")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*90)
+        print(f" ⏱️ Operational Time : {hour:02d}:00 HRS   |   📐 Trench Architecture: {self.trench_depth_m}m x {self.trench_base_m}m")
+        print(f" 🌿 Soil Matrix        : {self.soil_type}   |   🔄 System Feedback: {self.climate_feedback_status}")
+        print("-"*90)
+        
+        # Base Raw Weather Calculation based on Solar Diurnal Cycle
+        if 5.5 <= hour < 10.0:
+            phase = "🌅 Morning Golden Solar & Fog Harvesting Phase"
+            raw_temp, raw_humidity = 22.5 + (solar_kw * 2.0), 68.0
+        elif 11.0 <= hour <= 15.0:
+            phase = "☀️ Peak Zenith Solar & Piezoelectric Baffle Phase"
+            raw_temp, raw_humidity = 34.0 + (solar_kw * 4.0), 40.0
+        elif 15.0 < hour <= 18.0:
+            phase = "🌤️ Cooling Transition & Canopy Transpiration Phase"
+            raw_temp, raw_humidity = 27.5, 60.0
+        else:
+            phase = "🌙 Night Condensation & Deep Thermal Blanket Phase"
+            raw_temp, raw_humidity = 18.5, 92.0
+            
+        # Execute Refined Dynamic Weather & EMF Control Engine
+        control_metrics = self.dynamic_weather_and_emf_control_engine(hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=anomaly)
+            
+        print(f" 🔄 Current Operational Phase  : {phase}")
+        print(f" 🌡️ Raw Environment (Uncontrolled): {raw_temp:.2f}°C / {raw_humidity}% (Anomaly Shift: +{anomaly}°C)")
+        print(f" 🎛️ CONTROLLED Upper Climate   : {control_metrics['Controlled_Temp']}°C / {control_metrics['Controlled_Humidity']}%")
+        print("="*90)
+        
+        # Section A: Monitoring Grid Telemetry
+        print(" 📊 [SECTION A: LIVE MULTI-DIMENSIONAL MONITORING GRID]")
+        print(f"   • Surface Soil Temp / Moisture    : {self.monitoring_grid['Surface_Soil_Temp_C']}°C / {self.monitoring_grid['Surface_Soil_Moisture_pct']}%")
+        print(f"   • 4m Subsurface Temp / Moisture   : {control_metrics['Subsurface_Temp']}°C / {control_metrics['Subsurface_Moisture']}%")
+        print(f"   • Potassium & NPK Nutrient Index  : {self.monitoring_grid['Potassium_NPK_Nutrient_Index']}")
+        print(f"   • Magnetic Field / Piezo Voltage  : {self.monitoring_grid['Magnetic_Field_Wave_nT']} nT / {self.monitoring_grid['Piezoelectric_Stone_Voltage_mV']} mV")
+        print(f"   • Eco-Wave / Sky-Wave Spectrum    : {self.monitoring_grid['Eco_Wave_Mycorrhizal_Hz']} Hz / {self.monitoring_grid['Sky_Wave_Atmospheric_MHz']} MHz")
+        print("-"*90)
+        
+        # Section B: Active Adaptive Control & Weather Modulation
+        print(" ⚡ [SECTION B: REFINED ADAPTIVE WEATHER & EMF CONTROL MODULES]")
+        print(f"   • Upper Weather Modulation Status : {control_metrics['Upper_Status']}")
+        print(f"   • Wind & Vapor Circulation Action : {control_metrics['Wind_Action']}")
+        print(f"   • Eco Under-Control Weather (4m)  : {control_metrics['Subsurface_Status']}")
+        print(f"   • Electromagnetic Range Control   : Tuned @ {control_metrics['Tuned_EMF_Hz']} Hz [{control_metrics['EMF_Status']}]")
+        print(f"   • Closed-Loop Process Status      : {self.monitoring_grid['Microbial_Composting_Stage']}")
+        print("="*90)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print(f"   1. Subsurface Stratum ({self.trench_depth_m}m): Continuous microbial composting and nutrient cycling.")
+        print(f"   2. Climate Synchronization: Upper weather and subterranean eco-weather governed by adaptive feedback loops.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    # Launch Refined Dashboard System
+    dashboard = RefinedSirHamidOasisDashboard(location="Doha Smart Eco-Oasis", area_hectares=150.0)
+    
+    # Simulate different scenarios including sudden weather anomalies (e.g., +6°C unexpected heat spike at midday)
+    test_timeline = [
+        (7.0, 0.9, 3.0, 0.0),   # Morning normal
+        (13.0, 0.9, 0.8, 6.5),  # Midday with sudden severe heat anomaly (+6.5°C spike & low wind)
+        (17.0, 0.4, 3.5, 1.0),  # Evening cooling transition
+        (23.0, 0.0, 4.0, 0.0)   # Night steady state
+    ]
+    
+    for h, solar, wind, anomaly in test_timeline:
+        dashboard.render_advanced_monitoring_grid(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
+        
+    dashboard.execute_closed_loop_philosophy()
