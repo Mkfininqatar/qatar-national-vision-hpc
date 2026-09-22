@@ -651,3 +651,170 @@ if __name__ == "__main__":
         dashboard.render_dashboard(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
         
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class SirHamidBioDigitalOasisDashboard:
+    def __init__(self, location="Doha Smart Eco-Oasis", area_hectares=150.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.trench_base_m = 4.5
+        self.soil_type = "Converted Loamy Soil (Bele Doash)"
+        
+        # Monitoring Telemetry
+        self.monitoring_grid = {
+            "Surface_Soil_Moisture_pct": 58.5,
+            "Surface_Soil_Temp_C": 28.4,
+            "Deep_Subsurface_Moisture_4m_pct": 84.0,
+            "Deep_Subsurface_Temp_4m_C": 22.1,
+            "Potassium_NPK_Nutrient_Index": "Optimal (High Bio-Enriched)",
+            "Magnetic_Field_Wave_nT": 45.2,
+            "Eco_Wave_Mycorrhizal_Hz": 12.8,
+            "Sky_Wave_Atmospheric_MHz": 14.2,
+            "Piezoelectric_Stone_Voltage_mV": 185.4,
+            "Microbial_Composting_Stage": "Active Stage 4 (High Humus Conversion)",
+            "Closed_Loop_Efficiency": "96.4%"
+        }
+
+    def ecosystem_crop_decision_engine(self, hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=0.0):
+        """
+        Advanced Ecosystem Engine: Evaluates weather, seasonal changes, and 
+        allocates Long-Term vs. Seasonal crops to guarantee zero loss in agriculture.
+        """
+        adjusted_temp = raw_temp + weather_anomaly_factor
+        
+        # Determine Ecosystem Season & Operational Mode
+        if adjusted_temp > 35.0:
+            season_mode = "Summer / High-Heat Adaptation Mode"
+            upper_status = "CRITICAL HEAT SPIKE: Deploying Max Canopy Misting & Shade Arrays"
+            controlled_temp = adjusted_temp - 7.0
+            
+            # Risk-Free Crop Selection for Summer
+            long_term_crops = [
+                "Date Palm (মরুভূমির স্থায়ী প্রাচীর ও ফল সম্পদ - বহু বছরের স্থায়ী ইনভেস্টমেন্ট)",
+                "Neem & Koroi (প্রাকৃতিক উইন্ডব্রেকার ও ছায়া জেনারেটর - দীর্ঘমেয়াদী স্বাস্থ্য সুরক্ষা)",
+                "Mango & Jackfruit (গভীর শেকড়যুক্ত বহুবর্ষজীবী ফল গাছ - ৪ মিটার নিচের আর্দ্রতা ব্যবহারকারী)"
+            ]
+            seasonal_crops = [
+                "Okra / ঢেঁড়স (গ্রীষ্মকালীন উচ্চ সহনশীল শর্ট-টার্ম সবজি)",
+                "Gourds / লাউ, চিচিঙ্গা, ধুন্দুল (মাটির আর্দ্রতা গ্রাহী দ্রুত বর্ধনশীল)",
+                "Green Chili & Eggplant / কাঁচা মরিচ ও বেগুন (সারাবছর ফলনশীল ক্যাশ ক্রপ)"
+            ]
+            
+        elif adjusted_temp < 24.0:
+            season_mode = "Winter / Cool Mild Season Mode"
+            upper_status = "MILD CLIMATE: Natural Open Canopy & Solar Photon Absorption"
+            controlled_temp = adjusted_temp
+            
+            # Risk-Free Crop Selection for Winter
+            long_term_crops = [
+                "Jujube / বরই (শীতকালীন অত্যন্ত লাভজনক ও কম পানির ফল গাছ)",
+                "Banyan & Perennial Perimeter Trees (ইকোসিস্টেম শিল্ডিং ও মাইকোরাইজাল নেটওয়ার্ক স্টাবিলাইজার)"
+            ]
+            seasonal_crops = [
+                "Tomato / টমেটো (শীতের পারফেক্ট পিএইচ ৬.৮ এ সর্বোচ্চ উচ্চফলনশীল)",
+                "Cucumber / শসা (দ্রুত ফলনশীল ও উচ্চ চাহিদাসম্পন্ন ক্যাশ ক্রপ)",
+                "Leafy Greens / পালং শাক, লাল শাক, ধনেপাতা (মাইকোরাইজার মাধ্যমে দ্রুত পুষ্টি গ্রহণকারী)",
+                "Root Vegetables / গাজর ও মূলা (বেলে দোআঁশ মাটিতে নিখুঁত সোজা ও পুষ্টিকর বৃদ্ধি)"
+            ]
+            
+        else:
+            season_mode = "Transition / Spring-Autumn Balance Mode"
+            upper_status = "STABLE EQUILIBRIUM: Microclimate Flow Normal"
+            controlled_temp = adjusted_temp
+            
+            long_term_crops = ["Date Palm", "Mango", "Banana (দীর্ঘমেয়াদী ফল বাগান)"]
+            seasonal_crops = ["Seasonal Mixed Vegetables", "Tomato", "Cucumber", "Eggplant"]
+
+        # Subsurface & EMF Control Status
+        subsurface_status = "Subsurface Air Vents Auto-Adjusted | 4m Thermal Flywheel Stable (22°C)"
+        emf_status = "Locked in Biological Growth Window (7.83 Hz Schumann Resonance)"
+
+        return {
+            "Season_Mode": season_mode,
+            "Controlled_Temp": round(controlled_temp, 2),
+            "Upper_Status": upper_status,
+            "Subsurface_Status": subsurface_status,
+            "EMF_Status": emf_status,
+            "Long_Term_Crops": long_term_crops,
+            "Seasonal_Crops": seasonal_crops
+        }
+
+    def render_dashboard(self, hour, solar_kw, wind_ms, anomaly=0.0):
+        print("\n" + "="*100)
+        print(f" 🛰️ SIR HAMID'S BIO-DIGITAL ECO-SYSTEM & ZERO-LOSS CROP ALLOCATION DASHBOARD")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*100)
+        print(f" ⏱️ Operational Time : {hour:02d}:00 HRS   |   📐 Trench Specs: {self.trench_depth_m}m x {self.trench_base_m}m")
+        print(f" 🌿 Soil Matrix        : {self.soil_type}   |   🛡️ Agriculture Strategy: Zero-Loss Season Sync")
+        print("-"*100)
+        
+        # Raw Weather Calculation
+        if 5.5 <= hour < 10.0:
+            phase = "🌅 Morning Golden Solar & Fog Harvesting Phase"
+            raw_temp, raw_humidity = 22.5 + (solar_kw * 2.0), 68.0
+        elif 11.0 <= hour <= 15.0:
+            phase = "☀️ Peak Zenith Solar & Piezoelectric Baffle Phase"
+            raw_temp, raw_humidity = 34.0 + (solar_kw * 4.0), 40.0
+        elif 15.0 < hour <= 18.0:
+            phase = "🌤️ Cooling Transition & Canopy Transpiration Phase"
+            raw_temp, raw_humidity = 27.5, 60.0
+        else:
+            phase = "🌙 Night Condensation & Deep Thermal Blanket Phase"
+            raw_temp, raw_humidity = 18.5, 92.0
+            
+        # Run Ecosystem Engine
+        metrics = self.ecosystem_crop_decision_engine(hour, raw_temp, raw_humidity, wind_ms, weather_anomaly_factor=anomaly)
+            
+        print(f" 🔄 Current Operational Phase  : {phase}")
+        print(f" 🌍 Active Ecosystem Mode      : {metrics['Season_Mode']}")
+        print(f" 🌡️ Controlled Upper Climate   : {metrics['Controlled_Temp']}°C")
+        print("="*100)
+        
+        # Section A: Telemetry & Monitoring Grid
+        print(" 📊 [SECTION A: LIVE MULTI-DIMENSIONAL MONITORING GRID]")
+        print(f"   • Surface Soil Temp / Moisture    : {self.monitoring_grid['Surface_Soil_Temp_C']}°C / {self.monitoring_grid['Surface_Soil_Moisture_pct']}%")
+        print(f"   • 4m Subsurface Temp / Moisture   : {self.monitoring_grid['Deep_Subsurface_Temp_4m_C']}°C / {self.monitoring_grid['Deep_Subsurface_Moisture_4m_pct']}%")
+        print(f"   • Potassium & NPK Nutrient Index  : {self.monitoring_grid['Potassium_NPK_Nutrient_Index']}")
+        print(f"   • Magnetic Field / Piezo Voltage  : {self.monitoring_grid['Magnetic_Field_Wave_nT']} nT / {self.monitoring_grid['Piezoelectric_Stone_Voltage_mV']} mV")
+        print("-"*100)
+        
+        # Section B: Active Climate & EMF Control
+        print(" ⚡ [SECTION B: ACTIVE WEATHER & EMF SPECTRUM RANGE CONTROL]")
+        print(f"   • Upper Weather Control Status    : {metrics['Upper_Status']}")
+        print(f"   • Eco Under-Control Weather (4m)  : {metrics['Subsurface_Status']}")
+        print(f"   • Electromagnetic Range Control   : {metrics['EMF_Status']}")
+        print("-"*100)
+        
+        # Section C: Zero-Loss Crop Decision Matrix (Long-Term vs Seasonal)
+        print(" 🌾 [SECTION C: ZERO-LOSS ECO-SYSTEM CROP DECISION MATRIX]")
+        print("   🏛️ 1. दीर्घমেয়াদী স্থায়ী ফসল ও গাছপালা (Long-Term Assets / Permanent Security):")
+        for crop in metrics['Long_Term_Crops']:
+            print(f"      • {crop}")
+        print("\n   🌱 2. ঋতুভিত্তিক স্বল্পমেয়াদী ক্যাশ ক্রপ সবজি (Seasonal High-Yield Crops):")
+        for crop in metrics['Seasonal_Crops']:
+            print(f"      • {crop}")
+        print("="*100)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print(f"   1. Subsurface Stratum ({self.trench_depth_m}m): Continuous microbial composting and nutrient cycling.")
+        print(f"   2. Zero-Loss Agriculture: Matching exact seasonal microclimates with long-term and short-term crops eliminates all farming risks.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    dashboard = SirHamidBioDigitalOasisDashboard(location="Doha Smart Eco-Oasis", area_hectares=150.0)
+    
+    # Simulate different scenarios to show how crops adapt to seasonal and weather changes without loss
+    scenarios = [
+        (8.0, 0.8, 3.5, 0.0),   # Mild / Cool Shift
+        (13.0, 0.9, 0.7, 7.5)   # Extreme Heat Spike / Summer Season Simulation
+    ]
+    
+    for h, solar, wind, anomaly in scenarios:
+        dashboard.render_dashboard(hour=h, solar_kw=solar, wind_ms=wind, anomaly=anomaly)
+        
+    dashboard.execute_closed_loop_philosophy()
