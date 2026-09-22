@@ -1617,3 +1617,123 @@ if __name__ == "__main__":
     dashboard.render_dashboard(hour=14.0, raw_temp=42.0)
     dashboard.execute_rooftop_philosophy = dashboard.execute_closed_loop_philosophy()
     dashboard.execute_closed_loop_philosophy()
+import time
+import random
+
+class SirHamidUltimateMasterEcoTwinDashboard:
+    def __init__(self, location="Doha National Eco-Twin Grid", area_hectares=250.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # Structural Parameters
+        self.trench_depth_m = 4.0
+        self.soil_type = "Upcycled Loamy Soil (Bele Doash from Building Waste)"
+        self.rooftop_units_monitored = 500
+        
+        # Core Telemetry Database
+        self.master_telemetry = {
+            "Baseline_City_AQI": 160.0,
+            "Oasis_Cleaned_AQI": 35.0,
+            "Daily_CO2_Absorbed_kg": 3500.0,
+            "Building_Temp_Drop_C": -14.5,
+            "Closed_Loop_Efficiency": "99.1%"
+        }
+
+    def celestial_and_weather_engine(self, hour):
+        """Calculates Sun/Moon positions, solar radiation, temperature, and humidity."""
+        if 6.0 <= hour < 18.0:
+            celestial = "☀️ SUN ACTIVE (Zenith & Photon Absorption)"
+            solar_kw = round(1.0 - abs(hour - 12.0) / 6.0, 2)
+        else:
+            celestial = "🌙 MOON ACTIVE (Night Condensation & Dew Hydration)"
+            solar_kw = 0.0
+
+        # Temperature & Weather Simulation
+        if 6.0 <= hour < 10.0:
+            phase = "🌅 Morning High-Humidity & Dew Phase"
+            raw_temp = 23.0
+            humidity = 82.0  # Triggers rain/drizzle check
+        elif 10.0 <= hour <= 16.0:
+            phase = "☀️ Peak Zenith Solar & Heat Management"
+            raw_temp = 38.0
+            humidity = 38.0
+        else:
+            phase = "🌙 Night Thermal Retention & Cooling"
+            raw_temp = 20.5
+            humidity = 78.0
+
+        return {
+            "Celestial": celestial,
+            "Solar_KW": solar_kw,
+            "Phase": phase,
+            "Raw_Temp": raw_temp,
+            "Humidity": humidity
+        }
+
+    def rain_activation_engine(self, humidity, raw_temp):
+        """Triggers full-system activation when rain or high humidity occurs."""
+        if humidity >= 80.0 and raw_temp < 25.0:
+            return {
+                "Is_Raining": True,
+                "Status": "🌧️ RAIN DETECTED: 100% Water Harvested into 4m Deep Trenches",
+                "Action": "Irrigation Paused | Subsurface Bio-layer Recharged | AQI Super-Cleaned"
+            }
+        else:
+            return {
+                "Is_Raining": False,
+                "Status": "☀️ CLEAR WEATHER: Standard Solar-Thermal Regulation Active",
+                "Action": "Micro-drip Irrigation & Canopy Transpiration Active"
+            }
+
+    def render_master_dashboard(self, hour):
+        print("\n" + "="*115)
+        print(f" 🌟 SIR HAMID'S ULTIMATE MASTER BIO-DIGITAL ECO-TWIN & TOURISM GRID")
+        print(f" 📍 Location: {self.location} | Total Area: {self.area_hectares} Hectares")
+        print("="*115)
+        
+        # Get environmental and weather data
+        weather = self.celestial_and_weather_engine(hour)
+        rain_event = self.rain_activation_engine(weather['Humidity'], weather['Raw_Temp'])
+        
+        print(f" ⏱️ Operational Time    : {hour:02d}:00 HRS   |   Phase: {weather['Phase']}")
+        print(f" 🪐 Celestial Status    : {weather['Celestial']} | Solar Radiation: {weather['Solar_KW']} kW/m²")
+        print(f" 🌡️ Ambient Temperature : {weather['Raw_Temp']}°C     |   💧 Humidity: {weather['Humidity']}%")
+        print(f" 🌧️ Precipitation State : {rain_event['Status']}")
+        print("-"*115)
+        
+        # SECTION A: Waste-to-Soil & 4M Trench Telemetry
+        print(" ♻️ [SECTION A: BUILDING WASTE UPCYCLING & 4M SUBSURFACE BIO-LAYER]")
+        print(f"   • Soil Matrix Foundation          : {self.soil_type}")
+        print(f"   • Deep Trench Bioreactor Depth    : {self.trench_depth_m} Meters (Thermal & Water Flywheel)")
+        print(f"   • System Response Action          : {rain_event['Action']}")
+        print("-"*115)
+        
+        # SECTION B: Air Pollution & Carbon Sequestration
+        print(" 🍃 [SECTION B: URBAN AIR POLLUTION & CARBON SCRUBBING]")
+        print(f"   • Raw City AQI vs Oasis AQI       : {self.master_telemetry['Baseline_City_AQI']} (Polluted) ➔ {self.master_telemetry['Oasis_Cleaned_AQI']} (Pure Oxygen)")
+        print(f"   • Daily CO2 Sequestered           : {self.master_telemetry['Daily_CO2_Absorbed_kg']} kg/day stripped from atmosphere")
+        print(f"   • Particulate Matter (PM2.5) Drop : 82.5% Reduction via biological canopy filter")
+        print("-"*115)
+        
+        # SECTION C: Rooftop Green City & Eco-Tourism Revolution
+        print(" 🏙️ [SECTION C: ROOFTOP ECO-WEATHER COAT & QATAR TOURISM REVOLUTION]")
+        print(f"   • Monitored Rooftops (Sky Gardens): {self.rooftop_units_monitored} Units Transformed")
+        print(f"   • Rooftop Surface Temp Drop       : {abs(self.master_telemetry['Building_Temp_Drop_C'])}°C Cooler (Massive AC Energy Savings)")
+        print(f"   • Tourism Integration             : Sky-canopy fruit gardens acting as a breathtaking eco-tourism hub")
+        print("="*115)
+
+    def execute_master_philosophy(self):
+        print("\n✨ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print("   1. Urban Waste to Living Fruit Forests: Transforming debris and dead concrete into flourishing ecosystems.")
+        print("   2. Climate & Air Healing: Scrubbing carbon, reducing urban heat islands, and blanketing roofs with life.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+        print("="*115)
+
+if __name__ == "__main__":
+    master_grid = SirHamidUltimateMasterEcoTwinDashboard()
+    
+    # Simulate Morning (Rain & High Humidity) and Afternoon (Peak Sun & Carbon Scrubbing)
+    master_grid.render_master_dashboard(hour=7.0)   # Morning Rain Phase
+    master_grid.render_master_dashboard(hour=14.0)  # Peak Afternoon Solar & Tourism Phase
+    
+    master_grid.execute_master_philosophy()
