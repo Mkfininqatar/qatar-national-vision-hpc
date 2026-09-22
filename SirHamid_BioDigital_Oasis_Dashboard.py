@@ -1304,3 +1304,122 @@ if __name__ == "__main__":
     # Simulate normal and fluctuating weather conditions to test circular feedback
     monitor.render_circular_monitor(cycle_hour=9.0, weather_shift=0.0)   # Normal Morning
     monitor.render_circular_monitor(cycle_hour=14.0, weather_shift=6.5)  # Heat Spike / Weather Fluctuation
+import time
+import random
+
+class SirHamidRainActivatedOasisDashboard:
+    def __init__(self, location="Doha Smart Eco-Oasis", area_hectares=150.0):
+        self.location = location
+        self.area_hectares = area_hectares
+        
+        # System Structural Parameters
+        self.trench_depth_m = 4.0
+        self.soil_type = "Converted Loamy Soil (Bele Doash)"
+        
+        # Base Telemetry Grid
+        self.monitoring_grid = {
+            "Surface_Soil_Moisture_pct": 58.5,
+            "Deep_Subsurface_Moisture_4m_pct": 84.0,
+            "Closed_Loop_Efficiency": "98.5%"
+        }
+
+    def rain_activation_engine(self, hour, raw_temp, humidity):
+        """
+        Evaluates rain conditions and triggers full-system activation:
+        1. Rain Detection & Atmosphere Saturation Check
+        2. 4-Meter Deep Trench Rainwater Harvesting & Storage
+        3. Micro-irrigation Pause & Microbial Composting Activation
+        4. Zero-Loss Crop & Greening Hydration Lock
+        """
+        # Rain Trigger Logic
+        is_raining = False
+        rain_status = "Dry Weather / Standard Solar Phase"
+        
+        if humidity >= 80.0 and raw_temp < 25.0:
+            is_raining = True
+            rain_status = "🌧️ RAIN DETECTED: Full System Activation Triggered!"
+        elif 75.0 <= humidity < 80.0:
+            is_raining = True
+            rain_status = "🌦️ DRIZZLE DETECTED: Partial System Water Harvesting Active"
+        else:
+            rain_status = "☀️ CLEAR SKY: Standard Solar-Thermal Regulation Active"
+
+        # Full System Response when Rain Occurs
+        if is_raining:
+            system_action = "ACTIVE RAINWATER HARVESTING & DEEP TRENCH RECHARGE"
+            subsurface_moisture_boost = "+12.5% (Stored in 4m Sub-surface Bio-layer)"
+            irrigation_status = "PAUSED (Saved 100% Groundwater/Pumping Energy)"
+            microbial_activity = "PEAK (Rainwater activates underground microbes & NPK nutrients)"
+        else:
+            system_action = "Standard Closed-Loop Microclimate Regulation"
+            subsurface_moisture_boost = "Stable (Maintained via 4m Thermal Flywheel)"
+            irrigation_status = "AUTO-OPTIMIZED (Drip & Misting Active)"
+            microbial_activity = "Normal Steady State"
+
+        return {
+            "Is_Raining": is_raining,
+            "Rain_Status": rain_status,
+            "System_Action": system_action,
+            "Subsurface_Boost": subsurface_moisture_boost,
+            "Irrigation_Status": irrigation_status,
+            "Microbial_Activity": microbial_activity
+        }
+
+    def render_dashboard(self, hour):
+        print("\n" + "="*105)
+        print(f" 🌧️ SIR HAMID'S RAIN-ACTIVATED FULL SYSTEM INTEGRATION DASHBOARD")
+        print(f" 📍 Location: {self.location} | Grid Area: {self.area_hectares} Hectares")
+        print("="*105)
+        
+        # Simulate different weather conditions (Morning rain vs Midday sun)
+        if 6.0 <= hour < 10.0:
+            phase = "🌅 Morning High-Humidity Phase (Rain Event Simulation)"
+            raw_temp = 22.0
+            humidity = 85.0  # Triggers Rain Activation
+        elif 12.0 <= hour < 16.0:
+            phase = "☀️ Peak Zenith Afternoon Phase"
+            raw_temp = 36.0
+            humidity = 42.0  # Dry Condition
+        else:
+            phase = "🌙 Night Dew & Condensation Phase"
+            raw_temp = 19.0
+            humidity = 82.0  # Triggers Drizzle/Dew Activation
+
+        # Run Rain Activation Engine
+        activation = self.rain_activation_engine(hour, raw_temp, humidity)
+
+        print(f" ⏱️ Operational Time    : {hour:02d}:00 HRS   |   Phase: {phase}")
+        print(f" 🌡️ Ambient Temperature : {raw_temp}°C     |   💧 Humidity: {humidity}%")
+        print(f" ⚡ Weather Trigger     : {activation['Rain_Status']}")
+        print("="*105)
+        
+        # Section A: Full System Activation Status
+        print(" 🔄 [SECTION A: RAIN-ACTIVATED FULL SYSTEM RESPONSE]")
+        print(f"   • Primary System Action           : {activation['System_Action']}")
+        print(f"   • 4m Trench Groundwater Recharge  : {activation['Subsurface_Boost']}")
+        print(f"   • Surface Irrigation Status       : {activation['Irrigation_Status']}")
+        print(f"   • Underground Microbial Activity  : {activation['Microbial_Activity']}")
+        print("-"*105)
+        
+        # Section B: Soil & Water Grid Metrics
+        print(" 📊 [SECTION B: SOIL, WATER & ECO-GREENING TELEMETRY]")
+        print(f"   • Surface Soil Moisture           : {self.monitoring_grid['Surface_Soil_Moisture_pct']}% (Naturally Hydrated)")
+        print(f"   • 4m Subsurface Water Bank        : {self.monitoring_grid['Deep_Subsurface_Moisture_4m_pct']}% (Max Storage)")
+        print(f"   • Closed-Loop Efficiency          : {self.monitoring_grid['Closed_Loop_Efficiency']}")
+        print("="*105)
+
+    def execute_closed_loop_philosophy(self):
+        print("\n♻️ ETERNAL CLOSED-LOOP REGENERATION PHILOSOPHY:")
+        print("   1. Rain Integration: When rain falls, the entire system instantly wakes up, harvesting every drop into 4m deep trenches.")
+        print("   2. Zero Waste & Maximum Life: Natural water combines with upcycled soil nutrients to feed fruit forests and urban greenery.")
+        print("   3. Universal Law: 'What comes from the earth returns to the earth, creating continuous, immortal life.'")
+
+if __name__ == "__main__":
+    dashboard = SirHamidRainActivatedOasisDashboard()
+    
+    # Test across hours to show rain activation vs normal operations
+    test_timeline = [8.0, 14.0, 22.0]
+    for h in test_timeline:
+        dashboard.render_dashboard(hour=h)
+        
+    dashboard.execute_closed_loop_philosophy()
