@@ -1152,3 +1152,79 @@ if __name__ == "__main__":
     # Simulate normal and fluctuating weather conditions to test circular feedback
     monitor.render_circular_monitor(cycle_hour=9.0, weather_shift=0.0)   # Normal Morning
     monitor.render_circular_monitor(cycle_hour=14.0, weather_shift=6.5)  # Heat Spike / Weather Fluctuation
+import time
+import random
+
+class CircularSoilWeatherMonitor:
+    def __init__(self, location="Doha Urban Eco-Grid", zone_area_hectares=50.0):
+        self.location = location
+        self.zone_area_hectares = zone_area_hectares
+        
+        # Soil and Circular Grid Parameters
+        self.trench_depth_m = 4.0
+        self.soil_type = "Processed Loamy Soil (Bele Doash with Upcycled Waste)"
+        
+        # Live Grid Parameters Tracking
+        self.grid_parameters = {
+            "Soil_Moisture_Surface_pct": 62.4,
+            "Soil_Moisture_Subsurface_4m_pct": 85.0,
+            "Soil_Temperature_C": 26.5,
+            "Ambient_Weather_Temp_C": 34.2,
+            "Atmospheric_Humidity_pct": 55.0,
+            "CO2_Absorption_Index_ppm": 412.0,
+            "Circular_Regeneration_Efficiency": "98.1%"
+        }
+
+    def evaluate_circular_greening_status(self, weather_fluctuation):
+        """
+        Evaluates soil-weather synchronization and determines the exact greening capacity.
+        """
+        adjusted_soil_temp = self.grid_parameters["Soil_Temperature_C"] + (weather_fluctuation * 0.1)
+        adjusted_moisture = max(30.0, self.grid_parameters["Soil_Moisture_Surface_pct"] - (weather_fluctuation * 1.5))
+        
+        # Greening Condition Assessment
+        if adjusted_moisture > 50.0 and adjusted_soil_temp < 32.0:
+            greening_status = "OPTIMAL CIRCULAR GREENING: High Biomass & Plant Growth Rate"
+            action_required = "Maintain standard micro-irrigation and organic nutrient cycling."
+        else:
+            greening_status = "ADAPTIVE STRESS SHIELDING: Deploying Subsurface Moisture Release"
+            action_required = "Activate 4m deep thermal flywheel and shade canopy misting."
+
+        return {
+            "Adjusted_Soil_Temp": round(adjusted_soil_temp, 2),
+            "Adjusted_Moisture": round(adjusted_moisture, 2),
+            "Greening_Status": greening_status,
+            "Action_Required": action_required
+        }
+
+    def render_circular_monitor(self, cycle_hour, weather_shift=0.0):
+        print("\n" + "="*105)
+        print(f" 🌐 CIRCULAR SOIL & WEATHER GRID MONITORING DASHBOARD")
+        print(f" 📍 Location: {self.location} | Active Zone Area: {self.zone_area_hectares} Hectares")
+        print("="*105)
+        print(f" ⏱️ Monitoring Cycle Hour : {cycle_hour:02d}:00 HRS   |   📐 Subsurface Depth: {self.trench_depth_m}m")
+        print(f" 🌿 Soil Matrix Foundation : {self.soil_type}")
+        print("-"*105)
+        
+        status = self.evaluate_circular_greening_status(weather_shift)
+        
+        print(f" 📊 [SECTION A: REAL-TIME SOIL & WEATHER TELEMETRY]")
+        print(f"   • Ambient Weather Temperature     : {self.grid_parameters['Ambient_Weather_Temp_C'] + weather_shift}°C")
+        print(f"   • Surface Soil Temp / Moisture    : {status['Adjusted_Soil_Temp']}°C / {status['Adjusted_Moisture']}%")
+        print(f"   • 4m Deep Subsurface Moisture     : {self.grid_parameters['Soil_Moisture_Subsurface_4m_pct']}% (Stable)")
+        print(f"   • Atmospheric Humidity            : {self.grid_parameters['Atmospheric_Humidity_pct']}%")
+        print(f"   • CO2 Absorption Index            : {self.grid_parameters['CO2_Absorption_Index_ppm']} ppm")
+        print("-"*105)
+        
+        print(f" ♻️ [SECTION B: CIRCULAR GREENING & EQUILIBRIUM ANALYSIS]")
+        print(f"   • Grid Greening Condition         : {status['Greening_Status']}")
+        print(f"   • Automated Action Trigger        : {status['Action_Required']}")
+        print(f"   • Closed-Loop Efficiency          : {self.grid_parameters['Circular_Regeneration_Efficiency']}")
+        print("="*105)
+
+if __name__ == "__main__":
+    monitor = CircularSoilWeatherMonitor(location="Doha Smart Eco-Zone", zone_area_hectares=60.0)
+    
+    # Simulate normal and fluctuating weather conditions to test circular feedback
+    monitor.render_circular_monitor(cycle_hour=9.0, weather_shift=0.0)   # Normal Morning
+    monitor.render_circular_monitor(cycle_hour=14.0, weather_shift=6.5)  # Heat Spike / Weather Fluctuation
