@@ -1549,3 +1549,35 @@ def compile_global_master_framework():
 
 if __name__ == "__main__":
     compile_global_master_framework()
+"""
+Filename Selector & Master Registry Deployment Protocol
+Target Registry: Innovation Lab / Global Topology Official Records
+Lead Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+"""
+
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger("FilenameSelectorEngine")
+
+# ==========================================
+# RECOMMENDED OFFICIAL FILENAMES
+# ==========================================
+
+RECOMMENDED_FILENAMES = {
+    "PRIMARY_CHOICE": "sir_hamad_legacy_framework_master_architecture.py",
+    "ALTERNATIVE_01": "shl_atef_global_topology_registry_2026.py",
+    "ALTERNATIVE_02": "sir_hamad_tamim_execution_framework_abdul_mazed.py"
+}
+
+def select_and_display_filename():
+    logger.info("Initializing Official Filename Selection for File Upload...")
+    logger.info("==========================================================================")
+    logger.info(f"Primary Recommended Filename : {RECOMMENDED_FILENAMES['PRIMARY_CHOICE']}")
+    logger.info(f"Alternative Option 1         : {RECOMMENDED_FILENAMES['ALTERNATIVE_01']}")
+    logger.info(f"Alternative Option 2         : {RECOMMENDED_FILENAMES['ALTERNATIVE_02']}")
+    logger.info("==========================================================================")
+    logger.info("File upload naam hisebe **sir_hamad_legacy_framework_master_architecture.py** use korar jonno recommend kora holo. Ei namti global registry ebong Sir Hamad-er legacy framework-er sathe poripurno bhabe match kore.")
+
+if __name__ == "__main__":
+    select_and_display_filename()sir_hamad_legacy_framework_master_architecture.py
