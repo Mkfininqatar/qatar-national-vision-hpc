@@ -599,3 +599,162 @@ if __name__ == "__main__":
     print(worker_node.make_welfare_donation(100, "Community Charity & Disaster Relief Fund"))
     
     print(json.dumps(worker_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
+import hashlib
+import datetime
+import time
+import json
+
+class HamadTamimGlobalDignityDashboard:
+    def __init__(self, worker_name, passport_no, qid_no, base_salary):
+        self.worker_name = worker_name
+        self.qid_no = qid_no
+        self.base_salary = base_salary
+        
+        # 1. Worker Dignity & Identity Module (D-Token & QID Sync)
+        self.d_token = hashlib.sha256(f"{passport_no}{'dignity'}".encode()).hexdigest()
+        self.legal_status = "Partner"  
+        self.profile_access = "Worker_Controlled"
+
+        # 2. Real-Time Telemetry & Data Baseline Module
+        self.employment_status = "Active"
+        self.wage_delay_days = 0
+        self.employer_compliance_score = 100.0
+
+        # 3. Financial & Deduction Audit Metric Module (3-5 Years Partner Fund)
+        self.safety_contributions = 0
+        self.partner_bonus_pool = 0
+        self.deductions_log = []
+
+        # 4. Happiness & Well-being Telemetry Module
+        self.happiness_score = 8  
+        self.feedback_log = []
+
+        # 5. Primary Rescue & Emergency Support Module
+        self.emergency_support_active = False
+        self.rescue_logs = []
+
+        # 6. Voluntary Welfare & Social Donation Module
+        self.donation_wallet_balance = 500.0  
+        self.donation_history = []
+
+        # 7. Early Exit & Insurance Profit-Linked Refund Module (নতুন সংযোজন)
+        self.insurance_principal_paid = 0.0
+        self.insurance_profit_rate = 0.05  # 5% annual profit/return rate
+        self.early_exit_claims = []
+
+    # --- Module 1: Dignity Status ---
+    def get_dignity_identity(self):
+        return {
+            "Worker Name": self.worker_name,
+            "QID Number": self.qid_no,
+            "D-Token ID": self.d_token[:16] + "...", 
+            "Legal Status": self.legal_status,
+            "Access Control": self.profile_access
+        }
+
+    # --- Module 2: Telemetry Update ---
+    def update_telemetry(self, status, delay_days, compliance_score):
+        self.employment_status = status
+        self.wage_delay_days = delay_days
+        self.employer_compliance_score = compliance_score
+
+    # --- Module 3: Partner Progress Finance & Audit ---
+    def log_financial_contribution(self, category, amount):
+        self.deductions_log.append({"category": category, "amount": amount, "timestamp": str(datetime.datetime.now())})
+        if "Insurance" in category or "Safety" in category:
+            self.safety_contributions += amount
+            self.insurance_principal_paid += amount
+
+    def add_to_partner_bonus(self, amount):
+        self.partner_bonus_pool += amount
+
+    # --- Module 4: Voluntary Welfare Donation ---
+    def make_welfare_donation(self, amount, cause_name):
+        if amount > self.donation_wallet_balance:
+            return f"DONATION FAILED: Insufficient balance in welfare wallet for QID {self.qid_no}."
+        
+        self.donation_wallet_balance -= amount
+        donation_record = {
+            "QID": self.qid_no,
+            "Cause": cause_name,
+            "Amount Donated": amount,
+            "Remaining Wallet Balance": self.donation_wallet_balance,
+            "Timestamp": str(datetime.datetime.now())
+        }
+        self.donation_history.append(donation_record)
+        return f"SUCCESS: Donated {amount} QAR to '{cause_name}' from QID {self.qid_no}."
+
+    # --- Module 5: Early Exit Insurance Refund with Profit (৩ বছরের আগে প্রস্থান ও লাভসহ ফেরত) ---
+    def process_early_exit_insurance_refund(self, months_served):
+        if months_served >= 36:
+            return "ELIGIBLE FOR FULL 3-5 YEARS PARTNER BONUS. Standard exit rules apply."
+        
+        # Calculate profit based on months served
+        years_fraction = months_served / 12.0
+        accrued_profit = self.insurance_principal_paid * self.insurance_profit_rate * years_fraction
+        total_refundable = self.insurance_principal_paid + accrued_profit
+        
+        exit_record = {
+            "QID": self.qid_no,
+            "Months Served": months_served,
+            "Principal Insurance Paid": self.insurance_principal_paid,
+            "Accrued Profit": round(accrued_profit, 2),
+            "Total Refundable Amount": round(total_refundable, 2),
+            "Status": "Listed and Ready for Instant Liquidation",
+            "Timestamp": str(datetime.datetime.now())
+        }
+        self.early_exit_claims.append(exit_record)
+        return f"EARLY EXIT REGISTERED FOR QID {self.qid_no}: Total Refund with Profit = {round(total_refundable, 2)} QAR (Listed Successfully)."
+
+    # --- Module 6: Primary Rescue & Emergency Support ---
+    def trigger_emergency_rescue(self, reason):
+        self.emergency_support_active = True
+        rescue_record = {
+            "QID": self.qid_no,
+            "Reason": reason,
+            "Timestamp": str(datetime.datetime.now()),
+            "Status": "Primary Rescue Dispatched"
+        }
+        self.rescue_logs.append(rescue_record)
+        return f"EMERGENCY RESCUE LINKED TO QID {self.qid_no}: {reason}"
+
+    # --- Master Dashboard Summary ---
+    def generate_ht_gdd_summary(self):
+        return {
+            "Dashboard Title": "Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)",
+            "Identity": self.get_dignity_identity(),
+            "Telemetry": {
+                "Status": self.employment_status,
+                "Wage Delay Days": self.wage_delay_days,
+                "Compliance Score": self.employer_compliance_score
+            },
+            "Partner Finance (3-5 Years Fund)": {
+                "Safety Contributions": self.safety_contributions,
+                "Secured Partner Bonus Pool": self.partner_bonus_pool
+            },
+            "Early Exit Insurance Refunds": self.early_exit_claims,
+            "Happiness Score": self.happiness_score,
+            "Voluntary Donations": {
+                "Wallet Balance": self.donation_wallet_balance,
+                "History": self.donation_history
+            },
+            "Emergency Rescue Status": {
+                "Active": self.emergency_support_active,
+                "Logs": self.rescue_logs
+            }
+        }
+
+if __name__ == "__main__":
+    worker_node = HamadTamimGlobalDignityDashboard(
+        worker_name="Abdul Mazed's Model Worker", 
+        passport_no="QA987654321", 
+        qid_no="28475891234",
+        base_salary=2500
+    )
+    worker_node.update_telemetry(status="Active & Secure", delay_days=0, compliance_score=98.5)
+    worker_node.log_financial_contribution("Transparent Insurance Safety", 1200) # Principal paid
+    
+    # Simulating an early exit before 3 years (e.g., after 18 months) with profit calculation
+    print(worker_node.process_early_exit_insurance_refund(months_served=18))
+    
+    print(json.dumps(worker_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
