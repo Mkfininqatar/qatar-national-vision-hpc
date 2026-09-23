@@ -1441,3 +1441,222 @@ if __name__ == "__main__":
     print(participant_node.make_welfare_donation(250, "National Community & Humanitarian Welfare Fund"))
     
     print(json.dumps(participant_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
+import hashlib
+import datetime
+import json
+
+class HamadTamimGlobalDignityDashboard:
+    def __init__(self, participant_name, passport_no, qid_no, base_income, role_type="Universal Contributor"):
+        # State Branding & Vision Attributes
+        self.state_identity = "State of Qatar - Official Model"
+        self.flag_colors = "Maroon & White (Al Adaam)"
+        self.vision_target_year = 2030
+        self.architect_vision = "Fulfilling Sir Hamid's eternal dream under Leader Tamim's master leadership by 2030."
+        
+        self.participant_name = participant_name
+        self.qid_no = qid_no
+        self.base_income = base_income
+        self.role_type = role_type  # Universal scope for workers, professionals, and business owners
+        
+        # 1. Universal Dignity & Identity Module (D-Token & QID Sync)
+        self.d_token = hashlib.sha256(f"{passport_no}{'dignity'}".encode()).hexdigest()
+        self.legal_status = "Valued National Partner"  
+        self.profile_access = "Participant_Controlled"
+
+        # 2. Real-Time Telemetry & Data Baseline Module
+        self.system_status = "Active & Harmonized"
+        self.latency_days = 0
+        self.compliance_score = 100.0
+
+        # 3. Financial & Deduction Audit Metric Module (3-5 Years Partner Fund)
+        self.safety_contributions = 0.0
+        self.partner_bonus_pool = 0.0
+        self.deductions_log = []
+
+        # 4. Happiness & Well-being Telemetry Module
+        self.happiness_score = 10  
+        self.feedback_log = []
+
+        # 5. Primary Rescue & Emergency Support Module (QID Linked)
+        self.emergency_support_active = False
+        self.rescue_logs = []
+
+        # 6. Voluntary Welfare & Social Donation Module
+        self.donation_wallet_balance = 1000.0  
+        self.donation_history = []
+
+        # 7. Early Exit & Profit-Linked Refund Module
+        self.principal_paid = 0.0
+        self.profit_rate = 0.06  
+        self.exit_claims = []
+
+        # 8. Monthly Savings & Annual Profit-Linked Remittance/Growth Module
+        self.monthly_savings_locked = 0.0
+        self.annual_profit_rate = 0.08  
+        self.remittance_records = []
+
+    # --- Module 1: Universal Dignity Status ---
+    def get_participant_identity(self):
+        return {
+            "Participant Name": self.participant_name,
+            "Role Classification": self.role_type,
+            "QID Number": self.qid_no,
+            "D-Token ID": self.d_token[:16] + "...", 
+            "Legal Status": self.legal_status,
+            "Access Control": self.profile_access
+        }
+
+    # --- Module 2: Telemetry Update ---
+    def update_telemetry(self, status, latency_days, compliance_score):
+        self.system_status = status
+        self.latency_days = latency_days
+        self.compliance_score = compliance_score
+
+    # --- Module 3: Universal Partner Finance & Audit ---
+    def log_financial_contribution(self, category, amount):
+        self.deductions_log.append({"category": category, "amount": amount, "timestamp": str(datetime.datetime.now())})
+        self.safety_contributions += amount
+        self.principal_paid += amount
+
+    def add_to_partner_bonus(self, amount):
+        self.partner_bonus_pool += amount
+
+    # --- Module 4: Monthly Savings & Annual Profit Remittance (Universal) ---
+    def deposit_monthly_savings(self, monthly_amount):
+        self.monthly_savings_locked += monthly_amount
+        return f"SAVINGS DEPOSITED: Added {monthly_amount} QAR to QID {self.qid_no} universal savings vault."
+
+    def process_annual_savings_profit_and_remittance(self, years_elapsed):
+        if years_elapsed < 1:
+            return "REMITTANCE NOTICE: Savings must complete at least 1 full year to yield annual profit."
+        
+        total_accumulated_savings = self.monthly_savings_locked * 12 * years_elapsed
+        annual_profit = total_accumulated_savings * self.annual_profit_rate * years_elapsed
+        total_payout_amount = total_accumulated_savings + annual_profit
+        
+        record = {
+            "QID": self.qid_no,
+            "Years Elapsed": years_elapsed,
+            "Total Principal Saved": total_accumulated_savings,
+            "Annual Profit": round(annual_profit, 2),
+            "Total Payout / Remittance": round(total_payout_amount, 2),
+            "Status": "Ready for Secure Liquidation or Family Support",
+            "Timestamp": str(datetime.datetime.now())
+        }
+        self.remittance_records.append(record)
+        return f"ANNUAL PAYOUT READY FOR QID {self.qid_no}: Total Amount with Profit = {round(total_payout_amount, 2)} QAR."
+
+    # --- Module 5: Voluntary Welfare Donation ---
+    def make_welfare_donation(self, amount, cause_name):
+        if amount > self.donation_wallet_balance:
+            return f"DONATION FAILED: Insufficient balance in welfare wallet for QID {self.qid_no}."
+        
+        self.donation_wallet_balance -= amount
+        donation_record = {
+            "QID": self.qid_no,
+            "Cause": cause_name,
+            "Amount Donated": amount,
+            "Remaining Wallet Balance": self.donation_wallet_balance,
+            "Timestamp": str(datetime.datetime.now())
+        }
+        self.donation_history.append(donation_record)
+        return f"SUCCESS: Donated {amount} QAR to '{cause_name}' from QID {self.qid_no}."
+
+    # --- Module 6: Early Exit / Transition Refund with Profit ---
+    def process_early_exit_refund(self, months_served):
+        if months_served >= 36:
+            return "ELIGIBLE FOR FULL 3-5 YEARS PARTNER BONUS. Standard growth terms apply."
+        
+        years_fraction = months_served / 12.0
+        accrued_profit = self.principal_paid * self.profit_rate * years_fraction
+        total_refundable = self.principal_paid + accrued_profit
+        
+        exit_record = {
+            "QID": self.qid_no,
+            "Months Served": months_served,
+            "Principal Paid": self.principal_paid,
+            "Accrued Profit": round(accrued_profit, 2),
+            "Total Refundable Amount": round(total_refundable, 2),
+            "Status": "Listed and Ready for Instant Liquidation",
+            "Timestamp": str(datetime.datetime.now())
+        }
+        self.exit_claims.append(exit_record)
+        return f"EARLY TRANSITION REGISTERED FOR QID {self.qid_no}: Total Refund with Profit = {round(total_refundable, 2)} QAR."
+
+    # --- Module 7: Primary Rescue & Emergency Support ---
+    def trigger_emergency_rescue(self, reason):
+        self.emergency_support_active = True
+        rescue_record = {
+            "QID": self.qid_no,
+            "Reason": reason,
+            "Timestamp": str(datetime.datetime.now()),
+            "Status": "Primary Rescue Dispatched"
+        }
+        self.rescue_logs.append(rescue_record)
+        return f"EMERGENCY RESCUE LINKED TO QID {self.qid_no}: {reason}"
+
+    # --- Master Dashboard Summary ---
+    def generate_ht_gdd_summary(self):
+        return {
+            "State Branding": {
+                "Entity": self.state_identity,
+                "Colors": self.flag_colors,
+                "Official Logo/Seal": "State of Qatar Emblem Active"
+            },
+            "Dashboard Title": "Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)",
+            "Strategic Vision Milestone (2030)": {
+                "Target Year": self.vision_target_year,
+                "Core Mission": self.architect_vision,
+                "Leadership": "Leader Tamim fulfilling Sir Hamid's legacy by transforming Qatar into a universal dignity model."
+            },
+            "Scope": "Universal Model for All Contributors (Workers, Professionals & Business Owners)",
+            "Identity": self.get_participant_identity(),
+            "Telemetry": {
+                "System Status": self.system_status,
+                "Latency Days": self.latency_days,
+                "Compliance Score": self.compliance_score
+            },
+            "Partner Finance (3-5 Years Fund)": {
+                "Safety Contributions": self.safety_contributions,
+                "Secured Bonus Pool": self.partner_bonus_pool
+            },
+            "Monthly Savings & Annual Growth": {
+                "Active Vault Savings": self.monthly_savings_locked,
+                "Records": self.remittance_records
+            },
+            "Early Transition / Exit Refunds": self.exit_claims,
+            "Happiness Score": self.happiness_score,
+            "Voluntary Donations": {
+                "Wallet Balance": self.donation_wallet_balance,
+                "History": self.donation_history
+            },
+            "Emergency Rescue Status": {
+                "Active": self.emergency_support_active,
+                "Logs": self.rescue_logs
+            }
+        }
+
+if __name__ == "__main__":
+    print("==========================================================================")
+    print(" 🇶🇦 STATE OF QATAR: OFFICIAL MODEL BRANDING (MAROON & WHITE) 🇶🇦")
+    print(" ANNOUNCEMENT: Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)")
+    print(" Fulfilling Sir Hamid's Vision under Leader Tamim by 2030.")
+    print("==========================================================================\n")
+
+    # Universal participant initialization (Applies to all contributors in Qatar)
+    participant_node = HamadTamimGlobalDignityDashboard(
+        participant_name="Universal Contributor Model Node", 
+        passport_no="QA987654321", 
+        qid_no="28475891234",
+        base_income=5000,
+        role_type="Universal Partner & Contributor"
+    )
+    participant_node.update_telemetry(status="Fully Optimized & Secure", latency_days=0, compliance_score=100.0)
+    
+    for _ in range(12):
+        participant_node.deposit_monthly_savings(500)
+    
+    print(participant_node.process_annual_savings_profit_and_remittance(years_elapsed=1))
+    print(participant_node.make_welfare_donation(250, "National Community & Humanitarian Welfare Fund"))
+    
+    print(json.dumps(participant_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
