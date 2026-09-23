@@ -2018,3 +2018,27 @@ def home():
 if __name__ == "__main__":
     print("Starting HT-GDD Server on http://127.0.0.1:5000 ...")
     app.run(host="0.0.0.0", port=5000, debug=True)
+{
+    "Framework Name": "Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)",
+    "State Branding": {
+        "Entity": "State of Qatar - Official Model",
+        "Colors": "Maroon & White (Al Adaam)",
+        "Official Logo/Seal": "State of Qatar Emblem Active"
+    },
+    "Strategic Vision Milestone (2030)": {
+        "Target Year": 2030,
+        "Core Mission": "Fulfilling Sir Hamid's eternal dream under Leader Tamim's master leadership by 2030.",
+        "Leadership": "Leader Tamim fulfilling Sir Hamid's legacy by transforming Qatar into a universal dignity model."
+    },
+    "Universal Scope": "Applicable to all contributors in Qatar—workers, professionals, and business owners alike—treating everyone as a valued national partner receiving wages, profit, dignity, and security.",
+    "Core Modules Active": [
+        "Universal Dignity & Identity Module (QID-linked D-Token)",
+        "Real-Time Telemetry & Data Baseline Module (System Status & Compliance)",
+        "Partner Finance & 3-5 Year Fund Module (Safety & Bonus Pools)",
+        "Monthly Savings & Annual Profit-Linked Remittance Module (Bank Savings Vault & Desh Remittance)",
+        "Early Transition & Exit Refunds Module (Insurance Principal + Profit Payouts)",
+        "Primary Rescue & Emergency Support Module (QID-linked live emergency tracking)",
+        "Voluntary Welfare & Social Donation Module (Direct personal wallet charitable support)"
+    ],
+    "System Status": "Fully Operational, Harmonized, and Server-Ready (HT-GDD Live)"
+}
