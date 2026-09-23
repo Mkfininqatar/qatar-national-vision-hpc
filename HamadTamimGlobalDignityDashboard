@@ -74,3 +74,23 @@ class WellBeingTelemetry:
 
     def _trigger_welfare_check(self):
         print(f"ALERT: Welfare check required for Worker {self.d_token}")
+class PartnerProgressFinance:
+    def __init__(self, d_token):
+        self.d_token = d_token
+        self.base_salary = 2000 # QAR example
+        self.contributions_to_safety = 0
+        self.partner_bonus_pool = 0
+
+    def log_contribution(self, type, amount):
+        # Deductions are viewed as contributions to the system's safety
+        self.contributions_to_safety += amount
+
+    def add_to_bonus_pool(self, amount):
+        # Employer/Government contribution to the worker's end-of-term payout
+        self.partner_bonus_pool += amount
+
+    def get_partner_account_summary(self):
+        return {
+            "Current Safety Contributions": self.contributions_to_safety,
+            "Guaranteed Partner Bonus": self.partner_bonus_pool
+        }
