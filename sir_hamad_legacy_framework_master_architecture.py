@@ -1049,3 +1049,74 @@ def execute_unified_qid_account_protocol():
 
 if __name__ == "__main__":
     execute_unified_qid_account_protocol()
+"""
+Government-Controlled Centralized Recruitment & Circular Verification Protocol
+Target Registry: Innovation Lab / Topology Official Records (Sir Hamad Legacy Framework)
+Author / Architect: Elite Technical Consultant & Digital Twin Architect
+"""
+
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger("CentralizedRecruitmentEngine")
+
+# ==========================================
+# PHASE 1: INDEPENDENT RECRUITMENT & BROKER LOOPHOLE BUG LOG
+# ==========================================
+
+RECRUITMENT_CIRCUIT_BUGS = {
+    "CIRCULAR_BUG_01": {
+        "domain": "UNREGULATED_ONLINE_JOB_CIRCULARS",
+        "description": "Company ba je kono protisthan nijeder khushi moto online-e ba social media-te job circular diye thake, ja kono sorkari niontron ba oversight chara porichalito hoy.",
+        "impact": "Ei khola sujog ke kaje lagiye dalal o fraud syndicates-ra fake circular diye shromik der thokiye thake."
+    },
+    "CIRCULAR_BUG_02": {
+        "domain": "ABSENCE_OF_STATE_RECRUITMENT_OFFICER_GATEWAY",
+        "description": "Job circular ba hiring process-er modhye sorkarer nirdisto authorized recruitment officer ba regulatory board-er direct approval ba supervision na thaka.",
+        "impact": "Shromik ra dalal ebong ashādhu company-der malikana chokre (syndicate traps) sohojei pore jay."
+    },
+    "CIRCULAR_BUG_03": {
+        "domain": "EXPLOITATION_THROUGH_INDEPENDENT_HIRING",
+        "description": "Kono company direct hire ba third-party agency-r maddhome shromik ante giye sorkari nitimala o quota bypass kore.",
+        "impact": "Shromiker nibondhon ebong nirapotta nischito korar kono state tracking thake na."
+    }
+}
+
+# ==========================================
+# PHASE 2: CENTRALIZED RECRUITMENT & OFFICER SUPERVISION PATCHES
+# ==========================================
+
+RECRUITMENT_CIRCUIT_PATCHES = {
+    "PATCH_REC_01": {
+        "module": "MANDATORY_STATE_OFFICER_CIRCULAR_APPROVAL",
+        "action": "Enforce a statutory rule that any job circular published online or offline by any institution or company must be officially routed through and approved by designated state recruitment officers."
+    },
+    "PATCH_REC_02": {
+        "module": "CENTRALIZED_GOVERNMENT_RECRUITMENT_PORTAL",
+        "action": "Integrate all hiring processes into a single, state-monitored recruitment portal where every single advertisement, interview schedule, and selection must bear an official government tracking ID."
+    },
+    "PATCH_REC_03": {
+        "module": "TOTAL_ELIMINATION_OF_BROKER_CHANNELS (DALAL MUKT)",
+        "action": "Completely ban unverified third-party brokers from handling recruitment advertisements, ensuring workers deal strictly with state-approved and officer-supervised channels."
+    },
+    "PATCH_REC_04": {
+        "module": "SIR_HAMAD_FRAMEWORK_IMMUTABLE_REGISTRY",
+        "action": "Permanently commit this government-controlled centralized recruitment protocol into the Innovation Lab and topology registry under the Sir Hamad Legacy Framework."
+    }
+}
+
+def execute_centralized_recruitment_protocol():
+    logger.info("Initializing Government-Controlled Centralized Recruitment & Circular Protocol...")
+    
+    logger.info("--- PHASE 1: LOGGING RECRUITMENT CIRCUIT BUGS ---")
+    for bug_id, data in RECRUITMENT_CIRCUIT_BUGS.items():
+        logger.error(f"[{bug_id}] Domain: {data['domain']} | Details: {data['description']} | Impact: {data['impact']}")
+    
+    logger.info("--- PHASE 2: DEPLOYING CENTRALIZED RECRUITMENT PATCHES ---")
+    for patch_id, data in RECRUITMENT_CIRCUIT_PATCHES.items():
+        logger.info(f"[{patch_id}] Module: {data['module']} -> Action: {data['action']}")
+        
+    logger.info("Centralized Recruitment Protocol successfully locked into Innovation Lab Registry.")
+
+if __name__ == "__main__":
+    execute_centralized_recruitment_protocol()
