@@ -1152,3 +1152,81 @@ if __name__ == "__main__":
     print(participant_node.make_welfare_donation(250, "National Community & Humanitarian Welfare Fund"))
     
     print(json.dumps(participant_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
+import hashlib
+import datetime
+import time
+import json
+
+class QIDTrackingTelemetrySystem:
+    def __init__(self, participant_name, passport_no, qid_no, base_income, role_type="Universal Contributor"):
+        self.participant_name = participant_name
+        self.qid_no = qid_no
+        self.base_income = base_income
+        self.role_type = role_type  # Workers, professionals, and business owners alike
+        
+        # QID & D-Token Identity Sync
+        self.d_token = hashlib.sha256(f"{passport_no}{'dignity'}".encode()).hexdigest()
+        self.legal_status = "Valued National Partner"
+        self.profile_access = "Participant_Controlled"
+
+        # QID Real-Time Telemetry Baseline
+        self.system_status = "Active & Harmonized"
+        self.latency_days = 0
+        self.compliance_score = 100.0
+
+        # Financial & Vault Tracking linked to QID
+        self.safety_contributions = 0.0
+        self.partner_bonus_pool = 0.0
+        self.monthly_savings_vault = 0.0
+        self.donation_wallet_balance = 1000.0
+        
+        # Logs & Records
+        self.rescue_logs = []
+        self.remittance_records = []
+
+    # --- QID Live Telemetry Tracker ---
+    def get_qid_tracking_status(self):
+        return {
+            "Dashboard Title": "Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)",
+            "QID Tracked ID": self.qid_no,
+            "Participant Name": self.participant_name,
+            "Role Classification": self.role_type,
+            "D-Token Sync": self.d_token[:16] + "...",
+            "Legal Status": self.legal_status,
+            "System Status": self.system_status,
+            "Latency Days": self.latency_days,
+            "Compliance Score": self.compliance_score,
+            "Financial Vaults": {
+                "Safety Contributions": self.safety_contributions,
+                "Partner Bonus Pool": self.partner_bonus_pool,
+                "Monthly Savings Vault": self.monthly_savings_vault,
+                "Donation Wallet": self.donation_wallet_balance
+            },
+            "Emergency Rescue & Remittance Logs": {
+                "Rescue Logs": self.rescue_logs,
+                "Remittance Records": self.remittance_records
+            }
+        }
+
+    def trigger_qid_emergency_rescue(self, reason):
+        rescue_record = {
+            "QID": self.qid_no,
+            "Reason": reason,
+            "Timestamp": str(datetime.datetime.now()),
+            "Status": "Primary Rescue Dispatched via QID Tracking"
+        }
+        self.rescue_logs.append(rescue_record)
+        return f"QID TRACKING ALERT: Emergency rescue dispatched for QID {self.qid_no}."
+
+if __name__ == "__main__":
+    # Initializing QID track system for any participant in Qatar
+    qid_tracker = QIDTrackingTelemetrySystem(
+        participant_name="Abdul Mazed's Tracked Participant",
+        passport_no="QA123456789",
+        qid_no="29012345678",
+        base_income=6000,
+        role_type="Universal Partner"
+    )
+    
+    print(qid_tracker.trigger_qid_emergency_rescue("Immediate field assistance required."))
+    print(json.dumps(qid_tracker.get_qid_tracking_status(), indent=4, ensure_ascii=False))
