@@ -1,0 +1,10 @@
+class WorkerTelemetry:
+    def __init__(self, qid, employer_id):
+        self.qid = qid
+        self.employer_id = employer_id
+        self.status = "Active"
+        self.wage_delay_days = 0
+
+    def update_telemetry(self, status, delay):
+        self.status = status
+        self.wage_delay_days = delay
