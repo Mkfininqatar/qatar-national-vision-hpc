@@ -32,3 +32,14 @@ class LifecycleLatencyTracker:
         self.resolved = True
         latency_hours = (time.time() - self.start_time) / 3600
         return latency_hours
+class VulnerabilityIndexCalculator:
+    def __init__(self, qid):
+        self.qid = qid
+        self.reports = 0
+        self.delay_factor = 0
+
+    def compute_index(self, reports, wage_delay_days):
+        self.reports = reports
+        self.delay_factor = wage_delay_days * 0.1
+        vulnerability_score = (self.reports * 2.5) + self.delay_factor
+        return vulnerability_score
