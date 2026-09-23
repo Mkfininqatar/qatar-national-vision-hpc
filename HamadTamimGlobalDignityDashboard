@@ -94,3 +94,32 @@ class PartnerProgressFinance:
             "Current Safety Contributions": self.contributions_to_safety,
             "Guaranteed Partner Bonus": self.partner_bonus_pool
         }
+import datetime
+
+class GrievanceResolution:
+    def __init__(self, d_token):
+        self.d_token = d_token
+        self.open_tickets = []
+        self.resolved_tickets = []
+
+    def submit_grievance(self, issue_description):
+        ticket_id = f"G-{self.d_token}-{len(self.open_tickets) + 1}"
+        self.open_tickets.append({
+            "id": ticket_id,
+            "issue": issue_description,
+            "timestamp": datetime.datetime.now()
+        })
+        print(f"Grievance submitted: {issue_id}. Authority notified.")
+        # This immediately alerts the independent Welfare Authority
+
+    def resolve_ticket(self, ticket_id, resolution_notes):
+        # Only the independent Authority can resolve
+        ticket = next((t for t in self.open_tickets if t["id"] == ticket_id), None)
+        if ticket:
+            self.open_tickets.remove(ticket)
+            self.resolved_tickets.append({
+                "id": ticket_id,
+                "resolution": resolution_notes,
+                "resolution_timestamp": datetime.datetime.now()
+            })
+            print(f"Ticket {ticket_id} resolved with: {resolution_notes}")
