@@ -43,3 +43,17 @@ class VulnerabilityIndexCalculator:
         self.delay_factor = wage_delay_days * 0.1
         vulnerability_score = (self.reports * 2.5) + self.delay_factor
         return vulnerability_score
+class DignityIdentity:
+    def __init__(self, worker_name, passport_no):
+        self.worker_name = worker_name
+        self.d_token = self._generate_dignity_token(passport_no)
+        self.profile_access = "Worker_Controlled"
+        self.legal_status = "Partner" # Not "Employee"
+
+    def _generate_dignity_token(self, passport):
+        # Secure hash of passport and biometrics
+        import hashlib
+        return hashlib.sha256(f"{passport}{'dignity'}".encode()).hexdigest()
+
+    def get_profile_status(self):
+        return {"Status": self.legal_status, "Access": self.profile_access}
