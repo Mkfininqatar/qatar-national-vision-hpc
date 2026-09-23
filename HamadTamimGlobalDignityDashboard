@@ -8,3 +8,15 @@ class WorkerTelemetry:
     def update_telemetry(self, status, delay):
         self.status = status
         self.wage_delay_days = delay
+class FinancialAudit:
+    def __init__(self, qid, base_salary):
+        self.qid = qid
+        self.base_salary = base_salary
+        self.deductions = []
+
+    def log_deduction(self, category, amount):
+        self.deductions.append({"category": category, "amount": amount})
+
+    def audit_variance(self, expected_max_deduction):
+        total_deducted = sum(d["amount"] for d in self.deductions)
+        return total_deducted > expected_max_deduction
