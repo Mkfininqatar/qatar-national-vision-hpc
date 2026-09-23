@@ -239,3 +239,116 @@ if __name__ == "__main__":
     # Printing complete unified state
     import json
     print(json.dumps(worker_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
+code_content = '''import hashlib
+import datetime
+import time
+import json
+
+class HamadTamimGlobalDignityDashboard:
+    def __init__(self, worker_name, passport_no, base_salary):
+        self.worker_name = worker_name
+        self.base_salary = base_salary
+        
+        # 1. Worker Dignity & Identity Module (D-Token)
+        self.d_token = hashlib.sha256(f"{passport_no}{'dignity'}".encode()).hexdigest()
+        self.legal_status = "Partner"  # Not a managed laborer, but a valued partner
+        self.profile_access = "Worker_Controlled"
+
+        # 2. Real-Time Telemetry & Data Baseline Module
+        self.employment_status = "Active"
+        self.wage_delay_days = 0
+        self.employer_compliance_score = 100.0
+
+        # 3. Financial & Deduction Audit Metric Module (3-5 Years Partner Fund)
+        self.safety_contributions = 0
+        self.partner_bonus_pool = 0
+        self.deductions_log = []
+
+        # 4. Happiness & Well-being Telemetry Module
+        self.happiness_score = 8  # Baseline start
+        self.feedback_log = []
+
+        # 5. Lifecycle Latency & Grievance Resolution Module
+        self.start_time = time.time()
+        self.open_tickets = []
+        self.resolved_tickets = []
+
+    # --- Module 1: Dignity Status ---
+    def get_dignity_identity(self):
+        return {
+            "Worker Name": self.worker_name,
+            "D-Token ID": self.d_token[:16] + "...", # Masked for secure display
+            "Legal Status": self.legal_status,
+            "Access Control": self.profile_access
+        }
+
+    # --- Module 2: Telemetry Update ---
+    def update_telemetry(self, status, delay_days, compliance_score):
+        self.employment_status = status
+        self.wage_delay_days = delay_days
+        self.employer_compliance_score = compliance_score
+
+    # --- Module 3: Partner Progress Finance & Audit ---
+    def log_financial_contribution(self, category, amount):
+        self.deductions_log.append({"category": category, "amount": amount, "timestamp": str(datetime.datetime.now())})
+        self.safety_contributions += amount
+
+    def add_to_partner_bonus(self, amount):
+        # 3-5 years secured end-of-term payout pool
+        self.partner_bonus_pool += amount
+
+    def audit_financials(self, max_allowed_deduction):
+        total_deducted = sum(d["amount"] for d in self.deductions_log)
+        is_legal = total_deducted <= max_allowed_deduction
+        return {"Total Deducted": total_deducted, "Audit Passed": is_legal}
+
+    # --- Module 4: Happiness & Well-being Tracker ---
+    def record_happiness(self, score, feedback):
+        if not (1 <= score <= 10):
+            raise ValueError("Happiness score must be between 1 and 10.")
+        self.happiness_score = score
+        self.feedback_log.append(feedback)
+        if self.happiness_score < 5:
+            return "ALERT: Welfare check triggered due to low satisfaction."
+        return "Happiness level stable and optimal."
+
+    # --- Module 5: Ground Impact & Vulnerability Index ---
+    def compute_vulnerability_index(self, harassment_reports_count):
+        delay_factor = self.wage_delay_days * 0.1
+        vulnerability_score = (harassment_reports_count * 2.5) + delay_factor
+        return round(vulnerability_score, 2)
+
+    # --- Master Dashboard Summary ---
+    def generate_ht_gdd_summary(self):
+        return {
+            "Dashboard Title": "Hamad-Tamim Global Dignity & Telemetry Dashboard (HT-GDD)",
+            "Identity": self.get_dignity_identity(),
+            "Telemetry": {
+                "Status": self.employment_status,
+                "Wage Delay Days": self.wage_delay_days,
+                "Compliance Score": self.employer_compliance_score
+            },
+            "Partner Finance (3-5 Years Fund)": {
+                "Safety Contributions": self.safety_contributions,
+                "Secured Partner Bonus Pool": self.partner_bonus_pool
+            },
+            "Happiness Score": self.happiness_score,
+            "Vulnerability Index": self.compute_vulnerability_index(0)
+        }
+
+if __name__ == "__main__":
+    worker_node = HamadTamimGlobalDignityDashboard(
+        worker_name="Abdul Mazed's Model Worker", 
+        passport_no="QA987654321", 
+        base_salary=2500
+    )
+    worker_node.update_telemetry(status="Active & Secure", delay_days=0, compliance_score=98.5)
+    worker_node.log_financial_contribution("Transparent QID & Insurance Safety", 150)
+    worker_node.add_to_partner_bonus(1200)
+    worker_node.record_happiness(9, "Feeling valued, respected, and secure as a partner.")
+    
+    print(json.dumps(worker_node.generate_ht_gdd_summary(), indent=4, ensure_ascii=False))
+'''
+
+with open("HamadTamimGlobalDignityDashboard.py", "w", encoding="utf-8") as f:
+    f.write(code_content)
