@@ -57,3 +57,20 @@ class DignityIdentity:
 
     def get_profile_status(self):
         return {"Status": self.legal_status, "Access": self.profile_access}
+class WellBeingTelemetry:
+    def __init__(self, d_token):
+        self.d_token = d_token
+        self.happiness_score = 8 # Baseline upon joining
+        self.feedback_log = []
+
+    def submit_monthly_feedback(self, score, comments):
+        if not (1 <= score <= 10):
+            raise ValueError("Happiness score must be between 1 and 10.")
+        self.happiness_score = score
+        self.feedback_log.append(comments)
+        # Trigger alert if score drops below threshold (e.g., < 5)
+        if self.happiness_score < 5:
+            self._trigger_welfare_check()
+
+    def _trigger_welfare_check(self):
+        print(f"ALERT: Welfare check required for Worker {self.d_token}")
