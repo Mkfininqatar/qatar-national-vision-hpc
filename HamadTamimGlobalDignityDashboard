@@ -20,3 +20,15 @@ class FinancialAudit:
     def audit_variance(self, expected_max_deduction):
         total_deducted = sum(d["amount"] for d in self.deductions)
         return total_deducted > expected_max_deduction
+import time
+
+class LifecycleLatencyTracker:
+    def __init__(self, request_id):
+        self.request_id = request_id
+        self.start_time = time.time()
+        self.resolved = False
+
+    def resolve_request(self):
+        self.resolved = True
+        latency_hours = (time.time() - self.start_time) / 3600
+        return latency_hours
