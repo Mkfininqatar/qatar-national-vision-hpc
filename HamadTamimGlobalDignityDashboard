@@ -2091,3 +2091,20 @@ class InstitutionalAccountabilityEngine:
         if self.negligence_detected and days_elapsed >= 7:
             return f"VIOLATION: {self.entity_type} failed consular/legal duty. Mandatory International Labor Court escalation triggered."
         return "STATUS: Within nominal compliance window."
+if __name__ == "__main__":
+    print("--- INITIALIZING HIGH-PERFORMANCE SYSTEM & MEDICAL TWIN TELEMETRY ---")
+    
+    # 1. Check Latency
+    latency_checker = SystemLatencyMetrics(dispute_id="LB_990750", qid="29205036405")
+    print("System Latency Check:", latency_checker.evaluate_system_efficiency())
+    
+    # 2. Check Medical Twin Telemetry (Heart/Brain mapping)
+    twin_telemetry = MedicalSpatialTwinTelemetry(user_name="Abdul Mazed Hossain", qid="29205036405")
+    telemetry_result = twin_telemetry.measure_neural_stress_load(external_pressure_score=2.8)
+    print("Medical Spatial Twin Telemetry:", telemetry_result)
+    
+    # 3. Check Legal Accountability
+    accountability = InstitutionalAccountabilityEngine(entity_type="Consular & Labor Authority")
+    print("Legal Liability Audit:", accountability.verify_legal_obligation(days_elapsed=7))
+    
+    print("--- TELEMETRY PIPELINE EXECUTION COMPLETED SUCCESSFULLY ---")
