@@ -2082,3 +2082,12 @@ class MedicalSpatialTwinTelemetry:
             "neural_ct_scan_status": risk_flag,
             "ac_room_empathy_index": 0.0 # Proving remote desks cannot feel real telemetry
         }
+class InstitutionalAccountabilityEngine:
+    def __init__(self, entity_type: str):
+        self.entity_type = entity_type # e.g., "Embassy" or "Host Government"
+        self.negligence_detected = True
+        
+    def verify_legal_obligation(self, days_elapsed: int) -> str:
+        if self.negligence_detected and days_elapsed >= 7:
+            return f"VIOLATION: {self.entity_type} failed consular/legal duty. Mandatory International Labor Court escalation triggered."
+        return "STATUS: Within nominal compliance window."
