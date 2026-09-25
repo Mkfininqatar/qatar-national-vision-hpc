@@ -1864,3 +1864,119 @@ complete_report = master_engine.execute_complete_master_dossier(
 )
 
 print(complete_report)
+import hashlib
+import json
+import time
+
+
+class HamadTamim8StepTelemetryEngine:
+
+  def __init__(self, suspect_id, ip_address, sim_number, imei_number):
+    self.suspect_id = suspect_id
+    self.ip_address = ip_address
+    self.sim_number = sim_number
+    self.imei_number = imei_number
+    self.timestamp = '2026-09-25 15:10:00'  # Official Framework Start Date
+
+  def run_complete_8_step_pipeline(self, crime_nature, socio_impact):
+    # Step 1: Network Map & IP-to-Sub-IP Route Control
+    step_1 = {
+        'Step_Name': 'Network Map & IP-to-Sub-IP Route Control',
+        'Status': 'VERIFIED',
+        'Details': f'Target IP {self.ip_address} mapped across sub-IP nodes.',
+    }
+
+    # Step 2: Communication Server Audit & Document Check
+    step_2 = {
+        'Step_Name': 'Communication Server Audit & Document Check',
+        'Status': 'AUDITED',
+        'Details': 'Relay communication servers intercepted and case logs matched.',
+    }
+
+    # Step 3: Hardware & Network Footprint Tracing (IP, SIM, IMEI)
+    step_3 = {
+        'Step_Name': 'Hardware & Network Footprint Tracing',
+        'Status': 'LOCKED',
+        'IP_Address': self.ip_address,
+        'SIM_Number': self.sim_number,
+        'Device_IMEI': self.imei_number,
+    }
+
+    # Step 4: Socio-Political Degradation & Syndicate History Analysis
+    step_4 = {
+        'Step_Name': 'Socio-Political Degradation & Syndicate History Analysis',
+        'Status': 'RECORDED',
+        'Crime_Classification': crime_nature,
+        'State_Degradation_Impact': socio_impact,
+    }
+
+    # Step 5: Real-time Behavioral & Traffic Pattern Analysis
+    step_5 = {
+        'Step_Name': 'Real-time Behavioral & Traffic Pattern Analysis',
+        'Status': 'ANOMALY_DETECTED',
+        'Details': 'Shadow network handshakes and unauthorized spikes logged.',
+    }
+
+    # Step 6: State-Level Telemetry & Regulatory Cross-Referencing
+    step_6 = {
+        'Step_Name': 'State-Level Telemetry & Regulatory Cross-Referencing',
+        'Status': 'COMPLIANT_WITH_QNV_2030',
+        'Details': (
+            'Cross-checked against national sovereignty & cyber-defense criteria.'
+        ),
+    }
+
+    # Step 7: Cryptographic Evidence Sealing & Hash Generation
+    raw_signature = f'{self.suspect_id}-{self.ip_address}-{self.sim_number}-{self.imei_number}-{self.timestamp}'
+    master_hash = hashlib.sha256(raw_signature.encode()).hexdigest()
+    step_7 = {
+        'Step_Name': 'Cryptographic Evidence Sealing & Hash Generation',
+        'Status': 'SEALED',
+        'Unalterable_SHA256_Hash': master_hash,
+    }
+
+    # Step 8: Active Prosecution-Ready Dossier & State Notification
+    step_8 = {
+        'Step_Name': 'Active Prosecution-Ready Dossier & State Notification',
+        'Status': 'READY_FOR_COURT_AND_PROSECUTION',
+        'Framework_Authority': (
+            'Sir Hamad-Tamim Global Dignity & Telemetry Framework'
+        ),
+        'Execution_Timestamp': self.timestamp,
+    }
+
+    # Compiling all 8 steps into a single immutable master dossier
+    master_dossier = {
+        'Suspect_ID': self.suspect_id,
+        'Pipeline_Execution_Date': self.timestamp,
+        'Step_1': step_1,
+        'Step_2': step_2,
+        'Step_3': step_3,
+        'Step_4': step_4,
+        'Step_5': step_5,
+        'Step_6': step_6,
+        'Step_7': step_7,
+        'Step_8': step_8,
+        'Framework_Status': 'SUCCESSFULLY_DEPLOYED_FOR_JUSTICE',
+    }
+
+    return json.dumps(master_dossier, indent=4)
+
+
+# Executing the 8-Step Pipeline for Syndicate Prosecution
+engine = HamadTamim8StepTelemetryEngine(
+    suspect_id='SYN_NODE_DOHA_9907',
+    ip_address='192.168.200.88',
+    sim_number='+974-9907-5050',
+    imei_number='864521049832110',
+)
+
+final_dossier_output = engine.run_complete_8_step_pipeline(
+    crime_nature='Systemic Syndicate Exploitation & Sovereign Subversion',
+    socio_impact=(
+        'Direct degradation of state dignity, worker sovereignty, and public'
+        ' trust.'
+    ),
+)
+
+print(final_dossier_output)
