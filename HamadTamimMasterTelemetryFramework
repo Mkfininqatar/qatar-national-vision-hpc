@@ -4725,3 +4725,174 @@ if __name__ == "__main__":
         loop.run_forever()
     except KeyboardInterrupt:
         logger.info("Live Web Monitoring Server shut down.")
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+========================================================================================
+LIVE WEB MONITORING WITH TELEGRAM & WEBHOOK ALERTS
+========================================================================================
+Description: Extends the Sovereign Web Bridge with real-time Telegram Bot notifications 
+             and webhook integration for critical threat propagation and node failover.
+Author     : Master Technical Consultant & Digital Twin Architect
+========================================================================================
+"""
+
+import asyncio
+import json
+import logging
+import sys
+from aiohttp import web, ClientSession
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [ALERT_MODULE:%(name)s] -> %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("AlertModule")
+
+class SovereignAlertNotifier:
+    """
+    Handles automated broadcasting of critical sovereign telemetry alerts via 
+    Telegram Bot API and custom Webhooks.
+    """
+    def __init__(self, telegram_token: str = "YOUR_BOT_TOKEN", chat_id: str = "YOUR_CHAT_ID", webhook_url: str = ""):
+        self.telegram_token = telegram_token
+        self.chat_id = chat_id
+        self.webhook_url = webhook_url
+
+    async def send_telegram_alert(self, message: str):
+        if self.telegram_token == "YOUR_BOT_TOKEN":
+            logger.info(f"[SIMULATED TELEGRAM ALERT] {message}")
+            return
+        
+        url = f"https://api.telegram.org/bot{self.telegram_token}/sendMessage"
+        payload = {"chat_id": self.chat_id, "text": f"🚨 SOVEREIGN ALERT 🚨\n\n{message}", "parse_mode": "Markdown"}
+        
+        async with ClientSession() as session:
+            try:
+                async with session.post(url, json=payload) as response:
+                    if response.status == 200:
+                        logger.info("Telegram alert dispatched successfully.")
+                    else:
+                        logger.warning(f"Failed to send Telegram alert. Status: {response.status}")
+            except Exception as e:
+                logger.error(f"Telegram connection error: {str(e)}")
+
+    async def trigger_webhook(self, event_data: dict):
+        if not self.webhook_url:
+            return
+        async with ClientSession() as session:
+            try:
+                async with session.post(self.webhook_url, json=event_data) as response:
+                    logger.info(f"Webhook triggered with status: {response.status}")
+            except Exception as e:
+                logger.error(f"Webhook dispatch error: {str(e)}")
+
+
+class SovereignWebTelemetryBridgeWithAlerts:
+    """
+    Web monitoring server equipped with real-time WebSocket streaming and automated alerting.
+    """
+    def __init__(self, host: str = "127.0.0.1", port: int = 8080):
+        self.host = host
+        self.port = port
+        self.app = web.Application()
+        self.connected_clients = set()
+        self.notifier = SovereignAlertNotifier()
+        self._setup_routes()
+
+    def _setup_routes(self):
+        self.app.router.add_get("/", self.dashboard_index_handler)
+        self.app.router.add_get("/ws/telemetry", self.websocket_telemetry_handler)
+        self.app.router.add_post("/api/trigger-alert", self.manual_alert_handler)
+
+    async def dashboard_index_handler(self, request):
+        html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY COMMAND CENTER</title>
+            <style>
+                body { background-color: #0b0f19; color: #00ffcc; font-family: monospace; padding: 20px; }
+                h1 { border-bottom: 2px solid #00ffcc; padding-bottom: 10px; }
+                .panel { background: #111827; border: 1px solid #1f2937; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+                .status { color: #10b981; font-weight: bold; }
+                .alert { color: #ef4444; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <h1>HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK</h1>
+            <div class="panel">
+                <h3>System Status: <span class="status" id="sys-status">SECURE & ACTIVE</span></h3>
+                <p>Connected Cloud Nodes: <span id="node-count">3</span> (Doha, Dubai, Riyadh)</p>
+            </div>
+            <div class="panel">
+                <h3>Live Telemetry Stream & Alert Logs:</h3>
+                <pre id="log-box">Awaiting live telemetry packet ingestion...</pre>
+            </div>
+            <script>
+                const ws = new WebSocket('ws://' + window.location.host + '/ws/telemetry');
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    document.getElementById('log-box').innerText = JSON.stringify(data, null, 2);
+                    if(data.system_status) {
+                        document.getElementById('sys-status').innerText = data.system_status;
+                        if(data.system_status.includes('DEFENSIVE') || data.system_status.includes('FAILOVER')) {
+                            document.getElementById('sys-status').className = 'alert';
+                        }
+                    }
+                };
+            </script>
+        </body>
+        </html>
+        """
+        return web.Response(text=html_content, content_type="text/html")
+
+    async def websocket_telemetry_handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        self.connected_clients.add(ws)
+        logger.info("Dashboard client connected to live alert-enabled telemetry stream.")
+        try:
+            async for msg in ws:
+                pass
+        finally:
+            self.connected_clients.remove(ws)
+            logger.info("Dashboard client disconnected.")
+        return ws
+
+    async def manual_alert_handler(self, request):
+        data = await request.json()
+        alert_message = data.get("message", "Routine Sovereign Security Check")
+        await self.notifier.send_telegram_alert(alert_message)
+        await self.notifier.trigger_webhook(data)
+        return web.json_response({"status": "ALERT_DISPATCHED_SUCCESSFULLY"})
+
+    async def broadcast_alert_and_telemetry(self, payload: dict):
+        # Check if payload requires urgent notification
+        if payload.get("air_risk", 0.0) > 0.85 or "FAILOVER" in payload.get("system_status", ""):
+            await self.notifier.send_telegram_alert(f"Critical threshold breached! Status: {payload.get('system_status')}")
+
+        if not self.connected_clients:
+            return
+        data_str = json.dumps(payload)
+        for client in self.connected_clients:
+            await client.send_str(data_str)
+
+    async def start_server(self):
+        runner = web.AppRunner(self.app)
+        await runner.setup()
+        site = web.TCPSite(runner, self.host, self.port)
+        await site.start()
+        logger.info(f"Alert-Enabled Live Web Panel active at http://{self.host}:{self.port}")
+
+
+if __name__ == "__main__":
+    server = SovereignWebTelemetryBridgeWithAlerts(host="127.0.0.1", port=8080)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(server.start_server())
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.info("Server gracefully terminated.")
