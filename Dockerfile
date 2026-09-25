@@ -40,3 +40,24 @@ EXPOSE 8080
 
 # Execute the Master Telemetry Framework runner on container start
 CMD ["python3", "HamadTamimMasterTelemetryFramework.py"]
+version: '3.8'
+
+services:
+  hamad_tamim_telemetry_engine:
+    build: .
+    container_name: hamad_tamim_sovereign_node
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - TARGET_REGION=Doha-Sovereign-Cluster
+      - ENCRYPTION_STANDARD=AES-256-GCM
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - sovereign_mesh
+
+networks:
+  sovereign_mesh:
+    driver: bridge
