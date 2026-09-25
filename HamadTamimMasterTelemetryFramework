@@ -3684,3 +3684,173 @@ if __name__ == "__main__":
         asyncio.run(engine.deploy_engine())
     except KeyboardInterrupt:
         print("\n--- TELEMETRY ENGINE SHUT DOWN CLEANLY ---")
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import asyncio
+import json
+import logging
+import os
+import random
+import signal
+import sys
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List
+
+@dataclass
+class SovereignDirectiveMetrics:
+    directive_code: str
+    title_en: str
+    title_bn: str
+    status: str = "INACTIVE"
+    execution_parameters: List[str] = field(default_factory=list)
+    execution_count: int = 0  # Telemetry pulse tracking
+
+    async def execute_loop(self):
+        """Dedicated execution loop updating metrics sequentially."""
+        while True:
+            if self.status == "ACTIVE":
+                self.execution_count += 1
+                await asyncio.sleep(1.0)
+            else:
+                await asyncio.sleep(0.2)
+
+
+class GulfSovereignTelemetryEngine:
+    def __init__(self, engine_id: str = "GSTE-DASH-003"):
+        self.engine_id: str = engine_id
+        self.directives: Dict[str, SovereignDirectiveMetrics] = {}
+        self.running = True
+        self.metrics = {"air_risk": 0.0, "grid_distortion": 0.0}
+        self.state_file = "sovereign_engine_state.json"
+
+    def register_directive(self, directive: SovereignDirectiveMetrics) -> None:
+        self.directives[directive.directive_code] = directive
+
+    def setup_signal_handlers(self):
+        """Binds OS termination signals to the graceful shutdown protocol."""
+        loop = asyncio.get_running_loop()
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            try:
+                loop.add_signal_handler(sig, lambda s=sig: asyncio.create_task(self.graceful_shutdown(s)))
+            except NotImplementedError:
+                # Fallback safeguard for environments without native signal integration
+                pass
+
+    async def graceful_shutdown(self, sig):
+        """Halts the engine event loops safely and exports current runtime metrics."""
+        self.running = False
+        print("\n\033[K\033[1;31m[SHUTDOWN]\033[0m Intercepted signal. Saving state file securely...")
+        
+        # Prepare state schema for filesystem persistence
+        state_data = {
+            "engine_id": self.engine_id,
+            "metrics": self.metrics,
+            "directives": {code: asdict(obj) for code, obj in self.directives.items()}
+        }
+        
+        try:
+            with open(self.state_file, "w", encoding="utf-8") as f:
+                json.dump(state_data, f, ensure_ascii=False, indent=4)
+            print(f"\033[1;32m[SUCCESS]\033[0m System footprint preserved successfully at: {self.state_file}")
+        except Exception as e:
+            print(f"\033[1;31m[ERROR]\033[0m State export failed: {str(e)}")
+            
+        print("\033[1;33m[OFFLINE]\033[0m Gulf Sovereign Telemetry Engine deactivated safely.\n")
+        sys.exit(0)
+
+    async def real_time_metric_evaluator(self):
+        """Updates internal risks and dynamically shifts directive statuses."""
+        while self.running:
+            self.metrics["air_risk"] = random.uniform(0.0, 1.0)
+            self.metrics["grid_distortion"] = random.uniform(0.0, 1.0)
+
+            if "DIR-005" in self.directives:
+                self.directives["DIR-005"].status = "ACTIVE" if self.metrics["air_risk"] > 0.65 else "INACTIVE"
+            if "DIR-008" in self.directives:
+                self.directives["DIR-008"].status = "ACTIVE" if self.metrics["grid_distortion"] > 0.70 else "INACTIVE"
+
+            await asyncio.sleep(0.8)
+
+    async def terminal_dashboard_renderer(self):
+        """Renders an interactive dashboard dynamically in place using clean ANSI commands."""
+        # Hide standard console cursor to prevent display stuttering
+        sys.stdout.write("\033[?25l")
+        sys.stdout.flush()
+        
+        try:
+            while self.running:
+                # Reset terminal screen position to the home coordinate (0,0)
+                sys.stdout.write("\033[H")
+                
+                dashboard = []
+                dashboard.append("=========================================================================")
+                dashboard.append(f" SOVEREIGN TELEMETRY OPERATIONAL CORE | ENGINE ID: \033[1;36m{self.engine_id}\033[0m")
+                dashboard.append("=========================================================================")
+                dashboard.append(f" [METRIC] Airspace Compromise Risk : [{self.metrics['air_risk']:.4f}]")
+                dashboard.append(f" [METRIC] Grid Harmonic Distortion : [{self.metrics['grid_distortion']:.4f}]")
+                dashboard.append("-------------------------------------------------------------------------")
+                dashboard.append(" SYSTEM DIRECTIVES REGISTRY CHANNELS:")
+                dashboard.append("-------------------------------------------------------------------------")
+                
+                for code, d in self.directives.items():
+                    status_color = "\033[1;32mACTIVE  \033[0m" if d.status == "ACTIVE" else "\033[1;30mSTANDBY \033[0m"
+                    dashboard.append(
+                        f" * \033[1;33m{code}\033[0m | Status: {status_color} | Pulses: {d.execution_count:04d} | {d.title_en}"
+                    )
+                
+                dashboard.append("=========================================================================")
+                dashboard.append(" Press \033[1;31mCtrl+C\033[0m at any time to execute full graceful state preservation.")
+                
+                # Print lines cleanly matching console window width boundaries
+                sys.stdout.write("\n".join(dashboard) + "\n")
+                sys.stdout.flush()
+                await asyncio.sleep(0.2)
+                
+        finally:
+            # Always ensure the terminal cursor behavior is restored back to default
+            sys.stdout.write("\033[?25h")
+            sys.stdout.flush()
+
+    async def deploy_engine(self):
+        """Assembles and runs the application environment components concurrently."""
+        self.setup_signal_handlers()
+        
+        # Clear screen once before launching UI elements
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        tasks = [
+            asyncio.create_task(self.real_time_metric_evaluator()),
+            asyncio.create_task(self.terminal_dashboard_renderer())
+        ]
+        
+        for code, directive in self.directives.items():
+            tasks.append(asyncio.create_task(directive.execute_loop()))
+            
+        await asyncio.gather(*tasks)
+
+
+# ========================================================================================
+# PIPELINE INITIALIZATION
+# ========================================================================================
+if __name__ == "__main__":
+    engine = GulfSovereignTelemetryEngine()
+
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-005",
+        title_en="Regional Air & Sea Defense Matrix Isolation",
+        title_bn="আঞ্চলিক বায়ু ও সমুদ্র প্রতিরক্ষা ম্যাট্রিক্স বিচ্ছিন্নতা",
+        execution_parameters=["Air-gap border telemetry", "Sync radar inputs"]
+    ))
+
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-008",
+        title_en="Predictive Grid Threat & Anomaly Interception",
+        title_bn="ভবিষ্যদ্বাণীমূলক গ্রিড হুমকি এবং অসঙ্গতি বাধা",
+        execution_parameters=["Scan for harmonic frequency shifts"]
+    ))
+
+    try:
+        asyncio.run(engine.deploy_engine())
+    except (KeyboardInterrupt, SystemExit):
+        pass
