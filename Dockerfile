@@ -16,3 +16,27 @@ EXPOSE 8000
 
 # কন্টেইনার রান করার সময় ফাস্টএপিআই সার্ভার স্টার্ট করা
 CMD ["python", "trustflow_server.py"]
+# Use official lightweight Python image
+FROM python:3.11-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Install system dependencies & git if needed
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements or project files into the container
+COPY . /app/
+
+# Set environment variables for Doha Sovereign Cluster
+ENV PYTHONUNBUFFERED=1
+ENV CLOUD_NODE_ENV=production
+ENV SOVEREIGN_REGION=Doha-Cluster
+
+# Expose secure port for real-time API webhooks & dashboards
+EXPOSE 8080
+
+# Execute the Master Telemetry Framework runner on container start
+CMD ["python3", "HamadTamimMasterTelemetryFramework.py"]
