@@ -1067,3 +1067,56 @@ if __name__ == "__main__":
     print("Crime Network Intelligence & Timeline Report:")
     for key, value in intelligence_report.items():
         print(f"  - {key}: {value}")
+class SponsorAccountHeadcountAuditEngine:
+    def __init__(self, sponsor_account_id, company_registration_number):
+        self.account_id = sponsor_account_id
+        self.reg_number = company_registration_number
+
+    def audit_sponsor_accounts_and_headcount(self, official_allocated_quotas, active_working_employees_found, ghost_or_free_visa_count, financial_account_turnover):
+        """
+        স্পন্সর বা কোম্পানির ডিজিটাল অ্যাকাউন্ট ও কোটা পোর্টাল চেক করে দেখতে পায় 
+        তাদের লাইসেন্সের অধীনে মোট কতজন শ্রমিকের কোটা বা ভিসা বরাদ্দ ছিল এবং 
+        তার মধ্যে কতজন ভুয়া বা ফ্রি-ভিসার শিকার হয়েছে।
+        """
+        account_status = "NORMAL"
+        audit_verdict = "VERIFIED"
+        exploitation_scale = "ZERO"
+
+        # বরাদ্দকৃত কোটা এবং প্রকৃত কর্মীর হিসাব মেলানো
+        total_accounted_workers = active_working_employees_found + ghost_or_free_visa_count
+
+        if ghost_or_free_visa_count > 0 or total_accounted_workers != official_allocated_quotas:
+            account_status = "ACCOUNT_DISCREPANCY_AND_QUOTA_ABUSE"
+            audit_verdict = "SUSPECT_ILLEGAL_VISA_TRADING_ACCOUNT"
+            exploitation_scale = f"{ghost_or_free_visa_count} Illegal/Free-Visa Workers Tied to Account"
+
+        return {
+            "sponsor_account_id": self.account_id,
+            "company_reg_no": self.reg_number,
+            "official_allocated_quotas": official_allocated_quotas,
+            "actual_working_employees": active_working_employees_found,
+            "ghost_or_free_visa_workers": ghost_or_free_visa_count,
+            "financial_turnover_amount": f"${financial_account_turnover}",
+            "account_audit_status": account_status,
+            "system_audit_verdict": audit_verdict,
+            "exploitation_scale_detected": exploitation_scale
+        }
+
+# টেস্ট রান: স্পন্সর অ্যাকাউন্ট ও হেড-কাউন্ট অডিট
+if __name__ == "__main__":
+    headcount_engine = SponsorAccountHeadcountAuditEngine(
+        sponsor_account_id="ACC-QTR-SPN-8812",
+        company_registration_number="CR-99201-DOHA"
+    )
+    
+    # মূল্যায়ন: কোটা ছিল ১০০০ জনের, কিন্তু বাস্তবে কাজ করে ২০০ জন, বাকি ৮০০ জনই ফ্রি-ভিসা বা ভুয়া কোটার শিকার
+    headcount_report = headcount_engine.audit_sponsor_accounts_and_headcount(
+        official_allocated_quotas=1000,
+        active_working_employees_found=200,
+        ghost_or_free_visa_count=800,
+        financial_account_turnover=2400000 # সন্দেহজনক লেনদেন
+    )
+    
+    print("Sponsor Account & Quota Headcount Audit Report:")
+    for key, value in headcount_report.items():
+        print(f"  - {key}: {value}")
