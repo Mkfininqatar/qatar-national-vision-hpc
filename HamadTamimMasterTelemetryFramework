@@ -2647,3 +2647,110 @@ if __name__ == "__main__":
     engine.register_resident("29544400004", "Resident_Delta", "2022-03-20", "overstay", True)
 
     engine.audit_and_identify_loopholes()
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Core Orchestration Engine ("Digital Sovereign Shield")
+Author: Abdul Mazed Hossain
+Description: Integrated master engine executing QID tracking, digital monitoring,
+             anomaly detection, and system upgrade patching for sovereign accountability.
+"""
+
+import json
+import time
+from datetime import datetime
+
+class HamadTamimTelemetryFramework:
+    def __init__(self):
+        self.framework_name = "Hamad-Tamim Global Dignity & Telemetry Framework"
+        self.version = "1.0.0-Production"
+        self.sovereign_leader = "HH Sheikh Tamim bin Hamad Al Thani"
+        self.heritage_pioneer = "Father Amir Sheikh Hamad bin Khalifa Al Thani"
+        self.database_registry = []
+
+    def display_banner(self):
+        print("=" * 80)
+        print(f" {self.framework_name.upper()} ")
+        print(f" Sovereign Digital Weapon & Accountability Engine")
+        print("=" * 80)
+        print(f"[*] Leadership Anchor : {self.sovereign_leader}")
+        print(f"[*] Historical Root   : {self.heritage_pioneer}")
+        print(f"[*] Execution Core    : Domestic Priority ('Age Nijer Desh')")
+        print(f"[*] Timestamp         : {datetime.utcnow().isoformat()}Z")
+        print("-" * 80)
+
+    def ingest_qid_records(self, qid: str, full_name: str, passport: str, entry_date: str, duration_months: int, status: str, financial_anomaly: bool):
+        """
+        Ingests comprehensive QID profiles including duration, status, and transaction flags.
+        """
+        record = {
+            "qid": qid,
+            "full_name": full_name,
+            "passport": passport,
+            "entry_date": entry_date,
+            "duration_months": duration_months,
+            "status": status,  # 'active', 'vacation', 'overstay', 'violation'
+            "financial_anomaly": financial_anomaly,
+            "ingested_at": datetime.utcnow().isoformat()
+        }
+        self.database_registry.append(record)
+
+    def execute_digital_monitoring_audit(self):
+        """
+        Scans all records, identifies system loopholes, and flags administrative gaps.
+        """
+        print("\n[INFO] Initializing Real-Time Digital Monitoring & Investigation...")
+        time.sleep(0.4)
+        
+        flagged_count = 0
+        audit_report = []
+
+        for record in self.database_registry:
+            # Rule: Flag overstays, prolonged unverified durations, or financial transaction anomalies
+            if record["status"] in ["overstay", "violation"] or record["financial_anomaly"] or record["duration_months"] > 36:
+                flagged_count += 1
+                audit_report.append({
+                    "qid": record["qid"],
+                    "name": record["full_name"],
+                    "risk_vector": f"Status: {record['status'].upper()} | Duration: {record['duration_months']}M | FinAnomaly: {record['financial_anomaly']}"
+                })
+
+        print(f"[SUCCESS] Audit Completed. Total System Vulnerabilities Identified: {flagged_count}")
+        return audit_report
+
+    def execute_system_upgrade_patch(self, vulnerabilities):
+        """
+        True System Upgrade: Automatically marks structural errors and prepares 
+        actionable resolutions for Parliament-Level execution.
+        """
+        print("\n" + "=" * 80)
+        print(" PARLIAMENT-LEVEL EXECUTION & SYSTEM UPGRADE PIPELINE ")
+        print("=" * 80)
+        
+        if not vulnerabilities:
+            print("[INFO] No immediate system vulnerabilities detected. System state is optimal.")
+            return
+
+        for idx, vuln in enumerate(vulnerabilities, 1):
+            print(f"[{idx}] Patching Vulnerability -> QID: {vuln['qid']} | Target: {vuln['name']}")
+            print(f"    Vector Detail : {vuln['risk_vector']}")
+            print(f"    Action Status : Logged for Official Parliamentary Session & Policy Correction.")
+
+        print("-" * 80)
+        print("[SUCCESS] System Upgrade & Error Resolution Sequence Executed.")
+        print("[GLOBAL MESSAGE] Internal loop resolved successfully -> 'Welcome to Qatar' 🌍\n")
+
+if __name__ == "__main__":
+    # Initialize the framework
+    framework = HamadTamimTelemetryFramework()
+    framework.display_banner()
+
+    # Ingest master QID records for monitoring
+    framework.ingest_qid_records("28511004321", "Resident_Alpha", "P1234567", "2023-01-10", 42, "overstay", True)
+    framework.ingest_qid_records("29022008765", "Resident_Beta", "P7654321", "2025-06-15", 14, "active", False)
+    framework.ingest_qid_records("28833001122", "Resident_Gamma", "P9876543", "2022-09-01", 48, "violation", True)
+    framework.ingest_qid_records("29544009988", "Resident_Delta", "P4567890", "2026-02-10", 7, "vacation", False)
+
+    # Run audit and execute system upgrade patching
+    vulnerabilities = framework.execute_digital_monitoring_audit()
+    framework.execute_system_upgrade_patch(vulnerabilities)
