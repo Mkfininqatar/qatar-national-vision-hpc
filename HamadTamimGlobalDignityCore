@@ -687,3 +687,52 @@ if __name__ == "__main__":
     print("\nSystem Recovery & Diagnostics Execution Result:")
     for key, val in diagnostic_result.items():
         print(f"  - {key}: {val}")
+class LegacyVisaAndReputationRecoveryEngine:
+    def __init__(self, audit_batch_id, target_country="Qatar"):
+        self.batch_id = audit_batch_id
+        self.target_country = target_country
+
+    def audit_legacy_visas_and_reputation(self, total_legacy_visas, fraudulent_or_free_visas_found, international_complaints_count):
+        """
+        আগের ইস্যুকৃত সমস্ত লিগ্যাসি ভিসা পুঙ্খানুপুঙ্খভাবে অডিট করে ভুয়া, ফ্রি-ভিসা বা সিন্ডিকেট 
+        কোটা চিহ্নিত করে। একইসাথে এর ফলে কাতারের আন্তর্জাতিক ভাবমূর্তি বা সম্মানের ক্ষতির মাত্রা 
+        মূল্যায়ন করে পুনরুদ্ধারের রুটিন তৈরি করে।
+        """
+        # ১. জালিয়াতির হার এবং সুনাম ক্ষুণ্নের সূচক হিসাব করা
+        fraud_percentage = (fraudulent_or_free_visas_found / total_legacy_visas) * 100 if total_legacy_visas > 0 else 0
+        
+        reputation_status = "STABLE"
+        corrective_action = "MAINTAIN_STANDARD"
+
+        if fraud_percentage > 20.0 or international_complaints_count > 500:
+            reputation_status = "INTERNATIONAL_IMAGE_SEVERELY_DAMAGED"
+            corrective_action = "PURGE_ILLEGAL_VISAS_RESTORE_G2G_TRANSPARENCY"
+        elif fraud_percentage > 5.0:
+            reputation_status = "MODERATE_REPUTATION_RISK"
+            corrective_action = "TARGETED_SPONSOR_AUDIT_AND_PENALTY"
+
+        return {
+            "audit_batch_id": self.batch_id,
+            "target_nation": self.target_country,
+            "total_legacy_visas_audited": total_legacy_visas,
+            "fraudulent_or_syndicate_visas": fraudulent_or_free_visas_found,
+            "fraud_ratio_percentage": f"{round(fraud_percentage, 2)}%",
+            "international_complaints": international_complaints_count,
+            "reputation_damage_level": reputation_status,
+            "mandated_recovery_action": corrective_action
+        }
+
+# টেস্ট রান: লিগ্যাসি ভিসা অডিট এবং আন্তর্জাতিক ভাবমূর্তি মূল্যায়ন
+if __name__ == "__main__":
+    recovery_engine = LegacyVisaAndReputationRecoveryEngine(audit_batch_id="LEGACY-AUDIT-2026-QTR")
+    
+    # ধরে নিই আগের মোট ভিসা অডিট করে বড় অংকের জালিয়াতি ও আন্তর্জাতিক অভিযোগ পাওয়া গেছে
+    audit_report = recovery_engine.audit_legacy_visas_and_reputation(
+        total_legacy_visas=50000,
+        fraudulent_or_free_visas_found=12500, # ভুয়া বা ফ্রি ভিসা
+        international_complaints_count=850
+    )
+    
+    print("Legacy Visa Audit & Reputation Recovery Report:")
+    for key, value in audit_report.items():
+        print(f"  - {key}: {value}")
