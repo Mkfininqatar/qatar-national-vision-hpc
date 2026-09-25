@@ -4071,3 +4071,210 @@ if __name__ == "__main__":
         asyncio.run(engine.deploy_engine())
     except (KeyboardInterrupt, SystemExit):
         pass
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import asyncio
+import json
+import os
+import sqlite3
+import sys
+import time
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List
+
+@dataclass
+class SovereignDirectiveMetrics:
+    directive_code: str
+    title_en: str
+    title_bn: str
+    status: str = "INACTIVE"
+    execution_parameters: List[str] = field(default_factory=list)
+    execution_count: int = 0
+
+    async def execute_loop(self):
+        while True:
+            if self.status == "ACTIVE":
+                self.execution_count += 1
+                await asyncio.sleep(0.5)
+            else:
+                await asyncio.sleep(0.1)
+
+
+class GulfSovereignTelemetryEngine:
+    def __init__(self, node_id: str = "NODE-PRIMARY-01", port: int = 8888):
+        self.node_id: str = node_id
+        self.port: int = port
+        self.directives: Dict[str, SovereignDirectiveMetrics] = {}
+        self.running = True
+        self.metrics = {"air_risk": 0.0, "grid_distortion": 0.0}
+        self.db_file = "sovereign_telemetry_ledger.db"
+        self.cluster_logs: List[str] = []
+        
+        # Initialize embedded persistent ledger
+        self.init_database()
+
+    def register_directive(self, d: SovereignDirectiveMetrics) -> None:
+        self.directives[d.directive_code] = d
+
+    # ========================================================================================
+    # LEDGER STORAGE SUBSYSTEM (SQLite Integration)
+    # ========================================================================================
+    def init_database(self):
+        """Creates structural tables for structural metrics and log tracking."""
+        with sqlite3.connect(self.db_file) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS node_state (
+                    node_id TEXT PRIMARY KEY,
+                    air_risk REAL,
+                    grid_distortion REAL,
+                    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS directive_history (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    node_id TEXT,
+                    directive_code TEXT,
+                    status TEXT,
+                    execution_count INTEGER,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conn.commit()
+
+    def commit_state_to_ledger(self):
+        """Persists current high-velocity engine matrices inside the local ledger blocks."""
+        try:
+            with sqlite3.connect(self.db_file) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT OR REPLACE INTO node_state (node_id, air_risk, grid_distortion, last_updated)
+                    VALUES (?, ?, ?, datetime('now'))
+                """, (self.node_id, self.metrics["air_risk"], self.metrics["grid_distortion"]))
+                
+                for code, d in self.directives.items():
+                    cursor.execute("""
+                        INSERT INTO directive_history (node_id, directive_code, status, execution_count)
+                        VALUES (?, ?, ?, ?)
+                    """, (self.node_id, code, d.status, d.execution_count))
+                conn.commit()
+        except Exception as e:
+            self.cluster_logs.append(f"DB Write Error: {str(e)}")
+
+    def recover_state_from_ledger(self) -> bool:
+        """Pulls previous data matrices out of the localized ledger to rebuild execution states."""
+        try:
+            with sqlite3.connect(self.db_file) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT air_risk, grid_distortion FROM node_state WHERE node_id = ?", (self.node_id,))
+                row = cursor.fetchone()
+                if row:
+                    self.metrics["air_risk"], self.metrics["grid_distortion"] = row[0], row[1]
+                    
+                    # Reconstruct directive counters using historical entries
+                    for code in self.directives.keys():
+                        cursor.execute("""
+                            SELECT status, execution_count FROM directive_history 
+                            WHERE node_id = ? AND directive_code = ? 
+                            ORDER BY timestamp DESC LIMIT 1
+                        """, (self.node_id, code))
+                        d_row = cursor.fetchone()
+                        if d_row:
+                            self.directives[code].status = d_row[0]
+                            self.directives[code].execution_count = d_row[1]
+                    return True
+        except Exception as e:
+            self.cluster_logs.append(f"DB Recovery Fault: {str(e)}")
+        return False
+
+    # ========================================================================================
+    # DISTRIBUTED CLUSTER MESH (Socket Synchronization)
+    # ========================================================================================
+    async def start_cluster_sync_server(self):
+        """Spawns an asynchronous TCP network listener to receive remote telemetry heartbeats."""
+        server = await asyncio.start_server(self.handle_incoming_cluster_node, '127.0.0.1', self.port)
+        self.cluster_logs.append(f"Cluster P2P Mesh Server listening on port {self.port}")
+        async with server:
+            await server.serve_forever()
+
+    async def handle_incoming_cluster_node(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+        """Processes remote telemetry payloads and merges statuses dynamically."""
+        try:
+            data = await reader.read(4096)
+            if data:
+                payload = json.loads(data.decode('utf-8'))
+                sender_id = payload.get("node_id", "UNKNOWN_NODE")
+                remote_metrics = payload.get("metrics", {})
+                
+                self.cluster_logs.append(f"[{time.strftime('%X')}] Sync packet accepted from node: {sender_id}")
+                
+                # Dynamic Threshold Override: If remote nodes detect critical vectors, step up local status
+                if remote_metrics.get("air_risk", 0) > 0.85:
+                    self.metrics["air_risk"] = max(self.metrics["air_risk"], remote_metrics["air_risk"])
+                    
+                writer.write(b"ACK_OK\n")
+                await writer.drain()
+        except Exception as e:
+            self.cluster_logs.append(f"Network processing fault: {str(e)}")
+        finally:
+            writer.close()
+            await writer.open_connection if hasattr(writer, 'open_connection') else await asyncio.sleep(0.01)
+
+    async def broadcast_state_to_peers(self, peer_port: int):
+        """Pushes local processing updates out to adjacent nodes in the grid."""
+        await asyncio.sleep(3.0)  # Wait for startup sequences to stabilize
+        while self.running:
+            try:
+                reader, writer = await asyncio.open_connection('127.0.0.1', peer_port)
+                payload = {
+                    "node_id": self.node_id,
+                    "metrics": self.metrics,
+                    "directives": {code: asdict(d) for code, d in self.directives.items()}
+                }
+                writer.write(json.dumps(payload).encode('utf-8'))
+                await writer.drain()
+                writer.close()
+                await writer.wait_closed()
+            except Exception:
+                pass  # Peer offline; continuous polling prevents cluster stalls
+            await asyncio.sleep(2.0)
+
+    # ========================================================================================
+    # RUNTIME MONITORING & ORCHESTRATION
+    # ========================================================================================
+    async def execution_engine_loop(self):
+        """Evaluates risks and systematically writes runtime statistics to the DB."""
+        while self.running:
+            # Emulate real-world operational changes over time
+            self.metrics["air_risk"] = random.uniform(0.1, 0.9)
+            self.metrics["grid_distortion"] = random.uniform(0.1, 0.9)
+
+            self.directives["DIR-005"].status = "ACTIVE" if self.metrics["air_risk"] > 0.65 else "INACTIVE"
+            self.directives["DIR-008"].status = "ACTIVE" if self.metrics["grid_distortion"] > 0.70 else "INACTIVE"
+
+            self.commit_state_to_ledger()
+            await asyncio.sleep(1.0)
+
+    async def render_cluster_dashboard(self):
+        sys.stdout.write("\033[?25l")
+        try:
+            while self.running:
+                sys.stdout.write("\033[H")
+                dash = [
+                    "=========================================================================",
+                    f" SYSTEM MESH GRID RUNTIME | UNIQUE IDENTIFIER: \033[1;32m{self.node_id}\033[0m",
+                    "=========================================================================",
+                    f" Local Listener Port: {self.port} | Database Storage: {self.db_file}",
+                    f" Air Risk Metric     : [{self.metrics['air_risk']:.4f}]",
+                    f" Grid Distortion    : [{self.metrics['grid_distortion']:.4f}]",
+                    "-------------------------------------------------------------------------",
+                    " CLUSTER LEDGER MESH NETWORK LOGS:"
+                ]
+                for line in self.cluster_logs[-3:]:
+                    dash.append(f"  » {line}")
+                dash.append("-------------------------------------------------------------------------")
+                dash.append(" TARGET CHANNEL DIRECTIVES STATUS:")
+                for code, d in self.directives.items():
+                    sc = "\033[1;32mACTIVE  \033[0m" if d.status == "ACTIVE" else "\033[1;30mSTANDBY \033[0m"
