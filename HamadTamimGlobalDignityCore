@@ -141,3 +141,59 @@ if __name__ == "__main__":
         is_direct_sunlight=True
     )
     print("Thermal Safety Evaluation:", evaluation)
+class BioTelemetryStressEngine:
+    def __init__(self, worker_id):
+        self.worker_id = worker_id
+
+    def evaluate_physiological_stress(self, core_temp_f, heart_rate_bpm, bp_systolic, bp_diastolic, exposure_duration_mins):
+        """
+        শ্রমিকের শরীরের তাপমাত্রা, হৃদস্পন্দন এবং রক্তচাপের তারতম্য বিশ্লেষণ করে 
+        তাপজনিত স্বাস্থ্যঝুঁকি (Heat Stress & Cardiovascular Risk) মূল্যায়ন করে।
+        """
+        risk_level = "NORMAL"
+        medical_action = "STABLE_CONDITION"
+        
+        # ১. শরীরের তাপমাত্রা চেক (যেমন: ১০৪-১০৬° ফারেনহাইট বা তার বেশি হলে ক্রিটিক্যাল)
+        if core_temp_f >= 104.0:
+            risk_level = "CRITICAL_HEAT_STROKE_RISK"
+            medical_action = "EMERGENCY_EVACUATION_AND_COOLING_REQUIRED"
+        elif core_temp_f >= 101.5:
+            risk_level = "HIGH_THERMAL_STRAIN"
+            medical_action = "MANDATORY_REST_IN_SHADE"
+
+        # ২. রক্তচাপ ও হৃদস্পন্দন চেক (স্বাভাবিক: ১২০/৮০, উচ্চঝুঁকি: ১৪০/৯০+)
+        if bp_systolic >= 140 or bp_diastolic >= 90:
+            if risk_level != "CRITICAL_HEAT_STROKE_RISK":
+                risk_level = "HYPERTENSIVE_HEAT_STRAIN"
+            medical_action = "IMMEDIATE_BLOOD_PRESSURE_AND_HYDRATION_CHECK"
+
+        # ৩. দীর্ঘসময় ধরে উচ্চ ঝুঁকিতে থাকার প্রভাব (Long-term chronic risk accumulation)
+        if exposure_duration_mins > 90 and risk_level in ["HIGH_THERMAL_STRAIN", "HYPERTENSIVE_HEAT_STRAIN"]:
+            medical_action = "CHRONIC_ORGAN_DAMAGE_WARNING_STOP_WORK"
+
+        return {
+            "worker_id": self.worker_id,
+            "estimated_core_temp_f": core_temp_f,
+            "heart_rate": heart_rate_bpm,
+            "blood_pressure": f"{bp_systolic}/{bp_diastolic} mmHg",
+            "exposure_duration_mins": exposure_duration_mins,
+            "physiological_risk": risk_level,
+            "recommended_system_action": medical_action
+        }
+
+# টেস্ট রান: অতিরিক্ত গরমে শ্রমিকের শারীরিক অবস্থা যাচাই
+if __name__ == "__main__":
+    bio_engine = BioTelemetryStressEngine(worker_id="WRK-88210")
+    
+    # ধরে নিই কর্মীর শরীরের তাপমাত্রা ১০৫°F, হার্টবিট বেশি এবং রক্তচাপ ১৪২/৯৫ mmHg
+    stress_eval = bio_engine.evaluate_physiological_stress(
+        core_temp_f=105.2, 
+        heart_rate_bpm=125, 
+        bp_systolic=142, 
+        bp_diastolic=95, 
+        exposure_duration_mins=120 # ২ ঘণ্টা ধরে রোদে অবস্থান
+    )
+    
+    print("Bio-Telemetry Stress Evaluation Result:")
+    for key, value in stress_eval.items():
+        print(f"  - {key}: {value}")
