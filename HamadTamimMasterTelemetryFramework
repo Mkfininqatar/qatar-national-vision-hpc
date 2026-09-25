@@ -4278,3 +4278,11 @@ class GulfSovereignTelemetryEngine:
                 dash.append(" TARGET CHANNEL DIRECTIVES STATUS:")
                 for code, d in self.directives.items():
                     sc = "\033[1;32mACTIVE  \033[0m" if d.status == "ACTIVE" else "\033[1;30mSTANDBY \033[0m"
+### Key Architectural Updates Added:
+* **Asynchronous TCP Sockets Server**: Uses `asyncio.start_server` to establish a network topology on a dedicated port. This handles incoming JSON string buffers containing metrics from across the mesh network without locking up the user interface.
+* **ACID Database Compliance**: Moves away from volatile raw text file modification structures. By switching to an embedded **SQLite engine**, the system records histories into relational schemas, avoiding data overwriting or access race conditions.
+* **Cross-Node Trigger Thresholds**: Incorporates an aggregation layer. If an adjacent cluster node broadcasts an elevated threat vector score (e.g., `air_risk > 0.85`), the local engine instantly upgrades its own risk indexes to prevent multi-point systemic exploits.
+
+<FollowUp>
+Would you like to build out **cryptographic verification tokens (HMAC/AES-GCM)** for the network messages to protect node communication from being intercepted, or should we design an **automated failover algorithm** that reassigns tasks if a primary cluster node drops offline entirely?
+</FollowUp>
