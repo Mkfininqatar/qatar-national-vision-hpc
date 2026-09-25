@@ -2255,3 +2255,82 @@ formal_report = state_engine.generate_state_review_dossier(
 )
 
 print(formal_report)
+import hashlib
+import json
+
+
+class WorkerEmploymentFilterEngine:
+
+  def __init__(self):
+    self.framework = 'Sir Hamad-Tamim Global Dignity & Telemetry Framework'
+    self.worker_database = []
+
+  def register_worker(self, qid_number, worker_name, employment_status):
+    # employment_status: 'ACTIVE' or 'UNEMPLOYED'
+    record = {
+        'QID_Number': qid_number,
+        'Worker_Name': worker_name,
+        'Status': employment_status,
+    }
+    self.worker_database.append(record)
+
+  def filter_unemployed_workers(self):
+    active_workers = [
+        w for w in self.worker_database if w['Status'] == 'ACTIVE'
+    ]
+    unemployed_workers = [
+        w for w in self.worker_database if w['Status'] == 'UNEMPLOYED'
+    ]
+
+    report = {
+        'Framework': self.framework,
+        'Total_Registered_QIDs': len(self.worker_database),
+        'Total_Active_Workers': len(active_workers),
+        'Total_Unemployed_Workers': len(unemployed_workers),
+        'Unemployed_Worker_Registry': unemployed_workers,
+        'Filtering_Directive': (
+            'Targeted state support and job sovereignty enforcement for'
+            ' unemployed registered workers.'
+        ),
+    }
+
+    # Cryptographic seal for worker audit
+    report_string = json.dumps(report, sort_keys=True)
+    report_hash = hashlib.sha256(report_string.encode()).hexdigest()
+
+    final_output = {
+        'Worker_Audit_Report': report,
+        'Audit_Evidence_Hash': report_hash,
+    }
+
+    return json.dumps(final_output, indent=4)
+
+
+# Executing the Worker Filtering Engine
+filter_engine = WorkerEmploymentFilterEngine()
+
+# Registering sample QID records
+filter_engine.register_worker(
+    qid_number='28492011234',
+    worker_name='Worker Alpha',
+    employment_status='ACTIVE',
+)
+filter_engine.register_worker(
+    qid_number='29581022345',
+    worker_name='Worker Beta',
+    employment_status='UNEMPLOYED',
+)
+filter_engine.register_worker(
+    qid_number='27653033456',
+    worker_name='Worker Gamma',
+    employment_status='UNEMPLOYED',
+)
+filter_engine.register_worker(
+    qid_number='28901044567',
+    worker_name='Worker Delta',
+    employment_status='ACTIVE',
+)
+
+# Generating the filtered unemployment dossier
+unemployment_dossier = filter_engine.filter_unemployed_workers()
+print(unemployment_dossier)
