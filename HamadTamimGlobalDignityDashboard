@@ -3213,3 +3213,87 @@ if __name__ == "__main__":
 • জুলাই মাসের দুপুর ১২টায় আউটডোর শিফট চেক করলে এটি ILLEGAL_OPERATION এবং IMMEDIATE_WORK_HALT এলার্ট জেনারেট করবে, কারণ এটি মিনিস্ট্রি অফ লেবারের (Ministry of Labour) অফিসিয়াল নিষেধাজ্ঞার আওতায় পড়ে।
 • বেসিক বেতন ৯০০ টাকা দিলে সিস্টেম সরাসরি NON_COMPLIANT দেখাবে এবং কাতার মিনিমাম ওয়েজ ভায়োলেশন রিপোর্ট করবে।
 • জুলাই মাসের দুপুর ১২টায় আউটডোর শিফট চেক করলে এটি ILLEGAL_OPERATION এবং IMMEDIATE_WORK_HALT এলার্ট জেনারেট করবে, কারণ এটি মিনিস্ট্রি অফ লেবারের (Ministry of Labour) অফিসিয়াল নিষেধাজ্ঞার আওতায় পড়ে।
+import json
+import os
+from datetime import datetime
+
+class LaborLawComplianceAuditor:
+    def __init__(self, worker_id, log_filename="matrix_telemetry_log_2026.txt"):
+        self.worker_id = worker_id
+        self.MIN_BASIC_SALARY = 1000
+        self.log_filename = log_filename
+
+    def audit_and_log_incident(self, basic_salary, date_str, time_str, ambient_temp):
+        audit_report = {
+            "worker_id": self.worker_id,
+            "timestamp": datetime.now().isoformat(),
+            "status": "PASS",
+            "flags": []
+        }
+
+        # ১. মিনিমাম ওয়েজ অডিট
+        if basic_salary < self.MIN_BASIC_SALARY:
+            audit_report["status"] = "NON_COMPLIANT"
+            audit_report["flags"].append({
+                "type": "MINIMUM_WAGE_VIOLATION",
+                "details": f"Basic salary ({basic_salary} QAR) is below the statutory 1000 QAR threshold."
+            })
+
+        # ২. গ্রীষ্মকালীন মিড-ডে ওয়ার্ক ব্যান অডিট
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+        time_obj = datetime.strptime(time_str, "%H:%M").time()
+        
+        is_summer_ban_months = (date_obj.month == 6 and date_obj.day >= 1) or (7 <= date_obj.month <= 8) or (date_obj.month == 9 and date_obj.day <= 15)
+        ban_start = datetime.strptime("10:00", "%H:%M").time()
+        ban_end = datetime.strptime("15:30", "%H:%M").time()
+        is_ban_hours = ban_start <= time_obj <= ban_end
+
+        if is_summer_ban_months and is_ban_hours:
+            if audit_report["status"] != "NON_COMPLIANT":
+                audit_report["status"] = "ILLEGAL_OPERATION"
+            audit_report["flags"].append({
+                "type": "MINISTRY_OF_LABOUR_BAN_VIOLATION",
+                "alert": "IMMEDIATE_WORK_HALT",
+                "details": f"Outdoor activity detected during regulated summer hours ({time_str}) on {date_str}."
+            })
+
+        # ৩. ফাইল সেভ করার মেকানিজম (যদি কোনো ভায়োলেশন থাকে)
+        if audit_report["flags"]:
+            self._write_to_telemetry_log(audit_report)
+            
+        return audit_report
+
+    def _write_to_telemetry_log(self, report):
+        """
+        matrix_telemetry_log_2026.txt ফাইলে ভায়োলেশন রেকর্ড অ্যাপেন্ড করে।
+        """
+        separator = "=" * 60
+        log_entry = (
+            f"{separator}\n"
+            f"TIMESTAMP: {report['timestamp']}\n"
+            f"WORKER ID: {report['worker_id']}\n"
+            f"SYSTEM STATUS: {report['status']}\n"
+            f"VIOLATIONS DETECTED:\n"
+        )
+        
+        for flag in report["flags"]:
+            log_entry += f"  - [{flag['type']}] {flag.get('alert', 'WARNING')}: {flag['details']}\n"
+        
+        log_entry += f"{separator}\n\n"
+
+        # ফাইল রাইট অপারেশন
+        with open(self.log_filename, "a", encoding="utf-8") as file:
+            file.write(log_entry)
+        print(f"[+] Violation logs successfully written to {self.log_filename}")
+
+# সিস্টেম টেস্ট রান
+if __name__ == "__main__":
+    auditor = LaborLawComplianceAuditor(worker_id="WRK-88210")
+    
+    # টেস্ট কেস এক্সিকিউশন
+    result = auditor.audit_and_log_incident(
+        basic_salary=900,         # বেতন আইন লঙ্ঘন
+        date_str="2026-07-15",     # গ্রীষ্মকালীন নিষিদ্ধ মাস
+        time_str="12:00",         # নিষিদ্ধ কর্মঘণ্টা
+        ambient_temp=43.5
+    )
