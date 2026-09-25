@@ -3088,3 +3088,66 @@ class GlobalMessageMissionEngine:
 if __name__ == "__main__":
     broadcast = GlobalMessageMissionEngine()
     broadcast.broadcast_global_message()
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Continuous Automated Ingestion Pipeline (Cloud Edition)
+Description: Background worker script designed to run 24/7 on cloud infrastructure 
+             (AWS/Azure/GCP) to continuously ingest QID records, monitor duration 
+             thresholds, evaluate heat stress telemetry, and flag system anomalies.
+"""
+
+import time
+import json
+from datetime import datetime
+
+class CloudTelemetryIngestionEngine:
+    def __init__(self):
+        self.node_status = "CLOUD_ACTIVE_24_7"
+        self.target_region = "Doha-Sovereign-Cluster"
+
+    def fetch_incoming_stream(self):
+        """
+        Simulates fetching real-time telemetry and QID registry streams from the cloud gateway.
+        """
+        # Simulated live data packet containing QID status, duration, and environmental metrics
+        live_packet = {
+            "qid": "28511004321",
+            "full_name": "Resident_Alpha",
+            "current_hour": 13,  # Peak sun hour (11:00 - 15:00)
+            "ambient_temp_celsius": 42.5,
+            "is_direct_sunlight": True,
+            "duration_months": 38,
+            "financial_anomaly": True
+        }
+        return live_packet
+
+    def process_continuous_stream(self):
+        print("=" * 95)
+        print(f" CLOUD TELEMETRY: CONTINUOUS AUTOMATED INGESTION ({self.target_region}) ")
+        print("=" * 95)
+        print(f"[*] Node Status : {self.node_status}")
+        print(f"[*] Polling Loop: Active (Listening for real-time state data)")
+        print("-" * 95)
+
+        # Simulating a continuous processing cycle (running 1 iteration for demonstration)
+        packet = self.fetch_incoming_stream()
+        print(f"[INGEST] Received Data Packet -> QID: {packet['qid']} | Entity: {packet['full_name']}")
+        
+        # 1. Environmental & Heat Stress Telemetry Check (from QNV HPC Framework)[cite: 1]
+        is_peak_sun = 11 <= packet["current_hour"] < 15
+        if is_peak_sun and packet["is_direct_sunlight"] and packet["ambient_temp_celsius"] >= 40.0:
+            print(f"    [CRITICAL HAZARD] Ambient Temp: {packet['ambient_temp_celsius']}°C at Peak Hours[cite: 1]")
+            print(f"    [ACTION REQUIRED] IMMEDIATE_WORK_HALT_AND_SHADE_REQUIRED[cite: 1]")
+
+        # 2. QID Duration & Anomaly Check
+        if packet["duration_months"] > 36 or packet["financial_anomaly"]:
+            print(f"    [SYSTEM ANOMALY] Duration: {packet['duration_months']}M | Financial Flag: {packet['financial_anomaly']}")
+            print(f"    [PATCH PIPELINE] Forwarding vector to System Upgrade & Parliament Execution.")
+
+        print("-" * 95)
+        print("[SUCCESS] Cloud ingestion cycle completed. System standing by for next telemetry pulse.\n")
+
+if __name__ == "__main__":
+    cloud_engine = CloudTelemetryIngestionEngine()
+    cloud_engine.process_continuous_stream()
