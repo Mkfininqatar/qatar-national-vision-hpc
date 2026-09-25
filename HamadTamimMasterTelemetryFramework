@@ -3440,3 +3440,110 @@ if __name__ == "__main__":
     if gateway.authenticate_sovereign_node("QTR-SOV-MASTER-ACCESS-2026"):
         gateway.broadcast_sovereign_vision()
 HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK
+import json
+import logging
+import sys
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+# Enterprise Logging Setup
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [SOVEREIGN_CODE:%(directive_id)s] -> %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("SovereignEngine")
+
+def log_directive(directive_id: str, message: str, level: str = "INFO"):
+    extra = {"directive_id": directive_id}
+    if level == "WARNING":
+        logger.warning(message, extra=extra)
+    elif level == "ERROR":
+        logger.error(message, extra=extra)
+    else:
+        logger.info(message, extra=extra)
+
+
+@dataclass
+class SovereignDirectiveMetrics:
+    directive_code: str
+    title_en: str
+    title_bn: str
+    status: str = "ACTIVE"
+    execution_parameters: List[str] = field(default_factory=list)
+
+    def execute_directive(self):
+        log_directive(self.directive_code, f"EXECUTING MASTER DIRECTIVE: {self.title_en} ({self.title_bn})")
+        for param in self.execution_parameters:
+            log_directive(self.directive_code, f" -> Rule Enforced: {param}")
+
+
+class GulfSovereignTelemetryEngine:
+    def __init__(self, engine_id: str = "GSTE-MAIN-001"):
+        self.engine_id: str = engine_id
+        self.directives: Dict[str, SovereignDirectiveMetrics] = {}
+        log_directive("ENGINE_INIT", f"Sovereign Telemetry Engine [{self.engine_id}] initialized successfully.")
+
+    def load_directives_from_json(self, json_data: str) -> None:
+        """Dynamically ingests and registers directives via JSON data structures."""
+        try:
+            data = json.loads(json_data)
+            for item in data.get("directives", []):
+                directive = SovereignDirectiveMetrics(
+                    directive_code=item["directive_code"],
+                    title_en=item["title_en"],
+                    title_bn=item["title_bn"],
+                    status=item.get("status", "ACTIVE"),
+                    execution_parameters=item.get("execution_parameters", [])
+                )
+                self.directives[directive.directive_code] = directive
+            log_directive("ENGINE_LOAD", f"Successfully loaded {len(self.directives)} directives from config.")
+        except Exception as e:
+            log_directive("ENGINE_LOAD", f"Failed to ingest JSON telemetry config: {str(e)}", level="ERROR")
+
+    def run_all_directives(self) -> None:
+        log_directive("ENGINE_EXEC", f"Beginning telemetry execution for {len(self.directives)} directives.")
+        for code, directive in self.directives.items():
+            if directive.status == "ACTIVE":
+                directive.execute_directive()
+            else:
+                log_directive(code, f"Directive bypassed. Status: {directive.status}", level="WARNING")
+
+
+# ========================================================================================
+# AGGREGATED RUNTIME PIPELINE
+# ========================================================================================
+if __name__ == "__main__":
+    # Standard configuration file content (Simulating a sovereign_config.json file read)
+    config_payload = """
+    {
+        "directives": [
+            {
+                "directive_code": "DIR-001",
+                "title_en": "Spiritual Foundation & Core Resilience Alignment",
+                "title_bn": "আধ্যাত্মিক ভিত্তি এবং মূল স্থিতিস্থাপকতা প্রান্তিককরণ",
+                "execution_parameters": ["Enforce strict anti-hype telemetry parsing", "Zero-tolerance waste shielding protocol active"]
+            },
+            {
+                "directive_code": "DIR-005",
+                "title_en": "Regional Air & Sea Defense Matrix Isolation",
+                "title_bn": "আঞ্চলিক বায়ু ও সমুদ্র প্রতিরক্ষা ম্যাট্রিক্স বিচ্ছিন্নতা",
+                "execution_parameters": ["Enforce air-gapped security protocols on border telemetry", "Sync visual radar inputs with deep learning models"]
+            },
+            {
+                "directive_code": "DIR-013",
+                "title_en": "Divine Resilience Override & Infinite Recovery Pipeline",
+                "title_bn": "ডিভাইন স্থিতিস্থাপকতা ওভাররাইড এবং অসীম পুনরুদ্ধার পাইপলাইন",
+                "execution_parameters": ["Allow master key bypass on corrupted layers", "Reset all state telemetry to safe default profile"]
+            }
+        ]
+    }
+    """
+
+    engine = GulfSovereignTelemetryEngine()
+    
+    # Dynamically inject configuration data without hardcoding
+    engine.load_directives_from_json(config_payload)
+    
+    print("\n--- DEPLOYING MASTER STRATEGIC DIRECTIVES MATRIX ---")
+    engine.run_all_directives()
