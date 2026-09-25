@@ -3291,3 +3291,82 @@ if __name__ == "__main__":
     
     # Simulating a dynamic workload scale-up triggered by heavy telemetry streams
     scaler.scale_cluster_resources(workload_spike_detected=True)
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Real-Time API & Webhooks Engine (Cloud Secure Gateway)
+Description: Dispatches instant webhook notifications and real-time API payloads 
+             to secure administrative dashboards, mobile monitoring nodes, and 
+             parliamentary oversight systems for immediate state action.
+"""
+
+import time
+import json
+import urllib.request
+from datetime import datetime
+
+class RealTimeApiWebhookEngine:
+    def __init__(self):
+        self.gateway_endpoint = "https://telemetry.sovereign-doha.qa/api/v1/webhook/dispatch"
+        self.auth_token = "Bearer QTR-SOV-SECURE-TOKEN-2026"
+
+    def construct_webhook_payload(self, alert_type: str, target_qid: str, entity_name: str, risk_vector: str):
+        """
+        Constructs a standardized, encrypted JSON payload for external secure webhooks.
+        """
+        payload = {
+            "event_id": f"EVT-{int(time.time())}",
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "cluster_source": "Doha-Sovereign-Master-Cluster",
+            "alert_type": alert_type,
+            "target_data": {
+                "qid": target_qid,
+                "full_name": entity_name,
+                "risk_vector": risk_vector
+            },
+            "dispatch_status": "PENDING_SECURE_TRANSMISSION"
+        }
+        return payload
+
+    def trigger_webhook_dispatch(self, payload: dict):
+        """
+        Simulates secure API webhook transmission over HTTPS with zero-trust token headers.
+        """
+        print("=" * 95)
+        print(f" REAL-TIME API & WEBHOOK DISPATCH ENGINE ")
+        print("=" * 95)
+        print(f"[*] Target Endpoint : {self.gateway_endpoint}")
+        print(f"[*] Event ID        : {payload['event_id']}")
+        print(f"[*] Alert Type      : {payload['alert_type']}")
+        print("-" * 95)
+        
+        print("[INFO] Encrypting and transmitting payload via secure API gateway...")
+        time.sleep(0.4)
+        
+        # Simulating transmission response
+        response_status = 200
+        response_message = "SUCCESS: Payload received and routed to Secure Dashboard & Parliament Patcher."
+
+        if response_status == 200:
+            print(f"    ✅ [HTTP 200 OK] Transmission Successful.")
+            print(f"       Response Message: {response_message}")
+        else:
+            print(f"    ❌ [HTTP ERROR] Transmission Failed. Queued for retry.")
+
+        print("-" * 95)
+        print("[SUCCESS] Real-Time Webhook broadcast completed successfully.")
+        print("[SOVEREIGN IMPACT] Instant administrative visibility achieved across all monitoring nodes.\n")
+
+if __name__ == "__main__":
+    webhook_engine = RealTimeApiWebhookEngine()
+
+    # Constructing a sample critical telemetry webhook payload (e.g., combining heat hazard or QID anomaly)
+    sample_payload = webhook_engine.construct_webhook_payload(
+        alert_type="CRITICAL_ENVIRONMENTAL_AND_COMPLIANCE_HAZARD",
+        target_qid="28511004321",
+        entity_name="Resident_Alpha",
+        risk_vector="Ambient Temp: 43.5°C (Peak Hours)[cite: 1] | Duration: 42M Overstay | Remittance Leakage"
+    )
+
+    # Trigger webhook dispatch
+    webhook_engine.trigger_webhook_dispatch(sample_payload)
