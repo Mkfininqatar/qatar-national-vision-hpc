@@ -549,3 +549,64 @@ if __name__ == "__main__":
     print("Global Skill Progression & Career Chain Report:")
     for key, value in growth_report.items():
         print(f"  - {key}: {value}")
+class QatarInternalSyndicateShield:
+    def __init__(self, sponsor_id, company_name):
+        self.sponsor_id = sponsor_id
+        self.company_name = company_name
+
+    def audit_local_sponsor_compliance(self, holds_worker_passport, offers_free_visa_without_job, complies_with_direct_wages, has_active_noc_block):
+        """
+        কাতারের অভ্যন্তরীণ বাজারে স্পন্সর বা কোম্পানির সিন্ডিকেট কার্যক্রম, 
+        পাসপোর্ট আটকে রাখা বা ফ্রি ভিসা জালিয়াতির মতো অবৈধ কর্মকাণ্ড অডিট করে ব্ল্যাকলিস্ট করে।
+        """
+        syndicate_status = "CLEAN_COMPLIant_SPONSOR"
+        system_verdict = "APPROVED"
+        risk_level = "ZERO"
+
+        # ১. পাসপোর্ট আটকে রাখা বা ব্ল্যাকমেইল করার চেষ্টা চেক
+        if holds_worker_passport:
+            syndicate_status = "CRITICAL_PASSPORT_RETENTION_VIOLATION"
+            system_verdict = "IMMEDIATE_LEGAL_PENALTY_AND_PASSPORT_SEIZURE"
+            risk_level = "HIGH"
+
+        # ২. ফ্রি ভিসা বা ভুয়া কোটা ট্রেডিং সিন্ডিকেট চেক
+        if offers_free_visa_without_job or has_active_noc_block:
+            syndicate_status = "ILLEGAL_VISA_TRADING_SYNDICTATE_DETECTED"
+            system_verdict = "BLACKLIST_COMPANY_AND_REVOKE_LICENSE"
+            risk_level = "SEVERE"
+
+        # ৩. সরাসরি বেতন ও আইনি কমপ্লায়েন্স না মানলে
+        if not complies_with_direct_wages:
+            syndicate_status = "WAGE_PROTECTION_SYSTEM_BYPASS"
+            system_verdict = "FREEZE_COMPANY_ACCOUNTS"
+            risk_level = "CRITICAL"
+
+        return {
+            "sponsor_id": self.sponsor_id,
+            "company_name": self.company_name,
+            "passport_held": holds_worker_passport,
+            "free_visa_syndicate": offers_free_visa_without_job,
+            "direct_wages_compliant": complies_with_direct_wages,
+            "syndicate_audit_status": syndicate_status,
+            "system_verdict": system_verdict,
+            "risk_level": risk_level
+        }
+
+# টেস্ট রান: অভ্যন্তরীণ কোম্পানির সিন্ডিকেট ও জালিয়াতি অডিট
+if __name__ == "__main__":
+    syndicate_shield = QatarInternalSyndicateShield(
+        sponsor_id="QAT-SPN-7788",
+        company_name="Local_Syndicate_Subcontractor_LLC"
+    )
+    
+    # মূল্যায়ন: কোম্পানি পাসপোর্ট আটকে রেখেছে এবং ফ্রি ভিসা ট্রেডিং করছে
+    syndicate_report = syndicate_shield.audit_local_sponsor_compliance(
+        holds_worker_passport=True,
+        offers_free_visa_without_job=True,
+        complies_with_direct_wages=False,
+        has_active_noc_block=True
+    )
+    
+    print("Qatar Internal Syndicate Shield Report:")
+    for key, value in syndicate_report.items():
+        print(f"  - {key}: {value}")
