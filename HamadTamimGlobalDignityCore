@@ -487,3 +487,65 @@ if __name__ == "__main__":
     print("Pre-Departure Dignity Permit Evaluation:")
     for key, value in permit_evaluation.items():
         print(f"  - {key}: {value}")
+class GlobalSkillProgressionEngine:
+    def __init__(self, worker_id, current_skill_level, tenure_months):
+        self.worker_id = worker_id
+        self.current_skill_level = current_skill_level # যেমন: Junior, Intermediate, Expert
+        self.tenure_months = tenure_months
+
+    def evaluate_career_growth_and_increment(self, performance_score, completed_skill_modules, current_salary):
+        """
+        শ্রমিকের কাজের দক্ষতা, পারফরম্যান্স স্কোর এবং সময়ের ওপর ভিত্তি করে 
+        বেতন বৃদ্ধি (Increment) এবং লেভেল-আপ (Promotion) নির্ধারণ করে।
+        এটি একটি টেকসই 'Chain of Circle' বা দক্ষ মানবসম্পদ চক্র তৈরি করে।
+        """
+        new_skill_level = self.current_skill_level
+        increment_percentage = 0.0
+        promotion_status = "STABLE"
+
+        # ১. পারফরম্যান্স এবং দক্ষতার ভিত্তিতে লেভেল-আপ ও বেতন বৃদ্ধি রুলস
+        if performance_score >= 85 and completed_skill_modules >= 3 and self.tenure_months >= 12:
+            if self.current_skill_level == "Junior":
+                new_skill_level = "Intermediate_Skilled"
+                increment_percentage = 15.0 # ১৫% বেতন বৃদ্ধি
+                promotion_status = "PROMOTED_TO_INTERMEDIATE"
+            elif self.current_skill_level == "Intermediate_Skilled":
+                new_skill_level = "Master_Expert_Twin_Architect"
+                increment_percentage = 25.0 # ২৫% বেতন বৃদ্ধি
+                promotion_status = "PROMOTED_TO_EXPERT_LEAD"
+        elif performance_score >= 70:
+            increment_percentage = 5.0 # বার্ষিক সাধারণ ইনক্রিমেন্ট
+            promotion_status = "ANNUAL_INCREMENT_APPLIED"
+
+        # নতুন সংশোধিত বেতন হিসাব করা
+        revised_salary = current_salary + (current_salary * (increment_percentage / 100))
+
+        return {
+            "worker_id": self.worker_id,
+            "tenure_months": self.tenure_months,
+            "previous_level": self.current_skill_level,
+            "new_skill_level": new_skill_level,
+            "performance_score": performance_score,
+            "increment_applied_percentage": f"{increment_percentage}%",
+            "revised_monthly_salary": round(revised_salary, 2),
+            "career_chain_status": promotion_status
+        }
+
+# টেস্ট রান: শ্রমিকের দক্ষতা বৃদ্ধি ও বেতন ইনক্রিমেন্ট অডিট
+if __name__ == "__main__":
+    growth_engine = GlobalSkillProgressionEngine(
+        worker_id="WRK-88210",
+        current_skill_level="Junior",
+        tenure_months=14 # ১৪ মাস কাজ করেছেন
+    )
+    
+    # মূল্যায়ন: পারফরম্যান্স স্কোর ভালো এবং ৩টি স্কিল মডিউল সম্পন্ন করেছেন
+    growth_report = growth_engine.evaluate_career_growth_and_increment(
+        performance_score=88,
+        completed_skill_modules=3,
+        current_salary=1500
+    )
+    
+    print("Global Skill Progression & Career Chain Report:")
+    for key, value in growth_report.items():
+        print(f"  - {key}: {value}")
