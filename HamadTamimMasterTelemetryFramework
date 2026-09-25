@@ -4606,3 +4606,122 @@ if __name__ == "__main__":
     dashboard = EnterpriseDashboardLayout()
     print("--- CLOUD NODE & DASHBOARD CONFIGURATION INITIALIZED ---")
     print(dashboard.export_dashboard_payload())
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+========================================================================================
+LIVE WEB MONITORING PANEL & WEBSOCKET TELEMETRY BRIDGE
+========================================================================================
+Description: Connects the Hamad-Tamim Global Dignity & Telemetry Framework cloud 
+             nodes and dashboard layout to a live web server for real-time monitoring.
+Author     : Master Technical Consultant & Digital Twin Architect
+========================================================================================
+"""
+
+import asyncio
+import json
+import logging
+import sys
+from aiohttp import web
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [WEB_MONITOR:%(name)s] -> %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("LiveWebBridge")
+
+class SovereignWebTelemetryBridge:
+    """
+    HTTP and WebSocket server bridging enterprise cloud telemetry nodes with 
+    the real-time command center dashboard.
+    """
+    def __init__(self, host: str = "127.0.0.1", port: int = 8080):
+        self.host = host
+        self.port = port
+        self.app = web.Application()
+        self.connected_clients = set()
+        self._setup_routes()
+
+    def _setup_routes(self):
+        self.app.router.add_get("/", self.dashboard_index_handler)
+        self.app.router.add_get("/ws/telemetry", self.websocket_telemetry_handler)
+
+    async def dashboard_index_handler(self, request):
+        html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY COMMAND CENTER</title>
+            <style>
+                body { background-color: #0b0f19; color: #00ffcc; font-family: monospace; padding: 20px; }
+                h1 { border-bottom: 2px solid #00ffcc; padding-bottom: 10px; }
+                .panel { background: #111827; border: 1px solid #1f2937; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+                .status { color: #10b981; font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <h1>HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK</h1>
+            <div class="panel">
+                <h3>Live Command Center Status: <span class="status" id="sys-status">SECURE & ACTIVE</span></h3>
+                <p>Connected Cloud Nodes: <span id="node-count">3</span> (Doha, Dubai, Riyadh)</p>
+            </div>
+            <div class="panel">
+                <h3>Real-Time Telemetry Stream Logs:</h3>
+                <pre id="log-box">Awaiting live telemetry packet ingestion...</pre>
+            </div>
+            <script>
+                const ws = new WebSocket('ws://' + window.location.host + '/ws/telemetry');
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    document.getElementById('log-box').innerText = JSON.stringify(data, null, 2);
+                    if(data.system_status) {
+                        document.getElementById('sys-status').innerText = data.system_status;
+                    }
+                };
+            </script>
+        </body>
+        </html>
+        """
+        return web.Response(text=html_content, content_type="text/html")
+
+    async def websocket_telemetry_handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        self.connected_clients.add(ws)
+        logger.info("New dashboard client connected to live telemetry stream.")
+
+        try:
+            async for msg in ws:
+                if msg.type == web.WSMsgType.TEXT:
+                    # Handle incoming control commands from dashboard if needed
+                    pass
+        finally:
+            self.connected_clients.remove(ws)
+            logger.info("Dashboard client disconnected.")
+        return ws
+
+    async def broadcast_telemetry(self, telemetry_payload: dict):
+        if not self.connected_clients:
+            return
+        data_str = json.dumps(telemetry_payload)
+        for client in self.connected_clients:
+            await client.send_str(data_str)
+
+    async def start_server(self):
+        runner = web.AppRunner(self.app)
+        await runner.setup()
+        site = web.TCPSite(runner, self.host, self.port)
+        await site.start()
+        logger.info(f"Live Web Monitoring Panel active at http://{self.host}:{self.port}")
+
+
+if __name__ == "__main__":
+    bridge = SovereignWebTelemetryBridge(host="127.0.0.1", port=8080)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(bridge.start_server())
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.info("Live Web Monitoring Server shut down.")
