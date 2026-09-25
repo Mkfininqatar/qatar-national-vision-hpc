@@ -3547,3 +3547,140 @@ if __name__ == "__main__":
     
     print("\n--- DEPLOYING MASTER STRATEGIC DIRECTIVES MATRIX ---")
     engine.run_all_directives()
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import asyncio
+import logging
+import random
+import sys
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+# Enterprise-grade logging for concurrent execution tracking
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [NODE:%(directive_id)s] -> %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("SovereignAsyncEngine")
+
+def log_directive(directive_id: str, message: str, level: str = "INFO"):
+    extra = {"directive_id": directive_id}
+    if level == "WARNING":
+        logger.warning(message, extra=extra)
+    elif level == "ERROR":
+        logger.error(message, extra=extra)
+    else:
+        logger.info(message, extra=extra)
+
+
+@dataclass
+class SovereignDirectiveMetrics:
+    directive_code: str
+    title_en: str
+    title_bn: str
+    status: str = "INACTIVE"  # Defaulting to INACTIVE until triggered by metric thresholds
+    execution_parameters: List[str] = field(default_factory=list)
+
+    async def execute_loop(self):
+        """Dedicated continuous execution channel for the directive."""
+        log_directive(self.directive_code, f"Channel activated for: {self.title_en}")
+        
+        while True:
+            if self.status == "ACTIVE":
+                log_directive(self.directive_code, f"Enforcing Rules: {', '.join(self.execution_parameters)}")
+                # Simulate processing delay of defense channel telemetry
+                await asyncio.sleep(1.5)
+            else:
+                # Standby polling interval when state is suppressed
+                await asyncio.sleep(0.5)
+
+
+class GulfSovereignTelemetryEngine:
+    def __init__(self, engine_id: str = "GSTE-ASYNC-002"):
+        self.engine_id: str = engine_id
+        self.directives: Dict[str, SovereignDirectiveMetrics] = {}
+        log_directive("ENGINE_INIT", f"Asynchronous Master Telemetry Engine [{self.engine_id}] active.")
+
+    def register_directive(self, directive: SovereignDirectiveMetrics) -> None:
+        self.directives[directive.directive_code] = directive
+        log_directive(directive.directive_code, f"Registered to dedicated channel matrix.")
+
+    async def real_time_metric_evaluator(self):
+        """
+        Monitors simulated telemetry streams. Dynamically updates status thresholds
+        for critical defense nodes (DIR-005 and DIR-008) based on calculated threat metrics.
+        """
+        log_directive("METRIC_EVAL", "Real-time threat evaluation telemetry stream initialized.", level="INFO")
+        
+        while True:
+            # Simulate real-time metric inputs (e.g., radar anomalies or frequency grid shifts)
+            air_space_compromise_risk = random.uniform(0.0, 1.0)
+            grid_harmonic_distortion = random.uniform(0.0, 1.0)
+
+            # Evaluate DIR-005 Threshold (Air & Sea Defense Matrix)
+            if "DIR-005" in self.directives:
+                dir005 = self.directives["DIR-005"]
+                if air_space_compromise_risk > 0.75 and dir005.status == "INACTIVE":
+                    dir005.status = "ACTIVE"
+                    log_directive("METRIC_EVAL", f"CRITICAL THREAT DETECTED (Risk: {air_space_compromise_risk:.2f}). Activating DIR-005!", level="WARNING")
+                elif air_space_compromise_risk <= 0.40 and dir005.status == "ACTIVE":
+                    dir005.status = "INACTIVE"
+                    log_directive("METRIC_EVAL", f"Threat mitigated (Risk: {air_space_compromise_risk:.2f}). Standing down DIR-005.", level="INFO")
+
+            # Evaluate DIR-008 Threshold (Predictive Grid Interception)
+            if "DIR-008" in self.directives:
+                dir008 = self.directives["DIR-008"]
+                if grid_harmonic_distortion > 0.80 and dir008.status == "INACTIVE":
+                    dir008.status = "ACTIVE"
+                    log_directive("METRIC_EVAL", f"GRID ANOMALY SIGNATURE (Distortion: {grid_harmonic_distortion:.2f}). Activating DIR-008!", level="WARNING")
+                elif grid_harmonic_distortion <= 0.30 and dir008.status == "ACTIVE":
+                    dir008.status = "INACTIVE"
+                    log_directive("METRIC_EVAL", f"Grid frequencies stabilized (Distortion: {grid_harmonic_distortion:.2f}). Restoring DIR-008 to standby.", level="INFO")
+
+            # Metrics collection sampling frequency
+            await asyncio.sleep(1.0)
+
+    async def deploy_engine(self):
+        """Assembles thread-like coroutines to run loops concurrently on dedicated channels."""
+        tasks = []
+        
+        # Add the active evaluation tool loop
+        tasks.append(asyncio.create_task(self.real_time_metric_evaluator()))
+        
+        # Mount separate processing channels for every registered directive
+        for code, directive in self.directives.items():
+            tasks.append(asyncio.create_task(directive.execute_loop()))
+            
+        log_directive("ENGINE_DEPLOY", f"Spawning {len(tasks)} concurrent telemetry pipelines...")
+        await asyncio.gather(*tasks)
+
+
+# ========================================================================================
+# RUNTIME ORCHESTRATION PIPELINE
+# ========================================================================================
+if __name__ == "__main__":
+    engine = GulfSovereignTelemetryEngine()
+
+    # Mount DIR-005
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-005",
+        title_en="Regional Air & Sea Defense Matrix Isolation",
+        title_bn="আঞ্চলিক বায়ু ও সমুদ্র প্রতিরক্ষা ম্যাট্রিক্স বিচ্ছিন্নতা",
+        execution_parameters=["Air-gap border telemetry", "Sync radar inputs with trajectory models"]
+    ))
+
+    # Mount DIR-008
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-008",
+        title_en="Predictive Grid Threat & Anomaly Interception",
+        title_bn="ভবিষ্যদ্বাণীমূলক গ্রিড হুমকি এবং অসঙ্গতি বাধা",
+        execution_parameters=["Scan for harmonic frequency shifts", "Isolate targeted grid sub-segments"]
+    ))
+
+    print("\n--- INITIATING DYNAMIC CONCURRENT TELEMETRY ORCHESTRATION ---")
+    try:
+        asyncio.run(engine.deploy_engine())
+    except KeyboardInterrupt:
+        print("\n--- TELEMETRY ENGINE SHUT DOWN CLEANLY ---")
