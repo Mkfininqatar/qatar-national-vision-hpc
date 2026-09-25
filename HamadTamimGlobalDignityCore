@@ -856,3 +856,53 @@ if __name__ == "__main__":
     print("Institutional Accountability & Reputation Audit Report:")
     for key, value in audit_result.items():
         print(f"  - {key}: {value}")
+class DigitalEvidenceForensicEngine:
+    def __init__(self, target_entity_id, entity_name):
+        self.entity_id = target_entity_id
+        self.entity_name = entity_name
+
+    def audit_whatsapp_and_digital_evidence(self, whatsapp_chat_logs_found, illicit_money_demand_records, passport_retention_photos, visa_trade_agreements):
+        """
+        লাইসেন্সধারী বা দালালের মোবাইল ও হোয়াটসঅ্যাপ থেকে উদ্ধারকৃত চ্যাট লগ, 
+        অবৈধ টাকার লেনদেন, পাসপোর্ট আটকে রাখার ছবি এবং ফ্রি-ভিসা ট্রেডিংয়ের দলিল অডিট করে।
+        """
+        evidence_strength = "NO_EVIDENCE"
+        legal_action_verdict = "INSUFFICIENT_DATA"
+        severity_index = 0
+
+        # অপরাধের প্রমাণগুলোর উপস্থিতি যাচাই করা
+        if whatsapp_chat_logs_found and (illicit_money_demand_records or passport_retention_photos or visa_trade_agreements):
+            evidence_strength = "IRREFUTABLE_DIGITAL_PROOF"
+            legal_action_verdict = "IMMEDIATE_ARREST_AND_LICENSE_REVOCATION"
+            severity_index = 100 # সর্বোচ্চ শাস্তিযোগ্য অপরাধ
+
+        return {
+            "entity_id": self.entity_id,
+            "entity_name": self.entity_name,
+            "whatsapp_evidence_recovered": whatsapp_chat_logs_found,
+            "illegal_money_demands": illicit_money_demand_records,
+            "passport_holding_proof": passport_retention_photos,
+            "visa_trading_agreements": visa_trade_agreements,
+            "evidence_strength": evidence_strength,
+            "forensic_verdict": legal_action_verdict,
+            "crime_severity_score": f"{severity_index}%"
+        }
+
+# টেস্ট রান: দালালের মোবাইল বা হোয়াটসঅ্যাপ প্রমাণ অডিট
+if __name__ == "__main__":
+    forensic_engine = DigitalEvidenceForensicEngine(
+        target_entity_id="AGENCY-LIC-4421",
+        entity_name="Corrupt_Recruitment_Broker_Firm"
+    )
+    
+    # মূল্যায়ন: হোয়াটসঅ্যাপে অতিরিক্ত টাকা চাওয়ার চ্যাট, পাসপোর্টের ছবি ও ভিসার দলিল পাওয়া গেছে
+    forensic_report = forensic_engine.audit_whatsapp_and_digital_evidence(
+        whatsapp_chat_logs_found=True,
+        illicit_money_demand_records=True,
+        passport_retention_photos=True,
+        visa_trade_agreements=True
+    )
+    
+    print("Digital Evidence & WhatsApp Forensics Report:")
+    for key, value in forensic_report.items():
+        print(f"  - {key}: {value}")
