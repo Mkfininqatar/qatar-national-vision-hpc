@@ -430,3 +430,60 @@ if __name__ == "__main__":
     print("Master Audit Execution Complete:")
     for key, val in report.items():
         print(f"  - {key}: {val}")
+class PreDepartureDignityPermitEngine:
+    def __init__(self, worker_id, source_country, destination_country):
+        self.worker_id = worker_id
+        self.source_country = source_country
+        self.destination_country = destination_country
+
+    def verify_fundamental_rights_and_issue_permit(self, contract_signed_in_native_law, healthcare_guaranteed, fundamental_rights_secured, zero_broker_fee_verified):
+        """
+        শ্রমিক দেশ ছাড়ার আগে তার নিজ দেশের আইন অনুযায়ী চুক্তি, স্বাস্থ্যসেবা এবং মৌলিক অধিকার 
+        শতভাগ নিশ্চিত হয়েছে কি না তা যাচাই করে চূড়ান্ত পারমিট বা ছাড়পত্র (Dignity Permit) ইস্যু করে।
+        """
+        permit_status = "HOLD_AND_PENDING"
+        system_verdict = "REJECTED_RIGHTS_NOT_GUARANTEED"
+        transparency_index = 0.0
+
+        # সমস্ত মৌলিক শর্ত পূরণ হয়েছে কি না তা যাচাই করা
+        if contract_signed_in_native_law and healthcare_guaranteed and fundamental_rights_secured and zero_broker_fee_verified:
+            permit_status = "ISSUED_ABSOLUTE_DIGNITY_PERMIT"
+            system_verdict = "APPROVED_FOR_SAFE_DEPARTURE"
+            transparency_index = 100.0 # শতভাগ স্বচ্ছতা নিশ্চিত
+        else:
+            permit_status = "PERMIT_DENIED_VIOLATION_DETECTED"
+            system_verdict = "HALT_DEPARTURE_UNTIL_RIGHTS_PROTECTED"
+            transparency_index = 45.0
+
+        return {
+            "worker_id": self.worker_id,
+            "source_country": self.source_country,
+            "destination_country": self.destination_country,
+            "native_law_contract_verified": contract_signed_in_native_law,
+            "healthcare_guaranteed": healthcare_guaranteed,
+            "fundamental_rights_secured": fundamental_rights_secured,
+            "zero_broker_fee_verified": zero_broker_fee_verified,
+            "transparency_score": f"{transparency_index}%",
+            "permit_status": permit_status,
+            "system_verdict": system_verdict
+        }
+
+# টেস্ট রান: শ্রমিক কাতার বা গন্তব্যে আসার আগের প্রি-ডিপার্চার পারমিট অডিট
+if __name__ == "__main__":
+    permit_engine = PreDepartureDignityPermitEngine(
+        worker_id="WRK-88210",
+        source_country="Source_Nation",
+        destination_country="Qatar"
+    )
+    
+    # সব শর্ত পূরণ সাপেক্ষে পারমিট যাচাই
+    permit_evaluation = permit_engine.verify_fundamental_rights_and_issue_permit(
+        contract_signed_in_native_law=True,
+        healthcare_guaranteed=True,
+        fundamental_rights_secured=True,
+        zero_broker_fee_verified=True
+    )
+    
+    print("Pre-Departure Dignity Permit Evaluation:")
+    for key, value in permit_evaluation.items():
+        print(f"  - {key}: {value}")
