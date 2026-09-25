@@ -1120,3 +1120,51 @@ if __name__ == "__main__":
     print("Sponsor Account & Quota Headcount Audit Report:")
     for key, value in headcount_report.items():
         print(f"  - {key}: {value}")
+class AirportImmigrationTravelBanEngine:
+    def __init__(self, suspect_license_id, individual_passport_no):
+        self.license_id = suspect_license_id
+        self.passport_no = individual_passport_no
+
+    def check_airport_departure_and_enquiry_status(self, attempting_departure, license_under_forensic_investigation, inquiry_completed):
+        """
+        স্পন্সর বা লাইসেন্সধারীর দেশত্যাগের চেষ্টা শনাক্ত করে এবং যতক্ষণ পর্যন্ত 
+        তার বিরুদ্ধে তদন্ত (Inquiry) শেষ না হয়, ততক্ষণ এয়ারপোর্ট ইমিগ্রেশনে তার এক্সিট ব্লক করে রাখে।
+        """
+        travel_clearance = "ALLOWED"
+        airport_alert_signal = "GREEN"
+        border_action = "PROCEED_NORMALLY"
+
+        # যদি লাইসেন্সটি ফরেনসিক তদন্তের অধীনে থাকে এবং তদন্ত শেষ না হয়ে থাকে
+        if license_under_forensic_investigation and not inquiry_completed:
+            if attempting_departure:
+                travel_clearance = "DENIED_TRAVEL_BANNED"
+                airport_alert_signal = "RED_CRITICAL_ALERT"
+                border_action = "INTERCEPT_AND_DETAIN_AT_AIRPORT_CHECKPOINT"
+
+        return {
+            "suspect_license_id": self.license_id,
+            "passport_number": self.passport_no,
+            "forensic_investigation_status": "UNDER_ACTIVE_AUDIT",
+            "inquiry_completed": inquiry_completed,
+            "airport_alert_level": airport_alert_signal,
+            "border_control_action": border_action,
+            "final_travel_permission": travel_clearance
+        }
+
+# টেস্ট রান: এয়ারপোর্ট ইমিগ্রেশন ট্রাভেল ব্যান ও ইনকোয়ারি লক চেক
+if __name__ == "__main__":
+    ban_engine = AirportImmigrationTravelBanEngine(
+        suspect_license_id="LIC-QTR-SPN-8812",
+        individual_passport_no="P-992018274"
+    )
+    
+    # মূল্যায়ন: অপরাধী দেশত্যাগের চেষ্টা করছে, কিন্তু তার লাইসেন্সের ইনকোয়ারি এখনো শেষ হয়নি
+    ban_report = ban_engine.check_airport_departure_and_enquiry_status(
+        attempting_departure=True, # দেশ ছাড়ার চেষ্টা
+        license_under_forensic_investigation=True, # তদন্ত চলছে
+        inquiry_completed=False # তদন্ত এখনও শেষ হয়নি
+    )
+    
+    print("Airport Immigration & Smart Travel Ban Report:")
+    for key, value in ban_report.items():
+        print(f"  - {key}: {value}")
