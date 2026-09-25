@@ -1980,3 +1980,65 @@ final_dossier_output = engine.run_complete_8_step_pipeline(
 )
 
 print(final_dossier_output)
+import hashlib
+import json
+import time
+
+
+class RealTimeTelemetryMonitor:
+
+  def __init__(self, suspect_id, ip_address, sim_number, imei_number):
+    self.suspect_id = suspect_id
+    self.ip_address = ip_address
+    self.sim_number = sim_number
+    self.imei_number = imei_number
+
+  def perform_live_scan(self):
+    current_timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
+
+    # Simulating live network & hardware telemetry check
+    live_status = {
+        'Timestamp': current_timestamp,
+        'Framework': 'Sir Hamad-Tamim Global Dignity & Telemetry Framework',
+        'Monitoring_Status': 'ACTIVE_24_7',
+        'Target_Node': self.suspect_id,
+        'Captured_Footprint': {
+            'IP_Address': self.ip_address,
+            'SIM_Number': self.sim_number,
+            'Device_IMEI': self.imei_number,
+        },
+        'Network_Health': 'SECURED_AND_INTERCEPTED',
+    }
+
+    # Cryptographic sealing for live log
+    raw_str = f'{self.suspect_id}-{self.ip_address}-{self.sim_number}-{self.imei_number}-{current_timestamp}'
+    live_hash = hashlib.sha256(raw_str.encode()).hexdigest()
+    live_status['Live_Evidence_Hash'] = live_hash
+
+    return json.dumps(live_status, indent=4)
+
+  def start_continuous_monitoring(self, interval_seconds=10, max_loops=3):
+    print(
+        '[*] Starting Real-Time Telemetry Automation & Monitoring under Sir'
+        ' Hamad-Tamim Framework...'
+    )
+    for loop in range(1, max_loops + 1):
+      print(f'\n--- Live Scan Cycle #{loop} ---')
+      report = self.perform_live_scan()
+      print(report)
+      if loop < max_loops:
+        time.sleep(interval_seconds)  # Waiting for the next live monitoring cycle
+
+
+# Initiating live automation for the target node
+monitor_engine = RealTimeTelemetryMonitor(
+    suspect_id='SYN_NODE_DOHA_9907',
+    ip_address='192.168.200.88',
+    sim_number='+974-9907-5050',
+    imei_number='864521049832110',
+)
+
+# Running live monitoring simulation
+monitor_engine.start_continuous_monitoring(
+    interval_seconds=5, max_loops=2
+)
