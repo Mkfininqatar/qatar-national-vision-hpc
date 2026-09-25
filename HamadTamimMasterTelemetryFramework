@@ -2588,3 +2588,62 @@ if __name__ == "__main__":
     core = SovereignLeadershipCore()
     core.display_manifesto()
     core.verify_sovereign_alignment()
+#!/usr/bin/env python3
+"""
+Module: QID-Based Entry Tracking, Digital Monitoring & System Upgrade
+Description: Core auditing engine to track residency duration, identify loopholes,
+             and execute automated system upgrades for sovereign accountability.
+"""
+
+import json
+from datetime import datetime
+
+class QIDTelemetryEngine:
+    def __init__(self):
+        # Master repository simulation for QID tracking and digital monitoring
+        self.registry = []
+
+    def register_resident(self, qid: str, name: str, entry_date: str, status: str, transactions_flagged: bool):
+        record = {
+            "qid": qid,
+            "name": name,
+            "entry_date": entry_date,
+            "status": status,  # e.g., 'active', 'vacation', 'overstay'
+            "transactions_flagged": transactions_flagged,
+            "logged_timestamp": datetime.utcnow().isoformat()
+        }
+        self.registry.append(record)
+
+    def audit_and_identify_loopholes(self):
+        """
+        System Upgrade Logic: Identify errors, policy gaps, and structural discrepancies,
+        then mark them for parliament-level resolution.
+        """
+        print("=" * 80)
+        print(" QID DIGITAL MONITORING & ERROR IDENTIFICATION AUDIT ")
+        print("=" * 80)
+        
+        vulnerabilities_found = 0
+        for entry in self.registry:
+            # Evaluate duration and compliance flags
+            if entry["status"] == "overstay" or entry["transactions_flagged"]:
+                vulnerabilities_found += p_print_anomaly(entry)
+                
+        print("-" * 80)
+        print(f"[AUDIT COMPLETE] Total Anomalies/Loopholes Identified: {vulnerabilities_found}")
+        print("[ACTION REQUIRED] Forwarding marked vulnerabilities to Parliament-Level Execution pipeline.\n")
+
+def p_print_anomaly(record):
+    print(f"[ALERT] Vulnerability Marked -> QID: {record['qid']} | Name: {record['name']} | Status: {record['status'].upper()} | Flagged: {record['transactions_flagged']}")
+    return 1
+
+if __name__ == "__main__":
+    engine = QIDTelemetryEngine()
+    
+    # Simulating data ingestion for QID master monitoring list
+    engine.register_resident("28511100001", "Resident_Alpha", "2024-01-15", "active", False)
+    engine.register_resident("29022200002", "Resident_Beta", "2023-05-10", "overstay", True)
+    engine.register_resident("28833300003", "Resident_Gamma", "2025-11-01", "vacation", False)
+    engine.register_resident("29544400004", "Resident_Delta", "2022-03-20", "overstay", True)
+
+    engine.audit_and_identify_loopholes()
