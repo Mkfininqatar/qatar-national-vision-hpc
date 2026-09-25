@@ -252,3 +252,60 @@ if __name__ == "__main__":
     print("Financial Dignity & Salary Audit Result:")
     for key, value in disbursement_audit.items():
         print(f"  - {key}: {value}")
+class VisaBrokerExploitationShield:
+    def __init__(self, visa_id, processing_agency, destination_country):
+        self.visa_id = visa_id
+        self.processing_agency = processing_agency
+        self.destination_country = destination_country
+
+    def audit_agency_processing_integrity(self, official_visa_cost, charged_amount_to_worker, commission_broker_involved, has_hidden_fees):
+        """
+        ট্রাভেল এজেন্সি এবং মধ্যস্বত্বভোগীদের কমিশন চক্র, ভিসা গিল্টি এবং অতিরিক্ত অর্থ আদায়ের 
+        প্রতারণা শনাক্ত করে। এটি কোনো অবস্থাতেই সাধারণ শ্রমিককে শোষণের সুযোগ দেয় না।
+        """
+        fraud_status = "LEGITIMATE_G2G_PROCESS"
+        system_verdict = "APPROVED"
+        exploitation_risk = "ZERO"
+
+        # ১. অতিরিক্ত ফি বা কমিশন চার্জ চেক (ভিসা গিল্টি/প্রতারণা)
+        if charged_amount_to_worker > official_visa_cost or commission_broker_involved:
+            fraud_status = "CRITICAL_BROKER_EXPLOITATION_DETECTED"
+            system_verdict = "REJECTED_AND_BLACKLIST_AGENCY"
+            exploitation_risk = "HIGH_FRAUD_TRAP"
+
+        # ২. লুকানো ফি বা জালিয়াতির চুক্তি চেক
+        if has_hidden_fees:
+            fraud_status = "HIDDEN_FEE_SCAM_DETECTED"
+            system_verdict = "BLOCK_VISA_ISSUANCE"
+            exploitation_risk = "SEVERE"
+
+        return {
+            "visa_id": self.visa_id,
+            "agency_name": self.processing_agency,
+            "official_cost": official_visa_cost,
+            "charged_to_worker": charged_amount_to_worker,
+            "broker_commission_detected": commission_broker_involved,
+            "fraud_audit_status": fraud_status,
+            "verdict": system_verdict,
+            "exploitation_risk_level": exploitation_risk
+        }
+
+# টেস্ট রান: ট্রাভেল এজেন্সির কমিশন ও ভিসা প্রতারণার অডিট
+if __name__ == "__main__":
+    shield = VisaBrokerExploitationShield(
+        visa_id="VISA-QA-2026-8899", 
+        processing_agency="Local_Commission_Travel_Agency", 
+        destination_country="Qatar"
+    )
+    
+    # সরকারি বা প্রকৃত খরচ কম কিন্তু এজেন্সি দালালের কমিশনসহ অতিরিক্ত টাকা আদায় করেছে
+    audit_report = shield.audit_agency_processing_integrity(
+        official_visa_cost=300, 
+        charged_amount_to_worker=3500, # অতিরিক্ত ৪ হাজার বা চড়া দাম আদায়
+        commission_broker_involved=True, 
+        has_hidden_fees=True
+    )
+    
+    print("Visa & Broker Exploitation Audit Report:")
+    for key, value in audit_report.items():
+        print(f"  - {key}: {value}")
