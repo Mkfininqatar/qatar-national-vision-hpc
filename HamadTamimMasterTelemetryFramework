@@ -2754,3 +2754,76 @@ if __name__ == "__main__":
     # Run audit and execute system upgrade patching
     vulnerabilities = framework.execute_digital_monitoring_audit()
     framework.execute_system_upgrade_patch(vulnerabilities)
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: QID-Based Entry & Duration Tracking Engine
+Description: Advanced auditing module to track Qatar ID (QID) holders, entry/exit 
+             timestamps, vacation status, and total residency duration.
+"""
+
+import json
+from datetime import datetime
+
+class QIDDurationTracker:
+    def __init__(self):
+        self.master_qid_registry = []
+
+    def add_qid_record(self, qid: str, full_name: str, passport: str, entry_date: str, status: str, vacation_count: int):
+        """
+        Adds or updates a QID record with entry details and tracking metrics.
+        """
+        entry_dt = datetime.strptime(entry_date, "%Y-%m-%d")
+        current_dt = datetime.utcnow()
+        # Calculate duration of stay in days and months
+        stay_duration_days = (current_dt - entry_dt).days
+        stay_duration_months = round(stay_duration_days / 30.44, 1)
+
+        record = {
+            "qid": qid,
+            "full_name": full_name,
+            "passport": passport,
+            "entry_date": entry_date,
+            "stay_duration_months": stay_duration_months,
+            "status": status,  # 'active', 'vacation', 'exited', 'overstay'
+            "vacation_count": vacation_count,
+            "last_audit": current_dt.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        self.master_qid_registry.append(record)
+
+    def run_duration_audit(self, max_allowed_months: float = 36.0):
+        """
+        Scans all registered QIDs to analyze duration, identify prolonged stays,
+        and flag discrepancies for system patching.
+        """
+        print("=" * 90)
+        print(" QID ENTRY & DURATION TRACKING AUDIT (AGE NIJER DESH) ")
+        print("=" * 90)
+        print(f"{'QID':<15} | {'NAME':<15} | {'PASSPORT':<12} | {'DURATION (MOS)':<15} | {'STATUS':<10} | {'FLAG'}")
+        print("-" * 90)
+
+        flagged_entries = 0
+
+        for record in self.master_qid_registry:
+            is_overstay = record["stay_duration_months"] > max_allowed_months or record["status"] == "overstay"
+            flag_marker = "⚠️ ANOMALY" if is_overstay else "✔ COMPLIANT"
+            
+            if is_overstay:
+                flagged_entries += 1
+
+            print(f"{record['qid']:<15} | {record['full_name']:<15} | {record['passport']:<12} | {record['stay_duration_months']:<15} | {record['status'].upper():<10} | {flag_marker}")
+
+        print("-" * 90)
+        print(f"[AUDIT SUMMARY] Total QIDs Scanned: {len(self.master_qid_registry)} | Discrepancies Flagged: {flagged_entries}")
+        print("[INFO] Passing duration metrics and flagged QIDs to Digital Monitoring pipeline.\n")
+
+if __name__ == "__main__":
+    tracker = QIDDurationTracker()
+
+    # Ingesting sample QID records for precise duration profiling
+    tracker.add_qid_record("28511004321", "Resident_Alpha", "P1234567", "2023-01-10", "active", 2)
+    tracker.add_qid_record("29022008765", "Resident_Beta", "P7654321", "2021-05-15", "overstay", 4)
+    tracker.add_qid_record("28833001122", "Resident_Gamma", "P9876543", "2024-09-01", "vacation", 1)
+    tracker.add_qid_record("29544009988", "Resident_Delta", "P4567890", "2025-02-10", "active", 0)
+
+    tracker.run_duration_audit()
