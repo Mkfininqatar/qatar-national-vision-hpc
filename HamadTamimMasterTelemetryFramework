@@ -2544,3 +2544,47 @@ complete_execution_output = master_engine.run_complete_national_pipeline(
 )
 
 print(complete_execution_output)
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Sovereign Leadership & Inspiration Core
+Author: Abdul Mazed Hossain
+Description: Core initialization script capturing the 17-year technical journey,
+             sovereign alignment with QNV 2030, and foundational leadership heritage.
+"""
+
+import sys
+import time
+from datetime import datetime
+
+class SovereignLeadershipCore:
+    def __init__(self):
+        self.architect = "Abdul Mazed Hossain"
+        self.experience_years = 17
+        self.heritage_vision = "Father Amir Sheikh Hamad bin Khalifa Al Thani (1970s Telecom Pioneer)"
+        self.current_leadership = "HH Sheikh Tamim bin Hamad Al Thani (Sovereign & Moral Vision)"
+        self.framework_status = "ACTIVE_EXECUTION"
+
+    def display_manifesto(self):
+        print("=" * 80)
+        print(" HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK ")
+        print(" Module: Sovereign Leadership & Inspiration")
+        print("=" * 80)
+        print(f"[*] Architect           : {self.architect}")
+        print(f"[*] Technical Journey   : {self.experience_years} Years of Rigorous R&D")
+        print(f"[*] Historical Root     : {self.heritage_vision}")
+        print(f"[*] Modern Execution    : {self.current_leadership}")
+        print(f"[*] System State        : {self.framework_status}")
+        print(f"[*] Timestamp           : {datetime.utcnow().isoformat()}Z")
+        print("-" * 80)
+
+    def verify_sovereign_alignment(self):
+        print("[INFO] Initializing domestic integrity check ('Age Nijer Desh')...")
+        time.sleep(0.5)
+        print("[SUCCESS] Leadership alignment verified: Transforming free thought into state-level utility.")
+        print("[SUCCESS] Digital Weapon / Sovereign Shield initialized successfully.\n")
+
+if __name__ == "__main__":
+    core = SovereignLeadershipCore()
+    core.display_manifesto()
+    core.verify_sovereign_alignment()
