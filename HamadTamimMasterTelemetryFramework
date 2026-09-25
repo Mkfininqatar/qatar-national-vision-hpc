@@ -2827,3 +2827,71 @@ if __name__ == "__main__":
     tracker.add_qid_record("29544009988", "Resident_Delta", "P4567890", "2025-02-10", "active", 0)
 
     tracker.run_duration_audit()
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Digital Monitoring & Investigation Engine
+Description: Tracks residency activity flows, financial transactions, and anomaly 
+             vectors to expose hidden system losses and investigate missing links.
+"""
+
+import json
+from datetime import datetime
+
+class DigitalMonitoringInvestigationEngine:
+    def __init__(self):
+        self.investigation_registry = []
+
+    def record_activity_and_transaction(self, qid: str, full_name: str, activity_type: str, transaction_flow_qar: float, risk_indicator: str):
+        """
+        Records individual financial transactions and activity flows linked to a QID.
+        """
+        record = {
+            "qid": qid,
+            "full_name": full_name,
+            "activity_type": activity_type,  # e.g., 'commercial', 'remittance', 'unverified_flow'
+            "transaction_flow_qar": transaction_flow_qar,
+            "risk_indicator": risk_indicator,  # 'normal', 'suspicious', 'critical_leakage'
+            "investigated_at": datetime.utcnow().isoformat()
+        }
+        self.investigation_registry.append(record)
+
+    def execute_investigative_audit(self):
+        """
+        Scans digital logs to identify financial leakages, systemic losses, 
+        and missing links required for a true system upgrade.
+        """
+        print("=" * 95)
+        print(" DIGITAL MONITORING & INVESTIGATION ENGINE (STATE INTEGRITY AUDIT) ")
+        print("=" * 95)
+        print(f"{'QID':<15} | {'NAME':<15} | {'ACTIVITY':<18} | {'FLOW (QAR)':<15} | {'RISK STATUS':<15} | {'ACTION'}")
+        print("-" * 95)
+
+        total_loss_qar = 0.0
+        flagged_cases = 0
+
+        for item in self.investigation_registry:
+            is_critical = item["risk_indicator"] in ["suspicious", "critical_leakage"]
+            action_status = "🔍 INVESTIGATE" if is_critical else "✔ SECURE"
+            
+            if is_critical:
+                flagged_cases += 1
+                total_loss_qar += item["transaction_flow_qar"]
+
+            print(f"{item['qid']:<15} | {item['full_name']:<15} | {item['activity_type']:<18} | {item['transaction_flow_qar']:<15,.2f} | {item['risk_indicator'].upper():<15} | {action_status}")
+
+        print("-" * 95)
+        print(f"[INVESTIGATION SUMMARY] Scanned Entities: {len(self.investigation_registry)} | Critical Anomalies: {flagged_cases}")
+        print(f"[SYSTEM LOSS DETECTED] Estimated Leakage Value: QAR {total_loss_qar:,.2f}")
+        print("[INFO] Passing investigated missing links directly to System Upgrade & Parliament Execution pipeline.\n")
+
+if __name__ == "__main__":
+    engine = DigitalMonitoringInvestigationEngine()
+
+    # Ingesting real-world simulation data for financial activity and monitoring
+    engine.record_activity_and_transaction("28511004321", "Resident_Alpha", "remittance", 45000.00, "suspicious")
+    engine.record_activity_and_transaction("29022008765", "Resident_Beta", "commercial", 12500.50, "normal")
+    engine.record_activity_and_transaction("28833001122", "Resident_Gamma", "unverified_flow", 280000.00, "critical_leakage")
+    engine.record_activity_and_transaction("29544009988", "Resident_Delta", "remittance", 3200.00, "normal")
+
+    engine.execute_investigative_audit()
