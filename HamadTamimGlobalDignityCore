@@ -91,3 +91,53 @@ if __name__ == "__main__":
         is_mock_location=False
     )
     print("Telemetry Metric Log:", telemetry_result)
+from datetime import datetime
+
+class PeakHoursThermalSafetyEngine:
+    def __init__(self, worker_id, region_climate_profile="Middle_East_Desert"):
+        self.worker_id = worker_id
+        self.climate_profile = region_climate_profile
+
+    def evaluate_outdoor_risk(self, current_hour, ambient_temp_celsius, is_direct_sunlight):
+        """
+        সকাল ১১টা থেকে দুপুর ৩টা (11:00 - 15:00) পর্যন্ত রোদের তীব্রতা এবং তাপপ্রবাহ 
+        যাচাই করে রিয়েল-টাইম রিস্ক লেভেল নির্ধারণ করে। 
+        কোনো শ্রেণিভেদ ছাড়াই সকল শ্রমিকের জন্য এই প্রটেকশন সমানভাবে কার্যকর থাকবে।
+        """
+        # পিক আওয়ার বা সর্বোচ্চ রৌদ্রোজ্জ্বল সময় নির্ধারণ (সকাল ১১টা থেকে দুপুর ৩টা)
+        is_peak_sun_hours = 11 <= current_hour < 15
+
+        risk_status = "SAFE"
+        action_required = "NORMAL_OPERATION"
+
+        if is_peak_sun_hours and is_direct_sunlight:
+            if ambient_temp_celsius >= 40.0:
+                risk_status = "CRITICAL_HAZARD"
+                action_required = "IMMEDIATE_WORK_HALT_AND_SHADE_REQUIRED"
+            else:
+                risk_status = "HIGH_HEAT_RISK"
+                action_required = "MANDATORY_HYDRATION_AND_MONITORING"
+        elif ambient_temp_celsius >= 45.0:
+            risk_status = "EXTREME_TEMPERATURE_WARNING"
+            action_required = "HEAT_STRESS_PRECAUTION_ACTIVATED"
+
+        return {
+            "worker_id": self.worker_id,
+            "current_hour": f"{current_hour}:00",
+            "temperature_celsius": ambient_temp_celsius,
+            "peak_hours_active": is_peak_sun_hours,
+            "risk_level": risk_status,
+            "system_action": action_required
+        }
+
+# টেস্ট রান: সকাল সাড়ে ১১টার রোদের তীব্রতা ও তাপমাত্রা যাচাই
+if __name__ == "__main__":
+    thermal_engine = PeakHoursThermalSafetyEngine(worker_id="WRK-88210")
+    
+    # ধরে নিই বর্তমান সময় বেলা ১১:৩০ টা এবং তাপমাত্রা ৪৭ ডিগ্রি সেলসিয়াস
+    evaluation = thermal_engine.evaluate_outdoor_risk(
+        current_hour=11.5, 
+        ambient_temp_celsius=47.0, 
+        is_direct_sunlight=True
+    )
+    print("Thermal Safety Evaluation:", evaluation)
