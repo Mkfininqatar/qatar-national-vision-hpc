@@ -610,3 +610,80 @@ if __name__ == "__main__":
     print("Qatar Internal Syndicate Shield Report:")
     for key, value in syndicate_report.items():
         print(f"  - {key}: {value}")
+class SystemRecoveryAndDiagnosticsEngine:
+    def __init__(self, incident_id, worker_id):
+        self.incident_id = incident_id
+        self.worker_id = worker_id
+        self.recovery_actions = []
+
+    def map_problem_points_and_execute_recovery(self, system_audit_report):
+        """
+        সিস্টেমের বিভিন্ন মডিউলের অডিট রিপোর্ট থেকে প্রবলেম পয়েন্টগুলো (Problem Points) 
+        চিহ্নিত (Mark) করে এবং তাৎক্ষণিক রিকভারি বা প্রটেকশন প্রোটোকল চালু করে।
+        """
+        print(f"[*] DIAGNOSING INCIDENT: {self.incident_id} FOR WORKER: {self.worker_id}")
+        
+        modules = system_audit_report.get("module_reports", {})
+        recovery_plan = []
+
+        # ১. ভিসা ও ব্রোকার এক্সপ্লোইটেশন ফল্ট পয়েন্ট চেক
+        visa_status = modules.get("visa_and_broker_shield", {}).get("status", "")
+        if "REJECTED" in visa_status:
+            recovery_plan.append({
+                "problem_point": "Illegal Broker Commission / Visa Guilt",
+                "severity": "CRITICAL",
+                "recovery_action": "Blacklist agency, trigger G2G refund mandate, re-issue legitimate zero-fee permit."
+            })
+
+        # ২. থার্মাল সেফটি বা হিট স্ট্রেস ফল্ট পয়েন্ট চেক
+        thermal_risk = modules.get("thermal_safety", {}).get("risk", "")
+        if "CRITICAL" in thermal_risk:
+            recovery_plan.append({
+                "problem_point": "Peak Hours Thermal Hazard (11:00-15:00 Sun Exposure)",
+                "severity": "HIGH_EMERGENCY",
+                "recovery_action": "Dispatch cooling alert to wearable, mandate immediate shade break, notify field safety officer."
+            })
+
+        # ৩. বায়ো-মেট্রিক বা কার্ডিওভাসকুলার স্ট্রেস ফল্ট পয়েন্ট চেক
+        bio_risk = modules.get("biometric_telemetry", {}).get("physiological_risk", "")
+        if "CRITICAL" in bio_risk:
+            recovery_plan.append({
+                "problem_point": "Elevated Core Temp & Blood Pressure Spike",
+                "severity": "EMERGENCY_MEDICAL",
+                "recovery_action": "Trigger automated medical evacuation protocol, dispatch hydration & medical unit."
+            })
+
+        # ৪. ফিনান্সিয়াল ওয়েজ ডিলে বা মজুরি চুরি ফল্ট পয়েন্ট চেক
+        fin_status = modules.get("financial_dignity", {}).get("audit_result", "")
+        if "CRITICAL" in fin_status:
+            recovery_plan.append({
+                "problem_point": "Wage Delay / Financial Torture Detected",
+                "severity": "CRITICAL_LEGAL",
+                "recovery_action": "Freeze employer's digital payroll clearance, initiate automatic wage compensation from escrow."
+            })
+
+        self.recovery_actions = recovery_plan
+        return {
+            "incident_id": self.incident_id,
+            "total_problem_points_marked": len(recovery_plan),
+            "recovery_execution_plan": recovery_plan
+        }
+
+# টেস্ট রান: প্রবলেম ম্যাপিং এবং রিকভারি এক্সিকিউশন
+if __name__ == "__main__":
+    # ডামি মাস্টার অডিট রিপোর্ট যা আগের মডিউল থেকে এসেছে
+    mock_audit_report = {
+        "module_reports": {
+            "visa_and_broker_shield": {"status": "REJECTED_BROKER_EXPLOITATION"},
+            "thermal_safety": {"risk": "CRITICAL_HAZARD"},
+            "biometric_telemetry": {"physiological_risk": "CRITICAL_PHYSIOLOGICAL_STRAIN"},
+            "financial_dignity": {"audit_result": "CRITICAL_WAGE_DELAY_OR_THEFT"}
+        }
+    }
+
+    engine = SystemRecoveryAndDiagnosticsEngine(incident_id="INC-2026-9901", worker_id="WRK-88210")
+    diagnostic_result = engine.map_problem_points_and_execute_recovery(mock_audit_report)
+
+    print("\nSystem Recovery & Diagnostics Execution Result:")
+    for key, val in diagnostic_result.items():
+        print(f"  - {key}: {val}")
