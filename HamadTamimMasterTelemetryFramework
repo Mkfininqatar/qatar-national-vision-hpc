@@ -3854,3 +3854,220 @@ if __name__ == "__main__":
         asyncio.run(engine.deploy_engine())
     except (KeyboardInterrupt, SystemExit):
         pass
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import asyncio
+import json
+import logging
+import os
+import random
+import signal
+import sys
+import time
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List
+
+@dataclass
+class SovereignDirectiveMetrics:
+    directive_code: str
+    title_en: str
+    title_bn: str
+    status: str = "INACTIVE"
+    execution_parameters: List[str] = field(default_factory=list)
+    execution_count: int = 0  # Reconstructed across reboots
+
+    async def execute_loop(self):
+        while True:
+            if self.status == "ACTIVE":
+                self.execution_count += 1
+                await asyncio.sleep(0.5)  # Accelerated runtime clock for testing
+            else:
+                await asyncio.sleep(0.1)
+
+
+class GulfSovereignTelemetryEngine:
+    def __init__(self, engine_id: str = "GSTE-RECOVER-004"):
+        self.engine_id: str = engine_id
+        self.directives: Dict[str, SovereignDirectiveMetrics] = {}
+        self.running = True
+        self.metrics = {"air_risk": 0.0, "grid_distortion": 0.0, "attack_velocity": 0.0}
+        self.state_file = "sovereign_engine_state.json"
+        self.attack_scenario = "NORMAL STANDBY OPERATIONS"
+        self.reaction_log: List[str] = []
+
+    def register_directive(self, d: SovereignDirectiveMetrics) -> None:
+        self.directives[d.directive_code] = d
+
+    def setup_signal_handlers(self):
+        loop = asyncio.get_running_loop()
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            try:
+                loop.add_signal_handler(sig, lambda s=sig: asyncio.create_task(self.graceful_shutdown(s)))
+            except NotImplementedError:
+                pass
+
+    def load_previous_state(self) -> bool:
+        """
+        [STATE RECOVERY MECHANISM]
+        Inspects local storage for a prior state file, parsing operational histories
+        and restoring previous execution logs if found.
+        """
+        if not os.path.exists(self.state_file):
+            return False
+        try:
+            with open(self.state_file, "r", encoding="utf-8") as f:
+                saved_data = json.load(f)
+            
+            self.engine_id = saved_data.get("engine_id", self.engine_id)
+            self.metrics.update(saved_data.get("metrics", {}))
+            
+            # Map values back into object variables
+            for code, d_data in saved_data.get("directives", {}).items():
+                if code in self.directives:
+                    self.directives[code].status = d_data.get("status", "INACTIVE")
+                    self.directives[code].execution_count = d_data.get("execution_count", 0)
+            
+            self.reaction_log.append(f"[{time.strftime('%X')}] HOT REBOOT: State recovered from filesystem safely.")
+            return True
+        except Exception as e:
+            self.reaction_log.append(f"[{time.strftime('%X')}] HOT REBOOT FAULT: Failed to read state: {str(e)}")
+            return False
+
+    async def graceful_shutdown(self, sig):
+        self.running = False
+        state_data = {
+            "engine_id": self.engine_id,
+            "metrics": self.metrics,
+            "directives": {code: asdict(obj) for code, obj in self.directives.items()}
+        }
+        try:
+            with open(self.state_file, "w", encoding="utf-8") as f:
+                json.dump(state_data, f, ensure_ascii=False, indent=4)
+        except Exception:
+            pass
+        sys.exit(0)
+
+    async def dynamic_cyber_attack_simulator(self):
+        """
+        [MOCK CYBER ATTACK SCENARIO]
+        Progressively executes structured stress tests to measure activation speeds.
+        """
+        await asyncio.sleep(2.0)  # Grace period for dashboard recognition
+        
+        while self.running:
+            # --- PHASE 1: Targeted Airspace Jamming Vector ---
+            self.attack_scenario = "PHASE 1: BORDER COMMUNICATIONS JAMMING DETECTED"
+            self.metrics["attack_velocity"] = 45.2
+            t_start = time.perf_counter()
+            self.metrics["air_risk"] = 0.92
+            
+            while self.directives["DIR-005"].status != "ACTIVE":
+                await asyncio.sleep(0.01)
+            latency_05 = (time.perf_counter() - t_start) * 1000
+            self.reaction_log.append(f"[{time.strftime('%X')}] DIR-005 Isolation Latency: {latency_05:.2f}ms")
+            
+            await asyncio.sleep(5.0)
+
+            # --- PHASE 2: Coordinated Grid Harmonic Distortion ---
+            self.attack_scenario = "PHASE 2: DESTRUCTIVE GRID FREQUENCY ATTACK INFUSED"
+            self.metrics["attack_velocity"] = 98.7
+            t_start = time.perf_counter()
+            self.metrics["grid_distortion"] = 0.88
+            
+            while self.directives["DIR-008"].status != "ACTIVE":
+                await asyncio.sleep(0.01)
+            latency_08 = (time.perf_counter() - t_start) * 1000
+            self.reaction_log.append(f"[{time.strftime('%X')}] DIR-008 Intercept Latency: {latency_08:.2f}ms")
+            
+            await asyncio.sleep(5.0)
+
+            # --- PHASE 3: System De-escalation & Stabilization ---
+            self.attack_scenario = "PHASE 3: BREACH CONTAINED. RESTORING STANDARD ROUTING"
+            self.metrics["attack_velocity"] = 5.1
+            self.metrics["air_risk"] = 0.12
+            self.metrics["grid_distortion"] = 0.15
+            await asyncio.sleep(4.0)
+
+    async def operational_telemetry_evaluator(self):
+        """Standard evaluator reacting dynamically to generated metrics."""
+        while self.running:
+            # Automated status toggles depending on current scenario risk models
+            if "DIR-005" in self.directives:
+                self.directives["DIR-005"].status = "ACTIVE" if self.metrics["air_risk"] > 0.65 else "INACTIVE"
+            if "DIR-008" in self.directives:
+                self.directives["DIR-008"].status = "ACTIVE" if self.metrics["grid_distortion"] > 0.70 else "INACTIVE"
+            await asyncio.sleep(0.1)
+
+    async def terminal_dashboard_renderer(self):
+        sys.stdout.write("\033[?25l")
+        sys.stdout.flush()
+        try:
+            while self.running:
+                sys.stdout.write("\033[H")
+                dash = []
+                dash.append("=========================================================================")
+                dash.append(f" MASTER STATE CORE ENGINE | ARCHITECTURE: \033[1;36m{self.engine_id}\033[0m")
+                dash.append("=========================================================================")
+                dash.append(f" VECTOR STATUS: \033[1;31m{self.attack_scenario}\033[0m")
+                dash.append(f" Threat Velocity  : {self.metrics['attack_velocity']:.1f} Gbps / Pulse")
+                dash.append(f" Air-Space Risk   : [{self.metrics['air_risk']:.4f}]")
+                dash.append(f" Grid Distortion  : [{self.metrics['grid_distortion']:.4f}]")
+                dash.append("-------------------------------------------------------------------------")
+                dash.append(" CHANNELS STATUS CONFIGURATION:")
+                for code, d in self.directives.items():
+                    sc = "\033[1;32mACTIVE  \033[0m" if d.status == "ACTIVE" else "\033[1;30mSTANDBY \033[0m"
+                    dash.append(f" * \033[1;33m{code}\033[0m | {sc} | Iterations: {d.execution_count:05d} | {d.title_en}")
+                dash.append("-------------------------------------------------------------------------")
+                dash.append(" RECENT STATE RECOVERY & REACTION EVENTS:")
+                for log_line in self.reaction_log[-3:]:  # Display last 3 event logs
+                    dash.append(f"  » {log_line}")
+                dash.append("=========================================================================")
+                dash.append(" Terminate program (Ctrl+C) to test State Export functionality.")
+                
+                sys.stdout.write("\n".join(dash) + "\n\033[J")
+                sys.stdout.flush()
+                await asyncio.sleep(0.2)
+        finally:
+            sys.stdout.write("\033[?25h")
+            sys.stdout.flush()
+
+    async def deploy_engine(self):
+        self.setup_signal_handlers()
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        # Trigger initialization check for older files
+        self.load_previous_state()
+
+        tasks = [
+            asyncio.create_task(self.operational_telemetry_evaluator()),
+            asyncio.create_task(self.dynamic_cyber_attack_simulator()),
+            asyncio.create_task(self.terminal_dashboard_renderer())
+        ]
+        for directive in self.directives.values():
+            tasks.append(asyncio.create_task(directive.execute_loop()))
+            
+        await asyncio.gather(*tasks)
+
+
+if __name__ == "__main__":
+    engine = GulfSovereignTelemetryEngine()
+
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-005",
+        title_en="Regional Air & Sea Defense Matrix Isolation",
+        title_bn="আঞ্চলিক বায়ু ও সমুদ্র প্রতিরক্ষা ম্যাট্রিক্স বিচ্ছিন্নতা",
+        execution_parameters=["Air-gap border telemetry"]
+    ))
+
+    engine.register_directive(SovereignDirectiveMetrics(
+        directive_code="DIR-008",
+        title_en="Predictive Grid Threat & Anomaly Interception",
+        title_bn="ভবিষ্যদ্বাণীমূলক গ্রিড হুমকি এবং অসঙ্গতি বাধা",
+        execution_parameters=["Scan harmonic shifts"]
+    ))
+
+    try:
+        asyncio.run(engine.deploy_engine())
+    except (KeyboardInterrupt, SystemExit):
+        pass
