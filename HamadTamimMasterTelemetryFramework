@@ -5268,3 +5268,196 @@ if __name__ == "__main__":
         loop.run_forever()
     except KeyboardInterrupt:
         logger.info("Total Control Server shut down gracefully.")
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+========================================================================================
+HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK - PRODUCTION TRAFFIC MONITOR
+========================================================================================
+Description: Production-ready sovereign monitoring server featuring active client IP 
+             tracking, telemetry traffic data transfer logging, and consensus sync.
+Author     : Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+========================================================================================
+"""
+
+import asyncio
+import json
+import logging
+import sys
+from aiohttp import web
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] [TRAFFIC_MONITOR:%(name)s] -> %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger("SovereignServer")
+
+class TrafficMonitorManager:
+    """
+    Tracks active client connections, remote IP addresses, and data transfer volumes.
+    """
+    def __init__(self):
+        self.master_control_status = "TOTAL_DOHA_COMMAND_ACTIVE"
+        self.sovereign_dignity_index = 9.98
+        self.active_clients = {}  # Format: {websocket_id: {"ip": str, "connected_at": str, "bytes_sent": int}}
+        self.total_bytes_transferred = 0
+        self.node_states = {
+            "doha_core": {"status": "MASTER_COMMAND", "latency_ms": 11, "control": "PRIMARY"},
+            "dubai_cluster": {"status": "ONLINE", "latency_ms": 26, "control": "SYNCED"},
+            "riyadh_cluster": {"status": "ONLINE", "latency_ms": 21, "control": "SYNCED"}
+        }
+
+    def register_client(self, client_id, ip_address, timestamp):
+        self.active_clients[client_id] = {
+            "ip": ip_address,
+            "connected_at": timestamp,
+            "bytes_sent": 0
+        }
+        logger.info(f"New Client Connected -> IP: {ip_address}, ID: {client_id}")
+
+    def unregister_client(self, client_id):
+        if client_id in self.active_clients:
+            logger.info(f"Client Disconnected -> IP: {self.active_clients[client_id]['ip']}, ID: {client_id}")
+            del self.active_clients[client_id]
+
+    def add_traffic(self, client_id, size_bytes):
+        self.total_bytes_transferred += size_bytes
+        if client_id in self.active_clients:
+            self.active_clients[client_id]["bytes_sent"] += size_bytes
+
+
+class SovereignTelemetryServer:
+    """
+    Core Web Server managing Active Traffic Monitoring, IP tracking, and WebSockets.
+    """
+    def __init__(self, host: str = "127.0.0.1", port: int = 8080):
+        self.host = host
+        self.port = port
+        self.app = web.Application()
+        self.traffic_manager = TrafficMonitorManager()
+        self._setup_routes()
+
+    def _setup_routes(self):
+        self.app.router.add_get("/", self.dashboard_handler)
+        self.app.router.add_get("/ws/telemetry", self.websocket_handler)
+        self.app.router.add_get("/api/traffic/stats", self.api_traffic_stats_handler)
+
+    async def dashboard_handler(self, request):
+        html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>HAMAD-TAMIM ACTIVE TRAFFIC & TELEMETRY MONITOR</title>
+            <style>
+                body { background-color: #0b0f19; color: #00ffcc; font-family: monospace; padding: 25px; }
+                h1 { border-bottom: 2px solid #00ffcc; padding-bottom: 12px; font-size: 22px; }
+                .panel { background: #111827; border: 1px solid #1f2937; padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,255,204,0.1); }
+                .status-optimal { color: #10b981; font-weight: bold; }
+                .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
+                .card { background: #1f2937; padding: 15px; border-radius: 4px; border-left: 4px solid #00ffcc; }
+                pre { background: #030712; padding: 15px; border-radius: 4px; color: #34d399; overflow-x: auto; max-height: 250px; }
+            </style>
+        </head>
+        <body>
+            <h1>🌐 HAMAD-TAMIM TRAFFIC MONITORING COMMAND CENTER (DOHA MASTER)</h1>
+            
+            <div class="panel">
+                <h3>System Status: <span class="status-optimal">OPTIMAL_SECURE_TRACKING_ACTIVE</span></h3>
+                <div class="grid">
+                    <div class="card">
+                        <strong>Active Clients Connected:</strong> <span id="active-count" style="color:#34d399; font-size: 18px;">0</span>
+                    </div>
+                    <div class="card">
+                        <strong>Total Data Transferred:</strong> <span id="total-bytes" style="color:#34d399; font-size: 18px;">0 Bytes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Live Connected Clients & IP Logs:</h3>
+                <pre id="client-logs">Fetching client connection details...</pre>
+            </div>
+
+            <div class="panel">
+                <h3>Live Telemetry Ingestion Stream:</h3>
+                <pre id="telemetry-log">Establishing telemetry link...</pre>
+            </div>
+
+            <script>
+                const ws = new WebSocket('ws://' + window.location.host + '/ws/telemetry');
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    document.getElementById('telemetry-log').innerText = JSON.stringify(data.payload, null, 2);
+                    document.getElementById('active-count').innerText = data.stats.active_client_count;
+                    document.getElementById('total-bytes').innerText = data.stats.total_bytes_transferred + " Bytes";
+                    document.getElementById('client-logs').innerText = JSON.stringify(data.stats.active_clients, null, 2);
+                };
+            </script>
+        </body>
+        </html>
+        """
+        return web.Response(text=html_content, content_type="text/html")
+
+    async def websocket_handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        
+        client_id = id(ws)
+        client_ip = request.remote or "127.0.0.1"
+        connect_time = asyncio.get_event_loop().time()
+        
+        self.traffic_manager.register_client(client_id, client_ip, str(connect_time))
+        
+        try:
+            counter = 1
+            while True:
+                payload = {
+                    "sequence_id": counter,
+                    "master_control_status": self.traffic_manager.master_control_status,
+                    "sovereign_dignity_index": self.traffic_manager.sovereign_dignity_index,
+                    "nodes": self.traffic_manager.node_states
+                }
+                
+                stats = {
+                    "active_client_count": len(self.traffic_manager.active_clients),
+                    "total_bytes_transferred": self.traffic_manager.total_bytes_transferred,
+                    "active_clients": self.traffic_manager.active_clients
+                }
+                
+                message_data = json.dumps({"payload": payload, "stats": stats})
+                self.traffic_manager.add_traffic(client_id, len(message_data.encode('utf-8')))
+                
+                await ws.send_str(message_data)
+                counter += 1
+                await asyncio.sleep(3)
+        except Exception as e:
+            logger.error(f"WebSocket tracking error: {str(e)}")
+        finally:
+            self.traffic_manager.unregister_client(client_id)
+        return ws
+
+    async def api_traffic_stats_handler(self, request):
+        return web.json_response({
+            "active_clients": self.traffic_manager.active_clients,
+            "total_bytes_transferred": self.traffic_manager.total_bytes_transferred
+        })
+
+    async def start(self):
+        runner = web.AppRunner(self.app)
+        await runner.setup()
+        site = web.TCPSite(runner, self.host, self.port)
+        await site.start()
+        logger.info(f"Traffic Monitor Server running at http://{self.host}:{self.port}")
+
+
+if __name__ == "__main__":
+    server = SovereignTelemetryServer(host="127.0.0.1", port=8080)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(server.start())
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.info("Traffic Monitor Server shut down gracefully.")
