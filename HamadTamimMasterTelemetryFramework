@@ -4539,3 +4539,70 @@ if __name__ == "__main__":
         asyncio.run(global_engine.start_global_server())
     except KeyboardInterrupt:
         log_global("DOHA_GLOBAL_CORE_01", "Global Sovereign Telemetry Server gracefully shut down by master operator.")
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+========================================================================================
+CLOUD NODE & ENTERPRISE DASHBOARD INTEGRATION MODULE
+========================================================================================
+Description: Extends the v3.0 Global Sovereign Framework with cloud endpoint routing,
+             live dashboard telemetry streaming, and automated multi-region sync parameters.
+Author     : Master Technical Consultant & Digital Twin Architect
+========================================================================================
+"""
+
+import json
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+@dataclass
+class CloudNodeConfig:
+    region_name: str
+    cloud_ip_address: str
+    secure_port: int
+    active_protocols: List[str] = field(default_factory=lambda: ["HMAC-SHA256", "AES-GCM", "TCP-Async"])
+    sync_interval_seconds: int = 10
+
+class EnterpriseDashboardLayout:
+    """
+    Defines the layout specifications for the real-time command center holographic display.
+    """
+    def __init__(self, title: str = "HAMAD-TAMIM GLOBAL DIGNITY & TELEMETRY FRAMEWORK"):
+        self.title = title
+        self.grid_panels: Dict[str, dict] = {}
+        self._initialize_default_panels()
+
+    def _initialize_default_panels(self):
+        self.grid_panels["PANEL_01"] = {
+            "name": "Sovereign Directives Status",
+            "metrics": ["CODE-01 (Divine Grace)", "CODE-02 (Internal Self-Reliance)", "CODE-13 (Unyielding Defense)"],
+            "display_mode": "ACTIVE_REALTIME"
+        }
+        self.grid_panels["PANEL_02"] = {
+            "name": "Global Mesh Topology",
+            "tracked_nodes": ["DOHA_GLOBAL_CORE_01", "DUBAI_NODE_02", "RIYADH_NODE_03"],
+            "status": "SECURE_ENCRYPTED"
+        }
+        self.grid_panels["PANEL_03"] = {
+            "name": "Economic & Resource Shield",
+            "metrics": ["Zero Tolerance Waste Index", "Strategic Asset Transparency"],
+            "status": "OPTIMIZED"
+        }
+
+    def export_dashboard_payload(self) -> str:
+        return json.dumps({
+            "framework_title": self.title,
+            "layout_structure": self.grid_panels,
+            "rendering_status": "SYNCHRONIZED"
+        }, indent=4)
+
+
+if __name__ == "__main__":
+    # Initialize cloud node configurations for regional sync
+    doha_cloud = CloudNodeConfig(region_name="Doha-Core", cloud_ip_address="192.168.1.100", secure_port=9999)
+    dubai_cloud = CloudNodeConfig(region_name="Dubai-Cluster", cloud_ip_address="192.168.1.101", secure_port=9992)
+    riyadh_cloud = CloudNodeConfig(region_name="Riyadh-Cluster", cloud_ip_address="192.168.1.102", secure_port=9993)
+
+    dashboard = EnterpriseDashboardLayout()
+    print("--- CLOUD NODE & DASHBOARD CONFIGURATION INITIALIZED ---")
+    print(dashboard.export_dashboard_payload())
