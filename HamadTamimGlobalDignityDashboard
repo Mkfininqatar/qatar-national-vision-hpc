@@ -2887,3 +2887,324 @@ if __name__ == "__main__":
         loop.run_forever()
     except KeyboardInterrupt:
         logger.info("Traffic Monitor Server shut down gracefully.")
+Skip to content
+Mkfininqatar
+qatar-national-vision-hpc
+Repository navigation
+Code
+Issues
+1
+ (1)
+Pull requests
+Agents
+Discussions
+Actions
+Projects
+Wiki
+Security and quality
+5
+ (5)
+Insights
+Files
+Go to file
+t
+T
+.github
+assets
+docs
+github
+mobile_app
+neuro-spatial-topology
+src
+.gitignore
+AROS Project
+Add a README
+CNAME
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+Core Telemetry Engine
+CosmicQuantumTelemetry
+Dockerfile
+HamadTamimGlobalDignityDashboard
+HamadTamimMasterTelemetryFramework
+Hamid_Master_Blueprint_of_Agriculture_Formula.md
+LICENSE
+LICENSE.md
+LaborLawComplianceAuditor
+Master System Workflow Diagram
+QNV HPC Telemetry & System Loss Audit Engine
+QatarLaborSyndicateAuditor
+README.md
+SECURITY.md
+SIR_HAMAD_LEGACY_AMIR_TAMIM_GLOBAL_LEGISLATION_BLUEPRINT.py
+SYSTEM_AUDIT_README.md
+SafeLabor Trust
+Sir Hamad Global Labor Justice & Digital Twin Telemetry Blueprint
+SirHamid_BioDigital_Oasis_Dashboard.py
+app.py
+cardio_neural_solver.py
+cosmic_data_pipeline.py
+decode_cosmic_frequency()
+digital_twin_config.json
+golden_labor_sovereign_engine.py
+hamid_blueprint_v1.py
+hamid_master_agriculture_blueprint.py
+hpc_telemetry.py
+human_system_core.py
+index.html
+labor_compliance_auditor.py
+labor_exploitation_auditor.py
+matrix_telemetry_log_2026.txt
+mkdir -p political-theory cd political-theory
+nano hpc_telemetry_sync.py
+ppeal_to_qatar_authorities_labor_justice.md
+pytest
+requirements.txt
+sir_hamad_legacy_framework_master_architecture.py
+sir_hamad_master_monitor.log
+sir_hamad_master_monitor.py
+solar_uv_telemetry.py
+solution_engine.py
+telemetry_monitor.py
+trustflow_grievance_api.py
+trustflow_security_alert.py
+trustflow_server.py
+weather_grid_telemetry.py
+qatar-national-vision-hpc
+/HamadTamimMasterTelemetryFramework
+Mkfininqatar
+Mkfininqatar
+Implement sovereign telemetry monitoring server
+d7d871c
+ · 
+42 minutes ago
+qatar-national-vision-hpc
+/HamadTamimMasterTelemetryFramework
+
+Code
+
+Blame
+5463 lines (4716 loc) · 254 KB
+import hashlib
+import time
+from datetime import datetime
+
+class HamadTamimGlobalDignityCore:
+    def __init__(self, bilateral_agreement_id, worker_id, source_country, destination_country):
+        self.agreement_id = bilateral_agreement_id
+        self.worker_id = worker_id
+        self.source_country = source_country
+        self.destination_country = destination_country
+        self.contract_status = "PENDING_VERIFICATION"
+        self.telemetry_logs = []
+
+    def verify_bilateral_contract(self, promised_salary, actual_salary, broker_fee):
+        """
+        যাচাই করে যে ভিসা প্রসেসিং বা চুক্তিতে কোনো কারচুপি বা অবৈধ ফি আছে কি না।
+        কোনো শ্রেণিভেদ ছাড়াই প্রতিটি শ্রমিকের জন্য এটি সমানভাবে প্রযোজ্য।
+        """
+        print(f"[*] Verifying G2G Contract for Worker ID: {self.worker_id} between {self.source_country} and {self.destination_country}...")
+        
+        # জিরো-এক্সপ্লোইটেশন চেক: অবৈধ ব্রোকার ফি বা বেতন গরমিল যাচাই
+        if broker_fee > 0:
+            self.contract_status = "REJECTED_EXPLOITATION_DETECTED"
+            return {
+                "status": "FLAGGED",
+                "message": "System Alert: Broker fee detected! Violation of zero-exploitation policy."
+            }
+        
+        if promised_salary != actual_salary:
+            self.contract_status = "REJECTED_SALARY_MISMATCH"
+            return {
+                "status": "FLAGGED",
+                "message": "System Alert: Salary mismatch detected between source and destination terms."
+            }
+        
+        self.contract_status = "VERIFIED_SECURE"
+        return {
+            "status": "APPROVED",
+            "message": "Contract validated successfully under Hamad-Tamim Global Dignity Standards."
+        }
+
+    def log_telemetry_metrics(self, gps_coordinates, ambient_temp_celsius, is_mock_location):
+        """
+        রিয়েল-টাইম টেলিমেট্রি, থার্মাল সেফটি এবং অ্যান্টি-স্পুফিং ডিটেকশন।
+        """
+        timestamp = datetime.utcnow().isoformat()
+        
+        # অ্যান্টি-স্পুফিং এবং মক লোকেশন চেক
+        if is_mock_location:
+            security_alert = "HIGH_RISK: Mock location detected. Potential boundary spoofing."
+        else:
+            security_alert = "SECURE: Physical boundary verified."
+
+        # থার্মাল হিট স্ট্রেস চেক (যেমন: তাপমাত্রা যদি ৪৫ ডিগ্রি সেলসিয়াসের বেশি হয়)
+        heat_warning = True if ambient_temp_celsius >= 45.0 else False
+
+        telemetry_entry = {
+            "timestamp": timestamp,
+            "worker_id": self.worker_id,
+            "gps": gps_coordinates,
+            "temperature": ambient_temp_celsius,
+            "security_status": security_alert,
+            "heat_stress_warning": heat_warning
+        }
+
+        self.telemetry_logs.append(telemetry_entry)
+        return telemetry_entry
+
+# উদাহরণস্বরূপ টেস্ট রান (Test Execution):
+if __name__ == "__main__":
+    # ফ্রেমওয়ার্ক ইনিশিয়ালাইজ করা
+    system = HamadTamimGlobalDignityCore(
+        bilateral_agreement_id="HT-G2G-2026-9907",
+        worker_id="WRK-88210",
+        source_country="Source_Nation",
+        destination_country="Qatar"
+    )
+
+    # ১. ভিসা ও কন্ট্রাক্ট ভ্যালিডেশন চেক
+    validation_result = system.verify_bilateral_contract(
+        promised_salary=1500, 
+        actual_salary=1500, 
+        broker_fee=0 # জিরো ব্রোকার ফি নিশ্চিত করা হলো
+    )
+    print("Validation Result:", validation_result)
+
+    # ২. টেলিমেট্রি ও থার্মাল সেফটি লগ চেক
+    telemetry_result = system.log_telemetry_metrics(
+        gps_coordinates=(25.276987, 51.520008), 
+        ambient_temp_celsius=46.5, # অতিরিক্ত তাপমাত্রা
+        is_mock_location=False
+    )
+    print("Telemetry Metric Log:", telemetry_result)
+from datetime import datetime
+
+class PeakHoursThermalSafetyEngine:
+    def __init__(self, worker_id, region_climate_profile="Middle_East_Desert"):
+        self.worker_id = worker_id
+        self.climate_profile = region_climate_profile
+
+    def evaluate_outdoor_risk(self, current_hour, ambient_temp_celsius, is_direct_sunlight):
+        """
+        সকাল ১১টা থেকে দুপুর ৩টা (11:00 - 15:00) পর্যন্ত রোদের তীব্রতা এবং তাপপ্রবাহ 
+        যাচাই করে রিয়েল-টাইম রিস্ক লেভেল নির্ধারণ করে। 
+        কোনো শ্রেণিভেদ ছাড়াই সকল শ্রমিকের জন্য এই প্রটেকশন সমানভাবে কার্যকর থাকবে।
+        """
+        # পিক আওয়ার বা সর্বোচ্চ রৌদ্রোজ্জ্বল সময় নির্ধারণ (সকাল ১১টা থেকে দুপুর ৩টা)
+        is_peak_sun_hours = 11 <= current_hour < 15
+
+        risk_status = "SAFE"
+        action_required = "NORMAL_OPERATION"
+
+        if is_peak_sun_hours and is_direct_sunlight:
+            if ambient_temp_celsius >= 40.0:
+                risk_status = "CRITICAL_HAZARD"
+                action_required = "IMMEDIATE_WORK_HALT_AND_SHADE_REQUIRED"
+            else:
+                risk_status = "HIGH_HEAT_RISK"
+                action_required = "MANDATORY_HYDRATION_AND_MONITORING"
+        elif ambient_temp_celsius >= 45.0:
+            risk_status = "EXTREME_TEMPERATURE_WARNING"
+            action_required = "HEAT_STRESS_PRECAUTION_ACTIVATED"
+
+        return {
+            "worker_id": self.worker_id,
+            "current_hour": f"{current_hour}:00",
+            "temperature_celsius": ambient_temp_celsius,
+            "peak_hours_active": is_peak_sun_hours,
+            "risk_level": risk_status,
+            "system_action": action_required
+        }
+
+# টেস্ট রান: সকাল সাড়ে ১১টার রোদের তীব্রতা ও তাপমাত্রা যাচাই
+if __name__ == "__main__":
+    thermal_engine = PeakHoursThermalSafetyEngine(worker_id="WRK-88210")
+    
+    # ধরে নিই বর্তমান সময় বেলা ১১:৩০ টা এবং তাপমাত্রা ৪৭ ডিগ্রি সেলসিয়াস
+    evaluation = thermal_engine.evaluate_outdoor_risk(
+        current_hour=11.5, 
+        ambient_temp_celsius=47.0, 
+        is_direct_sunlight=True
+    )
+    print("Thermal Safety Evaluation:", evaluation)
+class BioTelemetryStressEngine:
+    def __init__(self, worker_id):
+        self.worker_id = worker_id
+
+    def evaluate_physiological_stress(self, core_temp_f, heart_rate_bpm, bp_systolic, bp_diastolic, exposure_duration_mins):
+        """
+                const ws = new WebSocket('ws://' + window.location.host + '/ws/telemetry');
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    document.getElementById('telemetry-log').innerText = JSON.stringify(data.payload, null, 2);
+                    document.getElementById('active-count').innerText = data.stats.active_client_count;
+                    document.getElementById('total-bytes').innerText = data.stats.total_bytes_transferred + " Bytes";
+                    document.getElementById('client-logs').innerText = JSON.stringify(data.stats.active_clients, null, 2);
+                };
+            </script>
+        </body>
+        </html>
+        """
+        return web.Response(text=html_content, content_type="text/html")
+
+    async def websocket_handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        
+        client_id = id(ws)
+        client_ip = request.remote or "127.0.0.1"
+        connect_time = asyncio.get_event_loop().time()
+        
+        self.traffic_manager.register_client(client_id, client_ip, str(connect_time))
+        
+        try:
+            counter = 1
+            while True:
+                payload = {
+                    "sequence_id": counter,
+                    "master_control_status": self.traffic_manager.master_control_status,
+                    "sovereign_dignity_index": self.traffic_manager.sovereign_dignity_index,
+                    "nodes": self.traffic_manager.node_states
+                }
+                
+                stats = {
+                    "active_client_count": len(self.traffic_manager.active_clients),
+                    "total_bytes_transferred": self.traffic_manager.total_bytes_transferred,
+                    "active_clients": self.traffic_manager.active_clients
+                }
+                
+                message_data = json.dumps({"payload": payload, "stats": stats})
+                self.traffic_manager.add_traffic(client_id, len(message_data.encode('utf-8')))
+                
+                await ws.send_str(message_data)
+                counter += 1
+                await asyncio.sleep(3)
+        except Exception as e:
+            logger.error(f"WebSocket tracking error: {str(e)}")
+        finally:
+            self.traffic_manager.unregister_client(client_id)
+        return ws
+
+    async def api_traffic_stats_handler(self, request):
+        return web.json_response({
+            "active_clients": self.traffic_manager.active_clients,
+            "total_bytes_transferred": self.traffic_manager.total_bytes_transferred
+        })
+
+    async def start(self):
+        runner = web.AppRunner(self.app)
+        await runner.setup()
+        site = web.TCPSite(runner, self.host, self.port)
+        await site.start()
+        logger.info(f"Traffic Monitor Server running at http://{self.host}:{self.port}")
+
+
+if __name__ == "__main__":
+    server = SovereignTelemetryServer(host="127.0.0.1", port=8080)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(server.start())
+        loop.run_forever()
+    except KeyboardInterrupt:
+        logger.info("Traffic Monitor Server shut down gracefully.")
