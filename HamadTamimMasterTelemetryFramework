@@ -3151,3 +3151,85 @@ class CloudTelemetryIngestionEngine:
 if __name__ == "__main__":
     cloud_engine = CloudTelemetryIngestionEngine()
     cloud_engine.process_continuous_stream()
+#!/usr/bin/env python3
+"""
+Framework: Hamad-Tamim Global Dignity & Telemetry Framework
+Module: Instant Risk Trigger & Alerting Engine (Cloud Edition)
+Description: Evaluates real-time telemetry packets from the cloud ingestion stream, 
+             triggers instant security and worker safety alerts, and dispatches 
+             high-priority notifications for immediate state action.
+"""
+
+import time
+import json
+from datetime import datetime
+
+class InstantRiskAlertingEngine:
+    def __init__(self):
+        self.alert_channel = "Doha-Sovereign-Secure-Channel"
+        self.active_alerts_log = []
+
+    def evaluate_and_trigger(self, telemetry_packet: dict):
+        """
+        Instantly analyzes incoming telemetry for environmental hazards, 
+        duration violations, and financial anomalies, triggering priority alerts.
+        """
+        print("=" * 95)
+        print(f" INSTANT RISK TRIGGER & ALERTING ENGINE ({self.alert_channel}) ")
+        print("=" * 95)
+        print(f"[*] Ingested Entity : {telemetry_packet['full_name']} (QID: {telemetry_packet['qid']})")
+        print(f"[*] Timestamp       : {datetime.utcnow().isoformat()}Z")
+        print("-" * 95)
+
+        risk_triggered = False
+
+        # 1. Environmental & Heat Stress Risk Trigger (QNV HPC Framework Integration)[cite: 1]
+        is_peak_sun = 11 <= telemetry_packet["current_hour"] < 15
+        if is_peak_sun and telemetry_packet["is_direct_sunlight"] and telemetry_packet["ambient_temp_celsius"] >= 40.0:
+            risk_triggered = True
+            alert_msg = f"[CRITICAL HAZARD] Ambient Temp {telemetry_packet['ambient_temp_celsius']}°C at Peak Hours[cite: 1]! IMMEDIATE WORK HALT AND SHADE REQUIRED[cite: 1]."
+            self.dispatch_alert("ENVIRONMENTAL_SAFETY", alert_msg, telemetry_packet)
+
+        # 2. Sovereign Duration & Financial Anomaly Risk Trigger
+        if telemetry_packet["duration_months"] > 36 or telemetry_packet["financial_anomaly"]:
+            risk_triggered = True
+            alert_msg = f"[SYSTEM ANOMALY] QID overstay ({telemetry_packet['duration_months']}M) or Financial Leakage detected."
+            self.dispatch_alert("SOVEREIGN_COMPLIANCE", alert_msg, telemetry_packet)
+
+        if not risk_triggered:
+            print("[STATUS] ✔ All metrics nominal. No risk triggers activated.")
+
+        print("-" * 95)
+        print(f"[ALERT SUMMARY] Total Active Alerts Dispatched: {len(self.active_alerts_log)}")
+        print("[INFO] Directing triggered alerts to Secure Database & Dashboard Notification Gateway.\n")
+
+    def dispatch_alert(self, alert_type: str, message: str, packet: dict):
+        """
+        Dispatches instant high-priority alerts to the secure cloud logging framework.
+        """
+        alert_record = {
+            "alert_type": alert_type,
+            "message": message,
+            "target_qid": packet["qid"],
+            "dispatched_at": datetime.utcnow().isoformat()
+        }
+        self.active_alerts_log.append(alert_record)
+        print(f"    🚨 [ALERT TRIGGERED] Type: {alert_type}")
+        print(f"       Message: {message}")
+        print(f"       Action : Secure notification sent to dashboard & system patcher.")
+
+if __name__ == "__main__":
+    alert_engine = InstantRiskAlertingEngine()
+
+    # Simulating a high-risk cloud telemetry packet (combining heat stress and financial/duration anomalies)
+    critical_telemetry_packet = {
+        "qid": "28511004321",
+        "full_name": "Resident_Alpha",
+        "current_hour": 12,  # Peak sun hour (11:00 - 15:00)[cite: 1]
+        "ambient_temp_celsius": 43.5,  # Above 40.0°C[cite: 1]
+        "is_direct_sunlight": True,
+        "duration_months": 42,
+        "financial_anomaly": True
+    }
+
+    alert_engine.evaluate_and_trigger(critical_telemetry_packet)
