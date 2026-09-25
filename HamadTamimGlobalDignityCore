@@ -796,3 +796,63 @@ if __name__ == "__main__":
     print("Institutional Accountability & Reputation Audit Report:")
     for key, value in audit_result.items():
         print(f"  - {key}: {value}")
+class InstitutionalAccountabilityEngine:
+    def __init__(self, institution_id, institution_name):
+        self.institution_id = institution_id
+        self.institution_name = institution_name
+
+    def audit_institutional_compliance_and_damage(self, allocated_visas, utilized_visas_for_actual_work, illegal_trading_cases, labor_law_violations, international_reputation_impact_score):
+        """
+        সরকার থেকে নেওয়া ভিসা বা কোটা সঠিক উদ্দেশ্যে ব্যবহার করা হয়েছে নাকি ফ্রি-ভিসা বা 
+        সিন্ডিকেটে বাণিজ্য করা হয়েছে, তা অডিট করে। পাশাপাশি আন্তর্জাতিক ভাবমূর্তি ক্ষুণ্ন 
+        এবং অভ্যন্তরীণ আইন লঙ্ঘনের জন্য প্রতিষ্ঠানটির জবাবদিহিতা ও শাস্তি নির্ধারণ করে।
+        """
+        accountability_status = "FULLY_COMPLIANT"
+        penalty_verdict = "NONE"
+        operational_status = "ACTIVE"
+
+        # ১. ভিসা কোটা অপব্যবহার বা ট্রেডিং চেক
+        misused_visas = allocated_visas - utilized_visas_for_actual_work
+        if misused_visas > 0 or illegal_trading_cases > 0:
+            accountability_status = "SEVERE_QUOTA_ABUSE_AND_TRADING"
+            penalty_verdict = "REVOKE_LICENSE_AND_HEAVY_FINES"
+            operational_status = "SUSPENDED"
+
+        # ২. অভ্যন্তরীণ আইন লঙ্ঘন ও আন্তর্জাতিক ভাবমূর্তি ক্ষুণ্ন হওয়ার মাত্রা চেক
+        if labor_law_violations > 5 or international_reputation_impact_score > 7.0:
+            accountability_status = "CRITICAL_BREACH_OF_LAW_AND_NATIONAL_IMAGE"
+            penalty_verdict = "BLACK_LIST_INSTITUTION_AND_LEGAL_PROSECUTION"
+            operational_status = "PERMANENTLY_BANNED"
+
+        return {
+            "institution_id": self.institution_id,
+            "institution_name": self.institution_name,
+            "total_visas_allocated": allocated_visas,
+            "visas_used_for_actual_work": utilized_visas_for_actual_work,
+            "illegal_visa_trading_cases": illegal_trading_cases,
+            "labor_law_violations_count": labor_law_violations,
+            "reputation_damage_score": f"{international_reputation_impact_score}/10.0",
+            "accountability_audit_status": accountability_status,
+            "enforced_penalty": penalty_verdict,
+            "institution_operational_status": operational_status
+        }
+
+# টেস্ট রান: অতীতে ভিসা নেওয়া প্রতিষ্ঠানের জবাবদিহিতা ও আইন লঙ্ঘন অডিট
+if __name__ == "__main__":
+    accountability_engine = InstitutionalAccountabilityEngine(
+        institution_id="INST-QTR-9902",
+        institution_name="Legacy_Recruitment_and_Sponsorship_Corp"
+    )
+    
+    # মূল্যায়ন: কোম্পানি ভিসা নিয়ে কাজ না লাগিয়ে বাণিজ্য করেছে এবং আন্তর্জাতিক ভাবমূর্তি ক্ষুণ্ন করেছে
+    audit_result = accountability_engine.audit_institutional_compliance_and_damage(
+        allocated_visas=5000,
+        utilized_visas_for_actual_work=1200, # বাকী ৩,৮০০ ভিসা অপব্যবহার বা বিক্রি করা হয়েছে
+        illegal_trading_cases=150,
+        labor_law_violations=12,
+        international_reputation_impact_score=8.5 # উচ্চ মাত্রার ভাবমূর্তি ক্ষুণ্ন
+    )
+    
+    print("Institutional Accountability & Reputation Audit Report:")
+    for key, value in audit_result.items():
+        print(f"  - {key}: {value}")
