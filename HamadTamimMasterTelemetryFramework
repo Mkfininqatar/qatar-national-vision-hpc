@@ -1738,3 +1738,56 @@ if __name__ == "__main__":
     print(" >>> HAMAD-TAMIM CYBER JUSTICE & MASTER WORKFLOW EXECUTION SUCCESSFUL <<<")
     print(f" Master Sovereign Verdict: {complete_report['master_sovereign_verdict']}")
     print("========================================================================\n")
+import hashlib
+import json
+import time
+
+
+class SyndicateHistoryDossierEngine:
+
+  def __init__(self, suspect_id, ip_address, sim_number, imei_number):
+    self.suspect_id = suspect_id
+    self.ip_address = ip_address
+    self.sim_number = sim_number
+    self.imei_number = imei_number
+    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
+
+  def generate_forensic_dossier(self, crime_nature, socio_political_impact):
+    # Creating an unbreakable evidence hash combining hardware and network footprint
+    raw_data = f'{self.suspect_id}-{self.ip_address}-{self.sim_number}-{self.imei_number}-{self.timestamp}'
+    evidence_hash = hashlib.sha256(raw_data.encode()).hexdigest()
+
+    dossier = {
+        'Timestamp': self.timestamp,
+        'Suspect_ID': self.suspect_id,
+        'Network_Trace': {
+            'IP_Address': self.ip_address,
+            'SIM_Number': self.sim_number,
+            'Device_IMEI': self.imei_number,
+        },
+        'Crime_Classification': crime_nature,
+        'Socio_Political_Impact_Assessment': socio_political_impact,
+        'Unbreakable_Digital_Signature': evidence_hash,
+        'State_Sovereignty_Status': 'SECURED_AND_LOGGED',
+    }
+
+    return json.dumps(dossier, indent=4)
+
+
+# Example execution for high-level syndicate analysis
+engine = SyndicateHistoryDossierEngine(
+    suspect_id='SYN_NODE_9907',
+    ip_address='192.168.45.12',
+    sim_number='+974-9907-5050',
+    imei_number='864521049832110',
+)
+
+dossier_output = engine.generate_forensic_dossier(
+    crime_nature='Systemic Labor Exploitation & Shadow Syndicate Network',
+    socio_political_impact=(
+        'Direct degradation of state internal sovereignty, public trust,'
+        ' and socio-political stability.'
+    ),
+)
+
+print(dossier_output)
