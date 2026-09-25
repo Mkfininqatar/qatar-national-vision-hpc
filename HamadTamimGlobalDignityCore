@@ -197,3 +197,58 @@ if __name__ == "__main__":
     print("Bio-Telemetry Stress Evaluation Result:")
     for key, value in stress_eval.items():
         print(f"  - {key}: {value}")
+class FinancialDignityDisbursementEngine:
+    def __init__(self, worker_id, employer_id):
+        self.worker_id = worker_id
+        self.employer_id = employer_id
+
+    def audit_salary_disbursement(self, scheduled_pay_date, actual_pay_date, contracted_amount, disbursed_amount, delay_days):
+        """
+        শ্রমিকের মাসিক বেতন এবং পাওনা নির্দিষ্ট সময়ে পরিশোধ হচ্ছে কি না তা অডিট করে।
+        দীর্ঘমেয়াদি মানসিক চাপ ও আর্থিক শোষণ রোধে এটি শতভাগ সময়মতো পেমেন্ট নিশ্চিত করে।
+        """
+        audit_status = "COMPLIANT"
+        system_action = "SALARY_SECURED_AND_VERIFIED"
+        psychological_stress_risk = "LOW"
+
+        # ১. পেমেন্টে দেরি বা ডিলে চেক (নির্দিষ্ট সময়ের মধ্যে পেমেন্ট নিশ্চিত করা)
+        if delay_days > 5:
+            audit_status = "NON_COMPLIANT_DELAYED_PAY"
+            system_action = "FLAG_EMPLOYER_FOR_FINANCIAL_BREACH"
+            psychological_stress_risk = "HIGH_DUE_TO_FINANCIAL_UNCERTAINTY"
+
+        # ২. বেতনের পরিমাণে গরমিল বা কম দেওয়ার জালিয়াতি চেক
+        if disbursed_amount < contracted_amount:
+            audit_status = "CRITICAL_WAGE_THEFT_DETECTED"
+            system_action = "AUTOMATED_G2G_PENALTY_AND_RESTITUTION_TRIGGER"
+            psychological_stress_risk = "CRITICAL_MENTAL_DISTRESS_HAZARD"
+
+        return {
+            "worker_id": self.worker_id,
+            "employer_id": self.employer_id,
+            "scheduled_date": scheduled_pay_date,
+            "actual_date": actual_pay_date,
+            "delay_days": delay_days,
+            "contracted_amount": contracted_amount,
+            "disbursed_amount": disbursed_amount,
+            "audit_result": audit_status,
+            "stress_risk_level": psychological_stress_risk,
+            "enforced_action": system_action
+        }
+
+# টেস্ট রান: শ্রমিকের মাসিক বেতন ডিসবার্সমেন্ট ও মানসিক চাপ অডিট
+if __name__ == "__main__":
+    fin_engine = FinancialDignityDisbursementEngine(worker_id="WRK-88210", employer_id="EMP-9920")
+    
+    # ধরে নিই বেতন দেওয়ার নির্ধারিত তারিখ ছিল মাসের ১ তারিখ, কিন্তু ১০ দিন দেরি হয়েছে এবং পুরো বেতন দেওয়া হয়নি
+    disbursement_audit = fin_engine.audit_salary_disbursement(
+        scheduled_pay_date="2026-09-01",
+        actual_pay_date="2026-09-11",
+        contracted_amount=1500,
+        disbursed_amount=1350, # আংশিক বেতন বা কর্তন
+        delay_days=10
+    )
+    
+    print("Financial Dignity & Salary Audit Result:")
+    for key, value in disbursement_audit.items():
+        print(f"  - {key}: {value}")
