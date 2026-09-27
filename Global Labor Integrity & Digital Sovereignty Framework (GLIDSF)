@@ -2305,3 +2305,84 @@ if __name__ == "__main__":
     audit_report = engine.audit_payroll_integrity("PAY-AUDIT-9911")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Iqama Renewal Delay & Blackmail Audit Engine (GLIDSF - Point 29)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits residency permit renewal timelines, delay logs, and employer liability 
+             to eliminate intentional renewal delays, fine shifting, and residency blackmail syndicates.
+"""
+
+from datetime import datetime
+import json
+
+class IqamaRenewalDelayAuditEngine:
+    def __init__(self):
+        # Mock registry tracking residency expiry dates, renewal submission dates, and fine shifts
+        self.renewal_registry = {}
+
+    def log_renewal_delay_data(self, record_id, company_id, qid, days_expired_without_renewal, employer_shifted_fine_to_worker, intentional_delay_blackmail_flag):
+        """
+        Logs residency renewal tracking data and employer compliance breaches.
+        :param days_expired_without_renewal: Number of days the Iqama remained expired due to employer inaction.
+        :param employer_shifted_fine_to_worker: Boolean verifying if the company forced the worker to pay delay fines.
+        :param intentional_delay_blackmail_flag: Boolean indicating if the delay was used to coerce or blackmail the worker.
+        """
+        self.renewal_registry[record_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "expired_days": days_expired_without_renewal,
+            "fine_shifted": employer_shifted_fine_to_worker,
+            "blackmail_flag": intentional_delay_blackmail_flag,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_renewal_delay_integrity(self, record_id):
+        """
+        Detects if an employer intentionally delayed residency renewal to blackmail or extort the worker.
+        """
+        if record_id not in self.renewal_registry:
+            return {"error": "Record ID not found in sovereign registry."}
+
+        data = self.renewal_registry[record_id]
+        expired_days = data["expired_days"]
+        fine_shifted = data["fine_shifted"]
+        blackmail = data["blackmail_flag"]
+
+        # Forensic Rule: If there is unexcused delay (>0 days past grace), fines shifted, or blackmail flag, trigger violation.
+        is_delay_violation = (expired_days > 15) or fine_shifted or blackmail
+
+        audit_result = {
+            "record_id": record_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "residency_expired_days": expired_days,
+            "status": "VIOLATION: IQAMA RENEWAL DELAY & BLACKMAIL SYNDICATE DETECTED" if is_delay_violation else "COMPLIANT: TIMELY SOVEREIGN RENEWAL",
+            "enforcement_action": (
+                "AUTOMATICALLY RENEW RESIDENCY, DEBIT FINES FROM EMPLOYER ESCROW, PENALIZE COMPANY & FREEZE PORTAL"
+                if is_delay_violation
+                else "PROCEED WITH ARCHIVAL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = IqamaRenewalDelayAuditEngine()
+
+    # Simulating a corrupt employer intentionally delaying a worker's Iqama renewal by 45 days 
+    # and shifting the delay fines to the worker to execute blackmail.
+    engine.log_renewal_delay_data(
+        record_id="RENEW-DELAY-9901",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        days_expired_without_renewal=45,     # Severe unexcused delay
+        employer_shifted_fine_to_worker=True, # Illegal fine transfer
+        intentional_delay_blackmail_flag=True # Active blackmail coercion
+    )
+
+    # Run the renewal delay audit
+    audit_report = engine.audit_renewal_delay_integrity("RENEW-DELAY-9901")
+
+    print(json.dumps(audit_report, indent=4))
