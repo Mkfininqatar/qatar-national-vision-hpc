@@ -1829,3 +1829,85 @@ if __name__ == "__main__":
     audit_report = engine.audit_atm_custody_integrity("ATM-AUDIT-9901")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: End-of-Service Benefits & Gratuity Audit Engine (GLIDSF - Point 23)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits statutory End-of-Service Benefits (EOSB) calculations and escrow allocations 
+             to eliminate gratuity fraud, final settlement withholding, and corporate asset evasion.
+"""
+
+from datetime import datetime
+import json
+
+class GratuityAndEOSBAuditEngine:
+    def __init__(self):
+        # Mock registry tracking statutory EOSB accruals vs actual final payouts
+        self.gratuity_registry = {}
+
+    def log_eosb_settlement(self, settlement_id, company_id, qid, statutory_calculated_eosb_qar, actual_payout_qar, is_settled_on_time):
+        """
+        Logs End-of-Service settlement financial data.
+        :param statutory_calculated_eosb_qar: Legally mandated gratuity based on service tenure and base wage.
+        :param actual_payout_qar: The actual amount disbursed or offered to the worker.
+        :param is_settled_on_time: Boolean verifying if the payment was made immediately upon contract completion.
+        """
+        self.gratuity_registry[settlement_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "statutory_eosb": statutory_calculated_eosb_qar,
+            "actual_payout": actual_payout_qar,
+            "is_settled": is_settled_on_time,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_gratuity_integrity(self, settlement_id):
+        """
+        Detects if an employer is underpaying, withholding, or defrauding End-of-Service benefits.
+        """
+        if settlement_id not in self.gratuity_registry:
+            return {"error": "Settlement ID not found in sovereign registry."}
+
+        data = self.gratuity_registry[settlement_id]
+        statutory = data["statutory_eosb"]
+        payout = data["actual_payout"]
+        settled = data["is_settled"]
+
+        # Forensic Rule: If actual payout is less than statutory EOSB or not settled on time, trigger gratuity fraud violation.
+        is_gratuity_violation = (payout < statutory) or (not settled)
+
+        audit_result = {
+            "settlement_id": settlement_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "statutory_eosb_due": statutory,
+            "actual_payout_made": payout,
+            "status": "VIOLATION: END-OF-SERVICE BENEFITS & GRATUITY FRAUD DETECTED" if is_gratuity_violation else "COMPLIANT: FULL EOSB SOVEREIGN SETTLEMENT",
+            "enforcement_action": (
+                "SEIZE ESCROW FUNDS, FORCE IMMEDIATE FULL DISBURSEMENT, PENALIZE EMPLOYER & FREEZE CORPORATE PORTAL"
+                if is_gratuity_violation
+                else "PROCEED WITH FINAL ARCHIVAL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = GratuityAndEOSBAuditEngine()
+
+    # Simulating a corrupt employer who underpaid a worker's statutory gratuity 
+    # of 15,000 QAR down to a meager 2,000 QAR and delayed the final settlement.
+    engine.log_eosb_settlement(
+        settlement_id="EOSB-SET-9921",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        statutory_calculated_eosb_qar=15000.0, # Legally required EOSB
+        actual_payout_qar=2000.0,             # Fraudulent underpayment
+        is_settled_on_time=False              # Delayed/withheld settlement
+    )
+
+    # Run the gratuity and EOSB audit
+    audit_report = engine.audit_gratuity_integrity("EOSB-SET-9921")
+
+    print(json.dumps(audit_report, indent=4))
