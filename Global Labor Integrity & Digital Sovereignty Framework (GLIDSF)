@@ -2386,3 +2386,72 @@ if __name__ == "__main__":
     audit_report = engine.audit_renewal_delay_integrity("RENEW-DELAY-9901")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Sovereign Wage-Rate & Pricing Compliance Engine (GLIDSF Core Policy)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits corporate payroll and hourly rates against mandatory state-regulated 
+             minimum pricing matrices based on job categories and work duration.
+"""
+
+from datetime import datetime
+import json
+
+class SovereignWageRateEngine:
+    def __init__(self):
+        # Mock sovereign statutory minimum rate matrix per hour (in QAR) based on job categories
+        self.statutory_rate_matrix = {
+            "HEAVY_CONSTRUCTION": 25.0,  # Minimum QAR per hour
+            "TECHNICAL_SPECIALIST": 40.0,
+            "GENERAL_LABOR": 18.0,
+            "LOGISTICS_OPERATOR": 20.0
+        }
+
+    def audit_employer_rate_compliance(self, record_id, company_id, qid, job_category, hours_worked, paid_rate_per_hour):
+        """
+        Audits if the employer's paid hourly rate meets or exceeds the mandatory sovereign minimum.
+        :param job_category: The official classification of work type.
+        :param hours_worked: Total validated hours worked.
+        :param paid_rate_per_hour: The actual hourly rate provided by the employer.
+        """
+        if job_category not in self.statutory_rate_matrix:
+            return {"error": "Invalid Job Category specified in sovereign matrix."}
+
+        mandatory_min_rate = self.statutory_rate_matrix[job_category]
+        
+        # Forensic Rule: If paid rate is less than state-mandated minimum, trigger underpayment violation.
+        is_underpaid_violation = paid_rate_per_hour < mandatory_min_rate
+
+        audit_result = {
+            "record_id": record_id,
+            "company_id": company_id,
+            "worker_qid": qid,
+            "job_category": job_category,
+            "state_mandatory_min_rate_qar": mandatory_min_rate,
+            "company_paid_rate_qar": paid_rate_per_hour,
+            "status": "VIOLATION: SUB-MINIMUM WAGE & PRICING NON-COMPLIANCE DETECTED" if is_underpaid_violation else "COMPLIANT: SOVEREIGN PRICING ENFORCED",
+            "enforcement_action": (
+                "FORCE WAGE RECTIFICATION TO STATE MINIMUM, PAY DIFFERENTIAL ARREARS, PENALIZE EMPLOYER & LOCK PORTAL"
+                if is_underpaid_violation
+                else "PROCEED WITH SECURED DISBURSEMENT"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = SovereignWageRateEngine()
+
+    # Simulating a corrupt employer paying a heavy construction worker 15.0 QAR per hour 
+    # while the state-mandated mandatory minimum rate is 25.0 QAR per hour.
+    audit_report = engine.audit_employer_rate_compliance(
+        record_id="RATE-AUDIT-7789",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        job_category="HEAVY_CONSTRUCTION",
+        hours_worked=160.0,
+        paid_rate_per_hour=15.0  # Illegal sub-minimum rate
+    )
+
+    print(json.dumps(audit_report, indent=4))
