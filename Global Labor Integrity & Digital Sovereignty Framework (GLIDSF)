@@ -1125,3 +1125,77 @@ if __name__ == "__main__":
     audit_report = engine.audit_accident_cover_up("INC-2026-4401")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Passport Confiscation & Mobility Audit Engine (GLIDSF - Point 14)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Eradicates illegal passport confiscation and freedom of movement restrictions 
+             by enforcing sovereign digital passport vaults and penalizing employer custody.
+"""
+
+from datetime import datetime
+import json
+
+class PassportConfiscationAuditEngine:
+    def __init__(self):
+        # Mock registry tracking passport physical custody status vs digital sovereign vault
+        self.passport_custody_registry = {}
+
+    def log_passport_custody_status(self, company_id, qid, passport_held_by_employer, worker_has_direct_vault_access):
+        """
+        Logs whether an employer is illegally holding a worker's physical passport.
+        :param passport_held_by_employer: Boolean indicating if the company confiscated the passport.
+        :param worker_has_direct_vault_access: Boolean verifying if the worker holds their own documents/digital vault.
+        """
+        self.passport_custody_registry[qid] = {
+            "company_id": company_id,
+            "passport_held_by_employer": passport_held_by_employer,
+            "worker_vault_access": worker_has_direct_vault_access,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_mobility_freedom(self, qid):
+        """
+        Detects if an employer is violating freedom of movement by withholding physical identity documents.
+        """
+        if qid not in self.passport_custody_registry:
+            return {"error": "Worker QID not found in sovereign registry."}
+
+        data = self.passport_custody_registry[qid]
+        held_by_employer = data["passport_held_by_employer"]
+        vault_access = data["worker_vault_access"]
+
+        # Forensic Rule: If employer holds the passport or worker lacks vault access, trigger freedom restriction violation.
+        is_mobility_violation = held_by_employer or (not vault_access)
+
+        audit_result = {
+            "worker_qid": qid,
+            "company_id": data["company_id"],
+            "passport_confiscated_by_employer": held_by_employer,
+            "status": "VIOLATION: PASSPORT CONFISCATION & FREEDOM RESTRICTION DETECTED" if is_mobility_violation else "COMPLIANT: UNRESTRICTED SOVEREIGN MOBILITY",
+            "enforcement_action": (
+                "IMMEDIATE PASSPORT CONFISCATION & REPATRIATION TO WORKER, CRIMINAL PROSECUTION & COMPANY FINE"
+                if is_mobility_violation
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = PassportConfiscationAuditEngine()
+
+    # Simulating an abusive employer who illegally confiscated a worker's physical passport in a company safe 
+    # to restrict their movement and prevent job switching.
+    engine.log_passport_custody_status(
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        passport_held_by_employer=True,    # Illegal custody by company
+        worker_has_direct_vault_access=False # Worker denied access
+    )
+
+    # Run the mobility freedom and passport custody audit
+    audit_report = engine.audit_mobility_freedom("29485710293")
+
+    print(json.dumps(audit_report, indent=4))
