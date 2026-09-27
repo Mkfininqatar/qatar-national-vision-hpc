@@ -658,3 +658,77 @@ if __name__ == "__main__":
     audit_report = engine.evaluate_structural_integrity("QAR-CORP-101")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Diplomatic & State Oversight Accountability Engine (GLIDSF - Point 8)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Tracks oversight KPI metrics for embassies and labor ministry inspection units,
+             automatically flagging administrative negligence or oversight black-holes.
+"""
+
+from datetime import datetime
+import json
+
+class OversightAccountabilityEngine:
+    def __init__(self):
+        # Mock registry tracking oversight unit response times and unresolved grievance backlogs
+        self.oversight_registry = {}
+
+    def log_oversight_performance(self, unit_id, jurisdiction_zone, pending_grievances_count, average_resolution_days):
+        """
+        Logs performance metrics for a specific diplomatic or state oversight unit.
+        :param pending_grievances_count: Number of unresolved worker complaints in the zone.
+        :param average_resolution_days: Average time taken to resolve reported violations.
+        """
+        self.oversight_registry[unit_id] = {
+            "jurisdiction_zone": jurisdiction_zone,
+            "pending_grievances": pending_grievances_count,
+            "avg_resolution_days": average_resolution_days,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_oversight_efficiency(self, unit_id, max_allowed_backlog=10, max_allowed_resolution_days=14):
+        """
+        Detects if an oversight unit is falling into an 'oversight black-hole' due to negligence or delay.
+        """
+        if unit_id not in self.oversight_registry:
+            return {"error": "Oversight Unit ID not found in sovereign registry."}
+
+        data = self.oversight_registry[unit_id]
+        backlog = data["pending_grievances"]
+        days = data["avg_resolution_days"]
+
+        # Forensic Rule: If backlog or resolution time exceeds thresholds, trigger negligence flag.
+        is_negligence_detected = (backlog > max_allowed_backlog) or (days > max_allowed_resolution_days)
+
+        audit_result = {
+            "unit_id": unit_id,
+            "jurisdiction_zone": data["jurisdiction_zone"],
+            "pending_grievances": backlog,
+            "average_resolution_days": days,
+            "status": "FLAGGED: ADMINISTRATIVE OVERSIGHT BLACK-HOLE DETECTED" if is_negligence_detected else "COMPLIANT & RESPONSIVE",
+            "enforcement_action": (
+                "ISSUING ADMINISTRATIVE ACCOUNTABILITY NOTICE & FORCING CASE ESCALATION"
+                if is_negligence_detected
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = OversightAccountabilityEngine()
+
+    # Simulating an inactive oversight unit with a high backlog of unresolved complaints and prolonged delays
+    engine.log_oversight_performance(
+        unit_id="DIP-UNIT-DOHA-SOUTH",
+        jurisdiction_zone="Industrial Sector Zone 4",
+        pending_grievances_count=45, # High backlog exceeding limit
+        average_resolution_days=60   # Delayed response
+    )
+
+    # Run the oversight audit
+    audit_report = engine.audit_oversight_efficiency("DIP-UNIT-DOHA-SOUTH")
+
+    print(json.dumps(audit_report, indent=4))
