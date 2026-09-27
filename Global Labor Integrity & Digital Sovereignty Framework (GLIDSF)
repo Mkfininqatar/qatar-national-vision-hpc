@@ -964,3 +964,86 @@ if __name__ == "__main__":
     audit_report = engine.audit_health_certification("MED-CERT-88192")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Forced Overtime & Wage Withholding Audit Engine (GLIDSF - Point 12)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits biometric work hours and overtime records against central WPS wage payouts 
+             to eliminate forced labor, unpaid overtime, and malicious wage withholding.
+"""
+
+from datetime import datetime
+import json
+
+class WageAndOvertimeAuditEngine:
+    def __init__(self):
+        # Mock registry tracking biometric work logs and actual WPS payouts
+        self.labor_payroll_registry = {}
+
+    def log_labor_workcycle(self, company_id, qid, standard_hours, overtime_hours, wages_paid_qar, has_withheld_salary):
+        """
+        Logs biometric work hours and actual salary disbursement status.
+        :param standard_hours: Regular scheduled working hours.
+        :param overtime_hours: Extra hours worked beyond standard limit.
+        :param wages_paid_qar: Total wages actually disbursed via WPS.
+        :param has_withheld_salary: Boolean indicating if salary payment is delayed or blocked.
+        """
+        self.labor_payroll_registry[qid] = {
+            "company_id": company_id,
+            "standard_hours": standard_hours,
+            "overtime_hours": overtime_hours,
+            "wages_paid": wages_paid_qar,
+            "has_withheld_salary": has_withheld_salary,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_wage_compliance(self, qid, minimum_legal_wage_qar=1400.0):
+        """
+        Detects unpaid overtime, forced labor, or malicious wage withholding.
+        """
+        if qid not in self.labor_payroll_registry:
+            return {"error": "Worker QID not found in sovereign registry."}
+
+        data = self.labor_payroll_registry[qid]
+        ot_hours = data["overtime_hours"]
+        wages = data["wages_paid"]
+        withheld = data["has_withheld_salary"]
+
+        # Forensic Rule: If salary is withheld or wages are below standard minimum despite overtime, flag violation.
+        is_wage_violation = withheld or (wages < minimum_legal_wage_qar) or (ot_hours > 0 and wages == minimum_legal_wage_qar)
+
+        audit_result = {
+            "worker_qid": qid,
+            "company_id": data["company_id"],
+            "overtime_hours_logged": ot_hours,
+            "wages_disbursed_qar": wages,
+            "salary_withheld_status": withheld,
+            "status": "VIOLATION: FORCED OVERTIME & WAGE WITHHOLDING BLACK ZONE DETECTED" if is_wage_violation else "COMPLIANT: FAIR WAGE & OVERTIME SECURED",
+            "enforcement_action": (
+                "INSTANT WAGE SEIZURE & DISBURSEMENT, COMPANY FINE & COMPLIANCE FREEZE"
+                if is_wage_violation
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = WageAndOvertimeAuditEngine()
+
+    # Simulating an abusive employer forcing 45 hours of overtime but withholding the salary 
+    # and paying below legal standards.
+    engine.log_labor_workcycle(
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        standard_hours=160,
+        overtime_hours=45.0,        # Heavy overtime worked
+        wages_paid_qar=1000.0,      # Below minimum wage
+        has_withheld_salary=True    # Salary maliciously withheld
+    )
+
+    # Run the wage and overtime compliance audit
+    audit_report = engine.audit_wage_compliance("29485710293")
+
+    print(json.dumps(audit_report, indent=4))
