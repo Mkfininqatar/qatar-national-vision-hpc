@@ -2942,3 +2942,71 @@ if __name__ == "__main__":
     # Simulating an audit test
     result = engine.audit_and_solve("SKILL_GRADE_B", 6000.00, "EMP_QATAR_9982")
     print("Integrated Audit & Solution Log:", result)
+# ==============================================================================
+# GLOBAL LABOR INTEGRITY & DIGITAL SOVEREIGNTY FRAMEWORK (GLIDSF)
+# ------------------------------------------------------------------------------
+# Module: Point 30 - Mandatory Pre-Recruitment Workplace Profile & Hazard Audit
+# Author: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+# ==============================================================================
+
+class SovereignWorkplaceAuditEngine:
+    def __init__(self):
+        # State regulated establishment compliance rules
+        self.mandatory_sectors = ["HOTEL", "RETAIL_SHOP", "CONSTRUCTION", "TECHNICAL_OFFICE", "INDUSTRIAL"]
+
+    def audit_pre_recruitment_profile(self, establishment_id: str, sector: str, job_description: dict) -> dict:
+        """
+        [POINT 30: Mandatory Pre-Recruitment Workplace & Job-Nature Audit]
+        ----------------------------------------------------------------------
+        [PROBLEM]: Employers recruit workers blindly without declaring the exact 
+                   nature of work, leading to hidden hazardous conditions, forced 
+                   job-swapping, and contract substitution upon arrival.
+        [DISCUSSION]: Accountability starts before recruitment. Every establishment 
+                      (hotel, shop, office) must legally submit a certified digital twin 
+                      profile and job hazard report to the Ministry before any visa is allocated.
+        [SOLUTION]: Automated pre-clearance gate. If the establishment fails to submit 
+                    detailed work telemetry, hazard rating, and true job description, 
+                    the recruitment quota remains strictly locked.
+        [FUTURE ROADMAP]: Real-time spatial twin monitoring of the workplace via IoT telemetry 
+                          to ensure actual working conditions match the pre-submitted report.
+        """
+        if sector not in self.mandatory_sectors:
+            return {
+                "point": "POINT_30",
+                "status": "REJECTED",
+                "message": "Invalid establishment sector specified for state labor onboarding."
+            }
+        
+        # Validating if critical job profile details are provided
+        required_keys = ["exact_job_title", "hazard_level", "daily_working_hours", "accommodation_standard"]
+        for key in required_keys:
+            if key not in job_description or not job_description[key]:
+                return {
+                    "point": "POINT_30",
+                    "status": "AUDIT_FAILED_INCOMPLETE_REPORT",
+                    "missing_parameter": key,
+                    "action_taken": "Recruitment quota locked. Establishment must submit complete work telemetry."
+                }
+        
+        return {
+            "point": "POINT_30",
+            "status": "WORKPLACE_REPORT_APPROVED",
+            "establishment_id": establishment_id,
+            "sector": sector,
+            "message": "Job profile and hazard telemetry successfully registered with Ministry database.",
+            "next_milestone": "Automated dispatch of digital work permit and verified contract to worker."
+        }
+
+if __name__ == "__main__":
+    engine = SovereignWorkplaceAuditEngine()
+    
+    # Test case: An establishment (e.g., a hotel or shop) trying to request workers
+    sample_job_report = {
+        "exact_job_title": "Front Desk & Operations Assistant",
+        "hazard_level": "LOW",
+        "daily_working_hours": 8,
+        "accommodation_standard": "Tier-1 State Certified"
+    }
+    
+    audit_log = engine.audit_pre_recruitment_profile("EST_DOHA_7789", "HOTEL", sample_job_report)
+    print("Point 30 Workplace Audit Log:", audit_log)
