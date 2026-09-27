@@ -1047,3 +1047,81 @@ if __name__ == "__main__":
     audit_report = engine.audit_wage_compliance("29485710293")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Workplace Safety & Accident Cover-Up Audit Engine (GLIDSF - Point 13)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Cross-references emergency hospital admission logs with corporate incident reports 
+             to eradicate workplace injury cover-ups, safety violations, and compensation denials.
+"""
+
+from datetime import datetime
+import json
+
+class WorkplaceSafetyAuditEngine:
+    def __init__(self):
+        # Mock registry tracking hospital emergency admissions vs corporate reports
+        self.safety_incident_registry = {}
+
+    def log_safety_incident(self, incident_id, company_id, qid, hospital_admission_recorded, corporate_reported_accident):
+        """
+        Logs safety incidents by comparing hospital records with employer disclosures.
+        :param hospital_admission_recorded: Boolean indicating if the worker was admitted to a registered hospital.
+        :param corporate_reported_accident: Boolean indicating if the employer officially reported the incident.
+        """
+        self.safety_incident_registry[incident_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "hospital_recorded": hospital_admission_recorded,
+            "corporate_reported": corporate_reported_accident,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_accident_cover_up(self, incident_id):
+        """
+        Detects if an employer is attempting to cover up a workplace accident or injury.
+        """
+        if incident_id not in self.safety_incident_registry:
+            return {"error": "Incident ID not found in sovereign registry."}
+
+        data = self.safety_incident_registry[incident_id]
+        hospital_rec = data["hospital_recorded"]
+        corp_rep = data["corporate_reported"]
+
+        # Forensic Rule: If hospital recorded an injury but the company failed to report it, trigger cover-up fraud flag.
+        is_cover_up_fraud = hospital_rec and (not corp_rep)
+
+        audit_result = {
+            "incident_id": incident_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "hospital_admission_verified": hospital_rec,
+            "corporate_reporting_status": corp_rep,
+            "status": "VIOLATION: ACCIDENT COVER-UP & UNSAFE WORK ENVIRONMENT DETECTED" if is_cover_up_fraud else "COMPLIANT: TRANSPARENT SAFETY PROTOCOL",
+            "enforcement_action": (
+                "SEIZE CORPORATE ASSETS, ENFORCE MAXIMUM PENALTY, DISBURSE INJURY COMPENSATION & SUSPEND LICENSE"
+                if is_cover_up_fraud
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = WorkplaceSafetyAuditEngine()
+
+    # Simulating a negligent employer whose worker suffered a severe site injury and was admitted to a hospital, 
+    # but the company deliberately hid the accident report to avoid liability.
+    engine.log_safety_incident(
+        incident_id="INC-2026-4401",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        hospital_admission_recorded=True,  # Worker admitted to hospital
+        corporate_reported_accident=False  # Company illegally hid the accident
+    )
+
+    # Run the accident cover-up audit
+    audit_report = engine.audit_accident_cover_up("INC-2026-4401")
+
+    print(json.dumps(audit_report, indent=4))
