@@ -1752,3 +1752,80 @@ if __name__ == "__main__":
     audit_report = engine.audit_hour_manipulation("TS-AUDIT-8812")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: ATM Card & Bank Account Custody Audit Engine (GLIDSF - Point 22)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits ATM card physical possession and post-WPS withdrawal behavior 
+             to eliminate illegal bank account takeovers, forced card handovers, and wage theft.
+"""
+
+from datetime import datetime
+import json
+
+class ATMCustodyAuditEngine:
+    def __init__(self):
+        # Mock registry tracking ATM card custody status and withdrawal behavior
+        self.atm_registry = {}
+
+    def log_atm_custody_data(self, record_id, company_id, qid, atm_card_held_by_employer, corporate_mass_withdrawal_detected):
+        """
+        Logs ATM card custody status and whether company agents withdrew the worker's salary.
+        :param atm_card_held_by_employer: Boolean verifying if the employer confiscated the physical ATM card.
+        :param corporate_mass_withdrawal_detected: Boolean indicating if funds were withdrawn by corporate proxies right after WPS deposit.
+        """
+        self.atm_registry[record_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "card_held_by_employer": atm_card_held_by_employer,
+            "mass_withdrawal": corporate_mass_withdrawal_detected,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_atm_custody_integrity(self, record_id):
+        """
+        Detects if an employer is holding worker ATM cards or illegally seizing bank funds.
+        """
+        if record_id not in self.atm_registry:
+            return {"error": "Record ID not found in sovereign registry."}
+
+        data = self.atm_registry[record_id]
+        held = data["card_held_by_employer"]
+        withdrawal = data["mass_withdrawal"]
+
+        # Forensic Rule: If the employer holds the ATM card or executes mass proxy withdrawals, trigger custody fraud.
+        is_atm_violation = held or withdrawal
+
+        audit_result = {
+            "record_id": record_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "atm_confiscated_by_employer": held,
+            "status": "VIOLATION: ILLEGAL ATM CARD CUSTODY & BANK ACCOUNT SYNDICATE DETECTED" if is_atm_violation else "COMPLIANT: SOVEREIGN BANKING INDEPENDENCE",
+            "enforcement_action": (
+                "SEIZE CORPORATE ACCOUNTS, RESTORE ATM SOVEREIGNTY TO WORKER, ISSUE HEAVY FINE & PROSECUTE"
+                if is_atm_violation
+                else "PROCEED WITH SECURED BANKING OPERATIONS"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = ATMCustodyAuditEngine()
+
+    # Simulating a corrupt employer who illegally confiscated a worker's ATM card 
+    # and executed a mass proxy withdrawal right after the WPS salary credit.
+    engine.log_atm_custody_data(
+        record_id="ATM-AUDIT-9901",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        atm_card_held_by_employer=True,   # Illegal card custody
+        corporate_mass_withdrawal_detected=True # Proxy cash seizure
+    )
+
+    # Run the ATM custody and bank account audit
+    audit_report = engine.audit_atm_custody_integrity("ATM-AUDIT-9901")
+
+    print(json.dumps(audit_report, indent=4))
