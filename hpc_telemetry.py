@@ -787,3 +787,107 @@ if __name__ == "__main__":
         entry = logger.log_temporal_shift(formatted_time)
         logger.display_latest_log(entry)
         time.sleep(0.05)  # Simulated micro-delay for telemetry output stream
+import asyncio
+import time
+import json
+import logging
+from typing import Dict, Any
+
+# Configure high-performance logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
+class ScalableTelemetryEngine:
+    def __init__(self, max_queue_size: int = 10000):
+        # In-memory asynchronous queue for non-blocking telemetry ingestion
+        self.telemetry_queue: asyncio.Queue = asyncio.Queue(maxsize=max_queue_size)
+        self.is_running: bool = False
+
+    async def ingest_node_data(self, node_id: str, metrics: Dict[str, Any]) -> None:
+        """
+        Non-blocking data ingestion point for multi-node environments.
+        Edges push data here instantly without waiting for disk I/O.
+        """
+        payload = {
+            "node_id": node_id,
+            "timestamp": time.time(),
+            "metrics": metrics
+        }
+        try:
+            # Put data into queue without blocking the event loop
+            self.telemetry_queue.put_nowait(payload)
+        except asyncio.QueueFull:
+            logging.warning(f"Telemetry queue is full! Dropping/Buffering packet from node: {node_id}")
+            # In a heavy distributed system, overflow can be safely redirected to a ring buffer or disk log
+
+    async def process_telemetry_pipeline(self) -> None:
+        """
+        Background worker that continuously consumes, audits, and optimizes 
+        incoming telemetry data in real-time.
+        """
+        while self.is_running:
+            try:
+                # Fetch data from queue asynchronously
+                packet = await self.telemetry_queue.get()
+                
+                # --- Core Audit & Pattern Recognition Logic ---
+                await self._audit_packet(packet)
+                
+                self.telemetry_queue.task_done()
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logging.error(f"Error in telemetry processing pipeline: {e}")
+
+    async def _audit_packet(self, packet: Dict[str, Any]) -> None:
+        """
+        Simulates deep telemetry pattern matching and anomaly detection 
+        under the GLIDSF framework.
+        """
+        node_id = packet["node_id"]
+        metrics = packet["metrics"]
+        
+        # Example pattern check: CPU or Resource Anomaly Detection
+        cpu_load = metrics.get("cpu_load", 0.0)
+        if cpu_load > 85.0:
+            logging.critical(f"ANOMALY DETECTED: High load on Node [{node_id}] -> CPU: {cpu_load}%")
+        else:
+            logging.info(f"Node [{node_id}] telemetry verified successfully.")
+
+    async def start(self, worker_count: int = 4) -> None:
+        """
+        Initializes and starts the distributed async telemetry engine.
+        """
+        self.is_running = True
+        logging.info(f"Starting Scalable Telemetry Engine with {worker_count} concurrent workers...")
+        
+        # Spawn multiple concurrent workers to process telemetry streams in parallel
+        workers = [asyncio.create_task(self.process_telemetry_pipeline()) for _ in range(worker_count)]
+        
+        # Keep engine alive
+        await asyncio.gather(*workers)
+
+    async def stop(self) -> None:
+        self.is_running = False
+        logging.info("Shutting down Telemetry Engine gracefully...")
+
+# --- Execution Simulation ---
+async def main():
+    engine = ScalableTelemetryEngine()
+    
+    # Start the engine in the background
+    engine_task = asyncio.create_task(engine.start(worker_count=3))
+    
+    # Simulate high-frequency multi-node data ingestion
+    nodes = ["node_alpha_01", "node_beta_02", "node_gamma_03"]
+    for i in range(5):
+        for node in nodes:
+            dummy_metrics = {"cpu_load": 70.0 + (i * 4), "memory_usage": 45.2}
+            await engine.ingest_node_data(node, dummy_metrics)
+            await asyncio.sleep(0.1) # Simulate network interval
+            
+    await asyncio.sleep(1) # Let workers finish processing
+    await engine.stop()
+    engine_task.cancel()
+
+if __name__ == "__main__":
+    asyncio.run(main())
