@@ -3074,3 +3074,118 @@ if __name__ == "__main__":
     
     dispatch_result = welfare_engine.dispatch_to_workers_welfare("EST_DOHA_7789", job_report, candidate)
     print("Point 31 Welfare Dispatch Log:", dispatch_result)
+# ==============================================================================
+# GLOBAL LABOR INTEGRITY & DIGITAL SOVEREIGNTY FRAMEWORK (GLIDSF)
+# ------------------------------------------------------------------------------
+# Framework Authorship: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+# State Vision Alignment: Qatar National Vision 2030 & Labor Reform Directives
+# ==============================================================================
+
+class IntegratedSovereignEngine:
+    def __init__(self):
+        # State-mandated standards and thresholds
+        self.sovereign_standards = {
+            "SKILL_GRADE_A": {"title": "High-Performance Computing / Digital Twin Architect", "min_wage": 15000.00},
+            "SKILL_GRADE_B": {"title": "Specialized Engineering / Medical Spatial Twin Technician", "min_wage": 8500.00},
+            "SKILL_GRADE_C": {"title": "Skilled Technical Operations & Telemetry Monitoring", "min_wage": 5000.00}
+        }
+        self.mandatory_sectors = ["HOTEL", "RETAIL_SHOP", "CONSTRUCTION", "TECHNICAL_OFFICE", "INDUSTRIAL"]
+        self.global_audit_ledger = []
+
+    def audit_point_30_workplace_profile(self, establishment_id: str, sector: str, job_description: dict) -> dict:
+        """
+        [POINT 30: Mandatory Pre-Recruitment Workplace & Job-Nature Audit]
+        ----------------------------------------------------------------------
+        [PROBLEM]: Employers recruit workers blindly without declaring the exact 
+                   nature of work, leading to hidden hazardous conditions, forced 
+                   job-swapping, and contract substitution upon arrival.
+        [DISCUSSION]: Accountability starts before recruitment. Every establishment 
+                      (hotel, shop, office) must legally submit a certified digital twin 
+                      profile and job hazard report to the Ministry before any visa is allocated.
+        [SOLUTION]: Automated pre-clearance gate. If the establishment fails to submit 
+                    detailed work telemetry, hazard rating, and true job description, 
+                    the recruitment quota remains strictly locked.
+        [FUTURE ROADMAP]: Real-time spatial twin monitoring of the workplace via IoT telemetry 
+                          to ensure actual working conditions match the pre-submitted report.
+        """
+        if sector not in self.mandatory_sectors:
+            return {
+                "point": "POINT_30",
+                "status": "REJECTED",
+                "message": "Invalid establishment sector specified for state labor onboarding."
+            }
+        
+        required_keys = ["exact_job_title", "hazard_level", "daily_working_hours", "accommodation_standard"]
+        for key in required_keys:
+            if key not in job_description or not job_description[key]:
+                return {
+                    "point": "POINT_30",
+                    "status": "AUDIT_FAILED_INCOMPLETE_REPORT",
+                    "missing_parameter": key,
+                    "action_taken": "Recruitment quota locked. Establishment must submit complete work telemetry."
+                }
+        
+        return {
+            "point": "POINT_30",
+            "status": "WORKPLACE_REPORT_APPROVED",
+            "establishment_id": establishment_id,
+            "sector": sector,
+            "message": "Job profile and hazard telemetry successfully registered with Ministry database."
+        }
+
+    def audit_point_31_welfare_dispatch(self, establishment_id: str, verified_job_report: dict, candidate_skill_profile: dict) -> dict:
+        """
+        [POINT 31: Workers' Welfare Dispatch & Global Telemetry Archiving]
+        ----------------------------------------------------------------------
+        [PROBLEM]: Unchecked direct hiring by establishments often bypasses national welfare oversight,
+                   leading to skill mismatch, exploitation, and lack of transparent historical records.
+        [DISCUSSION]: Once the establishment submits the workplace hazard and job nature report, 
+                      the requisition must route through State Workers' Welfare authorities for skill-based matching.
+        [SOLUTION]: Automated routing engine that cross-references job requirements with candidate diagnostics, 
+                    ensuring merit-based recruitment and logging every action into a permanent monthly/annual global ledger.
+        [FUTURE ROADMAP]: Real-time international transparency portal showcasing annual state labor integrity metrics 
+                          aligned with Qatar National Vision 2030.
+        """
+        candidate_skill = candidate_skill_profile.get("certified_skill_grade")
+        if not candidate_skill:
+            return {
+                "point": "POINT_31",
+                "status": "DISPATCH_PENDING_SKILL_DIAGNOSTIC",
+                "message": "Candidate skill diagnostics missing. Welfare authority requires verified skill mapping."
+            }
+        
+        telemetry_record = {
+            "record_id": f"GLIDSF-AUDIT-{establishment_id}-2026",
+            "establishment_id": establishment_id,
+            "matched_role": verified_job_report.get("exact_job_title"),
+            "candidate_id": candidate_skill_profile.get("worker_id"),
+            "dispatch_status": "APPROVED_AND_RECORDED",
+            "transparency_index": "TIER-1_SOVEREIGN"
+        }
+        
+        self.global_audit_ledger.append(telemetry_record)
+        
+        return {
+            "point": "POINT_31",
+            "status": "SUCCESSFULLY_DISPATCHED_VIA_WORKERS_WELFARE",
+            "audit_record": telemetry_record,
+            "message": "Job requisition routed through Workers' Welfare. Monthly/Annual global record updated successfully."
+        }
+
+if __name__ == "__main__":
+    engine = IntegratedSovereignEngine()
+    
+    # Testing Point 30 & Point 31 execution
+    job_report = {
+        "exact_job_title": "Digital Twin Architect & HPC Specialist",
+        "hazard_level": "LOW",
+        "daily_working_hours": 8,
+        "accommodation_standard": "Tier-1 State Certified"
+    }
+    candidate = {"worker_id": "QID_9907505", "certified_skill_grade": "SKILL_GRADE_A"}
+    
+    res_30 = engine.audit_point_30_workplace_profile("EST_DOHA_7789", "HOTEL", job_report)
+    print("Point 30 Audit Log:", res_30)
+    
+    res_31 = engine.audit_point_31_welfare_dispatch("EST_DOHA_7789", job_report, candidate)
+    print("Point 31 Audit Log:", res_31)
