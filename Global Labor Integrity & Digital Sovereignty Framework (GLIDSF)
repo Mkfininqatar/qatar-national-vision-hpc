@@ -1911,3 +1911,84 @@ if __name__ == "__main__":
     audit_report = engine.audit_gratuity_integrity("EOSB-SET-9921")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Intermediary & Sub-Agency Commission Audit Engine (GLIDSF - Point 24)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits recruitment supply chain transactions and sub-agency involvement 
+             to eliminate illegal hidden commissions, shadow broker syndicates, and pre-departure fees.
+"""
+
+from datetime import datetime
+import json
+
+class IntermediaryCommissionAuditEngine:
+    def __init__(self):
+        # Mock registry tracking recruitment channels, licensed agencies, and sub-agency fees
+        self.recruitment_registry = {}
+
+    def log_recruitment_channel(self, recruitment_id, agency_id, sub_agent_id, is_authorized_sub_agent, recruitment_fee_charged_qar, is_zero_fee_compliant):
+        """
+        Logs recruitment transaction details including intermediary channels and fees.
+        :param is_authorized_sub_agent: Boolean verifying if the sub-agent is officially registered with the state.
+        :param recruitment_fee_charged_qar: Any fee extracted from the worker during recruitment.
+        :param is_zero_fee_compliant: Boolean verifying adherence to zero recruitment fee policies.
+        """
+        self.recruitment_registry[recruitment_id] = {
+            "agency_id": agency_id,
+            "sub_agent_id": sub_agent_id,
+            "authorized_sub_agent": is_authorized_sub_agent,
+            "fee_charged": recruitment_fee_charged_qar,
+            "zero_fee_compliant": is_zero_fee_compliant,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_commission_syndicate(self, recruitment_id):
+        """
+        Detects if an unauthorized sub-agent or illegal recruitment syndicate extracted hidden commissions.
+        """
+        if recruitment_id not in self.recruitment_registry:
+            return {"error": "Recruitment ID not found in sovereign registry."}
+
+        data = self.recruitment_registry[recruitment_id]
+        auth_sub = data["authorized_sub_agent"]
+        fee = data["fee_charged"]
+        zero_fee = data["zero_fee_compliant"]
+
+        # Forensic Rule: If sub-agent is unauthorized, fees are charged, or zero-fee policy is broken, trigger syndicate violation.
+        is_commission_violation = (not auth_sub) or (fee > 0.0) or (not zero_fee)
+
+        audit_result = {
+            "recruitment_id": recruitment_id,
+            "agency_id": data["agency_id"],
+            "sub_agent_id": data["sub_agent_id"],
+            "unauthorized_fee_qar": fee,
+            "status": "VIOLATION: ILLEGAL INTERMEDIARY & SUB-AGENCY COMMISSION SYNDICATE DETECTED" if is_commission_violation else "COMPLIANT: ZERO-FEE RECRUITMENT SECURED",
+            "enforcement_action": (
+                "BLACKLIST SUB-AGENT, REVOKE MAIN AGENCY LICENSE, REFUND WORKER & PROSECUTE RECRUITMENT FRAUD"
+                if is_commission_violation
+                else "PROCEED WITH VISA ISSUANCE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = IntermediaryCommissionAuditEngine()
+
+    # Simulating an unauthorized shadow sub-agent illegally extracting 8,500 QAR 
+    # in recruitment commissions from a worker, violating zero-fee policies.
+    engine.log_recruitment_channel(
+        recruitment_id="REC-CH-99102",
+        agency_id="MAIN-AGENCY-QAR",
+        sub_agent_id="SHADOW-BROKER-SUB",
+        is_authorized_sub_agent=False, # Unauthorized shadow broker
+        recruitment_fee_charged_qar=8500.0, # Illegal commission fee
+        is_zero_fee_compliant=False    # Violated zero-fee policy
+    )
+
+    # Run the intermediary commission audit
+    audit_report = engine.audit_commission_syndicate("REC-CH-99102")
+
+    print(json.dumps(audit_report, indent=4))
