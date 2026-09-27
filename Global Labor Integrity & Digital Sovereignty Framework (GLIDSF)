@@ -2533,3 +2533,92 @@ if __name__ == "__main__":
     result = engine.audit_embassy_compliance("CONSULAR-AUDIT-4421")
 
     print(json.dumps(result, indent=4))
+"""
+Module: Sovereign Skill & Training Management Engine (GLIDSF Core Policy)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits worker skill proficiencies, assigns introductory concepts or upskilling pathways, 
+             and transforms incoming labor into certified high-skilled assets for sustainable economic progress.
+"""
+
+from datetime import datetime
+import json
+
+class SovereignSkillTrainingEngine:
+    def __init__(self):
+        # Mock registry tracking worker competency status and training participation
+        self.skill_registry = {}
+
+    def evaluate_worker_competency(self, record_id, qid, job_category, skill_score_percentage, requires_basic_orientation):
+        """
+        Evaluates worker skill metrics and assigns training pathways if deficits are found.
+        :param skill_score_percentage: Evaluated proficiency score (0 to 100).
+        :param requires_basic_orientation: Boolean indicating if basic introductory training is needed.
+        """
+        self.skill_registry[record_id] = {
+            "qid": qid,
+            "job_category": job_category,
+            "skill_score": skill_score_percentage,
+            "orientation_needed": requires_basic_orientation,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def process_training_and_deployment(self, record_id, completed_training_program):
+        """
+        Processes upskilling status and determines readiness for sovereign deployment.
+        """
+        if record_id not in self.skill_registry:
+            return {"error": "Record ID not found in sovereign skill registry."}
+
+        data = self.skill_registry[record_id]
+        score = data["skill_score"]
+        orientation = data["orientation_needed"]
+
+        # Forensic/Progress Rule: If score is below threshold or orientation is needed, enroll in sovereign training program.
+        is_training_required = (score < 75.0) or orientation
+
+        status_msg = "COMPLIANT: CERTIFIED SKILLED SOVEREIGN WORKFORCE"
+        action_msg = "PROCEED WITH DIRECT HIGH-PERFORMANCE DEPLOYMENT"
+
+        if is_training_required:
+            if not completed_training_program:
+                status_msg = "PENDING: SKILL DEFICIT DETECTED - TRAINING PATHWAY ASSIGNED"
+                action_msg = "ENROLL IN SOVEREIGN UP-SKILLING ACADEMY, PROVIDE BASIC CONCEPT ORIENTATION & TEMPORARY STIPEND"
+            else:
+                status_msg = "UPGRADED: SKILL DEFICIT RESOLVED VIA CERTIFIED TRAINING"
+                action_msg = "CERTIFY WORKER AS SKILLED ASSET & PROCEED WITH SECURED DEPLOYMENT"
+
+        audit_result = {
+            "record_id": record_id,
+            "worker_qid": data["qid"],
+            "job_category": data["job_category"],
+            "skill_score": score,
+            "status": status_msg,
+            "enforcement_action": action_msg
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = SovereignSkillTrainingEngine()
+
+    # Simulating a newly arrived worker with a preliminary skill score of 55% 
+    # who requires introductory concept training before field deployment.
+    engine.evaluate_worker_competency(
+        record_id="SKILL-TRAIN-8801",
+        qid="29485710293",
+        job_category="TECHNICAL_SPECIALIST",
+        skill_score_percentage=55.0,     # Needs upskilling
+        requires_basic_orientation=True  # Needs basic job concepts
+    )
+
+    # Process training status (simulating before and after training completion)
+    audit_report_pending = engine.process_training_and_deployment("SKILL-TRAIN-8801", completed_training_program=False)
+    print("--- Initial Evaluation ---")
+    print(json.dumps(audit_report_pending, indent=4))
+
+    # Simulating successful completion of sovereign training
+    audit_report_completed = engine.process_training_and_deployment("SKILL-TRAIN-8801", completed_training_program=True)
+    print("\n--- Post-Training Certification ---")
+    print(json.dumps(audit_report_completed, indent=4))
