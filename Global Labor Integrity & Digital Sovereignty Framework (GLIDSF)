@@ -1356,3 +1356,80 @@ if __name__ == "__main__":
     audit_report = engine.audit_litigation_integrity("SUIT-2026-9901")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Exit Permit & Iqama Blackmail Audit Engine (GLIDSF - Point 17)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Eliminates arbitrary employer vetoes on exit permits and Iqama renewals, 
+             automatically detecting and penalizing residency blackmail and mobility obstruction.
+"""
+
+from datetime import datetime
+import json
+
+class ExitPermitBlackmailAuditEngine:
+    def __init__(self):
+        # Mock registry tracking worker exit requests, residency renewal status, and employer blocks
+        self.exit_registry = {}
+
+    def log_exit_request(self, request_id, company_id, qid, has_legal_dispute_or_dues, employer_arbitrary_block):
+        """
+        Logs worker exit permit or residency renewal requests and employer responses.
+        :param has_legal_dispute_or_dues: Boolean checking if there are verified outstanding legal liabilities.
+        :param employer_arbitrary_block: Boolean indicating if the company is blocking the exit/renewal maliciously.
+        """
+        self.exit_registry[request_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "has_legal_dispute": has_legal_dispute_or_dues,
+            "employer_block": employer_arbitrary_block,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_exit_blackmail(self, request_id):
+        """
+        Detects if an employer is using exit permit blocks or Iqama blackmail to coerce workers.
+        """
+        if request_id not in self.exit_registry:
+            return {"error": "Exit Request ID not found in sovereign registry."}
+
+        data = self.exit_registry[request_id]
+        dispute = data["has_legal_dispute"]
+        block = data["employer_block"]
+
+        # Forensic Rule: If employer blocks exit without a verified legal dispute, it's illegal blackmail.
+        is_blackmail_violation = block and (not dispute)
+
+        audit_result = {
+            "request_id": request_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "employer_arbitrary_block_status": block,
+            "status": "VIOLATION: ILLEGAL IQAMA BLACKMAIL & EXIT PERMIT FRAUD DETECTED" if is_blackmail_violation else "COMPLIANT: SOVEREIGN EXIT CLEARANCE GRANTED",
+            "enforcement_action": (
+                "BYPASS EMPLOYER VETO, ISSUE SOVEREIGN EXIT PERMIT/RENEWAL, FINE COMPANY & FREEZE PORTAL"
+                if is_blackmail_violation
+                else "PROCEED WITH DEPARTURE/RENEWAL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = ExitPermitBlackmailAuditEngine()
+
+    # Simulating a corrupt employer maliciously blocking a worker's exit/renewal 
+    # to extort money or force them to stay, despite having no legitimate dispute.
+    engine.log_exit_request(
+        request_id="EXIT-REQ-8821",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        has_legal_dispute_or_dues=False, # No legitimate liability
+        employer_arbitrary_block=True    # Malicious arbitrary veto
+    )
+
+    # Run the exit permit and blackmail audit
+    audit_report = engine.audit_exit_blackmail("EXIT-REQ-8821")
+
+    print(json.dumps(audit_report, indent=4))
