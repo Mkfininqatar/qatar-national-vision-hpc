@@ -1279,3 +1279,80 @@ if __name__ == "__main__":
     audit_report = engine.audit_iqama_fee_compliance("IQAMA-TXN-99182")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Legal Harassment & False Litigation Audit Engine (GLIDSF - Point 16)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Evaluates corporate counter-claims and legal lawsuits against workers 
+             to eradicate malicious litigation, retaliatory harassment, and systemic legal obstruction.
+"""
+
+from datetime import datetime
+import json
+
+class LegalHarassmentAuditEngine:
+    def __init__(self):
+        # Mock registry tracking labor dispute filings and subsequent corporate lawsuits
+        self.litigation_registry = {}
+
+    def log_legal_claim(self, lawsuit_id, company_id, qid, is_retaliatory_counter_claim, lacks_digital_evidence):
+        """
+        Logs corporate lawsuits filed against workers.
+        :param is_retaliatory_counter_claim: Boolean indicating if the lawsuit was filed immediately after a worker complaint.
+        :param lacks_digital_evidence: Boolean verifying if the employer failed to provide foundational proof.
+        """
+        self.litigation_registry[lawsuit_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "is_retaliatory": is_retaliatory_counter_claim,
+            "lacks_evidence": lacks_digital_evidence,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_litigation_integrity(self, lawsuit_id):
+        """
+        Detects if an employer's lawsuit is a malicious, false litigation aimed at harassing the worker.
+        """
+        if lawsuit_id not in self.litigation_registry:
+            return {"error": "Lawsuit ID not found in sovereign registry."}
+
+        data = self.litigation_registry[lawsuit_id]
+        retaliatory = data["is_retaliatory"]
+        no_evidence = data["lacks_evidence"]
+
+        # Forensic Rule: If the claim is retaliatory and lacks evidence, trigger malicious litigation fraud flag.
+        is_legal_harassment = retaliatory or no_evidence
+
+        audit_result = {
+            "lawsuit_id": lawsuit_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "retaliatory_status": retaliatory,
+            "status": "VIOLATION: FALSE LITIGATION & LEGAL HARASSMENT SYNDICATE DETECTED" if is_legal_harassment else "COMPLIANT: LEGITIMATE LEGAL REVIEW",
+            "enforcement_action": (
+                "DISMISS FALSE LAWSUIT, PENALIZE CORPORATE LEGAL COUNSEL, COMPENSATE WORKER & FREEZE PORTAL"
+                if is_legal_harassment
+                else "PROCEED WITH STANDARD ARBITRATION"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = LegalHarassmentAuditEngine()
+
+    # Simulating a malicious employer filing a baseless retaliatory lawsuit lacking any digital evidence 
+    # to harass a worker who demanded unpaid dues.
+    engine.log_legal_claim(
+        lawsuit_id="SUIT-2026-9901",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        is_retaliatory_counter_claim=True, # Filed right after worker's complaint
+        lacks_evidence=True                # No valid foundational proof provided
+    )
+
+    # Run the legal harassment audit
+    audit_report = engine.audit_litigation_integrity("SUIT-2026-9901")
+
+    print(json.dumps(audit_report, indent=4))
