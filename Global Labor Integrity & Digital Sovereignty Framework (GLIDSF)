@@ -359,3 +359,80 @@ if __name__ == "__main__":
     compliance_report = engine.audit_recruitment_compliance("REC-2026-9901")
 
     print(json.dumps(compliance_report, indent=4))
+"""
+Module: Central Vacancy Transparency & Anti-Hoarding Engine (GLIDSF - Point 4)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Eliminates vacancy hoarding by enforcing automated public listing of all corporate 
+             job openings and penalizing managers who conceal openings for commission.
+"""
+
+from datetime import datetime
+import json
+
+class VacancyTransparencyEngine:
+    def __init__(self):
+        # Mock database for corporate project demands vs publicly posted vacancies
+        self.corporate_demand_registry = {}
+
+    def log_internal_project_demand(self, company_id, department, actual_required_positions, publicly_listed_positions):
+        """
+        Registers internal corporate worker demand versus what was actually published on the central portal.
+        :param actual_required_positions: Real workforce needed based on active project scale.
+        :param publicly_listed_positions: Positions officially published on the GLIDSF central portal.
+        """
+        self.corporate_demand_registry[company_id] = {
+            "department": department,
+            "actual_required": actual_required_positions,
+            "publicly_listed": publicly_listed_positions,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_vacancy_hoarding(self, company_id):
+        """
+        Detects if management is hoarding job vacancies (hiding openings to extract illegal commissions).
+        """
+        if company_id not in self.corporate_demand_registry:
+            return {"error": "Company ID not found in the sovereign registry."}
+
+        data = self.corporate_demand_registry[company_id]
+        actual = data["actual_required"]
+        listed = data["publicly_listed"]
+
+        # If actual required positions exceed publicly listed ones, vacancies are being hoarded
+        is_hoarding = actual > listed
+        hidden_count = actual - listed
+
+        audit_result = {
+            "company_id": company_id,
+            "department": data["department"],
+            "actual_workforce_demand": actual,
+            "publicly_listed_vacancies": listed,
+            "hidden_vacancies_detected": hidden_count,
+            "status": "VIOLATION: VACANCY HOARDING & COMMISSION SYNDICATE DETECTED" if is_hoarding else "COMPLIANT: FULL TRANSPARENCY",
+            "enforcement_action": (
+                "AUTOMATED PUBLIC PUBLICATION OF HIDDEN SLOTS, MANAGER AUDIT & FINE"
+                if is_hoarding
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = VacancyTransparencyEngine()
+
+    # Simulating a corrupt department needing 50 workers for a project, but publicly listing only 10 
+    # to hoard 40 positions for backdoor commission deals.
+    engine.log_internal_project_demand(
+        company_id="QAR-CORP-101",
+        department="Heavy Infrastructure Division",
+        actual_required_positions=50,
+        publicly_listed_positions=10 # 40 positions hidden
+    )
+
+    # Run the vacancy transparency audit
+    audit_report = engine.audit_vacancy_hoarding("QAR-CORP-101")
+
+    print(json.dumps(audit_report, indent=4))
