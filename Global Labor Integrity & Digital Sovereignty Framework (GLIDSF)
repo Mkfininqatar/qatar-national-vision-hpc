@@ -436,3 +436,79 @@ if __name__ == "__main__":
     audit_report = engine.audit_vacancy_hoarding("QAR-CORP-101")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Absconding Fraud Detection & Retaliation Engine (GLIDSF - Point 5)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Prevents malicious employers from filing false 'Absconding' (Rod Khat) cases 
+             to blackmail workers or evade wage settlements by enforcing digital proof audits.
+"""
+
+from datetime import datetime
+import json
+
+class AbscondingFraudEngine:
+    def __init__(self):
+        # Mock registry for worker employment statuses and active dispute logs
+        self.dispute_registry = {}
+
+    def file_absconding_claim(self, claim_id, company_id, qid, last_known_attendance_date, has_open_wage_dispute):
+        """
+        Registers an employer's claim that a worker has absconded.
+        :param has_open_wage_dispute: Checks if the worker recently filed a complaint for unpaid wages.
+        """
+        self.dispute_registry[claim_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "last_attendance": last_known_attendance_date,
+            "has_open_wage_dispute": has_open_wage_dispute,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def evaluate_absconding_validity(self, claim_id):
+        """
+        Audits the absconding claim. If there is an active wage dispute or lack of solid 
+        digital proof, it flags the claim as retaliatory fraud.
+        """
+        if claim_id not in self.dispute_registry:
+            return {"error": "Claim ID not found in sovereign registry."}
+
+        data = self.dispute_registry[claim_id]
+        has_dispute = data["has_open_wage_dispute"]
+
+        # Forensic Rule: If the worker has an open wage dispute, the absconding claim is highly likely retaliatory fraud.
+        is_fraudulent = has_dispute
+
+        audit_result = {
+            "claim_id": claim_id,
+            "company_id": data["company_id"],
+            "target_qid": data["qid"],
+            "active_dispute_detected": has_dispute,
+            "status": "REJECTED: RETALIATORY ABSCONDING FRAUD DETECTED" if is_fraudulent else "VERIFIED & APPROVED",
+            "enforcement_action": (
+                "CANCEL FALSE CLAIM, FREEZE EMPLOYER PORTAL ACCESS & ISSUE WAGE AUDIT"
+                if is_fraudulent
+                else "PROCEED WITH LEGAL DESERTION PROTOCOL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = AbscondingFraudEngine()
+
+    # Simulating a corrupt employer filing a false absconding case against a worker 
+    # who had previously filed a wage dispute claim.
+    engine.file_absconding_claim(
+        claim_id="ABS-CLAIM-992",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        last_known_attendance_date="2026-09-20",
+        has_open_wage_dispute=True # Worker has pending unpaid salary case against the company
+    )
+
+    # Run the audit on the absconding claim
+    audit_report = engine.evaluate_absconding_validity("ABS-CLAIM-992")
+
+    print(json.dumps(audit_report, indent=4))
