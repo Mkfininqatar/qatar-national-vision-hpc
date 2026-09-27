@@ -1670,3 +1670,85 @@ if __name__ == "__main__":
     audit_report = engine.audit_notice_legitimacy("NOTICE-WARN-9912")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Overtime Hour Manipulation Audit Engine (GLIDSF - Point 21)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits immutable biometric work logs against payroll disbursements 
+             to eliminate unauthorized overtime truncation, time-sheet tampering, and wage theft.
+"""
+
+from datetime import datetime
+import json
+
+class OvertimeHourManipulationAuditEngine:
+    def __init__(self):
+        # Mock registry tracking immutable biometric hours vs paid payroll hours
+        self.timesheet_registry = {}
+
+    def log_timesheet_audit_data(self, record_id, company_id, qid, biometric_overtime_hours, payroll_paid_overtime_hours, manual_edit_detected):
+        """
+        Logs biometric work hours compared to what was actually paid and checked for tampering.
+        :param biometric_overtime_hours: Actual extra hours recorded by sovereign biometric systems.
+        :param payroll_paid_overtime_hours: Overtime hours actually compensated in payroll.
+        :param manual_edit_detected: Boolean indicating if HR or payroll attempted manual alterations.
+        """
+        self.timesheet_registry[record_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "biometric_ot": biometric_overtime_hours,
+            "paid_ot": payroll_paid_overtime_hours,
+            "manual_edit": manual_edit_detected,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_hour_manipulation(self, record_id):
+        """
+        Detects if an employer truncated overtime hours or manipulated timesheet data.
+        """
+        if record_id not in self.timesheet_registry:
+            return {"error": "Timesheet Record ID not found in sovereign registry."}
+
+        data = self.timesheet_registry[record_id]
+        bio_ot = data["biometric_ot"]
+        paid_ot = data["paid_ot"]
+        edited = data["manual_edit"]
+
+        # Forensic Rule: If paid overtime is less than biometric overtime or manual edits exist, trigger hour manipulation fraud.
+        is_manipulation_violation = (paid_ot < bio_ot) or edited
+
+        audit_result = {
+            "record_id": record_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "biometric_ot_recorded": bio_ot,
+            "payroll_ot_paid": paid_ot,
+            "status": "VIOLATION: OVERTIME HOUR MANIPULATION & WAGE THEFT DETECTED" if is_manipulation_violation else "COMPLIANT: SECURED TIME-LEDGER",
+            "enforcement_action": (
+                "RESTORE TRUNCATED OVERTIME WAGES, LOCK PAYROLL SYSTEM, PENALIZE EMPLOYER & FINE HR"
+                if is_manipulation_violation
+                else "PROCEED WITH SECURED DISBURSEMENT"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = OvertimeHourManipulationAuditEngine()
+
+    # Simulating a corrupt employer who recorded 30 hours of biometric overtime 
+    # but maliciously truncated it to 5 hours in payroll via manual editing to steal wages.
+    engine.log_timesheet_audit_data(
+        record_id="TS-AUDIT-8812",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        biometric_overtime_hours=30.0, # Actual hours worked
+        payroll_paid_overtime_hours=5.0, # Truncated payroll hours
+        manual_edit_detected=True        # Unauthorized manual HR tampering
+    )
+
+    # Run the overtime hour manipulation audit
+    audit_report = engine.audit_hour_manipulation("TS-AUDIT-8812")
+
+    print(json.dumps(audit_report, indent=4))
