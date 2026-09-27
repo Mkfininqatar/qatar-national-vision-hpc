@@ -512,3 +512,78 @@ if __name__ == "__main__":
     audit_report = engine.evaluate_absconding_validity("ABS-CLAIM-992")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: WPS & Cash Transaction Audit Engine (GLIDSF - Point 6)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Enforces mandatory Central Bank WPS digital wage transfers and outlaws 
+             off-the-books cash payouts and unverified sub-contracting networks.
+"""
+
+from datetime import datetime
+import json
+
+class WPSCashTransactionAuditEngine:
+    def __init__(self):
+        # Mock registry for corporate payroll and sub-contractor transaction logs
+        self.payroll_registry = {}
+
+    def log_payment_transaction(self, company_id, sub_contractor_id, payment_method, total_payroll_amount, is_verified_wps):
+        """
+        Logs payroll transactions to verify if payments are made via official WPS or illegal cash.
+        :param payment_method: 'WPS_BANK_TRANSFER' or 'DIRECT_CASH'
+        :param is_verified_wps: Boolean indicating central bank compliance.
+        """
+        self.payroll_registry[company_id] = {
+            "sub_contractor_id": sub_contractor_id,
+            "payment_method": payment_method,
+            "total_payroll_amount": total_payroll_amount,
+            "is_verified_wps": is_verified_wps,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_payment_compliance(self, company_id):
+        """
+        Detects illegal cash transactions or unverified sub-contractor payrolls.
+        """
+        if company_id not in self.payroll_registry:
+            return {"error": "Company ID not found in sovereign registry."}
+
+        data = self.payroll_registry[company_id]
+        payment_method = data["payment_method"]
+        is_wps = data["is_verified_wps"]
+
+        # Forensic Rule: If payment is made via cash or non-WPS channel, trigger underworld syndication flag
+        is_underworld_violation = (payment_method == "DIRECT_CASH") or (not is_wps)
+
+        audit_result = {
+            "company_id": company_id,
+            "sub_contractor_id": data["sub_contractor_id"],
+            "payment_method_detected": payment_method,
+            "status": "VIOLATION: ILLEGAL CASH SUBCONTRACTING UNDERWORLD DETECTED" if is_underworld_violation else "COMPLIANT: WPS SECURED",
+            "enforcement_action": (
+                "FREEZE CORPORATE ACCOUNTS, PENALIZE SUBCONTRACTOR & FORCE DIGITAL WAGE SETTLEMENT"
+                if is_underworld_violation
+                else "NONE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = WPSCashTransactionAuditEngine()
+
+    # Simulating a shady sub-contractor paying workers illegally in raw cash to evade government audits
+    engine.log_payment_transaction(
+        company_id="QAR-CORP-101",
+        sub_contractor_id="SHADOW-SUBCONTRACT-99",
+        payment_method="DIRECT_CASH",
+        total_payroll_amount=150000.0,
+        is_verified_wps=False
+    )
+
+    # Run the WPS and cash audit
+    audit_report = engine.audit_payment_compliance("QAR-CORP-101")
+
+    print(json.dumps(audit_report, indent=4))
