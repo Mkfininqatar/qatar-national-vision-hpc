@@ -1992,3 +1992,80 @@ if __name__ == "__main__":
     audit_report = engine.audit_commission_syndicate("REC-CH-99102")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Exit & Re-Entry Visa Audit Engine (GLIDSF - Point 25)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits exit and re-entry visa transactions, sovereign mobility permissions, 
+             and eliminates arbitrary employer blocks, visa ransom syndicates, and re-entry black markets.
+"""
+
+from datetime import datetime
+import json
+
+class ExitReentryVisaAuditEngine:
+    def __init__(self):
+        # Mock registry tracking worker leave status, re-entry requests, and employer blocks
+        self.reentry_registry = {}
+
+    def log_reentry_request(self, request_id, company_id, qid, has_legitimate_legal_block, employer_arbitrary_visa_block):
+        """
+        Logs exit-re-entry visa applications and employer responses.
+        :param has_legitimate_legal_block: Boolean verifying if there is a valid court-mandated freeze.
+        :param employer_arbitrary_visa_block: Boolean indicating if the company is blocking the re-entry maliciously for extortion.
+        """
+        self.reentry_registry[request_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "legal_block": has_legitimate_legal_block,
+            "employer_block": employer_arbitrary_visa_block,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_reentry_integrity(self, request_id):
+        """
+        Detects if an employer is arbitrarily blocking a worker's re-entry visa or running a visa ransom syndicate.
+        """
+        if request_id not in self.reentry_registry:
+            return {"error": "Re-entry Request ID not found in sovereign registry."}
+
+        data = self.reentry_registry[request_id]
+        legal_block = data["legal_block"]
+        emp_block = data["employer_block"]
+
+        # Forensic Rule: If employer blocks re-entry without a legitimate court order, trigger re-entry blackmail violation.
+        is_reentry_violation = emp_block and (not legal_block)
+
+        audit_result = {
+            "request_id": request_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "employer_arbitrary_block": emp_block,
+            "status": "VIOLATION: ILLEGAL RE-ENTRY & EXIT-RE-ENTRY VISA BLACK MARKET DETECTED" if is_reentry_violation else "COMPLIANT: SOVEREIGN RE-ENTRY CLEARANCE SECURED",
+            "enforcement_action": (
+                "BYPASS EMPLOYER VETO, ISSUE SOVEREIGN RE-ENTRY VISA, PENALIZE EMPLOYER & FREEZE PORTAL"
+                if is_reentry_violation
+                else "PROCEED WITH RE-ENTRY AUTHORIZATION"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = ExitReentryVisaAuditEngine()
+
+    # Simulating a corrupt employer maliciously blocking a vacationing worker's re-entry visa 
+    # to extort money or prevent their return, despite having no legitimate legal dispute.
+    engine.log_reentry_request(
+        request_id="REENTRY-REQ-5512",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        has_legitimate_legal_block=False, # No court order
+        employer_arbitrary_visa_block=True # Malicious employer block
+    )
+
+    # Run the exit-re-entry visa audit
+    audit_report = engine.audit_reentry_integrity("REENTRY-REQ-5512")
+
+    print(json.dumps(audit_report, indent=4))
