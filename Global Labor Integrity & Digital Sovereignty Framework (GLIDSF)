@@ -200,3 +200,86 @@ if __name__ == "__main__":
     
     # Print formatted JSON output of the automated enforcement
     print(json.dumps(result, indent=4))
+"""
+Module: Secondary Labor Pool & QID Geo-Tracking Engine (GLIDSF - Point 2)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Utilizes QID and Metrash digital integration to track real-time worker 
+             location and employer alignment, instantly detecting unverified secondary labor pools.
+"""
+
+from datetime import datetime
+import json
+
+class SecondaryLaborTrackingEngine:
+    def __init__(self):
+        # Mock database for official worker-employer mappings and geo-locations
+        self.worker_registry = {}
+
+    def register_legal_worker(self, qid, worker_name, assigned_sponsor_id, authorized_site_zone):
+        """
+        Registers worker profile linked to an official sponsor and authorized workplace zone.
+        """
+        self.worker_registry[qid] = {
+            "worker_name": worker_name,
+            "assigned_sponsor_id": assigned_sponsor_id,
+            "authorized_site_zone": authorized_site_zone,
+            "status": "LEGAL & ACTIVE"
+        }
+
+    def audit_worker_location(self, qid, current_employer_id, current_work_site_zone):
+        """
+        Audits worker's real-time QID/Metrash ping against authorized registry 
+        to detect unauthorized secondary labor pool work (unregulated freelance/day labor).
+        """
+        if qid not in self.worker_registry:
+            return {
+                "qid": qid,
+                "status": "CRITICAL: UNREGISTERED / ILLEGAL RESIDENT (NO VALID QID)",
+                "action": "INSTANT DETENTION & DEPORTATION PROCEEDINGS"
+            }
+
+        worker_data = self.worker_registry[qid]
+        
+        # Check if working under an unauthorized sponsor or unverified secondary zone
+        is_unauthorized_employer = worker_data["assigned_sponsor_id"] != current_employer_id
+        is_out_of_zone = worker_data["authorized_site_zone"] != current_work_site_zone
+
+        is_secondary_market_violation = is_unauthorized_employer or is_out_of_zone
+
+        audit_response = {
+            "qid": qid,
+            "worker_name": worker_data["worker_name"],
+            "registered_sponsor": worker_data["assigned_sponsor_id"],
+            "detected_employer": current_employer_id,
+            "timestamp": datetime.utcnow().isoformat(),
+            "status": "VIOLATION: TRAPPED IN SECONDARY LABOR BLACK MARKET" if is_secondary_market_violation else "VERIFIED & COMPLIANT",
+            "enforcement_action": (
+                "QUARANTINE CAMP, SPONSOR PENALTY & AUTOMATED TRANSFER TO LEGAL POOL"
+                if is_secondary_market_violation
+                else "NONE"
+            )
+        }
+
+        return audit_response
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = SecondaryLaborTrackingEngine()
+
+    # Registering a legal worker under official sponsor
+    engine.register_legal_worker(
+        qid="29485710293",
+        worker_name="Worker Alpha",
+        assigned_sponsor_id="QAR-CORP-101",
+        authorized_site_zone="Doha Industrial Zone - Sector 3"
+    )
+
+    # Simulating a check where the worker is found working illegally in an unverified secondary site
+    violation_check = engine.audit_worker_location(
+        qid="29485710293",
+        current_employer_id="UNREGISTERED-SUB-CONTRACTOR-99",
+        current_work_site_zone="Unmapped Desert Camp Site B"
+    )
+
+    print(json.dumps(violation_check, indent=4))
