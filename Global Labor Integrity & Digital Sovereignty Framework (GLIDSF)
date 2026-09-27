@@ -1199,3 +1199,83 @@ if __name__ == "__main__":
     audit_report = engine.audit_mobility_freedom("29485710293")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Iqama Renewal Fee & Renewal Audit Engine (GLIDSF - Point 15)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits residency permit (Iqama) renewal transactions and enforces mandatory 
+             employer-paid government fees, eliminating illegal charges and worker wage deductions.
+"""
+
+from datetime import datetime
+import json
+
+class IqamaRenewalFeeAuditEngine:
+    def __init__(self):
+        # Mock registry tracking official Iqama fees vs actual charged amounts to workers
+        self.iqama_transaction_registry = {}
+
+    def log_iqama_renewal(self, transaction_id, company_id, qid, official_govt_fee_qar, amount_deducted_from_worker_qar, is_company_paid):
+        """
+        Logs residency permit renewal financial data.
+        :param official_govt_fee_qar: Standard government fee for Iqama renewal.
+        :param amount_deducted_from_worker_qar: Any illegal fee extracted directly from the worker.
+        :param is_company_paid: Boolean verifying if the employer paid the official fee.
+        """
+        self.iqama_transaction_registry[transaction_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "official_fee": official_govt_fee_qar,
+            "worker_deducted": amount_deducted_from_worker_qar,
+            "is_company_paid": is_company_paid,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_iqama_fee_compliance(self, transaction_id):
+        """
+        Detects if an employer is illegally charging the worker for Iqama renewals or inflating fees.
+        """
+        if transaction_id not in self.iqama_transaction_registry:
+            return {"error": "Transaction ID not found in sovereign registry."}
+
+        data = self.iqama_transaction_registry[transaction_id]
+        worker_deducted = data["worker_deducted"]
+        company_paid = data["is_company_paid"]
+
+        # Forensic Rule: If money is deducted from the worker or company failed to pay, trigger illegal fee syndicate flag.
+        is_fee_syndicate_violation = (worker_deducted > 0.0) or (not company_paid)
+
+        audit_result = {
+            "transaction_id": transaction_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "illegal_worker_deduction_qar": worker_deducted,
+            "status": "VIOLATION: IQAMA RENEWAL FEE & EXCESSIVE CHARGE SYNDICATE DETECTED" if is_fee_syndicate_violation else "COMPLIANT: EMPLOYER-PAID RESIDENCY SECURED",
+            "enforcement_action": (
+                "REFUND WORKER, PENALIZE EMPLOYER, FREEZE CORPORATE PORTAL & ENFORCE DIRECT GOVT GATEWAY"
+                if is_fee_syndicate_violation
+                else "PROCEED WITH RESIDENCY RENEWAL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = IqamaRenewalFeeAuditEngine()
+
+    # Simulating a corrupt employer illegally deducting 1,500 QAR from a worker's salary 
+    # for annual Iqama renewal instead of paying it from the corporate account.
+    engine.log_iqama_renewal(
+        transaction_id="IQAMA-TXN-99182",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        official_govt_fee_qar=1200.0,
+        amount_deducted_from_worker_qar=1500.0, # Illegal extraction + inflation
+        is_company_paid=False                  # Company evaded statutory payment
+    )
+
+    # Run the Iqama fee compliance audit
+    audit_report = engine.audit_iqama_fee_compliance("IQAMA-TXN-99182")
+
+    print(json.dumps(audit_report, indent=4))
