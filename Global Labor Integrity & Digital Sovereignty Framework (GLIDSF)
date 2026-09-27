@@ -587,3 +587,74 @@ if __name__ == "__main__":
     audit_report = engine.audit_payment_compliance("QAR-CORP-101")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Token Amnesty & Structural Override Engine (GLIDSF - Point 7)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Bypasses temporary cosmetic amnesties and enforces permanent structural enforcement 
+             against repeat offender corporations exploiting token grace periods.
+"""
+
+from datetime import datetime
+import json
+
+class TokenAmnestyOverrideEngine:
+    def __init__(self):
+        # Mock registry tracking corporate amnesty history and repeat violations
+        self.amnesty_registry = {}
+
+    def log_company_amnesty_claim(self, company_id, current_amnesty_phase, historical_violations_count):
+        """
+        Logs whether a company is attempting to use a token amnesty window to clear past violations.
+        :param current_amnesty_phase: Name or ID of the temporary grace period.
+        :param historical_violations_count: Number of past unaddressed infractions.
+        """
+        self.amnesty_registry[company_id] = {
+            "amnesty_phase": current_amnesty_phase,
+            "historical_violations": historical_violations_count,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def evaluate_structural_integrity(self, company_id):
+        """
+        Rejects cosmetic/token amnesty usage for repeat offenders and enforces permanent structural penalties.
+        """
+        if company_id not in self.amnesty_registry:
+            return {"error": "Company ID not found in sovereign registry."}
+
+        data = self.amnesty_registry[company_id]
+        violations = data["historical_violations"]
+
+        # Forensic Rule: If violations exist, token amnesty is blocked; permanent structural override is triggered.
+        is_cosmetic_evasion = violations > 0
+
+        audit_result = {
+            "company_id": company_id,
+            "amnesty_phase_attempted": data["amnesty_phase"],
+            "historical_violations_flagged": violations,
+            "status": "OVERRIDDEN: COSMETIC AMNESTY REJECTED FOR REPEAT OFFENDER" if is_cosmetic_evasion else "ELIGIBLE FOR STANDARD REVIEW",
+            "enforcement_action": (
+                "PERMANENT STRUCTURAL AUDIT, ASSET FREEZE & LICENSE CANCELLATION"
+                if is_cosmetic_evasion
+                else "PROCEED WITH NORMAL PROTOCOL"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = TokenAmnestyOverrideEngine()
+
+    # Simulating a repeat offender company attempting to clear its multi-layered violations 
+    # under a temporary cosmetic general amnesty.
+    engine.log_company_amnesty_claim(
+        company_id="QAR-CORP-101",
+        current_amnesty_phase="General Grace Period 2026",
+        historical_violations_count=5 # 5 major unresolved black market infractions
+    )
+
+    # Run the structural override evaluation
+    audit_report = engine.evaluate_structural_integrity("QAR-CORP-101")
+
+    print(json.dumps(audit_report, indent=4))
