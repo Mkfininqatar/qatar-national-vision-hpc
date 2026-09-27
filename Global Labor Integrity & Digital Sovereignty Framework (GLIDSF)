@@ -2223,3 +2223,85 @@ if __name__ == "__main__":
     audit_report = engine.audit_shell_company_status("QAR-SHELL-9900")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Under-the-Table Cash & Dual Payroll Audit Engine (GLIDSF - Point 28)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits digital contract wage values against actual WPS bank disbursements 
+             to eliminate dual payrolls, off-the-books cash payouts, and wage underreporting syndicates.
+"""
+
+from datetime import datetime
+import json
+
+class DualPayrollAuditEngine:
+    def __init__(self):
+        # Mock registry tracking official contract base wages vs WPS bank transfer amounts
+        self.payroll_registry = {}
+
+    def log_payroll_record(self, record_id, company_id, qid, contract_declared_wage_qar, wps_bank_disbursed_wage_qar, off_the_books_cash_flag):
+        """
+        Logs wage data comparing official contracts to bank transfers.
+        :param contract_declared_wage_qar: Salary stated in the sovereign digital employment contract.
+        :param wps_bank_disbursed_wage_qar: Actual funds transferred through the Central Bank WPS system.
+        :param off_the_books_cash_flag: Boolean indicating if cash was used to bypass official ledgers.
+        """
+        self.payroll_registry[record_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "contract_wage": contract_declared_wage_qar,
+            "wps_wage": wps_bank_disbursed_wage_qar,
+            "cash_flag": off_the_books_cash_flag,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_payroll_integrity(self, record_id):
+        """
+        Detects if an employer is running a dual payroll or under-the-table cash payment syndicate.
+        """
+        if record_id not in self.payroll_registry:
+            return {"error": "Payroll Record ID not found in sovereign registry."}
+
+        data = self.payroll_registry[record_id]
+        contract_wage = data["contract_wage"]
+        wps_wage = data["wps_wage"]
+        cash_flag = data["cash_flag"]
+
+        # Forensic Rule: If WPS wage differs from contract wage or off-the-books cash is detected, trigger dual payroll violation.
+        is_payroll_violation = (wps_wage != contract_wage) or cash_flag
+
+        audit_result = {
+            "record_id": record_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "contract_wage_qar": contract_wage,
+            "wps_disbursed_wage_qar": wps_wage,
+            "status": "VIOLATION: UNDER-THE-TABLE CASH & DUAL PAYROLL SYNDICATE DETECTED" if is_payroll_violation else "COMPLIANT: UNIFIED SOVEREIGN PAYROLL",
+            "enforcement_action": (
+                "ENFORCE FULL WAGE ALIGNMENT, RESTITUTE WAGE DIFFERENTIALS, PENALIZE EMPLOYER & FREEZE PORTAL"
+                if is_payroll_violation
+                else "PROCEED WITH SECURED DISBURSEMENT"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = DualPayrollAuditEngine()
+
+    # Simulating a corrupt employer who declared a 3,000 QAR wage on contract 
+    # but only paid 1,500 QAR via WPS, intending to pay the rest in illegal off-the-books cash (dual payroll).
+    engine.log_payroll_record(
+        record_id="PAY-AUDIT-9911",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        contract_declared_wage_qar=3000.0,
+        wps_bank_disbursed_wage_qar=1500.0, # Mismatched WPS payout
+        off_the_books_cash_flag=True         # Illegal cash workaround detected
+    )
+
+    # Run the dual payroll audit
+    audit_report = engine.audit_payroll_integrity("PAY-AUDIT-9911")
+
+    print(json.dumps(audit_report, indent=4))
