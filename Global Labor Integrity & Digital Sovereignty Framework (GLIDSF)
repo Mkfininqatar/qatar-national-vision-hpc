@@ -1433,3 +1433,84 @@ if __name__ == "__main__":
     audit_report = engine.audit_exit_blackmail("EXIT-REQ-8821")
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Healthcare Insurance & Neglect Audit Engine (GLIDSF - Point 18)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits health insurance policy compliance against national standards, 
+             eradicating substandard/fake insurance policies, medical neglect, and out-of-pocket denials.
+"""
+
+from datetime import datetime
+import json
+
+class HealthcareInsuranceAuditEngine:
+    def __init__(self):
+        # Mock registry tracking corporate health insurance policies and hospital claim rejections
+        self.insurance_registry = {}
+
+    def log_insurance_policy(self, policy_id, company_id, qid, is_national_standard_compliant, hospital_access_denied, out_of_pocket_paid):
+        """
+        Logs worker health insurance details and treatment accessibility status.
+        :param is_national_standard_compliant: Boolean verifying if the insurance meets federal healthcare quality benchmarks.
+        :param hospital_access_denied: Boolean indicating if a hospital rejected the policy during treatment.
+        :param out_of_pocket_paid: Any medical expense illegally paid by the worker due to policy failure.
+        """
+        self.insurance_registry[policy_id] = {
+            "company_id": company_id,
+            "qid": qid,
+            "compliant_policy": is_national_standard_compliant,
+            "access_denied": hospital_access_denied,
+            "out_of_pocket": out_of_pocket_paid,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_insurance_compliance(self, policy_id):
+        """
+        Detects if an employer is providing substandard/fake insurance or neglecting medical coverage.
+        """
+        if policy_id not in self.insurance_registry:
+            return {"error": "Policy ID not found in sovereign registry."}
+
+        data = self.insurance_registry[policy_id]
+        compliant = data["compliant_policy"]
+        denied = data["access_denied"]
+        out_of_pocket = data["out_of_pocket"]
+
+        # Forensic Rule: If policy is non-compliant, access was denied, or worker paid out of pocket, trigger health syndicate violation.
+        is_health_violation = (not compliant) or denied or (out_of_pocket > 0.0)
+
+        audit_result = {
+            "policy_id": policy_id,
+            "company_id": data["company_id"],
+            "worker_qid": data["qid"],
+            "policy_compliant": compliant,
+            "status": "VIOLATION: FAKE MEDICAL INSURANCE & HEALTHCARE NEGLECT SYNDICATE DETECTED" if is_health_violation else "COMPLIANT: SOVEREIGN HEALTHCARE SECURED",
+            "enforcement_action": (
+                "FORCE MANDATORY PREMIUM UPGRADE, REFUND WORKER EXPENSES, FINE COMPANY & FREEZE PORTAL"
+                if is_health_violation
+                else "PROCEED WITH ACTIVE HEALTH COVERAGE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = HealthcareInsuranceAuditEngine()
+
+    # Simulating a corrupt employer purchasing a fake/substandard health insurance policy 
+    # which got rejected by the hospital, forcing the worker to pay out of pocket.
+    engine.log_insurance_policy(
+        policy_id="INS-POL-77291",
+        company_id="QAR-CORP-101",
+        qid="29485710293",
+        is_national_standard_compliant=False, # Substandard/fake insurance
+        hospital_access_denied=True,          # Claim rejected by hospital
+        out_of_pocket_paid=1200.0             # Illegal out-of-pocket medical cost borne by worker
+    )
+
+    # Run the healthcare insurance audit
+    audit_report = engine.audit_insurance_compliance("INS-POL-77291")
+
+    print(json.dumps(audit_report, indent=4))
