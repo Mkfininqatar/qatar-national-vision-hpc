@@ -283,3 +283,79 @@ if __name__ == "__main__":
     )
 
     print(json.dumps(violation_check, indent=4))
+"""
+Module: Recruitment Broker & Cost Audit Engine (GLIDSF - Point 3)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Audits cross-border recruitment transactions and enforces zero-fee policies,
+             automatically penalizing employers and agencies involved in broker commission syndicates.
+"""
+
+from datetime import datetime
+import json
+
+class RecruitmentBrokerAuditEngine:
+    def __init__(self):
+        # Mock database for recruitment contracts and financial compliance
+        self.recruitment_registry = {}
+
+    def register_recruitment_order(self, order_id, company_id, agency_id, total_mandated_cost_by_employer, worker_out_of_pocket_paid):
+        """
+        Registers recruitment order details to verify who bore the recruitment expenses.
+        :param total_mandated_cost_by_employer: Expenses paid officially by the Qatari enterprise.
+        :param worker_out_of_pocket_paid: Any illegal fee extracted from the worker by brokers.
+        """
+        self.recruitment_registry[order_id] = {
+            "company_id": company_id,
+            "agency_id": agency_id,
+            "mandated_cost": total_mandated_cost_by_employer,
+            "worker_paid": worker_out_of_pocket_paid,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_recruitment_compliance(self, order_id):
+        """
+        Executes zero-fee compliance check. If the worker paid anything out-of-pocket, 
+        it triggers an immediate broker syndicate flag and enforces penalties.
+        """
+        if order_id not in self.recruitment_registry:
+            return {"error": "Recruitment order ID not found in sovereign registry."}
+
+        data = self.recruitment_registry[order_id]
+        worker_paid = data["worker_paid"]
+
+        # GLIDSF Rule: Worker out-of-pocket payment must be strictly ZERO.
+        is_syndicate_violation = worker_paid > 0.0
+
+        audit_result = {
+            "order_id": order_id,
+            "company_id": data["company_id"],
+            "agency_id": data["agency_id"],
+            "worker_illegal_fee_detected": worker_paid,
+            "status": "VIOLATION: BROKER & COMMISSION SYNDICATE ACTIVE" if is_syndicate_violation else "COMPLIANT: ZERO-FEE ENFORCED",
+            "enforcement_action": (
+                "INSTANT AGENCY BLACKLIST, LICENSE REVOCATION & EMPLOYER FINE"
+                if is_syndicate_violation
+                else "CLEAR FOR VISA ISSUANCE"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = RecruitmentBrokerAuditEngine()
+
+    # Simulating a corrupt recruitment order where the worker was illegally forced to pay 5,000 QAR to a broker
+    engine.register_recruitment_order(
+        order_id="REC-2026-9901",
+        company_id="QAR-CORP-101",
+        agency_id="GLOBAL-BROKER-SYN-X",
+        total_mandated_cost_by_employer=0.0, # Employer illegally evaded costs
+        worker_out_of_pocket_paid=5000.0     # Illegal fee extracted from worker
+    )
+
+    # Run the compliance audit
+    compliance_report = engine.audit_recruitment_compliance("REC-2026-9901")
+
+    print(json.dumps(compliance_report, indent=4))
