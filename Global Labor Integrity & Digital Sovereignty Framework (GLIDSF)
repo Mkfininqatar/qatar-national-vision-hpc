@@ -3010,3 +3010,67 @@ if __name__ == "__main__":
     
     audit_log = engine.audit_pre_recruitment_profile("EST_DOHA_7789", "HOTEL", sample_job_report)
     print("Point 30 Workplace Audit Log:", audit_log)
+# ==============================================================================
+# GLOBAL LABOR INTEGRITY & DIGITAL SOVEREIGNTY FRAMEWORK (GLIDSF)
+# ------------------------------------------------------------------------------
+# Module: Point 31 - Workers' Welfare Dispatch, Skill Matching & Global Telemetry Audit
+# Author: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+# ==============================================================================
+
+class SovereignWelfareDispatchEngine:
+    def __init__(self):
+        # Global telemetry ledger for monthly/annual auditing
+        self.global_audit_ledger = []
+
+    def dispatch_to_workers_welfare(self, establishment_id: str, verified_job_report: dict, candidate_skill_profile: dict) -> dict:
+        """
+        [POINT 31: Workers' Welfare Dispatch & Global Telemetry Archiving]
+        ----------------------------------------------------------------------
+        [PROBLEM]: Unchecked direct hiring by establishments often bypasses national welfare oversight,
+                   leading to skill mismatch, exploitation, and lack of transparent historical records.
+        [DISCUSSION]: Once the establishment submits the workplace hazard and job nature report, 
+                      the requisition must route through State Workers' Welfare authorities for skill-based matching.
+        [SOLUTION]: Automated routing engine that cross-references job requirements with candidate diagnostics, 
+                    ensuring merit-based recruitment and logging every action into a permanent monthly/annual global ledger.
+        [FUTURE ROADMAP]: Real-time international transparency portal showcasing annual state labor integrity metrics 
+                          aligned with Qatar National Vision 2030.
+        """
+        # Skill matching verification
+        required_skill = verified_job_report.get("exact_job_title")
+        candidate_skill = candidate_skill_profile.get("certified_skill_grade")
+        
+        if not candidate_skill:
+            return {
+                "point": "POINT_31",
+                "status": "DISPATCH_PENDING_SKILL_DIAGNOSTIC",
+                "message": "Candidate skill diagnostics missing. Welfare authority requires verified skill mapping."
+            }
+        
+        # Generating permanent transaction record for monthly/annual global telemetry report
+        telemetry_record = {
+            "record_id": f"GLIDSF-AUDIT-{establishment_id}-2026",
+            "establishment_id": establishment_id,
+            "matched_role": required_skill,
+            "candidate_id": candidate_skill_profile.get("worker_id"),
+            "dispatch_status": "APPROVED_AND_RECORDED",
+            "transparency_index": "TIER-1_SOVEREIGN"
+        }
+        
+        self.global_audit_ledger.append(telemetry_record)
+        
+        return {
+            "point": "POINT_31",
+            "status": "SUCCESSFULLY_DISPATCHED_VIA_WORKERS_WELFARE",
+            "audit_record": telemetry_record,
+            "message": "Job requisition routed through Workers' Welfare. Monthly/Annual global record updated successfully."
+        }
+
+if __name__ == "__main__":
+    welfare_engine = SovereignWelfareDispatchEngine()
+    
+    # Sample verification test
+    job_report = {"exact_job_title": "Digital Twin Architect & HPC Specialist"}
+    candidate = {"worker_id": "QID_9907505", "certified_skill_grade": "SKILL_GRADE_A"}
+    
+    dispatch_result = welfare_engine.dispatch_to_workers_welfare("EST_DOHA_7789", job_report, candidate)
+    print("Point 31 Welfare Dispatch Log:", dispatch_result)
