@@ -2455,3 +2455,81 @@ if __name__ == "__main__":
     )
 
     print(json.dumps(audit_report, indent=4))
+"""
+Module: Embassy-Anchored Recruitment & Worker Registration Engine (GLIDSF Core Policy)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Description: Mandates that all job circulars and worker registrations are vetted and hosted 
+             exclusively through respective home-country embassy channels to eradicate recruitment syndicates.
+"""
+
+from datetime import datetime
+import json
+
+class EmbassyRecruitmentRegistryEngine:
+    def __init__(self):
+        # Mock registry tracking embassy-verified job circulars and worker consular registrations
+        self.embassy_registry = {}
+
+    def log_recruitment_and_registration(self, reference_id, embassy_code, qid, is_job_circular_embassy_verified, worker_embassy_registered):
+        """
+        Logs job circular verification and worker consular registration status.
+        :param embassy_code: Country code of the home embassy (e.g., 'BGD-EMB-DOHA', 'IND-EMB-DOHA').
+        :param is_job_circular_embassy_verified: Boolean confirming if the job offer was published via the official embassy portal.
+        :param worker_embassy_registered: Boolean confirming if the worker completed mandatory embassy registration.
+        """
+        self.embassy_registry[reference_id] = {
+            "embassy": embassy_code,
+            "qid": qid,
+            "circular_verified": is_job_circular_embassy_verified,
+            "worker_registered": worker_embassy_registered,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    def audit_embassy_compliance(self, reference_id):
+        """
+        Detects if recruitment bypassed official embassy channels or if the worker lacks consular registration.
+        """
+        if reference_id not in self.embassy_registry:
+            return {"error": "Reference ID not found in consular registry."}
+
+        data = self.embassy_registry[reference_id]
+        verified_circular = data["circular_verified"]
+        registered_worker = data["worker_registered"]
+
+        # Forensic Rule: If job circular was not embassy-verified or worker is not registered at the embassy, trigger violation.
+        is_consular_violation = (not verified_circular) or (not registered_worker)
+
+        audit_result = {
+            "reference_id": reference_id,
+            "embassy_code": data["embassy"],
+            "worker_qid": data["qid"],
+            "job_circular_embassy_verified": verified_circular,
+            "worker_embassy_registered": registered_worker,
+            "status": "VIOLATION: UNAUTHORIZED RECRUITMENT & CONSULAR BYPASS DETECTED" if is_consular_violation else "COMPLIANT: EMBASSY-ANCHORED SOVEREIGN RECRUITMENT",
+            "enforcement_action": (
+                "BLOCK VISA ISSUANCE, HALT UNVERIFIED RECRUITMENT CHANNEL, NOTIFY EMBASSY & PENALIZE AGENCY"
+                if is_consular_violation
+                else "PROCEED WITH DIPLOMATICALLY SECURED DEPLOYMENT"
+            )
+        }
+
+        return audit_result
+
+
+# --- EXECUTION & TEST SIMULATION ---
+if __name__ == "__main__":
+    engine = EmbassyRecruitmentRegistryEngine()
+
+    # Simulating an unauthorized recruitment attempt where a private black-market broker 
+    # bypassed the embassy job portal and the worker was not registered with the consulate.
+    audit_report = engine.log_recruitment_and_registration(
+        reference_id="CONSULAR-AUDIT-4421",
+        embassy_code="BGD-EMB-DOHA",
+        qid="29485710293",
+        is_job_circular_embassy_verified=False, # Bypassed official embassy circular portal
+        worker_embassy_registered=False         # Missing mandatory consular registration
+    )
+
+    result = engine.audit_embassy_compliance("CONSULAR-AUDIT-4421")
+
+    print(json.dumps(result, indent=4))
