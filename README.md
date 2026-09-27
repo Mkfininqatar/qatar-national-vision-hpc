@@ -314,3 +314,22 @@ with open(file_name, "w", encoding="utf-8") as f:
     f.write(markdown_content)
 
 print(f"File successfully created: {file_name}")
+Framework Title: Global Labor Integrity & Digital Sovereignty Framework (GLIDSF)
+
+Chief Architect & Visionary Designer: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+
+Spiritual Foundation: Grounded in the righteous vision of Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)
+
+Executive Enforcer: Under the visionary leadership of HH Amir Sheikh Tamim bin Hamad Al Thani
+
+Core Pillars:
+
+Elimination of all 28+ black market syndicates (Visa, Broker, Overtime theft, ATM custody, Gratuity fraud, Dual payrolls, Coercion, etc.)
+
+Mandatory State Wage-Rate & Pricing Matrices based on job categories and hours
+
+Consular-Anchored Sovereign Recruitment & Embassy Registration channels
+
+Sovereign Skill Diagnostics, Upskilling Academies, and Embassy "Skill-Up Certification"
+
+Qatar Government Telemetry Integration & Mandatory Medical Science Student Research / Digital Twin Monitoring
