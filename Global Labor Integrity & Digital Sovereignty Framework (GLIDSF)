@@ -1,0 +1,112 @@
+"""
+Project Name: Global Labor Integrity & Digital Sovereignty Framework (GLIDSF)
+Chief Architect: Abdul Mazed Hossain (Technical Consultant & Digital Twin Architect)
+Dedication: Dedicated under Divine Authority, the legacy of Father Amir Sheikh Hamad (rah.), 
+            and spearheaded under HH Amir Sheikh Tamim.
+"""
+
+from datetime import datetime
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# --- 1. MOCK DATABASE & CONFIGURATION ---
+# Stock-Market Style Open Rate Board (Standardized Wage Index)
+WAGE_RATE_BOARD = {
+    "construction_skilled": {"min_rate_qar": 2500, "updated": "2026-09-27"},
+    "construction_unskilled": {"min_rate_qar": 1400, "updated": "2026-09-27"},
+    "digital_technician": {"min_rate_qar": 4500, "updated": "2026-09-27"},
+    "logistics_driver": {"min_rate_qar": 2200, "updated": "2026-09-27"}
+}
+
+# Grievance & Enforcement Registry (Direct Digital Grievance System)
+GRIEVANCE_REGISTRY = []
+
+
+# --- 2. API ENDPOINTS FOR DIGITAL SOVEREIGNTY ---
+
+@app.route('/api/v1/framework-info', methods=['GET'])
+def framework_info():
+    """Returns the metadata of the GLIDSF project."""
+    return jsonify({
+        "project_name": "Global Labor Integrity & Digital Sovereignty Framework (GLIDSF)",
+        "chief_architect": "Abdul Mazed Hossain",
+        "role": "Technical Consultant & Digital Twin Architect",
+        "leadership": "Dedicated under Father Amir Sheikh Hamad (rah.) & HH Amir Sheikh Tamim",
+        "status": "Active / Production-Ready Blueprint"
+    })
+
+
+@app.route('/api/v1/rate-board', methods=['GET'])
+def get_rate_board():
+    """Stock-Market Style Open Rate Board for transparent wage inspection."""
+    return jsonify({
+        "status": "success",
+        "market_standard": "Qatari Labor Sovereign Index",
+        "rates": WAGE_RATE_BOARD
+    })
+
+
+@app.route('/api/v1/report-violation', methods=['POST'])
+def report_violation():
+    """
+    Direct-to-State Digital Grievance Mechanism:
+    Allows any worker with a QID/Metrash integration to report wage non-compliance 
+    or quota diversion instantly.
+    """
+    data = request.json
+    qid = data.get('qid')
+    company_name = data.get('company_name')
+    violation_type = data.get('violation_type') # e.g., 'Underpaid', 'Absconding Fraud', 'No PPE'
+    claimed_amount = data.get('claimed_amount')
+
+    if not qid or not company_name or not violation_type:
+        return jsonify({"error": "Missing critical verification parameters (QID/Company/Type)"}), 400
+
+    grievance_case = {
+        "case_id": f"GLIDSF-CASE-{len(GRIEVANCE_REGISTRY) + 1001}",
+        "timestamp": datetime.utcnow().isoformat(),
+        "qid": qid,
+        "company_name": company_name,
+        "violation_type": violation_type,
+        "claimed_amount_qar": claimed_amount,
+        "status": "Pending Ministry Audit & Automated Enforcement"
+    }
+
+    GRIEVANCE_REGISTRY.append(grievance_case)
+
+    return jsonify({
+        "status": "success",
+        "message": "Grievance registered successfully and routed to MOL & Central Oversight.",
+        "case_details": grievance_case
+    }), 201
+
+
+@app.route('/api/v1/audit-quota', methods=['POST'])
+def audit_quota():
+    """
+    Forensic Audit Simulation:
+    Validates company quota utilization vs 12-month Entry/Exit logs.
+    """
+    data = request.json
+    company_id = data.get('company_id')
+    allocated_quotas = data.get('allocated_quotas', 0)
+    active_workers = data.get('active_workers', 0)
+
+    diverision_rate = ((allocated_quotas - active_workers) / allocated_quotas) * 100 if allocated_quotas > 0 else 0
+    
+    is_black_market = diversion_rate > 30  # If more than 30% quota is unaccounted for
+
+    return jsonify({
+        "company_id": company_id,
+        "allocated_quotas": allocated_quotas,
+        "active_workers": active_workers,
+        "diversion_percentage": round(diversion_rate, 2),
+        "black_market_status": "FLAGGED FOR LICENSE REVOCATION" if is_black_market else "COMPLIANT",
+        "action_required": "Instant Fine & Quota Freeze" if is_black_market else "None"
+    })
+
+
+if __name__ == '__main__':
+    # Run local sovereign development server
+    app.run(host='0.0.0.0', port=5000, debug=True)
