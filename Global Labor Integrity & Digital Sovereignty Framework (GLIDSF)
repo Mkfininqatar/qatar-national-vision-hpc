@@ -2707,3 +2707,68 @@ if __name__ == "__main__":
     audit_report = engine.audit_advanced_sovereign_integration("ADV-INTEGRATE-9901")
 
     print(json.dumps(audit_report, indent=4))
+# glidsf_pricing_grid.py
+# Global Labor Integrity & Digital Sovereignty Framework (GLIDSF)
+# Mandatory State Wage-Rate & Pricing Standardization Engine
+
+class SovereignPricingGrid:
+    def __init__(self):
+        # Government regulated wage and service pricing standards (in QAR)
+        self.pricing_standards = {
+            "SKILL_GRADE_A": {
+                "category": "High-Performance Computing / Digital Twin Architect & Tech Consultant",
+                "min_monthly_wage": 15000.00,
+                "overtime_multiplier": 1.5,
+                "max_working_hours": 48,
+                "insurance_coverage": "Comprehensive State Tier-1"
+            },
+            "SKILL_GRADE_B": {
+                "category": "Specialized Engineering / Medical Spatial Twin Technician",
+                "min_monthly_wage": 8500.00,
+                "overtime_multiplier": 1.25,
+                "max_working_hours": 48,
+                "insurance_coverage": "Standard Medical & Accident"
+            },
+            "SKILL_GRADE_C": {
+                "category": "Skilled Technical Operations & Telemetry Monitoring",
+                "min_monthly_wage": 5000.00,
+                "overtime_multiplier": 1.25,
+                "max_working_hours": 48,
+                "insurance_coverage": "Standard Worker Protection"
+            },
+            "SERVICE_RECRUITMENT_CAP": {
+                "category": "Maximum Allowable Agency Recruitment Fee (Fully Employer Paid)",
+                "max_fee": 0.00,  # Zero-cost for workers (Zero-Fee Policy enforced by State)
+                "penalty_multiplier_for_violation": 10.0
+            }
+        }
+
+    def validate_employer_contract(self, grade: str, offered_wage: float) -> dict:
+        """
+        Validates if an employer's contract meets the state-mandated wage standard.
+        Prevents underpaying or contractual fraud.
+        """
+        if grade not in self.pricing_standards:
+            return {"status": "REJECTED", "reason": "Invalid Skill Grade specified."}
+        
+        standard = self.pricing_standards[grade]
+        if "min_monthly_wage" in standard and offered_wage < standard["min_monthly_wage"]:
+            return {
+                "status": "VIOLATION_DETECTED",
+                "code": "ERR_WAGE_UNDERFLOW",
+                "required_minimum": standard["min_monthly_wage"],
+                "offered": offered_wage,
+                "message": f"Contract rejected. Offered wage is below the sovereign mandated minimum for {grade}."
+            }
+        
+        return {
+            "status": "APPROVED",
+            "message": "Contract complies with Qatar National Labor Integrity Standards."
+        }
+
+# Execution test for validation engine
+if __name__ == "__main__":
+    engine = SovereignPricingGrid()
+    # Test case: Evaluating an employer contract for Grade B
+    audit_result = engine.validate_employer_contract("SKILL_GRADE_B", 7000.00)
+    print("Sovereign Audit Result:", audit_result)
