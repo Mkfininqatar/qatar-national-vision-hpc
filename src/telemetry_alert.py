@@ -32,3 +32,75 @@ class RealTimeAlertEngine:
             logger.info(f"System status normal. CPU: {cpu_load}%, Memory: {memory_usage}%")
 
         return alert_triggered
+import os
+import logging
+from datetime import datetime
+from typing import Dict, Any, Optional
+
+# কনফিগারেশন লগিং সেটআপ
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
+)
+logger = logging.getLogger("TelemetryAlertEngine")
+
+class PersistentTelemetryAlertEngine:
+    """
+    HPC টেলিমেট্রি এবং মেট্রিক লগিংয়ের জন্য পার্সিস্টেন্ট অ্যালার্ট ইঞ্জিন।
+    থ্রেশহোল্ড অতিক্রম করলে বা সিস্টেম ফেইল করলে তাৎক্ষণিক নোটিফিকেশন ও লগ তৈরি করে।
+    """
+    def __init__(
+        self, 
+        log_file_path: str = "logs/telemetry_metrics.log",
+        cpu_threshold: float = 90.0, 
+        memory_threshold: float = 90.0
+    ):
+        self.cpu_threshold = cpu_threshold
+        self.memory_threshold = memory_threshold
+        self.log_file_path = log_file_path
+        
+        # লগ ডিরেক্টরি তৈরি নিশ্চিত করা
+        log_dir = os.path.dirname(self.log_file_path)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+
+    def evaluate_and_persist(self, metrics: Dict[str, Any]) -> bool:
+        """
+        মেট্রিকস ডেটা ইনপুট নিয়ে থ্রেশহোল্ড চেক করে, ফাইলে সেভ করে এবং অ্যালার্ট ট্রিগার করে।
+        """
+        timestamp = datetime.utcnow().isoformat()
+        cpu_load = metrics.get("cpu_load", 0.0)
+        memory_usage = metrics.get("memory_usage", 0.0)
+        gpu_temp = metrics.get("gpu_temp", 0.0)
+
+        alert_triggered = False
+        alert_messages = []
+
+        if cpu_load > self.cpu_threshold:
+            msg = f"CRITICAL: CPU load exceeded threshold -> {cpu_load}% (Limit: {self.cpu_threshold}%)"
+            logger.warning(msg)
+            alert_messages.append(msg)
+            alert_triggered = True
+
+        if memory_usage > self.memory_threshold:
+            msg = f"CRITICAL: Memory usage exceeded threshold -> {memory_usage}% (Limit: {self.memory_threshold}%)"
+            logger.warning(msg)
+            alert_messages.append(msg)
+            alert_triggered = True
+
+        # পার্সিস্টেন্ট লগে ডেটা এবং অ্যালার্ট স্ট্যাটাস সেভ করা
+        log_entry = (
+            f"[{timestamp}] STATUS: {'ALERT' if alert_triggered else 'NORMAL'} | "
+            f"CPU: {cpu_load}% | Memory: {memory_usage}% | GPU Temp: {gpu_temp}°C\n"
+        )
+        
+        try:
+            with open(self.log_file_path, "a", encoding="utf-8") as f:
+                f.write(log_entry)
+        except Exception as e:
+            logger.error(f"Failed to write telemetry log to file: {e}")
+
+        if not alert_triggered:
+            logger.info(f"Telemetry metrics normal. CPU: {cpu_load}%, Memory: {memory_usage}%")
+
+        return alert_triggered
