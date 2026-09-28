@@ -26,3 +26,9 @@ psutil==7.2.2
 
 # Testing & Quality Assurance
 pytest>=8.0.0
+# Core HPC & Data Processing Packages (Python 3.12 Compatible)
+numpy>=2.2.0,<3.0.0
+psutil==7.2.2
+
+# Testing & Quality Assurance
+pytest>=8.0.0
