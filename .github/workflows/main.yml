@@ -54,3 +54,8 @@ jobs:
         echo "All telemetry pipelines executed successfully!"
         echo "Qatar National Vision HPC & Digital Twin status: VERIFIED"
         echo "=================================================="
+steps:
+  - name: Set up Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.12' # 3.10 er bodole 3.12 ba 3.13 din
