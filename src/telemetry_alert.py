@@ -104,3 +104,7 @@ class PersistentTelemetryAlertEngine:
             logger.info(f"Telemetry metrics normal. CPU: {cpu_load}%, Memory: {memory_usage}%")
 
         return alert_triggered
+from src.telemetry_alert_engine import PersistentTelemetryAlertEngine
+
+engine = PersistentTelemetryAlertEngine()
+engine.evaluate_and_persist({"cpu_load": 85.5, "memory_usage": 60.2, "gpu_temp": 72.0})
