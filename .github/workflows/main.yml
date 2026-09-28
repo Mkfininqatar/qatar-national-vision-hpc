@@ -59,3 +59,5 @@ steps:
     uses: actions/setup-python@v5
     with:
       python-version: '3.12' # 3.10 er bodole 3.12 ba 3.13 din
+- name: Run Pytest Suite
+        run: pytest tests/
