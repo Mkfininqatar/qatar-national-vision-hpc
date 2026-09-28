@@ -20,3 +20,9 @@ pytest==9.1.1               # ISACA Governance Audit simulation suite and system
 python-logger2==2.0.4       # Core microsecond-accurate zero-drift spatial logging subsystem
 numpy>=2.2.0
 psutil==7.2.2
+# Core HPC & Data Processing Packages (Python 3.12 Compatible)
+numpy>=2.2.0,<3.0.0
+psutil==7.2.2
+
+# Testing & Quality Assurance
+pytest>=8.0.0
