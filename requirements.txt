@@ -5,7 +5,7 @@
 
 # Core System & Process Telemetry
 psutil==7.2.2               # Core CPU, Memory (8.37GB Peak Metrics), and PMIC Voltages diagnostics
-numpy==2.5.3               # Multi-dimensional arrays for Cardio-Neural spatial telemetry matrices
+numpy>=2.2.0,<3.0.0         # Multi-dimensional arrays for Cardio-Neural spatial telemetry matrices (Python 3.12 Compatible)
 scipy==1.18.1               # High-performance ODE solvers for Coupled Bio-Signal differential equations
 
 # Network Telemetry & Real-Time Data Streaming
@@ -18,17 +18,3 @@ pytest==9.1.1               # ISACA Governance Audit simulation suite and system
 
 # System Logging Foundation
 python-logger2==2.0.4       # Core microsecond-accurate zero-drift spatial logging subsystem
-numpy>=2.2.0
-psutil==7.2.2
-# Core HPC & Data Processing Packages (Python 3.12 Compatible)
-numpy>=2.2.0,<3.0.0
-psutil==7.2.2
-
-# Testing & Quality Assurance
-pytest>=8.0.0
-# Core HPC & Data Processing Packages (Python 3.12 Compatible)
-numpy>=2.2.0,<3.0.0
-psutil==7.2.2
-
-# Testing & Quality Assurance
-pytest>=8.0.0
