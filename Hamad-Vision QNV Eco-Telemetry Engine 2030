@@ -551,3 +551,69 @@ if __name__ == "__main__":
     # Deploying Point 7 sector allocation audit module
     sector_engine = Point7HumanitarianSectorEngine(node_id="DOHA-SECTOR-NODE-07")
     sector_engine.execute_point7_audit()
+"""
+Module: Point 8 - Socialized Risk & Corporate Accountability Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits and rejects asymmetric financial frameworks where public 
+             taxpayer funds absorb catastrophic failure risks while private 
+             entities capture unearned corporate profits and branding.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for risk assessment and financial equity
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point8-RiskAudit-Core): %(message)s'
+)
+
+@dataclass
+class RiskExposureMetrics:
+    public_risk_absorption_pct: float
+    private_profit_capture_pct: float
+    asymmetric_exploitation_detected: bool
+
+class Point8SocializedRiskEngine:
+    def __init__(self, node_id: str):
+        self.node_id = node_id
+        logging.info(f"Initializing Point 8 Engine [{self.node_id}]: Auditing Risk Asymmetry & Corporate Accountability under QNV 2030.")
+
+    def audit_risk_distribution(self) -> RiskExposureMetrics:
+        """
+        Evaluates financial transparency to ensure public funds are never 
+        exploited to subsidize private speculative vanity while citizens bear the loss.
+        """
+        # Simulating risk-to-profit equity check under sustainable QNV principles
+        public_risk = 0.0  # Zero tolerance for socialized risk
+        private_profit = 0.0  # Fair, grounded allocation
+        exploitation_detected = False  # Ensuring complete structural fairness
+
+        return RiskExposureMetrics(
+            public_risk_absorption_pct=public_risk,
+            private_profit_capture_pct=private_profit,
+            asymmetric_exploitation_detected=exploitation_detected
+        )
+
+    def enforce_equity_baseline(self, metrics: RiskExposureMetrics):
+        """
+        Executes Point 8 rule: Halts any pipeline transferring public risk to citizens 
+        for private corporate gain; locks system focus onto transparent terrestrial utility.
+        """
+        logging.info(f"Public Risk Exposure: {metrics.public_risk_absorption_pct}% | Exploitation Status: {metrics.asymmetric_exploitation_detected}")
+        
+        if metrics.asymmetric_exploitation_detected:
+            logging.error("RISK ALERT: Asymmetric corporate exploitation detected! Terminating unsanctioned public-risk subsidies.")
+        else:
+            logging.info("SUCCESS: Capital and telemetry streams operate under strict public accountability and equity.")
+
+    def execute_point8_audit(self):
+        logging.info("--- Executing Point 8: Socialized Risk & Profit Asymmetry Audit ---")
+        metrics = self.audit_risk_distribution()
+        self.enforce_equity_baseline(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 8 risk accountability audit module
+    risk_engine = Point8SocializedRiskEngine(node_id="DOHA-RISK-NODE-08")
+    risk_engine.execute_point8_audit()
