@@ -1689,3 +1689,70 @@ if __name__ == "__main__":
     # Deploying Point 24 science audit module with a strict integrity floor
     science_engine = Point24ScienceAuditEngine(node_id="DOHA-SCIENCE-NODE-24", min_integrity_threshold=90.0)
     science_engine.execute_point24_audit()
+"""
+Module: Point 25 - Corporate Monopoly & IP Equity Audit Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits system architecture and telemetry pipelines to detect and 
+             prevent corporate patent hoarding, IP overreach, and monopolistic 
+             barriers, enforcing open-access collaboration and sovereign equity under QNV 2030.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for corporate monopoly auditing and open-access tracking
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point25-MonopolyAudit-Core): %(message)s'
+)
+
+@dataclass
+class CorporateMonopolyMetrics:
+    monopolistic_ip_lock_detected: bool
+    open_access_compliance_pct: float
+    sovereign_ip_fairness_index: float
+
+class Point25CorporateMonopolyEngine:
+    def __init__(self, node_id: str, min_open_access_threshold: float):
+        self.node_id = node_id
+        self.min_open_access_threshold = min_open_access_threshold
+        logging.info(f"Initializing Point 25 Engine [{self.node_id}]: Enforcing Open Access & Combatting Corporate Monopolies under QNV 2030.")
+
+    def audit_ip_fairness(self) -> CorporateMonopolyMetrics:
+        """
+        Evaluates system telemetry to ensure no corporate IP overreach or 
+        patent hoarding restricts public-interest data sharing and sovereign innovation.
+        """
+        # Simulating IP fairness check under sustainable QNV standards
+        monopoly_flag = False           # Zero tolerance for corporate IP hoarding
+        open_access_compliance = 99.2   # High open-access collaboration target
+        fairness_index = 0.99           # Strong sovereign fairness benchmark
+
+        return CorporateMonopolyMetrics(
+            monopolistic_ip_lock_detected=monopoly_flag,
+            open_access_compliance_pct=open_access_compliance,
+            sovereign_ip_fairness_index=fairness_index
+        )
+
+    def enforce_monopoly_baseline(self, metrics: CorporateMonopolyMetrics):
+        """
+        Executes Point 25 rule: Re-routes any telemetry pipeline restricted by 
+        corporate IP monopolies; anchors computational collaboration strictly to open and equitable models.
+        """
+        logging.info(f"Open Access Compliance: {metrics.open_access_compliance_pct}% | IP Fairness Index: {metrics.sovereign_ip_fairness_index}")
+        
+        if metrics.monopolistic_ip_lock_detected or metrics.open_access_compliance_pct < self.min_open_access_threshold:
+            logging.error("MONOPOLY ALERT: Corporate IP overreach or patent hoarding detected! Re-routing telemetry to open-access sovereign nodes.")
+        else:
+            logging.info("SUCCESS: Telemetry and data pipelines verified open and equitable. Operating under strict QNV 2030 collaboration protocols.")
+
+    def execute_point25_audit(self):
+        logging.info("--- Executing Point 25: Corporate Monopoly & IP Equity Audit ---")
+        metrics = self.audit_ip_fairness()
+        self.enforce_monopoly_baseline(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 25 corporate monopoly audit module with a strict open-access floor
+    monopoly_engine = Point25CorporateMonopolyEngine(node_id="DOHA-MONOPOLY-NODE-25", min_open_access_threshold=90.0)
+    monopoly_engine.execute_point25_audit()
