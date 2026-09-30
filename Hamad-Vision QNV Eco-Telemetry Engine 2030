@@ -283,3 +283,69 @@ if __name__ == "__main__":
     # Deploying Point 3 historical audit module
     audit_engine = Point3FailureAuditEngine(node_id="DOHA-AUDIT-NODE-03")
     audit_engine.execute_point3_audit()
+"""
+Module: Point 4 - Economic Drain & Financial Resource Integrity Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits multi-billion dollar speculative budget drains, 
+             enforcing strict fiscal accountability and redirecting 
+             resources toward high-value, earth-centric terrestrial projects.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for financial audit and resource protection
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point4-EconomicAudit-Core): %(message)s'
+)
+
+@dataclass
+class FinancialAllocationMetrics:
+    total_budget_spent_billions_usd: float
+    human_return_on_investment_pct: float
+    budget_waste_flag: bool
+
+class Point4EconomicAuditEngine:
+    def __init__(self, node_id: str, max_allowable_waste_usd: float):
+        self.node_id = node_id
+        self.max_allowable_waste_usd = max_allowable_waste_usd
+        logging.info(f"Initializing Point 4 Engine [{self.node_id}]: Enforcing Strict Financial Accountability & QNV 2030 Budget Limits.")
+
+    def audit_financial_drains(self) -> FinancialAllocationMetrics:
+        """
+        Simulates the historical financial audit (~$40B to $60B spent 
+        on speculative space missions with zero humanitarian return).
+        """
+        historical_drain_usd = 50.0  # In billions USD (approx. 5-7 Lakh Crore BDT)
+        human_roi = 0.0  # Zero direct human return for common masses
+        is_wasteful = historical_drain_usd > self.max_allowable_waste_usd
+
+        return FinancialAllocationMetrics(
+            total_budget_spent_billions_usd=historical_drain_usd,
+            human_return_on_investment_pct=human_roi,
+            budget_waste_flag=is_wasteful
+        )
+
+    def enforce_fiscal_integrity(self, metrics: FinancialAllocationMetrics):
+        """
+        Executes Point 4 rule: Halts ungrounded financial drains and locks 
+        telemetry resources into terrestrial preservation and sustainable development.
+        """
+        logging.info(f"Financial Audit -> Speculative Drain: ${metrics.total_budget_spent_billions_usd}B | Human ROI: {metrics.human_return_on_investment_pct}%")
+        
+        if metrics.budget_waste_flag:
+            logging.error("CRITICAL FISCAL ALERT: Massive speculative budget drain detected! Redirecting capital to Earth-centric infrastructure.")
+        else:
+            logging.info("SUCCESS: Capital allocation strictly aligned with local sustainability goals.")
+
+    def execute_point4_audit(self):
+        logging.info("--- Executing Point 4: Economic Drain & Capital Integrity Audit ---")
+        metrics = self.audit_financial_drains()
+        self.enforce_fiscal_integrity(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 4 economic audit module with a strict ceiling
+    economic_engine = Point4EconomicAuditEngine(node_id="DOHA-FINANCIAL-NODE-04", max_allowable_waste_usd=5.0)
+    economic_engine.execute_point4_audit()
