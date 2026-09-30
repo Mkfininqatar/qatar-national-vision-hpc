@@ -416,3 +416,72 @@ if __name__ == "__main__":
     # Deploying Point 5 humanitarian welfare audit module
     welfare_engine = Point5HumanitarianWelfareEngine(node_id="DOHA-WELFARE-NODE-05")
     welfare_engine.execute_point5_audit()
+"""
+Module: Point 6 - Remote Rover Maintenance Audit & Local Resource Protection Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits the exorbitant annual maintenance costs of keeping 
+             remote space rovers operational, redirecting computational and 
+             financial telemetry toward high-efficiency local terrestrial nodes.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for rover maintenance audit and resource conservation
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point6-RoverAudit-Core): %(message)s'
+)
+
+@dataclass
+class RoverMaintenanceMetrics:
+    remote_rover_count: int
+    annual_maintenance_cost_millions_usd: float
+    local_terrestrial_redirection_active: bool
+    maintenance_drain_flag: bool
+
+class Point6RoverMaintenanceEngine:
+    def __init__(self, node_id: str, max_allowable_maintenance_usd: float):
+        self.node_id = node_id
+        self.max_allowable_maintenance_usd = max_allowable_maintenance_usd
+        logging.info(f"Initializing Point 6 Engine [{self.node_id}]: Auditing Remote Rover Upkeep & Enforcing Local QNV 2030 Efficiency.")
+
+    def audit_rover_maintenance_costs(self) -> RoverMaintenanceMetrics:
+        """
+        Simulates the annual audit of remote rover upkeep costs 
+        (Curiosity & Perseverance cost ~$100M-$150M annually to maintain).
+        """
+        active_rovers = 2
+        annual_cost_usd = 125.0  # In millions USD (approx. 1,500 Crore BDT per year)
+        redirection_active = True
+        is_drain = annual_cost_usd > self.max_allowable_maintenance_usd
+
+        return RoverMaintenanceMetrics(
+            remote_rover_count=active_rovers,
+            annual_maintenance_cost_millions_usd=annual_cost_usd,
+            local_terrestrial_redirection_active=redirection_active,
+            maintenance_drain_flag=is_drain
+        )
+
+    def enforce_maintenance_integrity(self, metrics: RoverMaintenanceMetrics):
+        """
+        Executes Point 6 rule: Halts continuous funding sinks for remote toy rovers 
+        and locks telemetry focus onto sustaining local terrestrial infrastructure.
+        """
+        logging.info(f"Active Remote Rovers: {metrics.remote_rover_count} | Annual Upkeep Drain: ${metrics.annual_maintenance_cost_millions_usd}M")
+        
+        if metrics.maintenance_drain_flag:
+            logging.warning("UPKEEP DRAIN ALERT: Excessive expenditure on remote rover maintenance detected! Shifting bandwidth to local eco-nodes.")
+        else:
+            logging.info("SUCCESS: Maintenance expenditures balanced within sustainable limits.")
+
+    def execute_point6_audit(self):
+        logging.info("--- Executing Point 6: Rover Maintenance & Financial Drain Audit ---")
+        metrics = self.audit_rover_maintenance_costs()
+        self.enforce_maintenance_integrity(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 6 rover maintenance audit module with a strict ceiling
+    rover_engine = Point6RoverMaintenanceEngine(node_id="DOHA-ROVER-AUDIT-06", max_allowable_maintenance_usd=20.0)
+    rover_engine.execute_point6_audit()
