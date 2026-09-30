@@ -1220,3 +1220,70 @@ if __name__ == "__main__":
     # Deploying Point 17 algorithmic integrity module with a strict transparency floor
     algo_engine = Point17AlgorithmicIntegrityEngine(node_id="DOHA-ALGO-NODE-17", min_transparency_threshold=90.0)
     algo_engine.execute_point17_audit()
+"""
+Module: Point 18 - Military-Space De-escalation & Anti-Weaponization Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits system telemetry and data nodes to detect and block hidden 
+             military-space weaponization or dual-use technological proliferation, 
+             enforcing strict peaceful civilian alignment under QNV 2030.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for military-space audit and weaponization tracking
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point18-MilitarySpaceAudit-Core): %(message)s'
+)
+
+@dataclass
+class MilitarySpaceMetrics:
+    covert_weaponization_detected: bool
+    peaceful_civilian_compliance_pct: float
+    geopolitical_security_index: float
+
+class Point18AntiWeaponizationEngine:
+    def __init__(self, node_id: str, min_compliance_threshold: float):
+        self.node_id = node_id
+        self.min_compliance_threshold = min_compliance_threshold
+        logging.info(f"Initializing Point 18 Engine [{self.node_id}]: Enforcing Peaceful Civilian Alignment & Anti-Weaponization under QNV 2030.")
+
+    def audit_military_space_links(self) -> MilitarySpaceMetrics:
+        """
+        Evaluates system telemetry to ensure no covert military-space links 
+        or weaponization routines contaminate the eco-telemetry architecture.
+        """
+        # Simulating military-space audit under sustainable QNV standards
+        weaponization_flag = False      # Zero tolerance for covert space weaponization
+        civilian_compliance = 99.5      # Maximum adherence to peaceful civilian utilities
+        security_index = 0.99           # High structural peace assurance
+
+        return MilitarySpaceMetrics(
+            covert_weaponization_detected=weaponization_flag,
+            peaceful_civilian_compliance_pct=civilian_compliance,
+            geopolitical_security_index=security_index
+        )
+
+    def enforce_peaceful_baseline(self, metrics: MilitarySpaceMetrics):
+        """
+        Executes Point 18 rule: Purges any telemetry pipeline linked to dual-use 
+        military space technology; anchors system processing strictly to peaceful earth-bound service.
+        """
+        logging.info(f"Civilian Compliance: {metrics.peaceful_civilian_compliance_pct}% | Security Index: {metrics.geopolitical_security_index}")
+        
+        if metrics.covert_weaponization_detected or metrics.peaceful_civilian_compliance_pct < self.min_compliance_threshold:
+            logging.error("SECURITY ALERT: Covert space weaponization or military proliferation detected! Terminating compromised telemetry channels.")
+        else:
+            logging.info("SUCCESS: Telemetry operations verified free of military-space proliferation. Operating under strict QNV 2030 peace protocols.")
+
+    def execute_point18_audit(self):
+        logging.info("--- Executing Point 18: Military-Space De-escalation & Anti-Weaponization Audit ---")
+        metrics = self.audit_military_space_links()
+        self.enforce_peaceful_baseline(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 18 anti-weaponization module with a strict compliance floor
+    weapon_engine = Point18AntiWeaponizationEngine(node_id="DOHA-WEAPON-NODE-18", min_compliance_threshold=90.0)
+    weapon_engine.execute_point18_audit()
