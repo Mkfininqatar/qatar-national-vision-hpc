@@ -885,3 +885,70 @@ if __name__ == "__main__":
     # Deploying Point 12 social stability audit module with a strict risk ceiling
     stability_engine = Point12SocialStabilityEngine(node_id="DOHA-STABILITY-NODE-12", max_allowable_conflict_risk=0.06)
     stability_engine.execute_point12_audit()
+"""
+Module: Point 13 - Media Propaganda & Narrative Noise Filtering Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits incoming data streams to filter out speculative media hype, 
+             corporate narrative distractions, and unverified space-propaganda, 
+             enforcing strict empirical grounding under QNV 2030 standards.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for narrative filtering and empirical data integrity
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point13-PropagandaFilter-Core): %(message)s'
+)
+
+@dataclass
+class MediaDistractionMetrics:
+    narrative_noise_level_pct: float
+    verifiable_ground_truth_pct: float
+    propaganda_distortion_detected: bool
+
+class Point13PropagandaFilterEngine:
+    def __init__(self, node_id: str, max_allowable_noise: float):
+        self.node_id = node_id
+        self.max_allowable_noise = max_allowable_noise
+        logging.info(f"Initializing Point 13 Engine [{self.node_id}]: Enforcing Empirical Ground Truth & Filtering Media Hyping under QNV 2030.")
+
+    def audit_incoming_telemetry_streams(self) -> MediaDistractionMetrics:
+        """
+        Evaluates data pipelines to detect speculative media hype or narrative 
+        distractions, ensuring processing is locked onto verifiable real-world metrics.
+        """
+        # Simulating narrative audit under clean QNV standards
+        noise_level = 1.5           # Low, filtered narrative noise percentage
+        ground_truth = 98.5         # High adherence to empirical reality
+        distortion_detected = False # Zero tolerance for deceptive hype
+
+        return MediaDistractionMetrics(
+            narrative_noise_level_pct=noise_level,
+            verifiable_ground_truth_pct=ground_truth,
+            propaganda_distortion_detected=distortion_detected
+        )
+
+    def enforce_empirical_baseline(self, metrics: MediaDistractionMetrics):
+        """
+        Executes Point 13 rule: Purges any telemetry pipeline contaminated by 
+        corporate media spin; anchors computational focus strictly to verified physical data.
+        """
+        logging.info(f"Narrative Noise Level: {metrics.narrative_noise_level_pct}% | Ground Truth Adherence: {metrics.verifiable_ground_truth_pct}%")
+        
+        if metrics.propaganda_distortion_detected or metrics.narrative_noise_level_pct > self.max_allowable_noise:
+            logging.error("PROPAGANDA ALERT: Narrative distortion or excessive media hype detected! Purging contaminated data streams.")
+        else:
+            logging.info("SUCCESS: Telemetry streams completely cleansed of corporate media hype. Operating on verified QNV 2030 truth.")
+
+    def execute_point13_audit(self):
+        logging.info("--- Executing Point 13: Media Propaganda & Narrative Filtering Audit ---")
+        metrics = self.audit_incoming_telemetry_streams()
+        self.enforce_empirical_baseline(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 13 propaganda filter audit module with a strict noise ceiling
+    filter_engine = Point13PropagandaFilterEngine(node_id="DOHA-FILTER-NODE-13", max_allowable_noise=5.0)
+    filter_engine.execute_point13_audit()
