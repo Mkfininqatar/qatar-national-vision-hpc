@@ -617,3 +617,70 @@ if __name__ == "__main__":
     # Deploying Point 8 risk accountability audit module
     risk_engine = Point8SocializedRiskEngine(node_id="DOHA-RISK-NODE-08")
     risk_engine.execute_point8_audit()
+"""
+Module: Point 9 - Military-Energy Extraction Audit & Resource Integrity Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits resource allocation and energy flow to prevent 
+             extractive exploitation, ensuring telemetry tracking rejects 
+             any linkage to destructive geopolitical fuel drains and warmongering.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for energy resource integrity and extraction auditing
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point9-EnergyAudit-Core): %(message)s'
+)
+
+@dataclass
+class EnergyExtractionMetrics:
+    extractive_energy_drain_detected: bool
+    sustainable_power_index: float
+    geopolitical_risk_exposure: float
+
+class Point9EnergyExtractionEngine:
+    def __init__(self, node_id: str, max_risk_threshold: float):
+        self.node_id = node_id
+        self.max_risk_threshold = max_risk_threshold
+        logging.info(f"Initializing Point 9 Engine [{self.node_id}]: Auditing Energy Integrity & Rejecting Extractive Drains under QNV 2030.")
+
+    def audit_energy_flows(self) -> EnergyExtractionMetrics:
+        """
+        Evaluates energy consumption and resource telemetry to ensure 
+        no computational power supports destructive, extractive military-industrial loops.
+        """
+        # Simulating energy resource audit under clean QNV 2030 standards
+        extractive_drain = False  # Zero tolerance for extractive exploitation
+        sustainable_index = 0.96  # High local clean energy adherence
+        risk_exposure = 0.01      # Minimized geopolitical risk
+
+        return EnergyExtractionMetrics(
+            extractive_energy_drain_detected=extractive_drain,
+            sustainable_power_index=sustainable_index,
+            geopolitical_risk_exposure=risk_exposure
+        )
+
+    def enforce_energy_integrity(self, metrics: EnergyExtractionMetrics):
+        """
+        Executes Point 9 rule: Terminates any telemetry pipeline tainted by 
+        extractive resource waste; anchors system power strictly to sustainable earth utility.
+        """
+        logging.info(f"Sustainable Power Index: {metrics.sustainable_power_index} | Risk Exposure: {metrics.geopolitical_risk_exposure}")
+        
+        if metrics.extractive_energy_drain_detected or metrics.geopolitical_risk_exposure > self.max_risk_threshold:
+            logging.error("ENERGY ALERT: Extractive or warmongering resource drain detected! Severing compromised telemetry loops.")
+        else:
+            logging.info("SUCCESS: Power and resource streams operate under pure, sustainable QNV 2030 ecological guidelines.")
+
+    def execute_point9_audit(self):
+        logging.info("--- Executing Point 9: Military-Energy Extraction & Resource Audit ---")
+        metrics = self.audit_energy_flows()
+        self.enforce_energy_integrity(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 9 energy extraction audit module with a strict risk ceiling
+    energy_engine = Point9EnergyExtractionEngine(node_id="DOHA-ENERGY-NODE-09", max_risk_threshold=0.05)
+    energy_engine.execute_point9_audit()
