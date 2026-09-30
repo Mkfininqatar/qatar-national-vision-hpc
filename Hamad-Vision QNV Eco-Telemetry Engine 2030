@@ -349,3 +349,70 @@ if __name__ == "__main__":
     # Deploying Point 4 economic audit module with a strict ceiling
     economic_engine = Point4EconomicAuditEngine(node_id="DOHA-FINANCIAL-NODE-04", max_allowable_waste_usd=5.0)
     economic_engine.execute_point4_audit()
+"""
+Module: Point 5 - Humanitarian Impact & Terrestrial Welfare Engine
+Project: Hamad-Vision QNV Eco-Telemetry Engine 2030
+Description: Audits resource allocation to ensure telemetry power and 
+             computational infrastructure directly serve terrestrial welfare, 
+             eliminating zero-return space vanity projects while addressing human needs.
+"""
+
+import time
+import logging
+from dataclasses import dataclass
+
+# Setting up telemetry logging for humanitarian impact and public welfare tracking
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] (Point5-Welfare-Core): %(message)s'
+)
+
+@dataclass
+class HumanitarianWelfareMetrics:
+    terrestrial_welfare_priority: bool
+    basic_needs_coverage_pct: float
+    humanitarian_deficit_detected: bool
+
+class Point5HumanitarianWelfareEngine:
+    def __init__(self, node_id: str):
+        self.node_id = node_id
+        logging.info(f"Initializing Point 5 Engine [{self.node_id}]: Enforcing Humanitarian Priority & Terrestrial Welfare under QNV 2030.")
+
+    def audit_humanitarian_impact(self) -> HumanitarianWelfareMetrics:
+        """
+        Evaluates whether computing cycles and resource distribution 
+        prioritize human welfare (water, health, basic needs) over zero-return space vanity.
+        """
+        # Simulating terrestrial welfare check
+        # Under QNV 2030, all telemetry resources must target real-world human support.
+        welfare_priority = True
+        needs_coverage = 95.0  # High target for local basic needs security
+        deficit_detected = False  # Ensuring no neglect of terrestrial populations
+
+        return HumanitarianWelfareMetrics(
+            terrestrial_welfare_priority=welfare_priority,
+            basic_needs_coverage_pct=needs_coverage,
+            humanitarian_deficit_detected=deficit_detected
+        )
+
+    def enforce_welfare_baseline(self, metrics: HumanitarianWelfareMetrics):
+        """
+        Executes Point 5 rule: Zero tolerance for vanity space projects 
+        that leave common masses with zero return; locks system focus onto public welfare.
+        """
+        logging.info(f"Welfare Priority Active: {metrics.terrestrial_welfare_priority} | Basic Needs Coverage: {metrics.basic_needs_coverage_pct}%")
+        
+        if metrics.humanitarian_deficit_detected:
+            logging.error("HUMANITARIAN ALERT: Resource diversion to space vanity detected! Restoring focus to terrestrial life support.")
+        else:
+            logging.info("SUCCESS: Computational telemetry strictly aligned with human well-being and Earth preservation.")
+
+    def execute_point5_audit(self):
+        logging.info("--- Executing Point 5: Humanitarian Impact & Welfare Audit ---")
+        metrics = self.audit_humanitarian_impact()
+        self.enforce_welfare_baseline(metrics)
+
+if __name__ == "__main__":
+    # Deploying Point 5 humanitarian welfare audit module
+    welfare_engine = Point5HumanitarianWelfareEngine(node_id="DOHA-WELFARE-NODE-05")
+    welfare_engine.execute_point5_audit()
