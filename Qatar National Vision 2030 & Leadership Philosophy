@@ -327,3 +327,25 @@
     }
   }
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-08",
+    "category": "Root, Mother Tongue & Sovereignty",
+    "title": "Assault on the Mother Tongue",
+    "detailed_analysis": {
+      "concept": "Colonial powers and systemic dominators systematically target native languages to dismantle collective memory and resistance.",
+      "architectural_impact": "Highlights linguistic defense as the frontline shield against external political and cultural subjugation.",
+      "description": "Oppressive forces and external powers always strike at the native mother tongue first as a primary tactic to silence the voice of the people."
+    }
+  }
+}
