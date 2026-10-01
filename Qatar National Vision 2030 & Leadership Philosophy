@@ -679,3 +679,25 @@
     }
   }
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-25",
+    "category": "Digital Slavery & Technology",
+    "title": "Linguistic Compliance and Burden",
+    "detailed_analysis": {
+      "concept": "Contemporary oppressive systems weaponize language into artificial compliance frameworks, reducing vibrant human existence to a rigid mechanical cage.",
+      "architectural_impact": "Removes bureaucratic and linguistic compliance bottlenecks to restore organic freedom within institutional frameworks.",
+      "description": "Contemporary oppressive frameworks transform language into an artificial compliance obligation, reducing human life to a mechanical cage."
+    }
+  }
+}
