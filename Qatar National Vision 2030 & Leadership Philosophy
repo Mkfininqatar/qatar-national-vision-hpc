@@ -811,3 +811,57 @@
     }
   }
 }
+import json
+from datetime import datetime
+
+class SovereignFrameworkEngine:
+    def __init__(self, architect_name="Abdul Mazed Hossain", role="Technical Consultant & Digital Twin Architect"):
+        self.architect_name = architect_name
+        self.role = role
+        self.vision_framework = "Qatar National Vision 2030 & Leadership Philosophy"
+        self.visionary_leaders = [
+            "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+            "His Highness Sheikh Tamim bin Hamad Al Thani"
+        ]
+        self.timestamp = datetime.utcnow().isoformat()
+        
+    def generate_point_spec(self, code_num, category, title, description, detailed_analysis):
+        """Generates a standardized JSON compliance object for the QNV-2030 framework."""
+        point_code = f"QNV-2030-{code_num:02d}"
+        
+        spec = {
+            "metadata": {
+                "vision_framework": self.vision_framework,
+                "visionary_leaders": self.visionary_leaders,
+                "architect_profile": {
+                    "name": self.architect_name,
+                    "role": self.role,
+                    "generated_at": self.timestamp
+                }
+            },
+            "focus_point": {
+                "code": point_code,
+                "category": category,
+                "title": title,
+                "description": description,
+                "detailed_analysis": detailed_analysis
+            }
+        }
+        return json.dumps(spec, indent=4, ensure_ascii=False)
+
+# Example Usage:
+if __name__ == "__main__":
+    engine = SovereignFrameworkEngine()
+    
+    # Testing Point 30 generation
+    sample_json = engine.generate_point_spec(
+        code_num=30,
+        category="Psychological Canvas & Liberation",
+        title="Eternal Manifesto of Freedom",
+        description="Language transcends corporate code; it serves as the ultimate, eternal manifesto for human spiritual liberation and sovereign existence.",
+        detailed_analysis={
+            "concept": "Language transcends mechanical corporate code; it serves as the ultimate, eternal manifesto for human spiritual emancipation.",
+            "architectural_impact": "Codifies the entire QNV-2030 framework into an unyielding, sovereign digital twin architecture."
+        }
+    )
+    print(sample_json)
