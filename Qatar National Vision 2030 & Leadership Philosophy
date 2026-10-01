@@ -459,3 +459,25 @@
     }
   }
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-14",
+    "category": "Elite Mask & Hypocrisy",
+    "title": "Discrimination in the Guise of Merit",
+    "detailed_analysis": {
+      "concept": "Imposing foreign language mastery as a standard of merit systematically sidelines brilliant minds rooted in native capabilities.",
+      "architectural_impact": "Redefines institutional key performance indicators (KPIs) to ensure equitable evaluation based on true indigenous capability.",
+      "description": "Society enforces foreign language proficiency as the primary metric of merit, marginalizing truly talented individuals rooted in their native tongues."
+    }
+  }
+}
