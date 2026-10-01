@@ -635,3 +635,25 @@
     }
   }
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-22",
+    "category": "Digital Slavery & Technology",
+    "title": "Corporate Propaganda",
+    "detailed_analysis": {
+      "concept": "Multinational technology giants deliberately wrap digital tools in an aura of invincible magic to induce psychological intimidation and systemic dependency.",
+      "architectural_impact": "Deconstructs corporate tech marketing narratives to expose underlying telemetry vulnerabilities and vendor lock-in traps.",
+      "description": "Multinational tech giants shroud technology in an aura of invincible magic to cultivate psychological fear and absolute dependence."
+    }
+  }
+}
