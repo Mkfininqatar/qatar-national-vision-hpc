@@ -193,3 +193,21 @@
     }
   ]
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-01",
+    "category": "Root, Mother Tongue & Sovereignty",
+    "title": "Mother Tongue as True Sovereignty",
+    "description": "True independence and self-respect are deeply rooted in the absolute right over one's mother tongue, extending far beyond physical geographical boundaries."
+  }
+}
