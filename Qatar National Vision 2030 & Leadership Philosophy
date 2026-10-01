@@ -767,3 +767,25 @@
     }
   }
 }
+{
+  "vision_framework": "Qatar National Vision 2030 & Leadership Philosophy",
+  "visionary_leaders": [
+    "His Highness Father Amir Sheikh Hamad bin Khalifa Al Thani (rah.)",
+    "His Highness Sheikh Tamim bin Hamad Al Thani"
+  ],
+  "architect_profile": {
+    "name": "Abdul Mazed Hossain",
+    "role": "Technical Consultant & Digital Twin Architect",
+    "contribution": "Designing the sovereign philosophical, linguistic, and high-performance technological frameworks to resist digital servitude and secure authentic national autonomy."
+  },
+  "focus_point": {
+    "code": "QNV-2030-29",
+    "category": "Psychological Canvas & Liberation",
+    "title": "Duty of the Coming Generation",
+    "detailed_analysis": {
+      "concept": "Comprehending the immense power of native languages empowers upcoming generations to defend their sovereignty against artificial bondage.",
+      "architectural_impact": "Embeds long-term educational safeguards and sovereign transmission protocols for succeeding leadership cadres.",
+      "description": "Understanding the profound power of native languages empowers future generations to safeguard their autonomy against all forms of artificial bondage."
+    }
+  }
+}
