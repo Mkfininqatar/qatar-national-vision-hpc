@@ -5,7 +5,7 @@
 
 # Core System & Process Telemetry
 psutil==7.2.2               # Core CPU, Memory (8.37GB Peak Metrics), and PMIC Voltages diagnostics
-numpy>=2.2.0,<3.0.0         # Multi-dimensional arrays for Cardio-Neural spatial telemetry matrices (Python 3.12 Compatible)
+numpy>=2.5.3,<3.0.0         # Multi-dimensional arrays for Cardio-Neural spatial telemetry matrices (Python 3.12 Compatible)
 scipy==1.18.1               # High-performance ODE solvers for Coupled Bio-Signal differential equations
 
 # Network Telemetry & Real-Time Data Streaming
