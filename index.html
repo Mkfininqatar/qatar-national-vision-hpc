@@ -842,3 +842,243 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QNV-2030 Sovereign Framework | Digital Twin Intelligence</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        qatar: {
+                            DEFAULT: '#8A1538',
+                            dark: '#5C0E24',
+                            light: '#A81D45',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen selection:bg-qatar selection:text-white" x-data="dashboardData()">
+
+    <!-- Top Navigation / Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-qatar rounded-xl flex items-center justify-center shadow-lg shadow-qatar/30 border border-qatar-light/20">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        QNV-2030 Sovereign Matrix 
+                        <span class="text-xs px-2.5 py-0.5 rounded-full bg-qatar/20 text-qatar-light border border-qatar/30">Active Twin</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Architect: <span class="text-slate-200 font-medium">Abdul Mazed Hossain</span> | Digital Twin Architect</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-6 text-xs text-slate-400">
+                <div class="text-right">
+                    <p class="font-medium text-slate-200">Visionary Leadership</p>
+                    <p>HH Father Amir & HH Sheikh Tamim</p>
+                </div>
+                <div class="h-8 w-px bg-slate-800"></div>
+                <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700/50 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-slate-300 font-mono">Telemetry: SECURE</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Metrics Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Framework Points</p>
+                    <i data-lucide="layers" class="w-5 h-5 text-qatar"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold text-white mt-2 font-mono">30</h3>
+                <p class="text-xs text-emerald-400 mt-1 flex items-center gap-1">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 100% Code Compliance
+                </p>
+            </div>
+            
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Core Categories</p>
+                    <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold text-white mt-2 font-mono">4</h3>
+                <p class="text-xs text-slate-400 mt-1">Roots, Elite, Tech, Liberation</p>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Sovereignty Index</p>
+                    <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold text-white mt-2 font-mono">99.9%</h3>
+                <p class="text-xs text-emerald-400 mt-1">Zero Linguistic Bias</p>
+            </div>
+
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Protocol Status</p>
+                    <i data-lucide="terminal" class="w-5 h-5 text-amber-400"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold text-white mt-2 font-mono">JSON-V30</h3>
+                <p class="text-xs text-amber-400 mt-1">Real-time Telemetry Live</p>
+            </div>
+        </div>
+
+        <!-- Filters and Search Toolbar -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between backdrop-blur">
+            <div class="relative w-full md:w-96">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                </span>
+                <input type="text" x-model="searchQuery" placeholder="Search framework code, title, or analysis..." 
+                    class="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-qatar transition-colors">
+            </div>
+
+            <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+                <button @click="selectedCategory = 'All'" 
+                    :class="selectedCategory === 'All' ? 'bg-qatar text-white border-qatar' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'"
+                    class="px-4 py-2 rounded-xl text-xs font-medium border transition-all whitespace-nowrap">
+                    All Points (30)
+                </button>
+                <button @click="selectedCategory = 'Root, Mother Tongue & Sovereignty'" 
+                    :class="selectedCategory === 'Root, Mother Tongue & Sovereignty' ? 'bg-qatar text-white border-qatar' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'"
+                    class="px-4 py-2 rounded-xl text-xs font-medium border transition-all whitespace-nowrap">
+                    Roots & Sovereignty (1-10)
+                </button>
+                <button @click="selectedCategory = 'Elite Mask & Hypocrisy'" 
+                    :class="selectedCategory === 'Elite Mask & Hypocrisy' ? 'bg-qatar text-white border-qatar' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'"
+                    class="px-4 py-2 rounded-xl text-xs font-medium border transition-all whitespace-nowrap">
+                    Elite Hypocrisy (11-18)
+                </button>
+                <button @click="selectedCategory = 'Digital Slavery & Technology'" 
+                    :class="selectedCategory === 'Digital Slavery & Technology' ? 'bg-qatar text-white border-qatar' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'"
+                    class="px-4 py-2 rounded-xl text-xs font-medium border transition-all whitespace-nowrap">
+                    Digital Slavery (19-25)
+                </button>
+                <button @click="selectedCategory = 'Psychological Canvas & Liberation'" 
+                    :class="selectedCategory === 'Psychological Canvas & Liberation' ? 'bg-qatar text-white border-qatar' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'"
+                    class="px-4 py-2 rounded-xl text-xs font-medium border transition-all whitespace-nowrap">
+                    Liberation (26-30)
+                </button>
+            </div>
+        </div>
+
+        <!-- Framework Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <template x-for="item in filteredPoints" :key="item.code">
+                <div class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-qatar/5 group">
+                    <div>
+                        <!-- Card Header -->
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-qatar/10 text-qatar-light border border-qatar/20" x-text="item.code"></span>
+                            <span class="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-medium" x-text="item.category"></span>
+                        </div>
+                        
+                        <!-- Title & Description -->
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-qatar-light transition-colors" x-text="item.title"></h3>
+                        <p class="text-sm text-slate-300 mb-4 leading-relaxed" x-text="item.description"></p>
+                    </div>
+
+                    <!-- Detailed Analysis & Architectural Impact -->
+                    <div class="border-t border-slate-800/80 pt-4 mt-4 space-y-3">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/50">
+                            <p class="text-[10px] font-semibold tracking-wider text-qatar-light uppercase mb-1">Concept Analysis</p>
+                            <p class="text-xs text-slate-300" x-text="item.analysis"></p>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/50">
+                            <p class="text-[10px] font-semibold tracking-wider text-emerald-400 uppercase mb-1">Architectural Impact</p>
+                            <p class="text-xs text-slate-300" x-text="item.impact"></p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 mt-20 py-8 text-center text-xs text-slate-500">
+        <p>QNV-2030 Sovereign Digital Twin Architecture &copy; 2026. Designed by Abdul Mazed Hossain.</p>
+    </footer>
+
+    <!-- Alpine.js Data Script -->
+    <script>
+        function dashboardData() {
+            return {
+                searchQuery: '',
+                selectedCategory: 'All',
+                points: [
+                    { code: 'QNV-2030-01', category: 'Root, Mother Tongue & Sovereignty', title: 'Mother Tongue as True Sovereignty', description: 'True independence and self-respect are deeply rooted in the absolute right over one\'s mother tongue, extending far beyond physical geographical boundaries.', analysis: 'Geographical boundaries define physical territory, but true national autonomy is anchored in linguistic supremacy.', impact: 'Prevents psychological colonization by establishing the mother tongue as foundational telemetry.' },
+                    { code: 'QNV-2030-02', category: 'Root, Mother Tongue & Sovereignty', title: 'Neural Network of Thought', description: 'A human\'s deepest thoughts, raw emotions, and authentic realizations originate and flourish exclusively within the framework of their mother tongue.', analysis: 'Cognitive processes and emotional intelligence are hardwired to native linguistic patterns.', impact: 'Maintains uncorrupted cognitive pipelines free from foreign cognitive biases.' },
+                    { code: 'QNV-2030-03', category: 'Root, Mother Tongue & Sovereignty', title: 'Artificial Nature of Foreign Languages', description: 'When forced to communicate in foreign or corporate languages, individuals fail to express any genuine inner truth or authentic realization.', analysis: 'Corporate and imposed foreign languages function as synthetic layers suppressing human creativity.', impact: 'Exposes communication bottlenecks and systemic friction caused by non-native vernacular.' },
+                    { code: 'QNV-2030-04', category: 'Root, Mother Tongue & Sovereignty', title: 'Script-Dependent Leadership', description: 'Standing on a stage and reciting pre-printed corporate scripts or foreign words authored by others marks the ultimate collapse of independent thought.', analysis: 'Sovereign leadership requires direct connection with masses, not mechanical script execution.', impact: 'Eliminates proxy-driven governance and establishes direct accountability.' },
+                    { code: 'QNV-2030-05', category: 'Root, Mother Tongue & Sovereignty', title: 'Voluntary Self-Enslavement', description: 'Abandoning the power of one\'s native language to embrace foreign protocols or scripted servitude is equivalent to voluntarily chaining oneself.', analysis: 'Internalizing foreign protocols out of perceived convenience constitutes self-inflicted captivity.', impact: 'Highlights the danger of adopting systemic compliance models that erode cultural independence.' },
+                    { code: 'QNV-2030-06', category: 'Root, Mother Tongue & Sovereignty', title: 'Leadership Servitude and Public Fate', description: 'When state leaders remain trapped in linguistic and psychological servitude, the general populace is inevitably dragged into the same illusion of captivity.', analysis: 'The psychological state of leadership cascades down to dictate collective mindset.', impact: 'Proves sovereign national development requires uncompromised linguistic autonomy.' },
+                    { code: 'QNV-2030-07', category: 'Root, Mother Tongue & Sovereignty', title: 'Primal Torch of Liberation', description: 'History bears witness that when humanity first articulated sounds from the heart, those spoken words became the very first torches of freedom.', analysis: 'Dawn of human freedom began when individuals articulated unmediated native sounds.', impact: 'Establishes ancestral vocal expression as the catalyst of human emancipation.' },
+                    { code: 'QNV-2030-08', category: 'Root, Mother Tongue & Sovereignty', title: 'Assault on the Mother Tongue', description: 'Oppressive forces and external powers always strike at the native mother tongue first as a primary tactic to silence the voice of the people.', analysis: 'Colonial powers systematically target native languages to dismantle collective memory.', impact: 'Highlights linguistic defense as the frontline shield against external subjugation.' },
+                    { code: 'QNV-2030-09', category: 'Root, Mother Tongue & Sovereignty', title: 'Leader\'s Address in Native Tongue', description: 'When a leader defies rigid protocols to address their nation in their native tongue, it elevates the collective dignity of the entire populace.', analysis: 'Rejecting artificial diplomatic protocols to speak natively fortifies cultural dignity.', impact: 'Validates authentic leadership performance metrics resonating with public identity.' },
+                    { code: 'QNV-2030-10', category: 'Root, Mother Tongue & Sovereignty', title: 'Linguistic Honor and Rooted Strength', description: 'The courage and authenticity of speaking in one\'s native tongue builds a formidable defense against linguistic-based subjugation.', analysis: 'Embracing native roots breaks the psychological cycle of language dependency.', impact: 'Constructs an impenetrable defensive layer against cultural homogenization.' },
+                    
+                    { code: 'QNV-2030-11', category: 'Elite Mask & Hypocrisy', title: 'Skeleton of the Polite Society', description: 'A major segment of the so-called \'educated\' and \'elite\' society has lost the capacity for independent thought, turning into symbols of quiet captivity.', analysis: 'Privileged classes surrender intellect to adopt hollow foreign behavioral templates.', impact: 'Exposes internal systemic decay hidden behind superficial elite compliance.' },
+                    { code: 'QNV-2030-12', category: 'Elite Mask & Hypocrisy', title: 'Flashy Catchphrases', description: 'Corporate jargon and foreign catchphrases used by the upper echelons are merely empty noises devoid of any real pulse or life.', analysis: 'High-level jargon projects false progress while remaining completely devoid of soul.', impact: 'Identifies and filters deceptive linguistic noise from core telemetry.' },
+                    { code: 'QNV-2030-13', category: 'Elite Mask & Hypocrisy', title: 'Ornaments of Nominal Titles', description: 'Grand titles such as director, consultant, or executive often function as colorful templates masking deep-seated psychological servitude.', analysis: 'Corporate designations act as superficial decorations masking submission.', impact: 'Deconstructs vanity metrics to prioritize genuine functional contribution.' },
+                    { code: 'QNV-2030-14', category: 'Elite Mask & Hypocrisy', title: 'Discrimination in the Guise of Merit', description: 'Society enforces foreign language proficiency as the primary metric of merit, marginalizing truly talented individuals rooted in their native tongues.', analysis: 'Imposing foreign language mastery sidelines brilliant indigenous minds.', impact: 'Redefines institutional KPIs for equitable evaluation based on true capability.' },
+                    { code: 'QNV-2030-15', category: 'Elite Mask & Hypocrisy', title: 'Exile Within One\'s Soul', description: 'Being denied dignity in one\'s native tongue while standing on home soil amounts to living the life of an exile or captive in one\'s own country.', analysis: 'Suffering cultural alienation on home soil creates internal displacement.', impact: 'Establishes a citizen-centric psychological baseline for identity harmony.' },
+                    { code: 'QNV-2030-16', category: 'Elite Mask & Hypocrisy', title: 'Voluntary Acceptance of Subjugation', description: 'Treating foreign cultures and languages as superior while discarding one\'s own language is a self-inflicted invitation to mental colonization.', analysis: 'Internalizing foreign superiority acts as an open vector for mental colonization.', impact: 'Identifies voluntary self-colonization as a critical vulnerability vector.' },
+                    { code: 'QNV-2030-17', category: 'Elite Mask & Hypocrisy', title: 'Intellectual Bankruptcy', description: 'Denying one\'s ancestral roots under the deceptive mask of \'smartness\' or \'modernity\' represents the highest degree of intellectual bankruptcy.', analysis: 'Discarding roots under superficial modernization represents intellectual poverty.', impact: 'Establishes robust cognitive safeguards in R&D and education.' },
+                    { code: 'QNV-2030-18', category: 'Elite Mask & Hypocrisy', title: 'Censorship-Free Psychological Slavery', description: 'Even in the absence of explicit external censorship, human minds remain bound by an invisible corporate control over perception and thought.', analysis: 'Consciousness remains bound by invisible corporate and cognitive programming.', impact: 'Deconstructs invisible thought-control to secure absolute data sovereignty.' },
+
+                    { code: 'QNV-2030-19', category: 'Digital Slavery & Technology', title: 'Digital Enslavement via Technology', description: 'Without deploying physical armies or swords, modern power structures weaponize language to trap populations in invisible digital servitude.', analysis: 'Power systems weaponize linguistic structures and digital protocols for control.', impact: 'Establishes cryptographic and linguistic security auditing for incoming software.' },
+                    { code: 'QNV-2030-20', category: 'Digital Slavery & Technology', title: 'Control via Code and Algorithms', description: 'When everyday software, platforms, and AI algorithms operate entirely under external agendas, human autonomy is quietly compromised.', analysis: 'Operating entirely on foreign AI logic compromises human independence at source.', impact: 'Mandates sovereign algorithm design and native telemetry pipelines.' },
+                    { code: 'QNV-2030-21', category: 'Digital Slavery & Technology', title: 'Technology as a Neutral Tool', description: 'Technology is neither a miraculous entity nor a divine force; it remains a simple, utilitarian tool dependent entirely on human intention.', analysis: 'Tech is a utilitarian tool that must bend to human sovereign intent.', impact: 'Demystifies tech hegemony, treating assets as components subordinate to vision.' },
+                    { code: 'QNV-2030-22', category: 'Digital Slavery & Technology', title: 'Corporate Propaganda', description: 'Multinational tech giants shroud technology in an aura of invincible magic to cultivate psychological fear and absolute dependence.', analysis: 'Tech giants wrap tools in invincible magic to induce psychological intimidation.', impact: 'Deconstructs corporate marketing to expose underlying vendor lock-in traps.' },
+                    { code: 'QNV-2030-23', category: 'Digital Slavery & Technology', title: 'Rootless Technological Dependency', description: 'Had societies remained anchored within the bounds of their distinct native tongues, this aggressive and asymmetric technology dependency would never have scaled.', analysis: 'Native anchoring prevents aggressive, asymmetric digital dependency.', impact: 'Establishes a native-first digital adoption matrix to block infiltration.' },
+                    { code: 'QNV-2030-24', category: 'Digital Slavery & Technology', title: 'Structural Vulnerability of Technology', description: 'Evaluating modern technology through the lens of native roots quickly exposes the hollow foundations of so-called \'advanced\' systems.', analysis: 'Native lens unmasks fragile and hollow foundations of advanced systems.', impact: 'Introduces forensic audit frameworks to evaluate digital twin topology.' },
+                    { code: 'QNV-2030-25', category: 'Digital Slavery & Technology', title: 'Linguistic Compliance and Burden', description: 'Contemporary oppressive frameworks transform language into an artificial compliance obligation, reducing human life to a mechanical cage.', analysis: 'Oppressive systems weaponize language into artificial compliance frameworks.', impact: 'Removes bureaucratic bottlenecks to restore organic institutional freedom.' },
+
+                    { code: 'QNV-2030-26', category: 'Psychological Canvas & Liberation', title: 'Repository of Ancestral Languages', description: 'Ancient linguistic heritage and expressions buried deep within cultural memory form a living and timeless historical record.', analysis: 'Ancient expressions preserved in memory serve as an eternal database of wisdom.', impact: 'Establishes historical telemetry archives for future generations.' },
+                    { code: 'QNV-2030-27', category: 'Psychological Canvas & Liberation', title: 'Song-Based Data Store', description: 'Human joy, struggle, and resilience find their most accurate database preserved within traditional folk melodies, music, and indigenous songs.', analysis: 'Folk melodies and songs store the most accurate psychological database.', impact: 'Integrates cultural rhythm and emotional telemetry into system parameters.' },
+                    { code: 'QNV-2030-28', category: 'Psychological Canvas & Liberation', title: 'Unveiling the Mind\'s Canvas', description: 'Returning to roots, native tongues, and indigenous rhythms is the only way to reveal the true, uncorrupted canvas of human consciousness.', analysis: 'Returning to foundational roots reveals uncorrupted consciousness.', impact: 'Cleanses cognitive pipelines of foreign biases to establish clarity.' },
+                    { code: 'QNV-2030-29', category: 'Psychological Canvas & Liberation', title: 'Duty of the Coming Generation', description: 'Understanding the profound power of native languages empowers future generations to safeguard their autonomy against all forms of artificial bondage.', analysis: 'Comprehending native power empowers upcoming cohorts to defend sovereignty.', impact: 'Embeds long-term educational safeguards for succeeding leadership.' },
+                    { code: 'QNV-2030-30', category: 'Psychological Canvas & Liberation', title: 'Eternal Manifesto of Freedom', description: 'Language transcends corporate code; it serves as the ultimate, eternal manifesto for human spiritual liberation and sovereign existence.', analysis: 'Language serves as the eternal manifesto for spiritual emancipation.', impact: 'Codifies the entire QNV-2030 framework into unyielding digital twin architecture.' }
+                ],
+                get filteredPoints() {
+                    return this.points.filter(item => {
+                        const matchesCategory = this.selectedCategory === 'All' || item.category === this.selectedCategory;
+                        const matchesSearch = item.code.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                              item.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                              item.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                              item.analysis.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        return matchesCategory && matchesSearch;
+                    });
+                }
+            }
+        }
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
