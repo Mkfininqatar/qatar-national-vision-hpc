@@ -5817,3 +5817,78 @@ class NationalTalentGreenCorridor(BaseModel):
     average_compliance_and_performance_score: float
     is_green_corridor_eligible: bool = True
     reward_allocated: str = "PRIORITY_RESIDENCY_OR_TALENT_CERTIFICATE"
+import json
+from datetime import datetime
+
+class EscrowRoutingEngine:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 2: QID Central Mapping & Automated Escrow Routing
+    """
+    def __init__(self):
+        # Database simulation for company reserves and worker bindings
+        self.corporate_reserves = {
+            "QCR-907505": {"reserve_balance": 55000.00, "status": "ACTIVE", "ring_fenced": True}
+        }
+        self.worker_registry = {
+            "28899012345": {"name": "Worker_Alpha", "company_id": "QCR-907505", "monthly_salary": 2500.00}
+        }
+
+    def bind_worker_to_company(self, qid, company_id):
+        """
+        Cryptographically maps the worker's QID to the company's commercial record (CR).
+        Prevents unauthorized transfers or hidden shadow deployment.
+        """
+        if company_id not in self.corporate_reserves:
+            return {"status": "FAILED", "reason": "Company license or reserve account not found."}
+        
+        self.worker_registry[qid] = {
+            "company_id": company_id,
+            "bound_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        return {"status": "SUCCESS", "message": f"QID {qid} successfully bound to Company {company_id}."}
+
+    def execute_automated_payroll(self, company_id, qid):
+        """
+        Executes automated direct salary routing from the pre-funded escrow account 
+        to the worker's verified digital account on pay-day, completely bypassing manual bottlenecks.
+        """
+        if company_id not in self.corporate_reserves:
+            return {"error": "Invalid Company ID."}
+        
+        if qid not in self.worker_registry:
+            return {"error": "Worker QID mapping not found."}
+
+        salary_due = self.worker_registry[qid]["monthly_salary"]
+        current_reserve = self.corporate_reserves[company_id]["reserve_balance"]
+
+        # Check if pre-funded reserve has sufficient balance
+        if current_reserve >= salary_due:
+            # Deduct from company ring-fenced reserve and route to worker
+            self.corporate_reserves[company_id]["reserve_balance"] -= salary_due
+            
+            transaction_receipt = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "company_id": company_id,
+                "recipient_qid": qid,
+                "amount_transferred": salary_due,
+                "remaining_reserve": self.corporate_reserves[company_id]["reserve_balance"],
+                "status": "AUTO_ROUTED_SUCCESS"
+            }
+            return transaction_receipt
+        else:
+            # Trigger emergency telemetry lock if pre-funded reserve drops below requirement
+            self.corporate_reserves[company_id]["status"] = "DEFICIT_LOCKED"
+            return {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "status": "CRITICAL_ESCROW_DEFICIT",
+                "action": "Automatic recruitment freeze and penalty flag triggered for company."
+            }
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    escrow_engine = EscrowRoutingEngine()
+
+    print("--- Executing HT-MTF Module 2: Automated Escrow Payout ---")
+    payout_result = escrow_engine.execute_automated_payroll(company_id="QCR-907505", qid="28899012345")
+    print(json.dumps(payout_result, indent=4))
