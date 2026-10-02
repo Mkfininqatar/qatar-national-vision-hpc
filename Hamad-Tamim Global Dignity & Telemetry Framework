@@ -5495,3 +5495,35 @@ class TelemetryEvent(BaseModel):
     ambient_temperature: float
     actual_hours_logged: float
     is_paperwork_matched: bool = True
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field
+
+class PassportBinding(BaseModel):
+    passport_number: str
+    issuing_country: str
+    is_passport_held_by_sponsor: bool = False  # Violation if True
+    digital_hash: str
+
+class SponsorshipTransferProtocol(BaseModel):
+    qid: str
+    current_sponsor_id: str
+    proposed_new_sponsor_id: Optional[str] = None
+    transfer_status: str = "LOCKED_TO_CURRENT"  # PENDING_GOV_APPROVAL, APPROVED, REJECTED
+    transfer_reason_code: str  # e.g., "CONTRACT_EXPIRY", "VIOLATION_BY_SPONSOR"
+
+class SupplyCompanyAudit(BaseModel):
+    company_id: str
+    company_name: str
+    total_active_workers: int
+    compliance_score: float = 100.0  # Scales from 0.0 to 100.0
+    is_blacklisted: bool = False
+    violation_strike_count: int = 0
+
+    def update_compliance(self, infraction_detected: bool):
+        if infraction_detected:
+            self.violation_strike_count += 1
+            self.compliance_score -= 15.0
+            if self.compliance_score <= 50.0 or self.violation_strike_count >= 3:
+                self.is_blacklisted = True
+                self.compliance_score = 0.0
