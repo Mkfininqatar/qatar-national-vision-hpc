@@ -5677,3 +5677,38 @@ class SmartInspectorRoutePlanner(BaseModel):
     high_risk_sites_targeted: List[str]  # Ranked by live telemetry violation heatmaps
     route_optimization_status: str = "AI_ROUTE_GENERATED"
     generated_at: datetime = Field(default_factory=datetime.utcnow)
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class WorkerAwarenessGuide(BaseModel):
+    qid: str
+    preferred_language: str  # e.g., "BN", "EN", "HI", "NE"
+    guide_module_id: str
+    is_onboarding_media_delivered: bool = True
+    acknowledgment_recorded: bool = True
+    delivered_at: datetime = Field(default_factory=datetime.utcnow)
+
+class NationalProductivityAnalytics(BaseModel):
+    sector_name: str  # e.g., "CONSTRUCTION", "MANUFACTURING"
+    total_active_workforce: int
+    average_productivity_index: float  # Scale of 0.0 to 100.0
+    overall_compliance_rate: float
+    analytics_generated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class BlackmailVisaFeeProtection(BaseModel):
+    qid: str
+    sponsor_id: str
+    is_contract_expired: bool = True
+    demanded_illegal_fee_amount: float = 0.0
+    is_extortion_flagged: bool = False
+    protection_enforcement: str = "ZERO_FEE_EXIT_GUARANTEED"
+
+    def audit_extortion(self):
+        # If sponsor demands illegal visa fees upon contract expiry, flag and block sponsor action
+        if self.demanded_illegal_fee_amount > 0 and self.is_contract_expired:
+            self.is_extortion_flagged = True
+            self.protection_enforcement = "SPONSOR_PENALIZED_ILLEGAL_FEE_BLOCKED"
+        else:
+            self.is_extortion_flagged = False
+            self.protection_enforcement = "ZERO_FEE_EXIT_GUARANTEED"
+        return self.is_extortion_flagged
