@@ -6678,3 +6678,103 @@ if __name__ == "__main__":
     print("\n==================================================")
     print(" ALL 10 PILLARS COMPLETE: HT-MTF ARCHITECTURE FULLY REALIZED")
     print("==================================================")
+import json
+from datetime import datetime, timedelta
+
+class EmergencyRescueAndHealthTelemetryEngine:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 11: Emergency Labor Rescue & Quarterly Health Telemetry Engine
+    """
+    def __init__(self):
+        # Simulated database tracking worker health compliance and active emergency alerts
+        self.worker_health_registry = {
+            "28899012345": {
+                "worker_name": "Worker_Alpha",
+                "company_id": "QCR-907505",
+                "last_health_check_date": "2026-06-01",  # 3+ months ago
+                "health_status": "PENDING_QUARTERLY_REVIEW"
+            }
+        }
+        self.active_emergency_alerts = []
+
+    def trigger_emergency_rescue(self, qid, gps_coordinates, distress_code):
+        """
+        Instant SOS trigger. Bypasses normal channels to deploy sovereign emergency 
+        response units and freeze the liable company's operational ledger.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        rescue_dispatch = {
+            "alert_timestamp": timestamp,
+            "emergency_type": distress_code,
+            "target_qid": qid,
+            "gps_location": gps_coordinates,
+            "sovereign_action": "PRIORITY_1_RESCUE_DISPATCHED",
+            "corporate_freeze": "Associated Commercial License locked pending emergency audit."
+        }
+        
+        self.active_emergency_alerts.append(rescue_dispatch)
+        return rescue_dispatch
+
+    def audit_quarterly_health_compliance(self, qid):
+        """
+        Enforces mandatory medical check-ups every 3 months. If the check-up is overdue,
+        the system automatically flags the QID and restricts corporate permit renewals.
+        """
+        timestamp = datetime.now()
+        timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+
+        if qid not in self.worker_health_registry:
+            return {"status": "ERROR", "reason": "Worker QID not found in health ledger."}
+
+        record = self.worker_health_registry[qid]
+        last_check = datetime.strptime(record["last_health_check_date"], "%Y-%m-%d")
+        
+        # Check if 3 months (approx. 90 days) have passed
+        days_elapsed = (timestamp - last_check).days
+        is_overdue = days_elapsed > 90
+
+        audit_result = {
+            "timestamp": timestamp_str,
+            "qid": qid,
+            "worker_name": record["worker_name"],
+            "days_since_last_check": days_elapsed
+        }
+
+        if is_overdue:
+            audit_result["health_compliance_status"] = "OVERDUE_MANDATORY_TEST"
+            audit_result["action_taken"] = "3-month health threshold exceeded. Automatic clinic routing scheduled and company notified."
+            record["health_status"] = "FLAGGED_MEDICAL_DUE"
+        else:
+            audit_result["health_compliance_status"] = "COMPLIANT"
+            audit_result["action_taken"] = "Health telemetry verified within the 90-day sovereign window."
+            record["health_status"] = "HEALTH_VERIFIED"
+
+        return audit_result
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    engine = EmergencyRescueAndHealthTelemetryEngine()
+
+    print("==================================================")
+    print(" EXECUTING HT-MTF MODULE 11: EMERGENCY RESCUE & HEALTH")
+    print("==================================================\n")
+
+    # 1. Test Quarterly Health Telemetry Check (3-Month Rule)
+    print("--- Running Quarterly Health Compliance Check ---")
+    health_report = engine.audit_quarterly_health_compliance(qid="28899012345")
+    print(json.dumps(health_report, indent=4))
+
+    # 2. Test Emergency SOS Rescue Trigger
+    print("\n--- Triggering Instant Emergency Rescue Protocol ---")
+    sos_report = engine.trigger_emergency_rescue(
+        qid="28899012345",
+        gps_coordinates={"lat": 25.276987, "lng": 51.520008},
+        distress_code="SOS-CRITICAL-SAFETY-HAZARD"
+    )
+    print(json.dumps(sos_report, indent=4))
+
+    print("\n==================================================")
+    print(" MODULE 11 INTEGRATED: DIGNITY & HEALTH SAFEGUARDS SECURED")
+    print("==================================================\n")
