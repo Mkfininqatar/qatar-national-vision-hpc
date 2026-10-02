@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HT-MTF Neural Telemetry & Sensor Hub</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 20px;
+            background: #111827;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 { margin: 0; font-size: 20px; color: #38bdf8; }
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric-box {
+            background: #1f2937;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #34d399;
+            margin-top: 5px;
+        }
+        canvas {
+            width: 100%;
+            height: 300px;
+            background: #030712;
+            border-radius: 6px;
+        }
+        .sensor-log {
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 13px;
+            color: #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HT-MTF Sovereign Neural Telemetry & Sensor Grid</h1>
+        <div style="color: #34d399; font-weight: bold;">● SYSTEM NOMINAL</div>
+    </header>
+
+    <div class="container">
+        <!-- Left Column: 3D / Visual Simulation Canvas -->
+        <div class="card">
+            <h3>3D Topology & Neural Node Stream</h3>
+            <canvas id="neuralCanvas"></canvas>
+            <div class="metric-grid">
+                <div class="metric-box">
+                    <div>Throughput</div>
+                    <div class="metric-value" id="throughputVal">124.8 GB/s</div>
+                </div>
+                <div class="metric-box">
+                    <div>Latency</div>
+                    <div class="metric-value" id="latencyVal">0.12 ms</div>
+                </div>
+                <div class="metric-box">
+                    <div>Security Index</div>
+                    <div class="metric-value">100.0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Biometric, Face Recognition & Weather Sensors -->
+        <div class="card">
+            <h3>Active Sensors & Biometrics</h3>
+            <p><strong>Face Recognition:</strong> <span id="faceStatus" style="color: #34d399;">Verified (Admin_Mazed)</span></p>
+            <p><strong>Biometric Sensor:</strong> <span id="bioStatus" style="color: #34d399;">Active (Pulse: 72 bpm)</span></p>
+            <hr style="border-color: #1f2937; margin: 15px 0;">
+            <h4>Weather Decode Feed</h4>
+            <div class="sensor-log" id="sensorLog">
+                [09:05:00] Weather Node Initialized...<br>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Canvas Animation Mockup for Neural Network
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        let particles = [];
+        for(let i=0; i<30; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 1.5,
+                speedY: (Math.random() - 0.5) * 1.5
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#38bdf8';
+            
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if(p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Real-time Sensor Data Simulation
+        setInterval(() => {
+            // Dynamic Throughput update
+            let tp = (124 + Math.random() * 2).toFixed(1);
+            document.getElementById('throughputVal').innerText = tp + " GB/s";
+
+            // Weather Decode log push
+            let temp = (28 + Math.random() * 5).toFixed(1);
+            let humidity = (45 + Math.random() * 10).toFixed(1);
+            let timeStr = new Date().toLocaleTimeString();
+            
+            let logDiv = document.getElementById('sensorLog');
+            logDiv.innerHTML += `[${timeStr}] Temp: ${temp}°C | Hum: ${humidity}% | Status: Decoded<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }, 3000);
+    </script>
+</body>
+</html>
