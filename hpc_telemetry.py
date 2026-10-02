@@ -1147,3 +1147,121 @@ def evaluate_site_telemetry(
         "hpc_cluster_status": hpc_status,
         "timestamp": datetime.utcnow().isoformat()
     }
+from fastapi import FastAPI, Header, HTTPException, status
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+import datetime
+
+app = FastAPI(
+    title="Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)",
+    version="3.0.0",
+    description="Sovereign Labor Governance & Automated Telemetry Enforcement Engine"
+)
+
+# সিমুলেটেড সিকিউরিটি কনফিগারেশন
+API_KEY_SECRET = "HT-MTF-SECURE-SOVEREIGN-KEY-2026"
+
+class IdentityVerificationRequest(BaseModel):
+    worker_qid: str
+    passport_number: str
+    registered_email: EmailStr
+    notified_email: EmailStr
+    company_id: str
+    has_physical_qid_in_possession: bool
+    assigned_supplier_id: Optional[str] = None
+
+class WageDisbursementRequest(BaseModel):
+    company_id: str
+    worker_qid: str
+    allocated_amount: float
+    disbursement_channel: str # 'DIRECT_BANK' or 'THIRD_PARTY_SUPPLIER'
+
+
+# ১. ডিজিটাল আইডেন্টিটি ও ক্রস-কনটামিনেশন চেকার (SIM & Email Mismatch Detector)
+class CrossContaminationDetector:
+    @staticmethod
+    def evaluate(data: IdentityVerificationRequest) -> dict:
+        # যদি রেজিস্ট্রেশনের ইমেল এবং নোটিফিকেশন ইমেল ম্যাচ না করে, তবে এটি ডেটা লিক বা জালিয়াতি
+        if data.registered_email != data.notified_email:
+            return {
+                "fraud_detected": True,
+                "risk_level": "CRITICAL",
+                "violation_type": "CROSS_CONTAMINATION_IDENTITY_MISMATCH",
+                "message": "Alert: Registered passport/QID data does not match the notification communication channel."
+            }
+        return {"fraud_detected": False, "risk_level": "LOW"}
+
+
+# ২. সিন্ডিকেট লুপহোল ও ফিজিক্যাল কার্ড উইথহোল্ডিং ব্লকার
+class SyndicateLoopholeBlocker:
+    @staticmethod
+    def evaluate_custody(data: IdentityVerificationRequest) -> dict:
+        # যদি শ্রমিকের কাছে তার নিজের ফিজিক্যাল কার্ড (QID/Batton Card) না থাকে এবং সাপ্লাইয়ের কাছে থাকে
+        if not data.has_physical_qid_in_possession and data.assigned_supplier_id:
+            return {
+                "blocker_triggered": True,
+                "violation": "PHYSICAL_ID_WITHHOLDING_SYNDICATE",
+                "action": "AUTOMATED_LICENSE_SUSPENSION",
+                "message": "Critical Violation: Worker identity card withheld by intermediary/supplier. Enforcing automatic compliance block."
+            }
+        return {"blocker_triggered": False}
+
+
+# ৩. ডিরেক্ট এস্ক্রো ওয়েজ রাউটার (Anti-Salary Embezzlement Engine)
+class WageDisbursementRouter:
+    @staticmethod
+    def process_wage(data: WageDisbursementRequest) -> dict:
+        if data.disbursement_channel == "THIRD_PARTY_SUPPLIER":
+            return {
+                "transaction_status": "REJECTED",
+                "error_code": "ILLEGAL_THIRD_PARTY_PAY_FLOW",
+                "message": "Transaction blocked. Direct account-vittik pay required to prevent wage embezzlement by middleman."
+            }
+        return {
+            "transaction_status": "SECURED_AND_DISBURSED",
+            "message": "Wage successfully routed directly to the verified sovereign worker account."
+        }
+
+
+# --- API এন্ডপয়েন্টসমূহ ---
+
+@app.post("/api/v3/telemetry/verify-identity")
+def verify_worker_identity(payload: IdentityVerificationRequest, x_api_key: str = Header(None)):
+    if x_api_key != API_KEY_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or Missing Sovereign API Key"
+        )
+    
+    # চেকারগুলো রান করা হচ্ছে
+    contamination_check = CrossContaminationDetector.evaluate(payload)
+    syndicate_check = SyndicateLoopholeBlocker.evaluate_custody(payload)
+    
+    if contamination_check["fraud_detected"] or syndicate_check["blocker_triggered"]:
+        return {
+            "status": "COMPLIANCE_BREACH_DETECTED",
+            "contamination_details": contamination_check,
+            "syndicate_blocker": syndicate_check,
+            "timestamp": datetime.datetime.utcnow().isoformat()
+        }
+        
+    return {
+            "status": "SOVEREIGN_IDENTITY_VERIFIED",
+            "message": "All data mappings, physical card possession, and telemetry checks are fully compliant."
+    }
+
+
+@app.post("/api/v3/telemetry/disburse-wage")
+def secure_wage_routing(payload: WageDisbursementRequest, x_api_key: str = Header(None)):
+    if x_api_key != API_KEY_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized Access to Financial Pipeline"
+        )
+        
+    routing_result = WageDisbursementRouter.process_wage(payload)
+    return {
+        "framework": "HT-MTF Wage Security Layer",
+        "result": routing_result,
+        "timestamp": datetime.datetime.utcnow().isoformat()
+    }
