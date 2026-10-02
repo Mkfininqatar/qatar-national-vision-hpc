@@ -6195,3 +6195,65 @@ if __name__ == "__main__":
     print("\n==================================================")
     print(" SYSTEM STATUS: 100% OPERATIONAL & AUTONOMOUS")
     print("==================================================")
+import json
+from datetime import datetime
+
+class HTMTFGlobalDashboard:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 5: Real-Time Sovereign Dashboard & Macro Analytics
+    """
+    def __init__(self, master_orchestrator):
+        self.orchestrator = master_orchestrator
+
+    def generate_sovereign_dashboard_view(self):
+        """
+        Aggregates live telemetry streams, escrow balances, active QID bindings, 
+        and compliance statuses into a unified macro-level sovereign display.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        total_companies = len(self.orchestrator.corporate_database)
+        total_workers = len(self.orchestrator.worker_registry)
+        
+        # Calculate aggregate financial reserves and compliance metrics
+        total_escrow_pool = sum(c["reserve_balance"] for c in self.orchestrator.corporate_database.values())
+        compliant_entities = sum(1 for c in self.orchestrator.corporate_database.values() if c["status"] == "COMPLIANT")
+        
+        dashboard_data = {
+            "dashboard_title": "HT-MTF Sovereign Command & Telemetry Intelligence Dashboard",
+            "system_status": "ONLINE - AUTONOMOUS GOVERNANCE ACTIVE",
+            "last_refreshed": timestamp,
+            "macro_metrics": {
+                "monitored_corporate_entities": total_companies,
+                "fully_compliant_entities": compliant_entities,
+                "active_qid_bound_workers": total_workers,
+                "total_ring_fenced_escrow_pool_qar": total_escrow_pool
+            },
+            "system_pillars_active": [
+                "1. Automated Telemetry & Enforcement (Traffic Camera Model)",
+                "2. QID-Centralized Digital Mapping & Escrow Payout",
+                "3. Anti-Visa Trading & Solvency Auditing Engine",
+                "4. Sovereign Telemetry & Historical Audit Ledger"
+            ]
+        }
+        return dashboard_data
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    from __main__ import HTMTFMasterOrchestrator
+
+    # Initialize the integrated orchestrator and dashboard
+    orchestrator = HTMTFMasterOrchestrator()
+    dashboard = HTMTFGlobalDashboard(orchestrator)
+
+    print("==================================================")
+    print(" RENDERING HT-MTF SOVEREIGN DASHBOARD")
+    print("==================================================\n")
+
+    live_view = dashboard.generate_sovereign_dashboard_view()
+    print(json.dumps(live_view, indent=4))
+
+    print("\n==================================================")
+    print(" FRAMEWORK DEPLOYMENT READY FOR STATE-LEVEL EXECUTION")
+    print("==================================================")
