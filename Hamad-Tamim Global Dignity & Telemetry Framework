@@ -5712,3 +5712,42 @@ class BlackmailVisaFeeProtection(BaseModel):
             self.is_extortion_flagged = False
             self.protection_enforcement = "ZERO_FEE_EXIT_GUARANTEED"
         return self.is_extortion_flagged
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class DigitalPoliceClearance(BaseModel):
+    qid: str
+    judicial_record_id: str
+    is_falsely_accused_flagged: bool = False
+    clearance_status: str = "CLEAN_AND_SYNCHRONIZED"
+    synchronized_at: datetime = Field(default_factory=datetime.utcnow)
+
+class DynamicHazardPay(BaseModel):
+    qid: str
+    site_id: str
+    base_hourly_rate: float
+    hazard_multiplier: float = 1.25  # 25% extra pay for high-risk exposure
+    calculated_hazard_bonus: float = 0.0
+
+    def compute_hazard_bonus(self, exposure_hours: float, is_extreme_condition: bool):
+        if is_extreme_condition:
+            self.calculated_hazard_bonus = exposure_hours * (self.base_hourly_rate * self.hazard_multiplier)
+        else:
+            self.calculated_hazard_bonus = 0.0
+        return self.calculated_hazard_bonus
+
+class PassportDepositViolation(BaseModel):
+    sponsor_id: str
+    qid: str
+    is_physical_passport_withheld: bool = False  # Violation if True
+    violation_notice_dispatched: bool = False
+    automatic_penalty_amount: float = 0.0
+
+    def audit_passport_retention(self):
+        if self.is_physical_passport_withheld:
+            self.violation_notice_dispatched = True
+            self.automatic_penalty_amount = 5000.0  # Automated institutional penalty
+        else:
+            self.violation_notice_dispatched = False
+            self.automatic_penalty_amount = 0.0
+        return self.automatic_penalty_amount
