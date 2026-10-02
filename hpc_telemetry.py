@@ -1363,3 +1363,599 @@ def secure_wage_routing(payload: WageDisbursementRequest, x_api_key: str = Heade
         "result": routing_result,
         "timestamp": datetime.datetime.utcnow().isoformat()
     }
+"""
+HT-MTF Worker Rights Protection Framework v4.0
+Prototype / integration-ready FastAPI service.
+
+Design goals:
+- Detect wage, identity-document, contract, and payment-flow risks.
+- Preserve evidence with SHA-256 hashes.
+- Create worker complaints and immutable-style audit events.
+- Support review / appeal / remedy workflows.
+- Provide integration points for Qatar WPS / Ministry workflows.
+- Never claim that a government licence, bank transfer, or legal decision
+  occurred unless an external authority integration confirms it.
+
+IMPORTANT:
+This is a prototype. Use a real database, secrets manager, IAM, encryption,
+retention policy, legal review, and official API integrations before production.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import hmac
+import os
+import secrets
+from datetime import datetime, timezone
+from enum import Enum
+from typing import Any, Optional
+from uuid import uuid4
+
+from fastapi import FastAPI, Header, HTTPException, status
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
+APP_VERSION = "4.0.0"
+API_KEY_SECRET = os.getenv("HT_MTF_API_KEY")
+if not API_KEY_SECRET:
+    # Development-only fallback. In production, fail closed instead.
+    API_KEY_SECRET = secrets.token_urlsafe(32)
+
+app = FastAPI(
+    title="HT-MTF Worker Rights Protection Framework",
+    version=APP_VERSION,
+    description=(
+        "Worker-rights protection, evidence, complaint, wage-monitoring, "
+        "audit and review API. External authorities must confirm enforcement actions."
+    ),
+)
+
+
+def now_utc() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def verify_api_key(x_api_key: Optional[str]) -> None:
+    if not x_api_key or not hmac.compare_digest(x_api_key, API_KEY_SECRET):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or missing API key",
+        )
+
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+class RiskLevel(str, Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class ComplaintType(str, Enum):
+    WAGE = "WAGE"
+    ID_DOCUMENT = "ID_DOCUMENT"
+    CONTRACT = "CONTRACT"
+    UNAUTHORIZED_DEDUCTION = "UNAUTHORIZED_DEDUCTION"
+    RETALIATION = "RETALIATION"
+    RECRUITMENT_FEE = "RECRUITMENT_FEE"
+    OTHER = "OTHER"
+
+
+class CaseStatus(str, Enum):
+    OPEN = "OPEN"
+    UNDER_REVIEW = "UNDER_REVIEW"
+    REFERRED = "REFERRED"
+    REMEDY_PENDING = "REMEDY_PENDING"
+    RESOLVED = "RESOLVED"
+    APPEALED = "APPEALED"
+    CLOSED = "CLOSED"
+
+
+class PaymentStatus(str, Enum):
+    PENDING = "PENDING"
+    VERIFIED = "VERIFIED"
+    DISBURSED = "DISBURSED"
+    FAILED = "FAILED"
+    DISPUTED = "DISPUTED"
+
+
+# ---------------------------------------------------------------------------
+# Models
+# ---------------------------------------------------------------------------
+
+class IdentityVerificationRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    worker_qid: str = Field(min_length=3, max_length=64)
+    passport_number: Optional[str] = Field(default=None, max_length=64)
+    registered_email: Optional[EmailStr] = None
+    notified_email: Optional[EmailStr] = None
+    company_id: str = Field(min_length=1, max_length=64)
+    has_physical_qid_in_possession: bool
+    assigned_supplier_id: Optional[str] = Field(default=None, max_length=64)
+
+
+class WageDisbursementRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    company_id: str
+    worker_qid: str
+    allocated_amount: float = Field(gt=0)
+    currency: str = Field(default="QAR", min_length=3, max_length=3)
+    disbursement_channel: str
+    due_date: Optional[str] = None
+    contract_reference: Optional[str] = None
+
+
+class EvidenceCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    case_id: str
+    evidence_type: str = Field(min_length=1, max_length=64)
+    content: str = Field(min_length=1, max_length=2_000_000)
+    source: Optional[str] = Field(default=None, max_length=128)
+
+
+class ComplaintCreateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    worker_qid: str
+    company_id: str
+    complaint_type: ComplaintType
+    description: str = Field(min_length=5, max_length=10_000)
+    requested_remedy: Optional[str] = Field(default=None, max_length=2_000)
+
+
+class CaseReviewRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    decision: str = Field(min_length=2, max_length=128)
+    reviewer_note: str = Field(min_length=2, max_length=5_000)
+    refer_to_authority: bool = False
+
+
+class AppealRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    reason: str = Field(min_length=5, max_length=5_000)
+
+
+# ---------------------------------------------------------------------------
+# In-memory prototype stores
+# Replace with PostgreSQL / encrypted storage in production.
+# ---------------------------------------------------------------------------
+
+CASES: dict[str, dict[str, Any]] = {}
+EVIDENCE: dict[str, dict[str, Any]] = {}
+PAYMENTS: dict[str, dict[str, Any]] = {}
+AUDIT_LOG: list[dict[str, Any]] = []
+
+
+def audit(event: str, actor: str, entity_id: str, details: dict[str, Any]) -> None:
+    AUDIT_LOG.append(
+        {
+            "audit_id": str(uuid4()),
+            "timestamp": now_utc(),
+            "event": event,
+            "actor": actor,
+            "entity_id": entity_id,
+            "details": details,
+        }
+    )
+
+
+# ---------------------------------------------------------------------------
+# Risk engines
+# ---------------------------------------------------------------------------
+
+class IdentityRightsEngine:
+    @staticmethod
+    def evaluate(data: IdentityVerificationRequest) -> dict[str, Any]:
+        findings: list[dict[str, str]] = []
+
+        # Email mismatch is a review signal, NOT automatic fraud.
+        if (
+            data.registered_email
+            and data.notified_email
+            and data.registered_email != data.notified_email
+        ):
+            findings.append(
+                {
+                    "code": "COMMUNICATION_IDENTITY_MISMATCH",
+                    "severity": "MEDIUM",
+                    "message": "Registered and notification email addresses differ; review required.",
+                }
+            )
+
+        if not data.has_physical_qid_in_possession and data.assigned_supplier_id:
+            findings.append(
+                {
+                    "code": "PHYSICAL_ID_WITHHOLDING_RISK",
+                    "severity": "CRITICAL",
+                    "message": "Worker reports not possessing the physical QID while a supplier is assigned.",
+                }
+            )
+
+        level = "LOW"
+        if any(f["severity"] == "CRITICAL" for f in findings):
+            level = "CRITICAL"
+        elif any(f["severity"] == "HIGH" for f in findings):
+            level = "HIGH"
+        elif findings:
+            level = "MEDIUM"
+
+        return {
+            "risk_level": level,
+            "findings": findings,
+            "requires_human_review": bool(findings),
+        }
+
+
+class WageProtectionEngine:
+    @staticmethod
+    def evaluate(data: WageDisbursementRequest) -> dict[str, Any]:
+        findings: list[dict[str, str]] = []
+
+        if data.disbursement_channel != "DIRECT_BANK":
+            findings.append(
+                {
+                    "code": "THIRD_PARTY_PAYMENT_FLOW",
+                    "severity": "HIGH",
+                    "message": "Payment channel is not DIRECT_BANK; verify lawful payment routing.",
+                }
+            )
+
+        return {
+            "risk_level": "HIGH" if findings else "LOW",
+            "findings": findings,
+            "requires_human_review": bool(findings),
+        }
+
+
+# ---------------------------------------------------------------------------
+# API endpoints
+# ---------------------------------------------------------------------------
+
+@app.get("/health")
+def health():
+    return {
+        "framework": "HT-MTF",
+        "version": APP_VERSION,
+        "status": "OPERATIONAL",
+        "timestamp": now_utc(),
+    }
+
+
+@app.post("/api/v4/telemetry/verify-identity")
+def verify_worker_identity(
+    payload: IdentityVerificationRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    result = IdentityRightsEngine.evaluate(payload)
+
+    audit(
+        "IDENTITY_CHECK",
+        "api_client",
+        payload.worker_qid,
+        {
+            "company_id": payload.company_id,
+            "risk_level": result["risk_level"],
+            "finding_count": len(result["findings"]),
+        },
+    )
+
+    return {
+        "framework": "HT-MTF",
+        "version": APP_VERSION,
+        "status": (
+            "REVIEW_REQUIRED"
+            if result["requires_human_review"]
+            else "IDENTITY_CHECK_PASSED"
+        ),
+        "worker_qid": payload.worker_qid,
+        "assessment": result,
+        "timestamp": now_utc(),
+    }
+
+
+@app.post("/api/v4/complaints")
+def create_complaint(
+    payload: ComplaintCreateRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    case_id = f"HT-{datetime.now(timezone.utc):%Y%m%d}-{uuid4().hex[:10].upper()}"
+
+    case = {
+        "case_id": case_id,
+        "worker_qid": payload.worker_qid,
+        "company_id": payload.company_id,
+        "complaint_type": payload.complaint_type,
+        "description": payload.description,
+        "requested_remedy": payload.requested_remedy,
+        "status": CaseStatus.OPEN,
+        "created_at": now_utc(),
+        "updated_at": now_utc(),
+        "evidence_ids": [],
+        "review": None,
+        "appeal": None,
+    }
+
+    CASES[case_id] = case
+
+    audit(
+        "COMPLAINT_CREATED",
+        "worker_or_authorized_client",
+        case_id,
+        {"complaint_type": payload.complaint_type},
+    )
+
+    return {
+        "status": "CASE_CREATED",
+        "case": case,
+        "next_step": "Attach evidence or submit the case for authorized review.",
+    }
+
+
+@app.post("/api/v4/evidence")
+def add_evidence(
+    payload: EvidenceCreateRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    if payload.case_id not in CASES:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    evidence_id = str(uuid4())
+    content_hash = hashlib.sha256(payload.content.encode("utf-8")).hexdigest()
+
+    record = {
+        "evidence_id": evidence_id,
+        "case_id": payload.case_id,
+        "evidence_type": payload.evidence_type,
+        "source": payload.source,
+        "sha256": content_hash,
+        "created_at": now_utc(),
+        # Prototype intentionally does not return/store raw content in the case.
+        "content_length": len(payload.content),
+    }
+
+    EVIDENCE[evidence_id] = record
+    CASES[payload.case_id]["evidence_ids"].append(evidence_id)
+    CASES[payload.case_id]["updated_at"] = now_utc()
+
+    audit(
+        "EVIDENCE_ATTACHED",
+        "api_client",
+        payload.case_id,
+        {
+            "evidence_id": evidence_id,
+            "evidence_type": payload.evidence_type,
+            "sha256": content_hash,
+        },
+    )
+
+    return {
+        "status": "EVIDENCE_REGISTERED",
+        "evidence": record,
+        "message": "Evidence hash recorded for later verification.",
+    }
+
+
+@app.get("/api/v4/cases/{case_id}")
+def get_case(
+    case_id: str,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    case = CASES.get(case_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    return {
+        "status": "CASE_FOUND",
+        "case": case,
+    }
+
+
+@app.post("/api/v4/cases/{case_id}/review")
+def review_case(
+    case_id: str,
+    payload: CaseReviewRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    case = CASES.get(case_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    case["status"] = (
+        CaseStatus.REFERRED if payload.refer_to_authority else CaseStatus.UNDER_REVIEW
+    )
+    case["review"] = {
+        "decision": payload.decision,
+        "reviewer_note": payload.reviewer_note,
+        "refer_to_authority": payload.refer_to_authority,
+        "reviewed_at": now_utc(),
+    }
+    case["updated_at"] = now_utc()
+
+    audit(
+        "CASE_REVIEWED",
+        "authorized_reviewer",
+        case_id,
+        {
+            "decision": payload.decision,
+            "refer_to_authority": payload.refer_to_authority,
+        },
+    )
+
+    return {
+        "status": "REVIEW_RECORDED",
+        "case": case,
+        "important": (
+            "Referral is recorded only. No government/legal action is claimed "
+            "until an official integration confirms it."
+        ),
+    }
+
+
+@app.post("/api/v4/cases/{case_id}/appeal")
+def appeal_case(
+    case_id: str,
+    payload: AppealRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    case = CASES.get(case_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    case["status"] = CaseStatus.APPEALED
+    case["appeal"] = {
+        "reason": payload.reason,
+        "submitted_at": now_utc(),
+    }
+    case["updated_at"] = now_utc()
+
+    audit(
+        "CASE_APPEALED",
+        "worker_or_authorized_client",
+        case_id,
+        {"reason_length": len(payload.reason)},
+    )
+
+    return {
+        "status": "APPEAL_REGISTERED",
+        "case_id": case_id,
+        "message": "Appeal recorded for authorized review.",
+    }
+
+
+@app.post("/api/v4/telemetry/disburse-wage")
+def secure_wage_routing(
+    payload: WageDisbursementRequest,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    assessment = WageProtectionEngine.evaluate(payload)
+    transaction_id = f"WAGE-{uuid4().hex[:16].upper()}"
+
+    payment = {
+        "transaction_id": transaction_id,
+        "company_id": payload.company_id,
+        "worker_qid": payload.worker_qid,
+        "amount": payload.allocated_amount,
+        "currency": payload.currency,
+        "channel": payload.disbursement_channel,
+        "status": PaymentStatus.PENDING,
+        "risk_assessment": assessment,
+        "created_at": now_utc(),
+        "external_bank_reference": None,
+    }
+
+    PAYMENTS[transaction_id] = payment
+
+    audit(
+        "WAGE_PAYMENT_REGISTERED",
+        "api_client",
+        transaction_id,
+        {
+            "worker_qid": payload.worker_qid,
+            "amount": payload.allocated_amount,
+            "currency": payload.currency,
+            "risk_level": assessment["risk_level"],
+        },
+    )
+
+    return {
+        "framework": "HT-MTF Wage Security Layer",
+        "status": "PAYMENT_RECORDED",
+        "transaction": payment,
+        "message": (
+            "No bank transfer is claimed here. An authorized bank/WPS integration "
+            "must confirm actual disbursement."
+        ),
+        "timestamp": now_utc(),
+    }
+
+
+@app.post("/api/v4/payments/{transaction_id}/confirm")
+def confirm_external_payment(
+    transaction_id: str,
+    external_reference: str,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    payment = PAYMENTS.get(transaction_id)
+    if not payment:
+        raise HTTPException(status_code=404, detail="Payment not found")
+
+    payment["status"] = PaymentStatus.DISBURSED
+    payment["external_bank_reference"] = external_reference
+    payment["confirmed_at"] = now_utc()
+
+    audit(
+        "EXTERNAL_PAYMENT_CONFIRMED",
+        "authorized_payment_integration",
+        transaction_id,
+        {"external_reference": external_reference},
+    )
+
+    return {
+        "status": "DISBURSEMENT_CONFIRMED",
+        "transaction": payment,
+        "timestamp": now_utc(),
+    }
+
+
+@app.get("/api/v4/audit/{entity_id}")
+def get_audit(
+    entity_id: str,
+    x_api_key: Optional[str] = Header(default=None),
+):
+    verify_api_key(x_api_key)
+
+    events = [event for event in AUDIT_LOG if event["entity_id"] == entity_id]
+
+    return {
+        "entity_id": entity_id,
+        "event_count": len(events),
+        "events": events,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Production integration checklist
+# ---------------------------------------------------------------------------
+# 1. Replace in-memory dictionaries with PostgreSQL.
+# 2. Encrypt sensitive worker identifiers at rest.
+# 3. Store only the minimum required PII; tokenize QID/passport numbers.
+# 4. Move API key to a secret manager and rotate it.
+# 5. Add OAuth2/OIDC + role-based access control for workers, reviewers,
+#    employers, auditors, and authority integrations.
+# 6. Add rate limiting, CSRF protections where applicable, request logging,
+#    SIEM integration, backups, retention/deletion rules, and key rotation.
+# 7. Add official WPS / Ministry APIs only after obtaining authorization.
+# 8. Keep legal decisions and enforcement actions outside this application;
+#    this service should record and transmit evidence, not impersonate an authority.
+# 9. Add multilingual worker UI (Arabic, English, Bengali, Hindi, Nepali, etc.)
+#    with accessible complaint submission.
+# 10. Perform security, privacy, labour-law, and data-protection review before launch.
