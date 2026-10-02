@@ -5527,3 +5527,34 @@ class SupplyCompanyAudit(BaseModel):
             if self.compliance_score <= 50.0 or self.violation_strike_count >= 3:
                 self.is_blacklisted = True
                 self.compliance_score = 0.0
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field
+
+class WorkerGrievance(BaseModel):
+    grievance_id: str
+    qid: str
+    category: str  # e.g., "EXCESS_HOURS", "UNPAID_WAGES", "HARASSMENT"
+    description: str
+    is_anonymous: bool = True
+    status: str = "FILED_TO_GOV"  # PENDING, INVESTIGATING, RESOLVED
+    filed_at: datetime = Field(default_factory=datetime.utcnow)
+
+class LegalProtectionShell(BaseModel):
+    qid: str
+    sponsor_id: str
+    is_under_grievance_protection: bool = True
+    protection_start_date: datetime = Field(default_factory=datetime.utcnow)
+    # Automatically freezes visa cancellation, exit pass, or termination while active grievance exists
+    is_visa_action_frozen: bool = True
+
+class EscrowPaymentGateway(BaseModel):
+    transaction_id: str
+    qid: str
+    sponsor_id: str
+    base_salary: float
+    verified_overtime_hours: float
+    overtime_rate_multiplier: float = 1.5
+    total_escrow_amount: float
+    payment_status: str = "HELD_IN_GOV_ESCROW"  # RELEASED, HELD, DISPUTED
+    settlement_deadline: datetime
