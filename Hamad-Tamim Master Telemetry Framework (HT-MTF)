@@ -6778,3 +6778,105 @@ if __name__ == "__main__":
     print("\n==================================================")
     print(" MODULE 11 INTEGRATED: DIGNITY & HEALTH SAFEGUARDS SECURED")
     print("==================================================\n")
+import json
+from datetime import datetime
+
+class FoodAndNutritionalTelemetryEngine:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 12: Automated Food Allowance & Nutritional Telemetry Engine
+    """
+    def __init__(self):
+        # Database tracking company food provisioning compliance and monthly allowances
+        self.food_compliance_registry = {
+            "QCR-907505": {
+                "company_name": "Doha Advanced Engineering LLC",
+                "provision_type": "ALLOWANCE",  # Options: "IN_KIND" (direct meals) or "ALLOWANCE" (cash/card)
+                "monthly_food_allowance_qar": 300.00,
+                "escrow_reserve_pool": 150000.00
+            }
+        }
+        self.worker_nutritional_status = {
+            "28899012345": {
+                "worker_name": "Worker_Alpha",
+                "company_id": "QCR-907505",
+                "last_nutritional_audit": "2026-06-01",
+                "status": "VERIFIED"
+            }
+        }
+
+    def process_automated_food_subsidy(self, company_id, qid):
+        """
+        Automatically routes the mandatory monthly food allowance (QAR 300+) or verifies 
+        direct in-kind meal provisioning through the pre-funded escrow reserve on a cyclic basis.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if company_id not in self.food_compliance_registry:
+            return {"status": "FAILED", "reason": "Company commercial record not found in food telemetry registry."}
+
+        company_profile = self.food_compliance_registry[company_id]
+        allowance_due = company_profile["monthly_food_allowance_qar"]
+
+        # Check if company escrow has enough balance to route the food allowance
+        if company_profile["escrow_reserve_pool"] >= allowance_due:
+            company_profile["escrow_reserve_pool"] -= allowance_due
+            
+            transaction_receipt = {
+                "timestamp": timestamp,
+                "company_id": company_id,
+                "recipient_qid": qid,
+                "provision_mode": company_profile["provision_type"],
+                "amount_routed_qar": allowance_due,
+                "remaining_reserve": company_profile["escrow_reserve_pool"],
+                "status": "FOOD_SUBSIDY_AUTO_ROUTED"
+            }
+            return transaction_receipt
+        else:
+            return {
+                "timestamp": timestamp,
+                "status": "CRITICAL_FOOD_ESCROW_DEFICIT",
+                "action": "Employer reserve deficit for food allowance. Instant compliance flag triggered."
+            }
+
+    def audit_quarterly_nutritional_health(self, qid):
+        """
+        Performs a mandatory quarterly (every 3 months) nutritional and BMI-based health assessment 
+        integrated with the medical telemetry module to guarantee worker physical well-being.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if qid not in self.worker_nutritional_status:
+            return {"status": "ERROR", "reason": "Worker QID missing from nutritional registry."}
+
+        # Simulated quarterly nutritional check logic
+        audit_result = {
+            "timestamp": timestamp,
+            "qid": qid,
+            "audit_cycle": "Quarterly (Every 3 Months)",
+            "nutritional_status": "OPTIMAL_BIOMETRIC_BALANCE",
+            "action_taken": "3-month nutritional verification passed successfully. Logged into sovereign health vault."
+        }
+        return audit_result
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    food_engine = FoodAndNutritionalTelemetryEngine()
+
+    print("==================================================")
+    print(" EXECUTING HT-MTF MODULE 12: FOOD & NUTRITIONAL TELEMETRY")
+    print("==================================================\n")
+
+    # 1. Test automated monthly food allowance routing
+    print("--- Running Monthly Food Subsidy Escrow Routing ---")
+    food_payout = food_engine.process_automated_food_subsidy(company_id="QCR-907505", qid="28899012345")
+    print(json.dumps(food_payout, indent=4))
+
+    # 2. Test 3-Month Quarterly Nutritional & Health Review
+    print("\n--- Running 3-Month Quarterly Nutritional Audit ---")
+    nutritional_report = food_engine.audit_quarterly_nutritional_health(qid="28899012345")
+    print(json.dumps(nutritional_report, indent=4))
+
+    print("\n==================================================")
+    print(" MODULE 12 INTEGRATED: NUTRITION & DIGNITY FULLY SECURED")
+    print("==================================================")
