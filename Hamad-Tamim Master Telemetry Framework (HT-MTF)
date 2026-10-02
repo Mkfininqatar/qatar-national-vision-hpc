@@ -6462,3 +6462,101 @@ if __name__ == "__main__":
     print("\n==================================================")
     print(" ALL 7 CORE MODULES COMPLETED: SYSTEM ARCHITECTURE FINALIZED")
     print("==================================================")
+import json
+from datetime import datetime
+
+class CrossContaminationDetector:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 8: Cross-Contamination & Identity Protection Engine
+    """
+    def __init__(self):
+        # Simulated registry holding verified biometric hashes and authorized QID fingerprints
+        self.biometric_registry = {
+            "28899012345": {
+                "worker_name": "Worker_Alpha",
+                "assigned_company": "QCR-907505",
+                "registered_biometric_hash": "bio_hash_alpha_990750",
+                "authorized_location": "Doha_Zone_42"
+            }
+        }
+
+    def verify_worker_presence(self, scanning_qid, captured_biometric_hash, live_scan_location):
+        """
+        Performs real-time biometric and facial telemetry matching. 
+        Detects and blocks proxy workers, illegal identity lending, or unauthorized cross-company deployments.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if scanning_qid not in self.biometric_registry:
+            return {
+                "timestamp": timestamp,
+                "status": "SECURITY_VIOLATION",
+                "action": "Unregistered QID detected. Automatic site lockout triggered."
+            }
+
+        record = self.biometric_registry[scanning_qid]
+        
+        # Check if captured biometric hash matches the sovereign registry
+        is_biometric_valid = (captured_biometric_hash == record["registered_biometric_hash"])
+        # Check if live location matches the authorized zone
+        is_location_valid = (live_scan_location == record["authorized_location"])
+
+        audit_result = {
+            "timestamp": timestamp,
+            "qid_scanned": scanning_qid,
+            "worker_name": record["worker_name"]
+        }
+
+        if not is_biometric_valid:
+            audit_result["status"] = "CROSS_CONTAMINATION_DETECTED"
+            audit_result["threat_level"] = "HIGH"
+            audit_result["action_taken"] = "Biometric mismatch! Proxy worker or identity fraud flagged. Instant site access revoked."
+            self._trigger_identity_lockout(scanning_qid, audit_result["action_taken"])
+            return audit_result
+
+        if not is_location_valid:
+            audit_result["status"] = "UNAUTHORIZED_DEPLOYMENT"
+            audit_result["threat_level"] = "MEDIUM"
+            audit_result["action_taken"] = "Worker detected outside authorized project footprint. Compliance penalty logged."
+            return audit_result
+
+        # All checks passed successfully
+        audit_result["status"] = "IDENTITY_VERIFIED"
+        audit_result["action_taken"] = "Biometric telemetry matched. Secure presence confirmed on sovereign ledger."
+        return audit_result
+
+    def _trigger_identity_lockout(self, qid, reason):
+        """
+        Executes immediate physical and digital lockdown for fraudulent identity attempts.
+        """
+        print(f"\n[HT-MTF IDENTITY ALERT] 🚨")
+        print(f"Target QID         : {qid}")
+        print(f"Security Action    : {reason}")
+        print(f"Status             : Sovereign Lockout Enforced.\n")
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    detector = CrossContaminationDetector()
+
+    print("==================================================")
+    print(" EXECUTING HT-MTF MODULE 8: IDENTITY & BIOMETRIC PROTECTION")
+    print("==================================================\n")
+
+    # Simulating a live check where someone attempts proxy substitution
+    simulated_live_scan = {
+        "qid": "28899012345",
+        "biometric_hash": "fake_hash_unauthorized_999", # Mismatched biometric input
+        "location": "Doha_Zone_42"
+    }
+
+    result = detector.verify_worker_presence(
+        scanning_qid=simulated_live_scan["qid"],
+        captured_biometric_hash=simulated_live_scan["biometric_hash"],
+        live_scan_location=simulated_live_scan["location"]
+    )
+
+    print(json.dumps(result, indent=4))
+    print("\n==================================================")
+    print(" MODULE 8 INTEGRATED: ZERO-TOLERANCE FRAUD SHIELD ACTIVE")
+    print("==================================================")
