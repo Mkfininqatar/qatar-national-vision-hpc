@@ -5602,3 +5602,41 @@ class WeatherAutoShutdown(BaseModel):
         else:
             self.is_outdoor_work_permitted = True
             self.shutdown_trigger_reason = "NORMAL_OPERATIONS"
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class MedicalInsuranceIntegration(BaseModel):
+    qid: str
+    insurance_policy_number: str
+    provider_name: str
+    is_policy_active: bool = True
+    emergency_medical_flag: bool = False
+    last_health_check_date: datetime
+
+class AntiPaperworkFraudBlocker(BaseModel):
+    audit_report_id: str
+    site_id: str
+    submitted_paperwork_claims: dict  # e.g., {"safety_status": "PASSED", "reported_work_hours": 8.0}
+    sensor_telemetry_ground_truth: dict  # e.g., {"actual_safety_breaches": 2, "actual_work_hours": 11.5}
+    is_audit_approved: bool = False
+    rejection_reason: str = "TELEMETRY_MISMATCH_FRAUD_DETECTED"
+
+    def evaluate_audit(self):
+        # If ground truth telemetry shows discrepancies with manual paperwork, reject automatically
+        if (self.submitted_paperwork_claims.get("reported_work_hours") != 
+            self.sensor_telemetry_ground_truth.get("actual_work_hours") or
+            self.sensor_telemetry_ground_truth.get("actual_safety_breaches", 0) > 0):
+            self.is_audit_approved = False
+            self.rejection_reason = "PAPERWORK_MANIPULATION_DETECTED_BY_TELEMETRY"
+        else:
+            self.is_audit_approved = True
+            self.rejection_reason = "PASSED_VERIFICATION"
+        return self.is_audit_approved
+
+class SubcontractorChainVisibility(BaseModel):
+    main_sponsor_id: str
+    subcontractor_id: str
+    supply_agency_id: str
+    qid: str
+    is_chain_authorized_by_gov: bool = True
+    chain_hierarchy_level: int = 3  # Maximum allowed depth to prevent illegal godown leasing
