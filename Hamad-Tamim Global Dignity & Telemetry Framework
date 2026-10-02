@@ -5640,3 +5640,40 @@ class SubcontractorChainVisibility(BaseModel):
     qid: str
     is_chain_authorized_by_gov: bool = True
     chain_hierarchy_level: int = 3  # Maximum allowed depth to prevent illegal godown leasing
+from datetime import datetime
+from typing import Tuple, List
+from pydantic import BaseModel, Field
+
+class RemittanceTransparency(BaseModel):
+    transaction_id: str
+    qid: str
+    amount_sent: float
+    currency: str
+    exchange_rate_verified: bool = True
+    is_legal_channel: bool = True  # Blocks illegal underground hundi channels
+    transfer_status: str = "COMPLETED_SECURELY"
+    transacted_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ConfinedLaborAlert(BaseModel):
+    camp_or_site_id: str
+    qid: str
+    last_known_gps: Tuple[float, float]
+    is_illegally_confined: bool = False
+    confinement_alert_triggered: str = "NORMAL_MOVEMENT"
+
+    def evaluate_confinement(self, restricted_hours_movement: bool, outside_geofence: bool):
+        # If workers show zero movement outside restricted hours or locked inside unauthorized godowns
+        if restricted_hours_movement and not outside_geofence:
+            self.is_illegally_confined = True
+            self.confinement_alert_triggered = "ILLEGAL_GODOWN_CONFINEMENT_DETECTED"
+        else:
+            self.is_illegally_confined = False
+            self.confinement_alert_triggered = "NORMAL_MOVEMENT"
+        return self.is_illegally_confined
+
+class SmartInspectorRoutePlanner(BaseModel):
+    inspector_id: str
+    assigned_region: str
+    high_risk_sites_targeted: List[str]  # Ranked by live telemetry violation heatmaps
+    route_optimization_status: str = "AI_ROUTE_GENERATED"
+    generated_at: datetime = Field(default_factory=datetime.utcnow)
