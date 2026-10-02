@@ -6880,3 +6880,91 @@ if __name__ == "__main__":
     print("\n==================================================")
     print(" MODULE 12 INTEGRATED: NUTRITION & DIGNITY FULLY SECURED")
     print("==================================================")
+import json
+from datetime import datetime
+
+class EssentialGoodsSubsidyAndAntiInflationEngine:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 13: Essential Goods Direct-Subsidy & Anti-Inflation Engine
+    """
+    def __init__(self):
+        # Simulated state-regulated essential goods catalog with dynamic tax and subsidy controls
+        self.essential_goods_catalog = {
+            "ITEM-FOOD-001": {"name": "Basic Nutritional Staple (Rice/Flour 10kg)", "base_market_price_qar": 45.00, "vat_rate": 0.05},
+            "ITEM-FOOD-002": {"name": "Fresh Protein Pack (Chicken/Fish)", "base_market_price_qar": 30.00, "vat_rate": 0.05},
+            "ITEM-MED-001": {"name": "Essential Healthcare & Wellness Kit", "base_market_price_qar": 25.00, "vat_rate": 0.05}
+        }
+        # Direct sovereign subsidy allocations per worker/citizen QID
+        self.sovereign_subsidy_wallets = {
+            "28899012345": {"holder_name": "Worker_Alpha", "subsidy_credit_balance_qar": 400.00}
+        }
+
+    def process_subsidized_essential_purchase(self, qid, item_code, purchase_channel):
+        """
+        Enables purchases of essential goods with zero/reduced VAT and direct state subsidies, 
+        bypassing hypermarket excess profit margins and protecting consumers from artificial inflation.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if qid not in self.sovereign_subsidy_wallets:
+            return {"status": "FAILED", "reason": "QID not found in sovereign subsidy registry."}
+        
+        if item_code not in self.essential_goods_catalog:
+            return {"status": "FAILED", "reason": "Item not listed under sovereign essential goods catalog."}
+
+        wallet = self.sovereign_subsidy_wallets[qid]
+        item = self.essential_goods_catalog[item_code]
+
+        # Apply sovereign anti-inflation rule: Eliminate VAT and apply direct price cap/subsidy
+        original_price = item["base_market_price_qar"]
+        standard_vat = original_price * item["vat_rate"]
+        
+        # Sovereign intervention: Zero out VAT and apply a direct 20% anti-inflation state discount
+        subsidized_vat = 0.00 
+        anti_inflation_discount = original_price * 0.20
+        final_price_to_consumer = original_price - anti_inflation_discount + subsidized_vat
+
+        # Check if worker has sufficient sovereign subsidy credit
+        if wallet["subsidy_credit_balance_qar"] >= final_price_to_consumer:
+            wallet["subsidy_credit_balance_qar"] -= final_price_to_consumer
+
+            transaction_receipt = {
+                "timestamp": timestamp,
+                "consumer_qid": qid,
+                "item_purchased": item["name"],
+                "purchase_outlet": purchase_channel,
+                "standard_market_price_qar": original_price + standard_vat,
+                "sovereign_subsidized_price_qar": round(final_price_to_consumer, 2),
+                "super_shop_markup_eliminated_qar": round((original_price + standard_vat) - final_price_to_consumer, 2),
+                "remaining_subsidy_balance_qar": round(wallet["subsidy_credit_balance_qar"], 2),
+                "status": "SOVEREIGN_PURCHASE_SUCCESSFUL"
+            }
+            return transaction_receipt
+        else:
+            return {
+                "timestamp": timestamp,
+                "status": "INSUFFICIENT_SUBSIDY_CREDIT",
+                "action": "Automated top-up triggered from state welfare reserve."
+            }
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    anti_inflation_engine = EssentialGoodsSubsidyAndAntiInflationEngine()
+
+    print("==================================================")
+    print(" EXECUTING HT-MTF MODULE 13: ESSENTIAL GOODS SUBSIDY")
+    print("==================================================\n")
+
+    # Simulate a worker purchasing essential food items bypassing high-markup super-shops
+    purchase_result = anti_inflation_engine.process_subsidized_essential_purchase(
+        qid="28899012345",
+        item_code="ITEM-FOOD-001",
+        purchase_channel="Sovereign-Direct-Cooperative-Outlet"
+    )
+
+    print(json.dumps(purchase_result, indent=4))
+
+    print("\n==================================================")
+    print(" MODULE 13 INTEGRATED: ANTI-INFLATION & FAIR PRICING ACTIVE")
+    print("==================================================")
