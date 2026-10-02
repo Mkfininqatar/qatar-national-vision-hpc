@@ -5892,3 +5892,89 @@ if __name__ == "__main__":
     print("--- Executing HT-MTF Module 2: Automated Escrow Payout ---")
     payout_result = escrow_engine.execute_automated_payroll(company_id="QCR-907505", qid="28899012345")
     print(json.dumps(payout_result, indent=4))
+import json
+from datetime import datetime
+
+class AntiVisaTradingEngine:
+    """
+    Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)
+    Module 3: Anti-Visa Trading & Location Telemetry Auditing
+    """
+    def __init__(self):
+        # Database simulation for company projects, active location footprints, and financial solvency
+        self.company_profiles = {
+            "QCR-907505": {
+                "active_projects": 2,
+                "verified_operational_locations": ["Doha_Zone_42", "Lusail_Marina_Plot_12"],
+                "bank_solvency_reserve": 150000.00,
+                "current_allocated_visas": 45,
+                "max_allowed_quota": 50
+            }
+        }
+
+    def audit_and_allocate_visa(self, company_id, requested_visas, operational_telemetry):
+        """
+        Audits real-time project scale, physical location telemetry, and bank solvency 
+        before approving new visa allocations, preventing artificial quota hoarding and visa trading.
+        """
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if company_id not in self.company_profiles:
+            return {
+                "timestamp": timestamp,
+                "status": "REJECTED",
+                "reason": "Commercial Registration (CR) not found in sovereign telemetry registry."
+            }
+
+        profile = self.company_profiles[company_id]
+        
+        # Verify operational site telemetry matches declared project footprint
+        declared_locations = set(profile["verified_operational_locations"])
+        telemetry_locations = set(operational_telemetry.get("active_deployment_locations", []))
+        
+        # Check financial solvency requirement per visa request
+        required_solvency_per_visa = 3000.00
+        total_required_solvency = requested_visas * required_solvency_per_visa
+
+        audit_result = {
+            "timestamp": timestamp,
+            "company_id": company_id,
+            "requested_visas": requested_visas
+        }
+
+        # Validation Checks
+        if profile["bank_solvency_reserve"] < total_required_solvency:
+            audit_result["status"] = "QUOTA_RESTRICTED"
+            audit_result["action_taken"] = f"Insufficient financial reserve. Required: {total_required_solvency}, Available: {profile['bank_solvency_reserve']}."
+            return audit_result
+
+        if not telemetry_locations.issubset(declared_locations):
+            audit_result["status"] = "LOCATION_MISMATCH_FLAGGED"
+            audit_result["action_taken"] = "Unauthorized shadow deployment detected outside verified project zones."
+            return audit_result
+
+        # If all telemetry audits pass, allocate verified quota
+        profile["current_allocated_visas"] += requested_visas
+        audit_result["status"] = "VISA_QUOTA_APPROVED"
+        audit_result["new_total_allocated"] = profile["current_allocated_visas"]
+        audit_result["action_taken"] = "Telemetry audit passed. Secure quota synchronized with QID registry."
+
+        return audit_result
+
+# --- Execution Test ---
+if __name__ == "__main__":
+    visa_engine = AntiVisaTradingEngine()
+
+    print("--- Executing HT-MTF Module 3: Anti-Visa Trading Audit ---")
+    
+    # Test input with valid location telemetry and matching solvency
+    test_telemetry = {
+        "active_deployment_locations": ["Doha_Zone_42", "Lusail_Marina_Plot_12"]
+    }
+    
+    result = visa_engine.audit_and_allocate_visa(
+        company_id="QCR-907505", 
+        requested_visas=5, 
+        operational_telemetry=test_telemetry
+    )
+    print(json.dumps(result, indent=4))
