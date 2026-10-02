@@ -5558,3 +5558,47 @@ class EscrowPaymentGateway(BaseModel):
     total_escrow_amount: float
     payment_status: str = "HELD_IN_GOV_ESCROW"  # RELEASED, HELD, DISPUTED
     settlement_deadline: datetime
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class ZeroBalanceClearance(BaseModel):
+    qid: str
+    sponsor_id: str
+    unpaid_wages_due: float = 0.0
+    active_disputes_count: int = 0
+    is_zero_balance_verified: bool = Field(
+        default=False, 
+        description="True only if all wages and dues are fully settled in Escrow"
+    )
+    renewal_clearance_status: str = "PENDING_FINANCIAL_AUDIT"
+
+class AutomatedOvertimeCalculator(BaseModel):
+    qid: str
+    standard_monthly_hours: float = 160.0
+    logged_total_hours: float
+    overtime_multiplier: float = 1.5  # Standard legal multiplier for extra hours
+    base_hourly_rate: float
+    calculated_overtime_pay: float = 0.0
+
+    def compute_overtime(self):
+        if self.logged_total_hours > self.standard_monthly_hours:
+            extra_hours = self.logged_total_hours - self.standard_monthly_hours
+            self.calculated_overtime_pay = extra_hours * (self.base_hourly_rate * self.overtime_multiplier)
+        else:
+            self.calculated_overtime_pay = 0.0
+        return self.calculated_overtime_pay
+
+class WeatherAutoShutdown(BaseModel):
+    site_id: str
+    current_ambient_temp_celsius: float
+    max_safe_temp_threshold: float = 40.0  # Regulatory safety limit
+    is_outdoor_work_permitted: bool = True
+    shutdown_trigger_reason: str = "NORMAL_OPERATIONS"
+
+    def evaluate_weather_safety(self):
+        if self.current_ambient_temp_celsius >= self.max_safe_temp_threshold:
+            self.is_outdoor_work_permitted = False
+            self.shutdown_trigger_reason = "EXTREME_HEAT_AUTO_SHUTDOWN"
+        else:
+            self.is_outdoor_work_permitted = True
+            self.shutdown_trigger_reason = "NORMAL_OPERATIONS"
