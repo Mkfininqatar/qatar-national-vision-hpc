@@ -5751,3 +5751,43 @@ class PassportDepositViolation(BaseModel):
             self.violation_notice_dispatched = False
             self.automatic_penalty_amount = 0.0
         return self.automatic_penalty_amount
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class AirportExitClearanceLock(BaseModel):
+    qid: str
+    is_all_wages_settled: bool = False
+    is_active_legal_dispute: bool = False
+    exit_clearance_status: str = "LOCKED_PENDING_AUDIT"
+
+    def evaluate_exit(self):
+        if self.is_all_wages_settled and not self.is_active_legal_dispute:
+            self.exit_clearance_status = "GREEN_SIGNAL_EXIT_APPROVED"
+        else:
+            self.exit_clearance_status = "EXIT_BLOCKED_UNSETTLED_DUES"
+        return self.exit_clearance_status
+
+class LaborCampCapacityAudit(BaseModel):
+    camp_id: str
+    room_number: str
+    room_area_sqm: float
+    current_occupant_count: int
+    max_allowed_occupancy: int  # Legal threshold based on area
+    is_ac_functional: bool = True
+    is_overcrowding_flagged: bool = False
+
+    def audit_camp(self):
+        if self.current_occupant_count > self.max_allowed_occupancy or not self.is_ac_functional:
+            self.is_overcrowding_flagged = True
+        else:
+            self.is_overcrowding_flagged = False
+        return self.is_overcrowding_flagged
+
+class WorkplaceAccidentForensicLock(BaseModel):
+    incident_id: str
+    qid: str
+    site_id: str
+    event_type: str  # e.g., "FATALITY", "SEVERE_INJURY"
+    is_last_24h_telemetry_locked: bool = True
+    forensic_status: str = "SECURED_FOR_GOV_INVESTIGATION"
+    recorded_at: datetime = Field(default_factory=datetime.utcnow)
