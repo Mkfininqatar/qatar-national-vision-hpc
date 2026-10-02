@@ -1035,3 +1035,115 @@ def evaluate_site_telemetry(
         "audit_reason": fraud_blocker.rejection_reason,
         "timestamp": "Live Telemetry Synchronized"
     }
+from datetime import datetime
+from typing import List, Tuple
+from fastapi import FastAPI, HTTPException, Security, status
+from fastapi.security.api_key import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+
+app = FastAPI(
+    title="Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)",
+    version="2.0.0",
+    description="Sovereign Digital Labor Governance, HPC Telemetry, and Hardened Security Pipeline."
+)
+
+# --- Security Hardening: CORS Policy ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # প্রোডাকশনে নির্দিষ্ট ডোমেইন (যেমন: https://yourdomain.qa) দিয়ে দিতে পারেন
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+# --- Security Hardening: API Key Header Auth ---
+API_KEY = "HT-MTF-SECURE-SOVEREIGN-KEY-2026"
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+def verify_api_key(api_key: str = Security(api_key_header)):
+    if api_key != API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials / Unauthorized Sovereign Access"
+        )
+    return api_key
+
+# --- HPC Telemetry & Labor Governance Models ---
+class HPCSystemTelemetry(BaseModel):
+    node_id: str
+    cpu_utilization_percent: float = Field(..., ge=0.0, le=100.0)
+    gpu_temperature_celsius: float
+    cluster_power_draw_kw: float
+    is_telemetry_healthy: bool = True
+
+class WeatherAutoShutdown(BaseModel):
+    site_id: str
+    current_ambient_temp_celsius: float
+    max_safe_temp_threshold: float = 40.0
+    is_outdoor_work_permitted: bool = True
+    shutdown_trigger_reason: str = "NORMAL_OPERATIONS"
+
+    def evaluate_weather_safety(self):
+        if self.current_ambient_temp_celsius > self.max_safe_temp_threshold:
+            self.is_outdoor_work_permitted = False
+            self.shutdown_trigger_reason = "EXTREME_HEAT_SHUTDOWN_ENFORCED"
+        else:
+            self.is_outdoor_work_permitted = True
+            self.shutdown_trigger_reason = "NORMAL_OPERATIONS"
+
+class AntiPaperworkFraudBlocker(BaseModel):
+    audit_report_id: str
+    site_id: str
+    submitted_paperwork_claims: dict
+    sensor_telemetry_ground_truth: dict
+    is_audit_approved: bool = True
+    rejection_reason: str = "CLEAN"
+
+    def evaluate_audit(self):
+        reported_hours = self.submitted_paperwork_claims.get("reported_work_hours", 0)
+        actual_hours = self.sensor_telemetry_ground_truth.get("actual_work_hours", 0)
+        if actual_hours > (reported_hours + 1.0):
+            self.is_audit_approved = False
+            self.rejection_reason = "FRAUD_DETECTED_HIDDEN_OVERTIME"
+        else:
+            self.is_audit_approved = True
+            self.rejection_reason = "APPROVED"
+
+# --- API Endpoints ---
+@app.get("/", tags=["System Status"])
+def read_root():
+    return {
+        "framework": "Hamad-Tamim Global Dignity & Telemetry Framework",
+        "status": "HARDENED_SECURE_ACTIVE",
+        "total_active_points_governed": 30,
+        "hpc_integration": "ONLINE"
+    }
+
+@app.post("/api/v1/compliance/evaluate-site", tags=["Automated Compliance & HPC Engine"])
+def evaluate_site_telemetry(
+    weather_sensor: WeatherAutoShutdown,
+    fraud_blocker: AntiPaperworkFraudBlocker,
+    hpc_node: HPCSystemTelemetry,
+    api_key: str = Security(verify_api_key)
+):
+    # Evaluate safety rules
+    weather_sensor.evaluate_weather_safety()
+    fraud_blocker.evaluate_audit()
+    
+    # HPC status check
+    hpc_status = "HEALTHY"
+    if hpc_node.gpu_temperature_celsius > 85.0 or hpc_node.cpu_utilization_percent > 98.0:
+        hpc_status = "CRITICAL_LOAD_THROTTLE_TRIGGERED"
+
+    return {
+        "authorization": "VERIFIED",
+        "site_id": weather_sensor.site_id,
+        "weather_status": weather_sensor.shutdown_trigger_reason,
+        "outdoor_permitted": weather_sensor.is_outdoor_work_permitted,
+        "audit_approval": fraud_blocker.is_audit_approved,
+        "audit_reason": fraud_blocker.rejection_reason,
+        "hpc_node_id": hpc_node.node_id,
+        "hpc_cluster_status": hpc_status,
+        "timestamp": datetime.utcnow().isoformat()
+    }
