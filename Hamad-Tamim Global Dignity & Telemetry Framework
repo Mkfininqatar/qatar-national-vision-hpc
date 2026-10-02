@@ -5791,3 +5791,29 @@ class WorkplaceAccidentForensicLock(BaseModel):
     is_last_24h_telemetry_locked: bool = True
     forensic_status: str = "SECURED_FOR_GOV_INVESTIGATION"
     recorded_at: datetime = Field(default_factory=datetime.utcnow)
+from datetime import datetime
+from pydantic import BaseModel, Field
+
+class MultiLanguageVoiceComplaint(BaseModel):
+    complaint_id: str
+    qid: str
+    source_language: str  # e.g., "bn", "hi", "ne"
+    raw_audio_or_text_input: str
+    ai_translated_english_text: str
+    urgency_score: float = 8.5  # Scale 0.0 to 10.0
+    routed_to_department: str = "LABOR_MINISTRY_ENFORCEMENT"
+    processed_at: datetime = Field(default_factory=datetime.utcnow)
+
+class SupplySyndicateBankruptcyTransfer(BaseModel):
+    failed_sponsor_id: str
+    qid: str
+    next_verified_sponsor_id: str
+    is_emergency_transfer_active: bool = True
+    transfer_status: str = "AUTO_REASSIGNED_SUCCESSFULLY"
+
+class NationalTalentGreenCorridor(BaseModel):
+    qid: str
+    total_service_years: float
+    average_compliance_and_performance_score: float
+    is_green_corridor_eligible: bool = True
+    reward_allocated: str = "PRIORITY_RESIDENCY_OR_TALENT_CERTIFICATE"
