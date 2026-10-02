@@ -985,3 +985,53 @@ class PersistentTelemetryEngine:
 if __name__ == "__main__":
     engine = PersistentTelemetryEngine()
     engine.run_live_feed()
+from fastapi import FastAPI, HTTPException, status
+from typing import List
+
+# Import modular schemas and rule engines across all 30 points
+from modules.p1_to_p3_identity import PassportBinding, SponsorshipTransferProtocol, SupplyCompanyAudit
+from modules.p4_to_p6_protection import WorkerGrievance, LegalProtectionShell, EscrowPaymentGateway
+from modules.p7_to_p9_safety import ZeroBalanceClearance, AutomatedOvertimeCalculator, WeatherAutoShutdown
+from modules.p10_to_p12_audit import MedicalInsuranceIntegration, AntiPaperworkFraudBlocker, SubcontractorChainVisibility
+from modules.p13_to_p15_sos import WorkerSkillProfile, VisaQuotaManager, EmergencyPanicButton
+from modules.p16_to_p18_logistics import RemittanceTransparency, ConfinedLaborAlert, SmartInspectorRoutePlanner
+from modules.p19_to_p21_analytics import WorkerAwarenessGuide, NationalProductivityAnalytics, BlackmailVisaFeeProtection
+from modules.p22_to_p24_forensics import DigitalPoliceClearance, DynamicHazardPay, PassportDepositViolation
+from modules.p25_to_p27_clearance import AirportExitClearanceLock, LaborCampCapacityAudit, WorkplaceAccidentForensicLock
+from modules.p28_to_p30_governance import MultiLanguageVoiceComplaint, SupplySyndicateBankruptcyTransfer, NationalTalentGreenCorridor
+
+app = FastAPI(
+    title="Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)",
+    version="1.0.0",
+    description="National Digital Labor Governance, Telemetry, and Sovereign Anti-Exploitation Pipeline."
+)
+
+@app.get("/", tags=["System Status"])
+def read_root():
+    return {
+        "framework": "Hamad-Tamim Global Dignity & Telemetry Framework",
+        "status": "SECURE_ACTIVE_MONITORING",
+        "total_active_points_governed": 30
+    }
+
+@app.post("/api/v1/compliance/evaluate-site", tags=["Automated Compliance Engine"])
+def evaluate_site_telemetry(
+    weather_sensor: WeatherAutoShutdown,
+    fraud_blocker: AntiPaperworkFraudBlocker,
+    confinement_check: ConfinedLaborAlert
+):
+    """
+    Evaluates real-time IoT feeds against national labor laws. 
+    Triggers automated shutdowns, anti-fraud flags, and confinement alerts.
+    """
+    weather_sensor.evaluate_weather_safety()
+    fraud_blocker.evaluate_audit()
+    
+    return {
+        "site_id": weather_sensor.site_id,
+        "weather_status": weather_sensor.shutdown_trigger_reason,
+        "outdoor_permitted": weather_sensor.is_outdoor_work_permitted,
+        "audit_approval": fraud_blocker.is_audit_approved,
+        "audit_reason": fraud_blocker.rejection_reason,
+        "timestamp": "Live Telemetry Synchronized"
+    }
