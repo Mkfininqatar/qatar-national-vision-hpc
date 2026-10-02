@@ -5461,3 +5461,37 @@ if __name__ == "__main__":
         loop.run_forever()
     except KeyboardInterrupt:
         logger.info("Traffic Monitor Server shut down gracefully.")
+from datetime import datetime
+from typing import List, Optional
+from pydantic import BaseModel, Field
+
+class BiometricData(BaseModel):
+    face_vector_hash: str
+    fingerprint_hash: str
+    device_id: str
+    captured_at: datetime = Field(default_factory=datetime.utcnow)
+
+class AccountabilityChain(BaseModel):
+    sponsor_id: str
+    subcontractor_id: Optional[str] = None
+    supply_agency_id: Optional[str] = None
+    is_locked_to_sponsor: bool = True
+
+class WorkerQIDProfile(BaseModel):
+    qid: str = Field(..., description="Unique National QID")
+    full_name: str
+    passport_number: str
+    nationality: str
+    biometrics: BiometricData
+    chain_of_command: AccountabilityChain
+    registered_at: datetime = Field(default_factory=datetime.utcnow)
+    compliance_status: str = "ACTIVE_VERIFIED"
+
+class TelemetryEvent(BaseModel):
+    qid: str
+    site_id: str
+    event_type: str  # e.g., "ENTRY", "EXIT", "OVERTIME_FLAG"
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    ambient_temperature: float
+    actual_hours_logged: float
+    is_paperwork_matched: bool = True
