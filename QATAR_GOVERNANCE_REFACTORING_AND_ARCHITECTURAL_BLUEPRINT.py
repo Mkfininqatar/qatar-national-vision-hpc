@@ -38,3 +38,13 @@ def real_time_data_integration_module():
         "status": "Active"
     }
     return pillar_data
+# Point 2: Option-2 Fault Recovery Protocol Module
+def option_2_fault_recovery_module():
+    pillar_data = {
+        "id": 2,
+        "title": "Option-2 Fault Recovery Protocol",
+        "cause": "In the current system, there is no backup or fault recovery mechanism to correct policies when they fail.",
+        "description": "Adding a mandatory fault recovery protocol subroutine to the system's code to instantly implement a backup or alternative solution whenever a policy or service error is detected.",
+        "status": "Active"
+    }
+    return pillar_data
