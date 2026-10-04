@@ -48,3 +48,36 @@ def option_2_fault_recovery_module():
         "status": "Active"
     }
     return pillar_data
+# Point 3 to 6: Accountability, Gateway, Audits, and Testing Modules
+
+def full_cycle_accountability_module():
+    return {
+        "id": 3,
+        "title": "Full-Cycle Accountability Framework",
+        "cause": "Lack of tracking from policy makers down to implementers leads to irregularities and harassment.",
+        "description": "Establishing real-time tracking and strict accountability for administrators and policy makers."
+    }
+
+def merit_based_gateway_module():
+    return {
+        "id": 4,
+        "title": "Merit-Based Gateway Routing",
+        "cause": "Flattery and incompetence at the counter level disrupt public service.",
+        "description": "Replacing arbitrary counter friction with merit-driven processing and skilled staffing."
+    }
+
+def time_bound_policy_audits_module():
+    return {
+        "id": 5,
+        "title": "Time-Bound Policy Audits",
+        "cause": "Years of outdated laws make administration mechanical rather than citizen-friendly.",
+        "description": "Setting expiration triggers and periodic review systems on legacy mandates."
+    }
+
+def pilot_testing_sandbox_module():
+    return {
+        "id": 6,
+        "title": "Pilot Testing Sandbox",
+        "cause": "Enforcing new rules without field verification creates chaos.",
+        "description": "Mandating field-data validation and pilot tests before nationwide rollout."
+    }
