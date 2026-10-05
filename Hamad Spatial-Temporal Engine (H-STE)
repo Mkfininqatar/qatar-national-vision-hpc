@@ -114,3 +114,52 @@ H_STE_SOVEREIGN_OWNERSHIP = {
     "indigenous_nationals_core": "~350,000 (The true sovereign claimants and stewards of national wealth)",
     "economic_sovereignty": "Built on the enduring vision of Sheikh Hamad bin Khalifa Al Thani, strictly anchored to national heritage and governance."
 }
+"""
+Module: h_ste_core.py (Sovereign Demographic & Guardianship Baseline)
+Description: Encapsulates Qatar's demographic breakdown, indigenous sovereignty, 
+             and the guardianship role of Qatari nationals over the wider expatriate community.
+Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani.
+Author: Abdul Majeed (Technical Consultant & Digital Twin Architect)
+"""
+
+H_STE_DEMOGRAPHIC_SOVEREIGNTY = {
+    "engine_identity": {
+        "name": "Hamad Spatial-Temporal Engine (H-STE)",
+        "heritage_dedication": "Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani",
+        "version": "2026.03_guardianship_update"
+    },
+    
+    "population_breakdown": {
+        "total_population": "Approx. 3.17M - 3.37M",
+        "indigenous_qatari_core": {
+            "count": "~350,000 (3.5 Lakh)",
+            "role": "True sovereign owners of national wealth, heritage, and ultimate economic stewardship."
+        },
+        "expatriate_workforce_and_communities": {
+            "count": "Approx. 3.02M - 3.03M (~89.5%)",
+            "composition": {
+                "india": "~730,000",
+                "bangladesh": "~420,000",
+                "nepal": "~420,000",
+                "other_nations": "Remaining global professionals, businesses, and workers."
+            },
+            "guardianship_status": "The 3.5 lakh Qatari nationals stand as the dignified guardians and protectors of all resident communities living and working under Qatar's sovereign umbrella."
+        }
+    }
+}
+
+def execute_demographic_audit():
+    """Outputs the structured demographic and guardianship baseline for H-STE telemetry."""
+    identity = H_STE_DEMOGRAPHIC_SOVEREIGNTY["engine_identity"]
+    demo = H_STE_DEMOGRAPHIC_SOVEREIGNTY["population_breakdown"]
+    
+    print(f"=== {identity['name']} : Demographic & Guardianship Audit ===")
+    print(f"Dedication: {identity['heritage_dedication']}\n")
+    print(f"Total Population Scale: {demo['total_population']}")
+    print(f"[*] Indigenous Sovereign Core: {demo['indigenous_qatari_core']['count']}")
+    print(f"    -> Role: {demo['indigenous_qatari_core']['role']}")
+    print(f"[*] Expatriate & Workforce Community: {demo['expatriate_workforce_and_communities']['count']}")
+    print(f"    -> Guardianship Principle: {demo['expatriate_workforce_and_communities']['guardianship_status']}\n")
+
+if __name__ == "__main__":
+    execute_demographic_audit()
