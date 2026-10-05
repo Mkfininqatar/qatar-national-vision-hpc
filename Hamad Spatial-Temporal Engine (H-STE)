@@ -103,3 +103,14 @@ def execute_pillar_upgrades():
 
 if __name__ == "__main__":
     execute_pillar_upgrades()
+"""
+Module: h_ste_core.py (Sovereign Ownership & Demographic Baseline)
+Description: Defines the true sovereign economic claimants and demographic reality 
+             (Indigenous core ~350,000 out of total population) established under Sheikh Hamad.
+"""
+
+H_STE_SOVEREIGN_OWNERSHIP = {
+    "historical_demographic_scale": "Transition from ~1.5 lakh baseline to modern scale while preserving sovereign core.",
+    "indigenous_nationals_core": "~350,000 (The true sovereign claimants and stewards of national wealth)",
+    "economic_sovereignty": "Built on the enduring vision of Sheikh Hamad bin Khalifa Al Thani, strictly anchored to national heritage and governance."
+}
