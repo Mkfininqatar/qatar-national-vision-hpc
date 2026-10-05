@@ -313,3 +313,32 @@ results = achievement_core.evaluate_core_achievements()
 print(f"[{achievement_core.engine_name}] Core Sovereign Profile:")
 for metric, description in results.items():
     print(f"  - {metric.replace('_', ' ').upper()}: {description}")
+class HamadSovereignGuardianCore:
+    def __init__(self):
+        self.foundational_era = "1995-1998"
+        self.core_visionary = "Father Amir Sheikh Hamad bin Khalifa Al Thani"
+        self.foundational_philosophy = "Matir manush theke sovereign guardianship ebong shomobonton"
+
+    def get_engine_heritage(self):
+        """
+        Returns the immutable foundational narrative and core philosophy of H-STE,
+        decoupling human dignity and social development from volatile global market prices.
+        """
+        return {
+            "historical_anchor": self.foundational_era,
+            "visionary_guardian": self.core_visionary,
+            "core_transition": "Pre-1995 individual struggle to Post-1995 state-led equitable distribution",
+            "extraction_to_welfare_model": "Natural resources (extraction cost deducted) dedicated purely to human & social development",
+            "system_status": "Immutable and Active"
+        }
+
+# Initializing the H-STE Heritage Core
+hste_core = HamadSovereignGuardianCore()
+heritage_data = hste_core.get_engine_heritage()
+
+print("==================================================")
+print("  H-STE (Hamad Spatial-Temporal Engine) - CORE FOUNDATION")
+print("==================================================")
+for key, value in heritage_data.items():
+    print(f"[{key.replace('_', ' ').upper()}]: {value}")
+print("==================================================")
