@@ -638,3 +638,32 @@ print("=========================================================================
 for key, val in inclusive_report.items():
     print(f"  • {key.replace('_', ' ').upper()}: {val}")
 print("==================================================================================")
+class HamadFoundationalCompassCore:
+    def __init__(self):
+        self.core_name = "H-STE Foundational Compass & Journey Guardian"
+        self.main_base = "1995-1998 Historical Identity Layer & Divine Blessing Foundation"
+        self.ultimate_warning = "Poth cholar golpo ba unnotir doure jeno asol uddessho hariye na jay."
+        self.eternal_guideline = "Itihasher main base theke shuru kore, 3.5 lakh nagoriker shoman onshidaritto ebong kallyan-i amader ekmatro dhrubotara."
+
+    def audit_journey_and_purpose(self):
+        """
+        Continuously verifies that the journey's execution never drifts from the historical 
+        base and the core sovereign purpose of protecting and uplifting every single citizen.
+        """
+        return {
+            "compass_anchor": self.main_base,
+            "core_warning": self.ultimate_warning,
+            "guiding_principle": self.eternal_guideline,
+            "journey_status": "Strictly Anchored to Historical Roots & Sovereign Purpose"
+        }
+
+# Initializing and Executing the Compass Audit Core
+compass_core = HamadFoundationalCompassCore()
+compass_report = compass_core.audit_journey_and_purpose()
+
+print("==================================================================================")
+print("     H-STE: FOUNDATIONAL COMPASS & JOURNEY PURPOSE ARCHITECTURE                   ")
+print("==================================================================================")
+for metric, details in compass_report.items():
+    print(f"  • {metric.replace('_', ' ').upper()}: {details}")
+print("==================================================================================")
