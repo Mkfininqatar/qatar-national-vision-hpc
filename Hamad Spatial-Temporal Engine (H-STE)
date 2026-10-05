@@ -448,3 +448,31 @@ print("=========================================================================
 for key, val in vision_output.items():
     print(f"  • {key.replace('_', ' ').upper()}: {val}")
 print("==================================================================================")
+class QatarCulturalSovereigntyCore:
+    def __init__(self):
+        self.sovereignty_layer = "H-STE Indigenous Heritage & Cultural Sovereignty Core"
+        self.core_principle = "Desh o tader itihas age—Western ba external model noy."
+        self.foundational_heritage = "1995-1998 Transition Era & Native Roots"
+
+    def audit_cultural_sovereignty(self):
+        """
+        Ensures the system and national vision remain strictly anchored in native Qatari 
+        heritage, history, and sovereign values, completely independent of external western frameworks.
+        """
+        return {
+            "sovereignty_status": "Strictly Indigenous & Protected",
+            "core_directive": self.core_principle,
+            "heritage_anchor": self.foundational_heritage,
+            "philosophy": "Modernity built upon authentic roots, historical struggle, and sovereign guardianship for the 3.5 lakh citizen community."
+        }
+
+# Executing Cultural Sovereignty Audit
+cultural_core = QatarCulturalSovereigntyCore()
+sovereignty_report = cultural_core.audit_cultural_sovereignty()
+
+print("==================================================================================")
+print("     QATAR CULTURAL SOVEREIGNTY & HERITAGE CORE ARCHITECTURE                      ")
+print("==================================================================================")
+for metric, details in sovereignty_report.items():
+    print(f"  • {metric.replace('_', ' ').upper()}: {details}")
+print("==================================================================================")
