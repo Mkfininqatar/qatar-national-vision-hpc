@@ -342,3 +342,40 @@ print("==================================================")
 for key, value in heritage_data.items():
     print(f"[{key.replace('_', ' ').upper()}]: {value}")
 print("==================================================")
+class HamadSovereignCitizenCore:
+    def __init__(self):
+        self.engine_name = "H-STE Sovereign Citizen Core"
+        self.citizen_base = 350000  # 3.5 Lakh Citizens
+        self.foundational_anchor_era = "1995-1998"
+        self.visionary_guardian = "Father Amir Sheikh Hamad bin Khalifa Al Thani"
+
+    def evaluate_sovereign_allocation(self, extraction_efficiency_score):
+        """
+        Audits sovereign distribution based purely on human and social development metrics 
+        for the 3.5 lakh citizen community, completely decoupled from global market price volatility.
+        """
+        if extraction_efficiency_score >= 80.0:
+            status = "Absolute Sovereign Equilibrium"
+            policy_action = "Maintain equitable distribution, free healthcare, education, and social security."
+        else:
+            status = "Distribution Pipeline Friction Detected"
+            policy_action = "Optimize local resource extraction flow to safeguard citizen welfare."
+
+        return {
+            "target_population": f"{self.citizen_base} Qatari Citizens",
+            "historical_foundation": f"Anchored in the {self.foundational_anchor_era} transition era under {self.visionary_guardian}",
+            "core_philosophy": "Extraction output directly fuels human and social development, ignoring external market price noise.",
+            "system_status": status,
+            "recommended_action": policy_action
+        }
+
+# Executing the Immutable H-STE Core Audit
+hste_audit_engine = HamadSovereignCitizenCore()
+audit_results = hste_audit_engine.evaluate_sovereign_allocation(88.5)
+
+print("==================================================================")
+print("     H-STE: HAMAD SPATIAL-TEMPORAL ENGINE - CITIZEN CORE LOGIC      ")
+print("==================================================================")
+for metric, val in audit_results.items():
+    print(f"  • {metric.replace('_', ' ').upper()}: {val}")
+print("==================================================================")
