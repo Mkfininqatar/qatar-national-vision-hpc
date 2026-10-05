@@ -163,3 +163,65 @@ def execute_demographic_audit():
 
 if __name__ == "__main__":
     execute_demographic_audit()
+"""
+Module: h_ste_core.py (Sovereign Demographic, Guardianship & Economic Baseline)
+Description: Encapsulates Qatar's demographic breakdown, indigenous sovereignty, 
+             the guardianship role of Qatari nationals, and the historical pre-2008 explosive economic surge.
+Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani.
+Author: Abdul Majeed (Technical Consultant & Digital Twin Architect)
+"""
+
+H_STE_SOVEREIGN_MASTER_BASELINE = {
+    "engine_identity": {
+        "name": "Hamad Spatial-Temporal Engine (H-STE)",
+        "heritage_dedication": "Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani",
+        "version": "2026.04_sovereign_master_update"
+    },
+    
+    "historical_economic_foundation": {
+        "era": "Pre-2008 Explosive Transformation",
+        "growth_metrics": "Multi-fold and 100%+ economic scaling driven by North Field LNG development.",
+        "leadership_vision": "Strategic capital deployment under Sheikh Hamad bin Khalifa Al Thani establishing lifelong financial and sovereign capital reserves."
+    },
+    
+    "population_and_guardianship_breakdown": {
+        "total_population": "Approx. 3.17M - 3.37M",
+        "indigenous_qatari_core": {
+            "count": "~350,000 (3.5 Lakh)",
+            "role": "True sovereign owners of national wealth, heritage, and ultimate economic stewardship."
+        },
+        "expatriate_workforce_and_communities": {
+            "count": "Approx. 3.02M - 3.03M (~89.5%)",
+            "composition": {
+                "india": "~730,000",
+                "bangladesh": "~420,000",
+                "nepal": "~420,000",
+                "other_nations": "Remaining global professionals, businesses, and workers."
+            },
+            "guardianship_status": "The 3.5 lakh Qatari nationals stand as the dignified guardians and protectors of all resident communities living and working under Qatar's sovereign umbrella."
+        }
+    }
+}
+
+def execute_sovereign_master_audit():
+    """Outputs the complete structured historical, economic, demographic, and guardianship baseline for H-STE telemetry."""
+    identity = H_STE_SOVEREIGN_MASTER_BASELINE["engine_identity"]
+    econ = H_STE_SOVEREIGN_MASTER_BASELINE["historical_economic_foundation"]
+    demo = H_STE_SOVEREIGN_MASTER_BASELINE["population_and_guardianship_breakdown"]
+    
+    print(f"=== {identity['name']} : Sovereign Master Audit ===")
+    print(f"Dedication: {identity['heritage_dedication']}\n")
+    
+    print(f"[*] Historical Economic Foundation ({econ['era']}):")
+    print(f"    -> Growth Surge: {econ['growth_metrics']}")
+    print(f"    -> Vision: {econ['leadership_vision']}\n")
+    
+    print(f"[*] Demographic & Guardianship Structure:")
+    print(f"    -> Total Population: {demo['total_population']}")
+    print(f"    -> Indigenous Sovereign Core: {demo['indigenous_qatari_core']['count']}")
+    print(f"       Role: {demo['indigenous_qatari_core']['role']}")
+    print(f"    -> Expatriate Communities: {demo['expatriate_workforce_and_communities']['count']}")
+    print(f"       Guardianship Principle: {demo['expatriate_workforce_and_communities']['guardianship_status']}\n")
+
+if __name__ == "__main__":
+    execute_sovereign_master_audit()
