@@ -289,3 +289,27 @@ result = audit_engine.audit_distribution_bottleneck(78.5) # Example telemetry ef
 print(f"[{audit_engine.pillar_name}]")
 for k, v in result.items():
     print(f"  - {k.replace('_', ' ').capitalize()}: {v}")
+class HamadSovereignAchievementCore:
+    def __init__(self):
+        self.engine_name = "H-STE Sovereign Achievement & Pillar Framework"
+        self.foundational_anchor = 1995
+        
+    def evaluate_core_achievements(self):
+        """
+        Focuses purely on the nation's human, institutional, and equitable achievements 
+        independent of external market selling price volatilities.
+        """
+        return {
+            "pillar_1_welfare_distribution": "Absolute Sovereign Guardianship (Free from pre-1995 daily struggle)",
+            "pillar_2_human_capital": "Advanced Education City, Skilled Workforce & Intellectual Infrastructure",
+            "pillar_3_institutional_stability": "World-class governance, resilience, and sovereign self-reliance",
+            "core_philosophy": "Equitable distribution and human dignity are above raw market revenue fluctuations."
+        }
+
+# Execution of Achievement Focus
+achievement_core = HamadSovereignAchievementCore()
+results = achievement_core.evaluate_core_achievements()
+
+print(f"[{achievement_core.engine_name}] Core Sovereign Profile:")
+for metric, description in results.items():
+    print(f"  - {metric.replace('_', ' ').upper()}: {description}")
