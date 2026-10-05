@@ -52,3 +52,54 @@ def initialize_h_ste():
 
 if __name__ == "__main__":
     initialize_h_ste()
+"""
+Module: h_ste_core.py (Hamad Spatial-Temporal Engine - 4-Pillar Upgrade)
+Description: Integrates QNV 2030 pillars as dynamic execution layers within the sovereign telemetry framework.
+Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani.
+Author: Abdul Majeed (Technical Consultant & Digital Twin Architect)
+"""
+
+H_STE_SOVEREIGN_BASELINE = {
+    "engine_identity": {
+        "name": "Hamad Spatial-Temporal Engine (H-STE)",
+        "heritage_dedication": "Named in honor of Father Amir Sheikh Hamad bin Khalifa Al Thani",
+        "target_frameworks": ["Digital Guardian", "Cardio-Neural Digital Twin"],
+        "version": "2026.02_upgraded"
+    },
+    
+    "qnv_2030_upgraded_pillars": {
+        "human_development": {
+            "status": "Upgraded",
+            "objective": "Cultivating skilled native technical forces to manage advanced digital systems and telemetry."
+        },
+        "social_development": {
+            "status": "Upgraded",
+            "objective": "Balancing expatriate scale while preserving family structures, cultural heritage, and legal baseline."
+        },
+        "economic_development": {
+            "status": "Upgraded",
+            "objective": "Leveraging natural resources and spatial layouts to build a sustainable, high-performance digital economy."
+        },
+        "environmental_development": {
+            "status": "Upgraded",
+            "objective": "Managing desert and sea ecological constraints via eco-friendly urban and infrastructural master planning."
+        }
+    }
+}
+
+def execute_pillar_upgrades():
+    """Executes and logs the integration of QNV 2030 upgraded pillars into the H-STE architecture."""
+    identity = H_STE_SOVEREIGN_BASELINE["engine_identity"]
+    pillars = H_STE_SOVEREIGN_BASELINE["qnv_2030_upgraded_pillars"]
+    
+    print(f"=== {identity['name']} : Pillar Upgrades Initialized ===")
+    print(f"Dedication: {identity['heritage_dedication']}\n")
+    
+    for pillar_name, details in pillars.items():
+        print(f"[{details['status'].upper()}] {pillar_name.replace('_', ' ').title()}:")
+        print(f" -> {details['objective']}\n")
+        
+    return pillars
+
+if __name__ == "__main__":
+    execute_pillar_upgrades()
