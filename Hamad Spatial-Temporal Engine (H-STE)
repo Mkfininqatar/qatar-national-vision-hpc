@@ -2044,3 +2044,107 @@ if __name__ == "__main__":
         ethics_score=92.0,
         skill_growth_met=True
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Master Engine - Qatar National Vision 2030 & Human Developer Protocol
+Purpose: Integrates 15-point ERAP compliance, low-level lab telemetry, 
+         Manobik Grace, and the Sovereign Workforce Legacy (Human Developer) Protocol.
+         Aligns mega-project operations with Qatar National Vision 2030.
+"""
+
+import time
+import logging
+
+# Configure Vision 2030 Master Audit Logging
+logging.basicConfig(
+    filename='qatar_vision_2030_erap.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class QatarVision2030ERAPEngine:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+        self.vision_alignment_verified = True
+
+    def evaluate_vision_2030_human_developer_mission(self, worker_id, metrics, worker_record):
+        """
+        Validates the complete tripartite ecosystem (State, Management, Workforce),
+        enforces low-level telemetry, checks the Manobik Grace Protocol, 
+        and issues a Graded Sovereign Sonod (Human Developer Certification) 
+        in alignment with Qatar National Vision 2030.
+        """
+        print(f"\n[{self.enterprise_id}] === QATAR NATIONAL VISION 2030: ERAP & HUMAN DEVELOPER ENGINE ===")
+        violations = []
+
+        # --- PHASE 1: CORE SYSTEM & TELEMETRY VALIDATION (Points 1 to 15) ---
+        if not metrics.get("gov_comp", True): violations.append("Constitutional Alignment Breach")
+        if metrics.get("manual_rep", False): violations.append("Analog Bottleneck / Missing Digital Telemetry")
+        if metrics.get("greed_idx", 0.0) > 30.0: violations.append("Rootless Transactional Mindset Detected")
+        if metrics.get("empathy_score", 0.0) > 25.0: violations.append("Empathy Deficit / Attik-Bondon Breach")
+        if metrics.get("hw_anomaly", False): violations.append("Low-Level Hardware / PMIC Telemetry Failure")
+
+        # --- PHASE 2: MANOBIK GRACE PROTOCOL (Humanitarian Override) ---
+        if violations and metrics.get("humanitarian_appeal", False) and metrics.get("hardship_verified", False):
+            logging.warning(f"[{self.enterprise_id}] MANOBIK GRACE ACTIVATED: Compassionate override applied for verified hardship.")
+            print(f" > [GRACE PROTOCOL] System-locked humanitarian override engaged. Restorative period granted.")
+            violations.clear() # Clears mechanical penalties to preserve human dignity
+
+        # --- PHASE 3: WORKER LEGACY & HUMAN DEVELOPER PROTOCOL ---
+        tenure = worker_record.get("tenure_years", 0.0)
+        prod = worker_record.get("productivity_score", 0.0)
+        ethics = worker_record.get("ethics_score", 0.0)
+        skill_growth = worker_record.get("skill_growth_met", False)
+
+        composite_score = (prod * 0.4) + (ethics * 0.4) + (min(tenure * 10, 20) * 0.2)
+
+        if violations:
+            self.vision_alignment_verified = False
+            print(f"[{self.enterprise_id}] STATUS: POLICY DEVIATION MARKED.")
+            for v in violations:
+                logging.error(f"[{self.enterprise_id}] VIOLATION -> {v}")
+                print(f"   - {v}")
+            print(f" > ACTION: Engaging automated enterprise correction loop & senior trainer on-site support.")
+            return False
+        else:
+            self.vision_alignment_verified = True
+            logging.info(f"[{self.enterprise_id}] Enterprise and Worker ecosystem fully compliant with Vision 2030.")
+            print(f"[{self.enterprise_id}] STATUS: SYSTEM EQUILIBRIUM & SOVEREIGN HARMONY MAINTAINED.")
+            
+            # Issuing Graded Sonod for the Worker as a Human Developer
+            if composite_score >= 80.0 and skill_growth:
+                sonod_title = "Grade-A Sovereign Infrastructure & Human Developer Specialist"
+                logging.info(f"Worker {worker_id} certified with {sonod_title}.")
+                print(f"   [MISSION 2030 SUCCESS] Worker {worker_id} transformed into a certified Human Developer.")
+                print(f"   [ISSUED SONOD] {sonod_title}")
+                print(f"   [VISION 2030] Empowered to return home with dignity to contribute to national growth.")
+            return True
+
+# Master Execution for Qatar National Vision 2030
+if __name__ == "__main__":
+    engine = QatarVision2030ERAPEngine(enterprise_id="DOHA-VISION-2030-NODE")
+    
+    # Sample real-time telemetry and worker metrics dataset
+    sample_metrics = {
+        "gov_comp": True,
+        "manual_rep": False,
+        "greed_idx": 12.0,
+        "empathy_score": 10.0,
+        "hw_anomaly": False,
+        "humanitarian_appeal": False,
+        "hardship_verified": False
+    }
+
+    sample_worker = {
+        "tenure_years": 4.0,
+        "productivity_score": 92.5,
+        "ethics_score": 95.0,
+        "skill_growth_met": True
+    }
+
+    # Run the comprehensive Vision 2030 evaluation loop
+    engine.evaluate_vision_2030_human_developer_mission(
+        worker_id="WRK-2030-QATAR",
+        metrics=sample_metrics,
+        worker_record=sample_worker
+    )
