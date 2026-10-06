@@ -1205,3 +1205,155 @@ if __name__ == "__main__":
     print("=== QATAR PILLAR 2 FULL ARCHITECTURAL TELEMETRY PACKET ===")
     for k, v in result_packet.items():
         print(f"{k}: {v}")
+"""
+=============================================================================
+QATAR PILLAR 2: SORNALI ITIHAS O ARCHITECTURAL TELEMETRY CORE (h_ste_core.py)
+=============================================================================
+Translating ancestral social cohesion, familial values, collective ethics, 
+and the 14 foundational historical pillars into high-performance computing telemetry.
+=============================================================================
+"""
+
+import time
+import sys
+
+class SornaliItihasPillar2Engine:
+    def __init__(self, node_id="QATAR_GOLDEN_SOVEREIGN_01"):
+        self.node_id = node_id
+        
+        # --- PHASE I: MONOBOL & SOVEREIGNTY (Pillars 1, 2, 9, 10, 14) ---
+        self.sovereignty_active = True           # Pillar 1 & 2: Inner strength & leadership legacy
+        self.patriotic_duty_level = 100.0        # Pillar 9: Natural civic & social responsibility
+        self.shared_vision_lock = True           # Pillar 10: Diverse roles, single goal (Shared Vision)
+        self.holistic_culture_synced = True      # Pillar 14: Holistic & culture-driven education sync
+
+        # --- PHASE II: SOCIAL & FAMILY FABRIC (Pillars 3, 4, 5, 6, 7, 8) ---
+        self.family_bond_integrity = 100.0       # Pillar 4: Nuclear family unit protection against fragmentation
+        self.empathy_buffer = 100.0              # Pillar 5 & 6: Neighborly empathy & training ground resilience
+        self.sarthobadi_filter_active = True     # Pillar 7 & 8: Rejection of rootless/selfish transactional systems
+
+        # --- PHASE III: EQUITY, WELFARE & GROWTH (Pillars 11, 12, 13) ---
+        self.somo_bonton_active = True           # Pillar 11: Equality, fairness & dignity ("No Citizen Left Behind")
+        self.welfare_reserve_pool = 100.0        # Pillar 12: Welfare savings for collective crisis protection
+        self.collective_growth_pool = 100.0      # Pillar 13: Self-reliant national advancement & growth savings
+        
+        self.global_golden_tick = 0
+
+    # =========================================================================
+    # PHASE I LOGIC: Monobol, Leadership Legacy & Holistic Education
+    # =========================================================================
+    def validate_phase_i_foundations(self):
+        """
+        Pillars 1, 2, 9, 10, 14: Validates internal strength, sovereign leadership legacy, 
+        natural patriotic duty, shared vision across diverse roles, and holistic cultural education.
+        """
+        if not self.sovereignty_active:
+            raise SystemError("CRITICAL [Pillar 1-2]: External structural dependency breach detected.")
+        if not self.shared_vision_lock:
+            return "WARNING [Pillar 10]: Vision desynchronization among heterogenous workers."
+        return "STATUS [Phase I]: Monobol, Shared Vision & Holistic Culture Aligned."
+
+    # =========================================================================
+    # PHASE II LOGIC: Society, Family Topology & Empathy
+    # =========================================================================
+    def evaluate_phase_ii_social_fabric(self, node_clusters, transaction_requests):
+        """
+        Pillars 3, 4, 5, 6, 7, 8: Evaluates nuclear family bonds, prevents rootless 
+        fragmentation, runs neighborly load absorption, and filters out selfish transactions.
+        """
+        # Pillar 3 & 4: Family & Core Node Topology
+        for cluster in node_clusters:
+            if cluster.get("isolated", False):
+                self.family_bond_integrity -= 5.0
+
+        if self.family_bond_integrity < 60.0:
+            return "WARNING [Pillar 3-4]: Fragmented node topology detected. Restoring core unity."
+
+        # Pillar 7 & 8: Filter out purely rootless/selfish transactions
+        clean_tx = [tx for tx in transaction_requests if not (tx.get("is_selfish", False) and self.sarthobadi_filter_active)]
+        
+        return "STATUS [Phase II]: Social Fabric, Family Bonds & Selfless State Filters Intact."
+
+    # =========================================================================
+    # PHASE III LOGIC: Somo-bonton, Welfare & Collective Growth Savings
+    # =========================================================================
+    def execute_phase_iii_welfare_and_fairness(self, resource_queues, system_stress):
+        """
+        Pillars 11, 12, 13: Enforces absolute equality/dignity (Somo-bonton), 
+        manages welfare reserves, and secures self-reliant growth savings.
+        """
+        # Pillar 11: Somo-bonton Niti (Equality & Fairness)
+        if resource_queues:
+            mean_load = sum(resource_queues) / len(resource_queues)
+            max_variance = max(abs(q - mean_load) for q in resource_queues)
+            if max_variance > 15.0:
+                # Fair-share redistribution across threads (No node left behind)
+                resource_queues = [q * 0.9 for q in resource_queues]
+        
+        # Pillar 12 & 13: Welfare & Collective Growth Reserves
+        if system_stress > 80.0:
+            self.welfare_reserve_pool -= 10.0
+            savings_status = "ACTION [Pillar 12-13]: Welfare savings pool activated for crisis defense."
+        else:
+            if self.welfare_reserve_pool < 100.0:
+                self.welfare_reserve_pool += 0.5
+            savings_status = "STATUS [Pillar 12-13]: Welfare & Growth Reserves Stable."
+
+        return resource_queues, savings_status
+
+    # =========================================================================
+    # MASTER EXECUTION PIPELINE: The Sornali Itihas Telemetry Loop
+    # =========================================================================
+    def execute_sornali_itihas_telemetry(self, raw_telemetry_packet):
+        self.global_golden_tick += 1
+
+        # Execute Phase I
+        phase_i_report = self.validate_phase_i_foundations()
+
+        # Execute Phase II
+        phase_ii_report = self.evaluate_phase_ii_social_fabric(
+            raw_telemetry_packet.get("node_clusters", []),
+            raw_telemetry_packet.get("transactions", [])
+        )
+
+        # Execute Phase III (Fairness & Welfare)
+        adjusted_loads, phase_iii_report = self.execute_phase_iii_welfare_and_fairness(
+            raw_telemetry_packet.get("cpu_loads", [40.0, 42.0, 41.0]),
+            max(raw_telemetry_packet.get("cpu_loads", [40.0]))
+        )
+
+        # Constructing the Final Sornali Itihas Telemetry Packet
+        golden_packet = {
+            "golden_tick": self.global_golden_tick,
+            "node_id": self.node_id,
+            "phase_i_monobol_status": phase_i_report,
+            "phase_ii_social_status": phase_ii_report,
+            "phase_iii_welfare_status": phase_iii_report,
+            "welfare_reserve_level": f"{self.welfare_reserve_pool}%",
+            "family_bond_health": f"{self.family_bond_integrity}%",
+            "system_state": "SORNALI_ITIHAS_HARMONIC_ACTIVE",
+            "historical_blueprint": "QATAR_PILLAR_2_ORIGIN"
+        }
+
+        return golden_packet
+
+if __name__ == "__main__":
+    # Initialize the Sornali Itihas Engine
+    engine = SornaliItihasPillar2Engine()
+
+    # Sample Telemetry Data reflecting multi-dimensional system check
+    sample_data = {
+        "node_clusters": [{"id": "cluster_qatar_base", "isolated": False}],
+        "cpu_loads": [45.5, 48.2, 46.8],
+        "transactions": [{"id": 101, "is_selfish": False}]
+    }
+
+    # Run Telemetry Tick
+    packet = engine.execute_sornali_itihas_telemetry(sample_data)
+
+    print("==========================================================")
+    print("      QATAR PILLAR 2: SORNALI ITIHAS TELEMETRY PACKET     ")
+    print("==========================================================")
+    for key, value in packet.items():
+        print(f"{key}: {value}")
+    print("==========================================================")
