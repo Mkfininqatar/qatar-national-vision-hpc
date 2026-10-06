@@ -1915,3 +1915,74 @@ if __name__ == "__main__":
     }
     
     master_engine.run_complete_evaluation(test_metrics)
+"""
+Module: h_ste_core.py
+Engine: ERAP Master Engine with Manobik Grace Protocol (Compassionate Override)
+Purpose: Balances rigid telemetry compliance with a system-locked humanitarian override,
+         ensuring system dignity and empathy (*Attik-Bondon*) are never compromised.
+"""
+
+import time
+import logging
+
+logging.basicConfig(
+    filename='erap_master_with_grace.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPMasterEngineWithGrace:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+
+    def evaluate_with_humanitarian_balance(self, metrics, humanitarian_appeal=False, hardship_verified=False):
+        """
+        Executes the 15-point evaluation, but includes a system-locked 
+        Manobik Grace Protocol for genuine human hardship cases.
+        """
+        print(f"\n[{self.enterprise_id}] === RUNNING ERAP EVALUATION WITH MANOBIK BALANCE ===")
+        violations = []
+
+        # Standard 15-Point Check (Simplified for demonstration)
+        if not metrics.get("gov_comp", True): violations.append("Constitutional Alignment Breach")
+        if metrics.get("manual_rep", False): violations.append("Analog Bottleneck / Missing Digital Tracking")
+        if metrics.get("greed_idx", 0.0) > 30.0: violations.append("Rootless Transactional Mindset Detected")
+        if metrics.get("empathy_score", 0.0) > 25.0: violations.append("Empathy Deficit Detected")
+
+        if violations:
+            print(f"[{self.enterprise_id}] STATUS: Policy deviations detected.")
+            
+            # --- THE SYSTEM-LOCKED MANOBIK GRACE PROTOCOL ---
+            if humanitarian_appeal and hardship_verified:
+                logging.warning(f"[{self.enterprise_id}] MANOBIK GRACE ACTIVATED: System-locked compassionate override applied for verified hardship.")
+                print(f"[{self.enterprise_id}] >>> MANOBIK GRACE PROTOCOL ENGAGED <<<")
+                print(f"[{self.enterprise_id}] Reason: Real human hardship recognized. Restorative grace period granted instead of mechanical penalty.")
+                return True # System grants restoration grace, maintaining human dignity
+            else:
+                logging.error(f"[{self.enterprise_id}] STATUS: Standard compliance breach. No valid hardship appeal found.")
+                print(f"[{self.enterprise_id}] ACTION: Engaging standard corrective restoration loop.")
+                return False
+        else:
+            logging.info(f"[{self.enterprise_id}] All systems compliant. Equilibrium and mutual respect verified.")
+            print(f"[{self.enterprise_id}] STATUS: FULLY COMPLIANT & BALANCED.")
+            return True
+
+# Test Execution of the Humanitarian Balance
+if __name__ == "__main__":
+    engine = ERAPMasterEngineWithGrace(enterprise_id="DOHA-GRACE-NODE-01")
+    
+    # Simulating a minor compliance deviation, but with a verified humanitarian reason
+    edge_case_metrics = {
+        "gov_comp": True,
+        "manual_rep": False,
+        "greed_idx": 15.0,
+        "empathy_score": 18.0,
+        "minor_deviation_flag": True  # Triggering a soft edge case
+    }
+    
+    # Evaluating with the Manobik Grace Protocol active
+    engine.evaluate_with_humanitarian_balance(
+        metrics=edge_case_metrics,
+        humanitarian_appeal=True,
+        hardship_verified=True
+    )
