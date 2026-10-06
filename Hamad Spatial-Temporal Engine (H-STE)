@@ -738,3 +738,163 @@ print("=========================================================================
 for metric, details in response_report.items():
     print(f"  • {metric.replace('_', ' ').upper()}: {details}")
 print("==================================================================================")
+from dataclasses import dataclass, field
+from typing import List, Dict, Any
+
+@dataclass
+class PillarResource:
+    id: int
+    title_en: str
+    title_bn: str
+    detailed_analysis: str
+    sovereignty_transformation: str
+    telemetry_binding: bool = True
+
+@dataclass
+class PillarOneBlueprint:
+    pillar_id: str = "PILLAR_01"
+    name: str = "Pearl Diving, Heritage & Foundational Resources"
+    immutable_anchor_period: str = "1995-1998"
+    mastermind_leadership: str = "Father Amir Sheikh Hamad bin Khalifa Al Thani"
+    stakeholder_mandate: str = "No Citizen Left Behind"
+    stakeholder_base_count: int = 350000  # 3.5 lakh Qatari stakeholders
+    
+    resources: List[PillarResource] = field(default_factory=lambda: [
+        PillarResource(
+            id=1,
+            title_en="Maritime Wealth & Core Origins",
+            title_bn="Sagorer Mohona o Vese Asa Shompod",
+            detailed_analysis="Qatar's foundational civilization originated from coastal estuaries, maritime wealth, and traditional pearl diving, laying the bedrock of long-term independence.",
+            sovereignty_transformation="Transformed from raw coastal harvesting into an unshakeable collective national identity and historical baseline of Qatari statehood."
+        ),
+        PillarResource(
+            id=2,
+            title_en="Fishermen's Wisdom & Sustainable Resource Mastery",
+            title_bn="Motso-Shikarider Buddhimotta o Sagorer Sothik Bebohar",
+            detailed_analysis="Early Qatari mariners applied profound native intelligence and supreme patience to understand marine ecosystems, currents, and tides without ecological disruption.",
+            sovereignty_transformation="Established the timeless principle that natural wealth must be harvested with deep ecological intellect and preserved for future generations."
+        ),
+        PillarResource(
+            id=3,
+            title_en="Precious Stones & Gems Dimension",
+            title_bn="Precious Stones & Gems (White, Blue & Gold Assets)",
+            detailed_analysis="Encompasses White (pure coastal pearl origins), Blue (oceanic depth and long-term visionary stability), and Gold (foundational prosperity born from land and sea).",
+            sovereignty_transformation="Served as international exchange tokens and early financial assets that placed Qatar on the map of prosperous regional entities."
+        ),
+        PillarResource(
+            id=4,
+            title_en="Construction Aggregates & Raw Materials",
+            title_bn="Nirman Samigri: Balu o Choto Pathor",
+            detailed_analysis="Marine and terrestrial sand and aggregate stones formed the physical raw materials essential for building robust infrastructure and permanent dwellings.",
+            sovereignty_transformation="The deliberate gathering and engineering of these foundational elements transformed natural geography into tangible national architecture."
+        ),
+        PillarResource(
+            id=5,
+            title_en="Limestone & Cement Infrastructure",
+            title_bn="Chuna Pathor o Cement Postuti",
+            detailed_analysis="Indigenous limestone served as the crucial raw material for cement production, enabling structural permanence and heavy construction industries.",
+            sovereignty_transformation="Elevated national development from temporary shelters to modern, enduring, and climate-resilient urban foundations."
+        ),
+        PillarResource(
+            id=6,
+            title_en="Port-Based Salt Production & Native Technological Mastery",
+            title_bn="Bondor-Vittik Lobon Utpadon o Prakritik Projukti",
+            detailed_analysis="Coastal evaporation pans supplied food preservation and trade commodities using sophisticated native ecological engineering (solar angles, wind currents, tidal flows).",
+            sovereignty_transformation="Proved that native intellectual mastery over natural elements builds the technical mindset required for complex modern engineering."
+        ),
+        PillarResource(
+            id=7,
+            title_en="Mastery Over Harsh Climates & Commercial Evolution",
+            title_bn="Boiri Abohawate Megha-Chintar Protifolon o Banijjik Kendre",
+            detailed_analysis="Early Qataris confronted extreme coastal heat, harsh weather, and maritime storms through environmental adaptation and high intellectual discipline.",
+            sovereignty_transformation="The resilience forged in harsh coastal climates became the psychological bedrock that transformed Qatar into a global commercial powerhouse."
+        ),
+        PillarResource(
+            id=8,
+            title_en="Environmental Architecture & Agricultural Mastery",
+            title_bn="Matir Upor Sobuz o Krishi Bikash",
+            detailed_analysis="Despite arid terrain and hostile sandy conditions, ancestors applied deep environmental architecture to cultivate greenery, manage water, and pioneer agriculture.",
+            sovereignty_transformation="Proved that nature is a living system to be harmonized with—forming the biological roots of modern sustainable urban planning."
+        ),
+        PillarResource(
+            id=9,
+            title_en="Collective Human Development & National Legacy Blueprint",
+            title_bn="Manob Unnayon o Puro Jatir Sthayi Blueprint",
+            detailed_analysis="Ancestral pioneers never focused on individual enrichment alone; every struggle and skill was dedicated to building a secure haven for upcoming generations.",
+            sovereignty_transformation="Codified the true essence of human development as a collective national legacy, forming the ideological root of modern sovereign care."
+        ),
+        PillarResource(
+            id=10,
+            title_en="Sir Hamad's Visionary Leadership & The 1995–1998 Immutable Anchor",
+            title_bn="Sir Hamad-er Durdorshi Chinta o 1995–1998 Immutable Anchor",
+            detailed_analysis="Father Amir Sheikh Hamad bin Khalifa Al Thani acted as the strategic catalyst who gathered fragmented ancestral heritage and natural resources into a unified state model.",
+            sovereignty_transformation="The 1995–1998 governance paradigm serves as the permanent, unalterable anchor for all contemporary strategic operations."
+        ),
+        PillarResource(
+            id=11,
+            title_en="Evolution from Maritime Harvesting to Sovereign Energy Wealth",
+            title_bn="Samudrik Ahoron Theke Tel o Gash-er Jatio Shompod",
+            detailed_analysis="The same discipline, patience, and precision utilized in traditional pearl harvesting were systematically scaled up to govern subterranean hydrocarbon exploration.",
+            sovereignty_transformation="Converted raw natural energy deposits into sovereign national power rather than leaving them vulnerable to external exploitation."
+        ),
+        PillarResource(
+            id=12,
+            title_en="Conquering the Impossible: Offshore Extraction & Mastermind Leadership",
+            title_bn="Sagorer Tolodesh Theke Tel-Gas Uttrolon o Mastermind Leadership",
+            detailed_analysis="Operating under extreme marine depths and technological limitations to extract hydrocarbons from complex reservoirs (including the North Field) was a monumental feat.",
+            sovereignty_transformation="Sir Hamad's mastermind leadership defied impossible odds, bringing advanced offshore technology to establish Qatar's global energy identity."
+        ),
+        PillarResource(
+            id=13,
+            title_en="Marine Depth & Structural Weather Extremes in Offshore Refining",
+            title_bn="Gabhir Sagor o Gathonik Weather-er Majhkhan Theke Refining",
+            detailed_analysis="Navigating profound oceanic depths and hostile structural weather to not only drill but successfully refine crude hydrocarbons into usable energy.",
+            sovereignty_transformation="Ascended Qatar from a raw extraction zone into a sovereign industrial refining powerhouse of international standards."
+        ),
+        PillarResource(
+            id=14,
+            title_en="Commercialization & Ascension as Qatar's Primary GDP Pillar",
+            title_bn="Banijjikoron o Qatar-er GDP-r Shobcheye Boro Aayer Prodan",
+            detailed_analysis="Commercializing refined energy assets into global markets, systematically scaling up monetization to make energy the primary revenue driver of Qatar's GDP.",
+            sovereignty_transformation="Secured total macroeconomic stability and global financial independence through elite energy commercialization."
+        ),
+        PillarResource(
+            id=15,
+            title_en="Marine Gold & Precious Mineral Exploration",
+            title_bn="Samudrik Shorno o Mulyoban Khanij Ahoron",
+            detailed_analysis="Exploring and harvesting submerged mineral wealth, precious elements, and marine-bed mineral deposits hidden within coastal shelves and oceanic floors.",
+            sovereignty_transformation="Cemented the ultimate tier of sovereign wealth reserves, fortifying national capital security against global market volatility."
+        ),
+        PillarResource(
+            id=16,
+            title_en="Spatial-Temporal Telemetry & Sovereign Distribution",
+            title_bn="Spatial-Temporal Telemetry & Sovereign Distribution (No Citizen Left Behind)",
+            detailed_analysis="Codifying this historical, material, industrial, and leadership lineage into an advanced digital spatial twin topology and high-performance telemetry framework.",
+            sovereignty_transformation="Ensures all sovereign wealth and future prosperity remain securely distributed and dedicated to the 3.5 lakh Qatari stakeholders under 'No Citizen Left Behind'."
+        )
+    ])
+
+def export_pillar_blueprint() -> Dict[str, Any]:
+    blueprint = PillarOneBlueprint()
+    return {
+        "pillar": blueprint.pillar_id,
+        "name": blueprint.name,
+        "anchor": blueprint.immutable_anchor_period,
+        "leader": blueprint.mastermind_leadership,
+        "mandate": blueprint.stakeholder_mandate,
+        "total_stakeholders": blueprint.stakeholder_base_count,
+        "points_count": len(blueprint.resources),
+        "data": [
+            {
+                "id": r.id,
+                "title_en": r.title_en,
+                "title_bn": r.title_bn,
+                "analysis": r.detailed_analysis,
+                "transformation": r.sovereignty_transformation
+            } for r in blueprint.resources
+        ]
+    }
+
+if __name__ == "__main__":
+    import json
+    print(json.dumps(export_pillar_blueprint(), indent=4, ensure_ascii=False))
