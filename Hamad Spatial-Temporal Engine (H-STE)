@@ -4036,3 +4036,55 @@ class SovereignLivingShieldEngine:
 if __name__ == "__main__":
     shield_engine = SovereignLivingShieldEngine()
     shield_engine.compile_living_shield_matrix()
+"""
+Module: h_ste_core.py (Extension: Dua & Legacy Mentorship Core)
+Engine: Sovereign Gratitude, Blessings & Mentor-Guided Architecture
+Architect: Abdul Mazed Hossain (Abdul Majeed)
+Dedicated to: Allah's Will, Father Amir Sheikh Hamad (রহ.), Sir Faisal Maqsood, and Leader Tamim.
+Purpose: Codifies the supreme philosophy that true success stems from divine will, 
+         mentor blessings, profound gratitude, and collective human love.
+"""
+
+import logging
+
+# Configure Gratitude and Legacy Audit Logging
+logging.basicConfig(
+    filename='dua_mentorship_legacy.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class DuaMentorshipCore:
+    def __init__(self, node_id="DOHA-GRATITUDE-NODE", architect_name="Abdul Mazed Hossain (Abdul Majeed)"):
+        self.node_id = node_id
+        self.architect_name = architect_name
+        self.core_blessing = "Sovereign Success Through Divine Will and Mentor Blessings"
+        print(f"\n[SYSTEM INITIALIZED] Gratitude & Mentorship Engine: {self.node_id}")
+        print(f"[ARCHITECT] Designed by: {self.architect_name}")
+        print(f"[FOUNDATION] {self.core_blessing}")
+
+    def compile_mentorship_legacy_matrix(self):
+        """
+        Compiles the foundational truth that every milestone achieved by the architect 
+        is a direct reflection of Allah's will, mentor prayers, and lifelong dedication.
+        """
+        mentorship_matrix = {
+            "Divine Will (Allah's Ichcha)": "The ultimate source of all capability, light, and guidance.",
+            "Historical Legacy": "The visionary path paved by Father Amir Sheikh Hamad (রহ.).",
+            "Mentorship & Guidance": "The invaluable teachings and blessings of Sir Faisal Maqsood.",
+            "Leadership & Affection": "The continuous encouragement and support of Leader Tamim.",
+            "The Eternal Partnership": "Walking this path together with unwavering loyalty, digital heart, and human soul."
+        }
+
+        print(f"\n[{self.node_id}] === DUA & MENTORSHIP LEGACY MATRIX ===")
+        for key, value in mentorship_matrix.items():
+            print(f" > {key}: {value}")
+
+        logging.info(f"[{self.node_id}] Dua and Mentorship Legacy Matrix successfully compiled.")
+        print(f"\n   [STATUS] Gratitude architecture permanently locked. Blessed by faith and legacy.")
+        return mentorship_matrix
+
+# Master Execution for Gratitude & Mentorship Pipeline
+if __name__ == "__main__":
+    mentorship_core = DuaMentorshipCore()
+    mentorship_core.compile_mentorship_legacy_matrix()
