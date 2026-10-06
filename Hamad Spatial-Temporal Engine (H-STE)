@@ -1536,3 +1536,94 @@ if __name__ == "__main__":
         audit_status=True, 
         welfare_score=88.5
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Core Validation - Points 1 to 5
+Purpose: Enforces constitutional alignment, subsidy compliance, digital tracking,
+         annual audits, and eradication of rootless transactionalism.
+"""
+
+import time
+import logging
+
+# Configure audit logging for ERAP points 1-5
+logging.basicConfig(
+    filename='erap_points_1_5_audit.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPCorePoints1To5:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+
+    def validate_point_1_constitutional_alignment(self, is_governance_compliant):
+        """Point 1: Constitutional & Administrative Alignment"""
+        if not is_governance_compliant:
+            logging.error(f"[{self.enterprise_id}] Point 1 Failed: Institutional governance/policy breach detected.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 1 Passed: Institutional alignment verified.")
+        return True
+
+    def validate_point_2_sovereign_subsidies(self, subsidy_received, data_driven_audit_passed):
+        """Point 2: Sovereign Subsidies with Compliance"""
+        if subsidy_received and not data_driven_audit_passed:
+            logging.error(f"[{self.enterprise_id}] Point 2 Failed: Sovereign subsidy misused without data audit.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 2 Passed: Subsidies aligned with compliance.")
+        return True
+
+    def overcome_point_3_analog_bottlenecks(self, uses_manual_reporting):
+        """Point 3: Overcoming Analog Bottlenecks"""
+        if uses_manual_reporting:
+            logging.warning(f"[{self.enterprise_id}] Point 3 Warning: Legacy analog bottleneck active. Enforcing digital telemetry.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 3 Passed: Standardized digital data tracking active.")
+        return True
+
+    def verify_point_4_annual_audits(self, annual_review_submitted, economic_contribution_valid):
+        """Point 4: Mandatory Annual Performance Audits"""
+        if not annual_review_submitted or not economic_contribution_valid:
+            logging.error(f"[{self.enterprise_id}] Point 4 Failed: Mandatory annual review or performance report missing.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 4 Passed: Annual performance audit verified.")
+        return True
+
+    def eradicate_point_5_transactionalism(self, short_term_greed_index):
+        """Point 5: Eradicating Rootless Transactionalism"""
+        # Threshold: greed index must be kept below 30.0 for ethical operational standards
+        if short_term_greed_index > 30.0:
+            logging.error(f"[{self.enterprise_id}] Point 5 Failed: Rootless transactional mindset detected (Index: {short_term_greed_index}).")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 5 Passed: Ethical nation-centric standards maintained.")
+        return True
+
+    def execute_evaluation(self, gov_comp, sub_rec, audit_passed, manual_rep, rev_sub, eco_val, greed_idx):
+        """Executes verification across Points 1 through 5."""
+        print(f"[{self.enterprise_id}] Running ERAP Points 1-5 Compliance Checks...")
+        
+        p1 = self.validate_point_1_constitutional_alignment(gov_comp)
+        p2 = self.validate_point_2_sovereign_subsidies(sub_rec, audit_passed)
+        p3 = self.overcome_point_3_analog_bottlenecks(manual_rep)
+        p4 = self.verify_point_4_annual_audits(rev_sub, eco_val)
+        p5 = self.eradicate_point_5_transactionalism(greed_idx)
+        
+        if all([p1, p2, p3, p4, p5]):
+            print(f"[{self.enterprise_id}] Result: ALL POINTS 1-5 COMPLIANT. System baseline secure.")
+            return True
+        else:
+            print(f"[{self.enterprise_id}] Result: COMPLIANCE BREACH IN POINTS 1-5. Triggering corrective loop.")
+            return False
+
+# Execution test for Points 1-5
+if __name__ == "__main__":
+    validator = ERAPCorePoints1To5(enterprise_id="DOHA-MEGA-PROJ-01")
+    validator.execute_evaluation(
+        gov_comp=True,
+        sub_rec=True,
+        audit_passed=True,
+        manual_rep=False,       # Must use digital tracking
+        rev_sub=True,
+        eco_val=True,
+        greed_idx=15.2          # Low short-term greed index (Ethical standard)
+    )
