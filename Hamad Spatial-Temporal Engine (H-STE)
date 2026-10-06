@@ -1447,3 +1447,92 @@ if __name__ == "__main__":
     # Running telemetry loop
     telemetry_data = engine.execute_validation_loops()
     print("Final Telemetry Output:", telemetry_data)
+"""
+Module: h_ste_core.py
+Engine: Economic Restoration & Accountability Protocol (ERAP) Core
+Purpose: Validates low-level telemetry, checks sovereign compliance, 
+         and eliminates analog/administrative gaps in real-time.
+"""
+
+import time
+import logging
+
+# Configure logging for immutable digital audit trails
+logging.basicConfig(
+    filename='erap_telemetry_audit.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class EconomicRestorationEngine:
+    def __init__(self, node_id, enterprise_type):
+        self.node_id = node_id
+        self.enterprise_type = enterprise_type
+        self.is_compliant = True
+
+    def recover_low_level_telemetry(self, raw_cpu_load, memory_usage, pmic_voltage):
+        """
+        Recovers and restores low-level hardware metrics from lab environment 
+        to bypass legacy analog limitations and data hiding.
+        """
+        telemetry_status = {
+            "node": self.node_id,
+            "cpu_load_pct": raw_cpu_load,
+            "memory_usage_pct": memory_usage,
+            "pmic_voltage_v": pmic_voltage,
+            "timestamp": time.time()
+        }
+        
+        # Check for hardware instability or anomalies
+        if raw_cpu_load > 90.0 or pmic_voltage < 3.3:
+            logging.warning(f"Hardware anomaly detected in node {self.node_id}. Triggering review loop.")
+            return telemetry_status, False
+            
+        logging.info(f"Low-level telemetry recovered successfully for node {self.node_id}.")
+        return telemetry_status, True
+
+    def validate_sovereign_compliance(self, annual_audit_submitted, worker_welfare_score):
+        """
+        Validates corporate accountability, annual audit status, and 
+        anti-transactional mindset alignment (ERAP Rule).
+        """
+        if not annual_audit_submitted or worker_welfare_score < 75.0:
+            self.is_compliant = False
+            logging.error(f"Compliance breach: Node {self.node_id} failed annual review or welfare check.")
+            return False
+
+        logging.info(f"Sovereign compliance verified for node {self.node_id}.")
+        return True
+
+    def execute_restoration_protocol(self, cpu_load, memory, voltage, audit_status, welfare_score):
+        """
+        Main execution loop combining low-level recovery and policy validation.
+        """
+        print(f"[{self.node_id}] Executing ERAP Telemetry & Restoration Loop...")
+        
+        # Step 1: Recover low-level lab metrics
+        hw_metrics, hw_ok = self.recover_low_level_telemetry(cpu_load, memory, voltage)
+        
+        # Step 2: Validate administrative and corporate accountability
+        compliance_ok = self.validate_sovereign_compliance(audit_status, welfare_score)
+        
+        if hw_ok and compliance_ok:
+            print(f"[{self.node_id}] Status: STABLE & COMPLIANT. System equilibrium maintained.")
+            return True
+        else:
+            print(f"[{self.node_id}] Status: RESTORATION PROTOCOL TRIGGERED. Applying penalty loop / corrective audit.")
+            return False
+
+# Example execution for testing the core engine
+if __name__ == "__main__":
+    # Test Node Instance
+    engine = EconomicRestorationEngine(node_id="DOHA-HPC-01", enterprise_type="Mega-Project")
+    
+    # Simulating data recovery and compliance check
+    engine.execute_restoration_protocol(
+        cpu_load=45.5, 
+        memory=60.2, 
+        pmic_voltage=3.75, 
+        audit_status=True, 
+        welfare_score=88.5
+    )
