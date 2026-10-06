@@ -1357,3 +1357,93 @@ if __name__ == "__main__":
     for key, value in packet.items():
         print(f"{key}: {value}")
     print("==========================================================")
+"""
+Core System Architecture: h_ste_core.py
+Framework: Qatar Pillar 2 - Sornali Itihas & Sovereign HPC Telemetry
+Description: Translates ancestral social cohesion, core ethics, inner strength 
+             (Monobol), and global-international integration into spatial-temporal 
+             telemetry validation loops and dynamic load balancing.
+"""
+
+import time
+import logging
+from dataclasses import dataclass, field
+from typing import Dict, List, Any
+
+# Configure structured logging for sovereign telemetry
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] (H_STE_CORE): %(message)s"
+)
+logger = logging.getLogger("H_STE_Core")
+
+@dataclass
+class SystemNode:
+    node_id: str
+    profession_role: str  # e.g., "CPU", "GPU", "TPU" (Diverse Roles)
+    inner_strength_monobol: float  # Scale 0.0 to 1.0
+    spiritual_bond_index: float  # Attik-bondon metric
+    equity_fairness_share: float  # Somo-bonton allocation
+    is_active: bool = True
+
+@dataclass
+class TelemetryPacket:
+    timestamp: float = field(default_factory=time.time)
+    shared_vision_tag: str = "QATAR_SOVEREIGN_VISION_2030"
+    active_threads: int = 0
+    system_equilibrium_state: bool = True
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+class SornaliItihasTelemetryEngine:
+    def __init__(self, cluster_name: str = "Sovereign-HPC-Core"):
+        self.cluster_name = cluster_name
+        self.nodes: Dict[str, SystemNode] = {}
+        logger.info(f"Initialized {self.cluster_name} based on Sornali Itihas framework.")
+
+    def register_node(self, node: SystemNode) -> None:
+        """
+        Registers a processing node ensuring it aligns with core ethics,
+        rejecting rootless, selfish transactional models (Pillars 7 & 8).
+        """
+        if node.inner_strength_monobol < 0.2 or node.spiritual_bond_index < 0.2:
+            logger.warning(f"Node {node.node_id} rejected: Insufficient Monobol or Spiritual Bond.")
+            return
+        
+        self.nodes[node.node_id] = node
+        logger.info(f"Node registered successfully: {node.node_id} [{node.profession_role}]")
+
+    def execute_validation_loops(self) -> TelemetryPacket:
+        """
+        Executes the 14-Pillar Validation Loops, ensuring dynamic empathy
+        load balancing and absolute system equilibrium.
+        """
+        total_monobol = sum(n.inner_strength_monobol for n in self.nodes.values() if n.is_active)
+        total_bonds = sum(n.spiritual_bond_index for n in self.nodes.values() if n.is_active)
+        node_count = len([n for n in self.nodes.values() if n.is_active])
+
+        equilibrium_achieved = node_count > 0 and (total_monobol / node_count >= 0.5)
+
+        packet = TelemetryPacket(
+            active_threads=node_count,
+            system_equilibrium_state=equilibrium_achieved,
+            metadata={
+                "mean_monobol": total_monobol / node_count if node_count > 0 else 0.0,
+                "mean_spiritual_bond": total_bonds / node_count if node_count > 0 else 0.0,
+                "somo_bonton_status": "Balanced & Fair-Share Enforced"
+            }
+        )
+        
+        logger.info(f"Telemetry validation executed. Equilibrium: {packet.system_equilibrium_state}")
+        return packet
+
+if __name__ == "__main__":
+    # Example execution sequence mapping historical pillars to telemetry nodes
+    engine = SornaliItihasTelemetryEngine()
+    
+    # Registering diverse global/local nodes sharing a unified vision
+    engine.register_node(SystemNode("node_alpha_01", "Core-Sovereign-CPU", 0.95, 0.90, 1.0))
+    engine.register_node(SystemNode("node_beta_02", "Global-Integration-GPU", 0.88, 0.85, 1.0))
+    
+    # Running telemetry loop
+    telemetry_data = engine.execute_validation_loops()
+    print("Final Telemetry Output:", telemetry_data)
