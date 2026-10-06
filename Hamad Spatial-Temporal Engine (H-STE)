@@ -1627,3 +1627,93 @@ if __name__ == "__main__":
         eco_val=True,
         greed_idx=15.2          # Low short-term greed index (Ethical standard)
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Core Validation - Points 6 to 10
+Purpose: Enforces supervisory accountability, national reputation safeguards, 
+         sovereign ownership integrity, human mindset filtering, and real-time feedback.
+"""
+
+import time
+import logging
+
+# Configure audit logging for ERAP points 6-10
+logging.basicConfig(
+    filename='erap_points_6_10_audit.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPCorePoints6To10:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+
+    def validate_point_6_supervisory_oversight(self, supervisor_negligence_detected):
+        """Point 6: Supervisory Accountability & Oversight"""
+        if supervisor_negligence_detected:
+            logging.error(f"[{self.enterprise_id}] Point 6 Failed: Supervisory negligence or oversight gap detected. Triggering penalty loop.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 6 Passed: Supervisory accountability verified.")
+        return True
+
+    def safeguard_point_7_national_reputation(self, reputation_risk_index):
+        """Point 7: Safeguarding National Reputation"""
+        # Threshold: reputation risk index must be kept below 20.0 to protect Qatar's global image
+        if reputation_risk_index > 20.0:
+            logging.error(f"[{self.enterprise_id}] Point 7 Failed: High reputational risk detected (Index: {reputation_risk_index}).")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 7 Passed: National reputation and sovereign dignity safeguarded.")
+        return True
+
+    def preserve_point_8_sovereign_ownership(self, ownership_alignment_status):
+        """Point 8: Preserving Sovereign Ownership Integrity"""
+        if not ownership_alignment_status:
+            logging.error(f"[{self.enterprise_id}] Point 8 Failed: Corporate behavior misaligned with Qatar asset control.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 8 Passed: Sovereign ownership integrity preserved.")
+        return True
+
+    def mitigate_point_9_human_mindset(self, empathy_deficit_score):
+        """Point 9: Mitigating Weak Human Mindsets"""
+        # Threshold: empathy deficit score must not exceed 25.0
+        if empathy_deficit_score > 25.0:
+            logging.error(f"[{self.enterprise_id}] Point 9 Failed: Weak human mindset / empathy deficit detected (Score: {empathy_deficit_score}).")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 9 Passed: Ethical human mindset and mutual respect maintained.")
+        return True
+
+    def verify_point_10_feedback_channels(self, secure_digital_feedback_active):
+        """Point 10: Real-time Feedback & Transparency Channels"""
+        if not secure_digital_feedback_active:
+            logging.error(f"[{self.enterprise_id}] Point 10 Failed: Ground-level transparency channels inactive or blocked.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 10 Passed: Secure real-time feedback channels operational.")
+        return True
+
+    def execute_evaluation(self, sup_negligence, rep_risk, own_align, empathy_score, feedback_active):
+        """Executes verification across Points 6 through 10."""
+        print(f"[{self.enterprise_id}] Running ERAP Points 6-10 Compliance Checks...")
+        
+        p6 = self.validate_point_6_supervisory_oversight(sup_negligence)
+        p7 = self.safeguard_point_7_national_reputation(rep_risk)
+        p8 = self.preserve_point_8_sovereign_ownership(own_align)
+        p9 = self.mitigate_point_9_human_mindset(empathy_score)
+        p10 = self.verify_point_10_feedback_channels(feedback_active)
+        
+        if all([p6, p7, p8, p9, p10]):
+            print(f"[{self.enterprise_id}] Result: ALL POINTS 6-10 COMPLIANT. Supervisory layer secure.")
+            return True
+        else:
+            print(f"[{self.enterprise_id}] Result: COMPLIANCE BREACH IN POINTS 6-10. Corrective protocols engaged.")
+            return False
+
+# Execution test for Points 6-10
+if __name__ == "__main__":
+    validator = ERAPCorePoints6To10(enterprise_id="DOHA-MEGA-PROJ-01")
+    validator.execute_evaluation(
+        sup_negligence=False,     # No supervisory negligence
+        rep_risk=8.5,             # Low reputation risk index
+        own_align=True,           # Aligned with sovereign asset ownership
+        empathy_score=12.0,       # Low empathy deficit score
+        feedback_active=True      # Real-time feedback channels open
+    )
