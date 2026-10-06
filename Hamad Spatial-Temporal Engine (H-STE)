@@ -2861,3 +2861,116 @@ if __name__ == "__main__":
         telemetry_data=live_telemetry,
         apparel_metrics=apparel_metrics_data
     )
+"""
+Module: h_ste_core.py
+Engine: Qatari Cultural Ceramic & Pottery Export Innovation Engine
+Architect: Abdul Mazed Hossain (Abdul Majeed)
+Dedicated in Memory & Vision of: Father Amir Sheikh Hamad bin Khalifa Al Thani (রহ.)
+Purpose: Integrates Qatari heritage designs into advanced ceramic manufacturing, 
+         enforcing kiln/hardware telemetry, ethical production, and "Made in Qatar" 
+         global export under Qatar National Vision 2030.
+"""
+
+import time
+import logging
+
+# Configure Vision 2030 Master Audit Logging
+logging.basicConfig(
+    filename='qatari_ceramic_export.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class QatariCeramicExportEngine:
+    def __init__(self, node_id, architect_name="Abdul Mazed Hossain (Abdul Majeed)"):
+        self.node_id = node_id
+        self.architect_name = architect_name
+        self.ceramic_equilibrium = True
+        print(f"\n[SYSTEM INITIALIZED] Qatari Ceramic & Pottery Node: {self.node_id}")
+        print(f"[ARCHITECT] Designed by: {self.architect_name}")
+        print(f"[DEDICATION] Inspired by the visionary legacy of Father Amir Sheikh Hamad bin Khalifa Al Thani (রহ.).")
+
+    def evaluate_ceramic_production_line(self, craftsman_id, telemetry_data, ceramic_metrics):
+        """
+        Validates Qatari heritage-infused ceramic designs and kiln production,
+        ensuring real-time kiln telemetry, Manobik Grace, and global export readiness 
+        under Qatar National Vision 2030.
+        """
+        print(f"\n[{self.node_id}] === 'MADE IN QATAR' CERAMIC & POTTERY EXPORT PIPELINE ===")
+        print(f" > System Architect: {self.architect_name}")
+        
+        system_alerts = []
+
+        # --- PHASE 1: TELEMETRY & ERAP COMPLIANCE ---
+        if not telemetry_data.get("gov_comp", True): system_alerts.append("Sovereign Compliance Breach")
+        if telemetry_data.get("manual_bottleneck", False): system_alerts.append("Analog Paperwork / Telemetry Desync")
+        if telemetry_data.get("exploitation_index", 0.0) > 25.0: system_alerts.append("Transactional Imbalance Detected")
+        if telemetry_data.get("kiln_hardware_anomaly", False): system_alerts.append("Kiln Temperature / PMIC Telemetry Failure")
+
+        # --- PHASE 2: MANOBIK GRACE PROTOCOL (Humanitarian Override) ---
+        if system_alerts and telemetry_data.get("humanitarian_appeal", False) and telemetry_data.get("hardship_verified", False):
+            logging.warning(f"[{self.node_id}] MANOBIK GRACE ACTIVATED: Humanitarian override engaged for verified hardship.")
+            print(f"   [GRACE PROTOCOL] Vault unlocked. Mechanical penalties waived to protect human dignity.")
+            system_alerts.clear()
+
+        # --- PHASE 3: CULTURAL CERAMIC & GLOBAL EXPORT EVALUATION ---
+        cultural_pattern_score = ceramic_metrics.get("cultural_pattern_score", 0.0)
+        glaze_durability_score = ceramic_metrics.get("durability_score", 0.0)
+        global_market_demand = ceramic_metrics.get("global_market_appeal", 0.0)
+        ethical_conduct = ceramic_metrics.get("ethical_conduct_score", 0.0)
+
+        ceramic_composite_score = (cultural_pattern_score * 0.30) + (glaze_durability_score * 0.30) + (global_market_demand * 0.25) + (ethical_conduct * 0.15)
+
+        if system_alerts:
+            self.ceramic_equilibrium = False
+            print(f"[{self.node_id}] STATUS: ECOSYSTEM DEVIATION DETECTED.")
+            for alert in system_alerts:
+                logging.error(f"[{self.node_id}] ALERT -> {alert}")
+                print(f"   - {alert}")
+            print(f"   [ACTION] Engaging automated corrective loops and kiln-design recalibration.")
+            return False
+        else:
+            self.ceramic_equilibrium = True
+            logging.info(f"[{self.node_id}] 'Made in Qatar' ceramic artifacts validated for international export.")
+            print(f"[{self.node_id}] STATUS: CERAMIC MODERNIZATION & EXPORT HARMONY ACHIEVED.")
+            
+            # Issuing Graded Sovereign Sonod for Ceramic Innovation Pioneers
+            if ceramic_composite_score >= 88.0:
+                sonod_title = "Sovereign 'Made in Qatar' Ceramic & Pottery Master Specialist"
+                logging.info(f"Craftsman {craftsman_id} certified with {sonod_title} under architect {self.architect_name}.")
+                print(f"   [VISION 2030 SUCCESS] Craftsman {craftsman_id} successfully launched a 'Made in Qatar' Ceramic Brand.")
+                print(f"   [ISSUED SOVEREIGN SONOD] {sonod_title}")
+                print(f"   [PARADIGM SHIFT] Integrating Qatari cultural patterns into advanced ceramic engineering expands global export.")
+            return True
+
+# Master Execution for Qatar National Vision 2030
+if __name__ == "__main__":
+    engine = QatariCeramicExportEngine(
+        node_id="DOHA-CERAMIC-EXPORT-NODE",
+        architect_name="Abdul Mazed Hossain (Abdul Majeed)"
+    )
+    
+    # Real-time Telemetry Dataset
+    live_telemetry = {
+        "gov_comp": True,
+        "manual_bottleneck": False,
+        "exploitation_index": 1.9,
+        "kiln_hardware_anomaly": False,
+        "humanitarian_appeal": False,
+        "hardship_verified": False
+    }
+
+    # Cultural Ceramic & Pottery Metrics
+    ceramic_metrics_data = {
+        "cultural_pattern_score": 98.5,
+        "durability_score": 97.0,
+        "global_market_appeal": 96.0,
+        "ethical_conduct_score": 99.0
+    }
+
+    # Run the ceramic export evaluation
+    engine.evaluate_ceramic_production_line(
+        craftsman_id="CERAMIC-DEV-001",
+        telemetry_data=live_telemetry,
+        ceramic_metrics=ceramic_metrics_data
+    )
