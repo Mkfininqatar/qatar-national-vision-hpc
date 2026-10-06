@@ -2148,3 +2148,41 @@ if __name__ == "__main__":
         metrics=sample_metrics,
         worker_record=sample_worker
     )
+graph TD
+    %% Define Styles
+    classDef stateStyle fill:#1e3d59,stroke:#ff6e40,stroke-width:2px,color:#fff;
+    classDef enterpriseStyle fill:#17b978,stroke:#086972,stroke-width:2px,color:#fff;
+    classDef workerStyle fill:#ff6e40,stroke:#d72323,stroke-width:2px,color:#fff;
+    classDef protocolStyle fill:#393e46,stroke:#00adb5,stroke-width:2px,color:#fff;
+
+    %% Main Entities
+    State["Qatar National Vision 2030 <br/>(Sovereign Regulator & State)"]:::stateStyle
+    Enterprise["Enterprise / Management Node <br/>(h_ste_core.py Engine)"]:::enterpriseStyle
+    Worker["Workforce / Laborer <br/>(Future Human Developer)"]:::workerStyle
+
+    %% Protocols & Sub-systems
+    Telemetry["Zero-Friction State Sync <br/>(Real-Time Telemetry Feed)"]:::protocolStyle
+    Grace["Manobik Grace Protocol <br/>(System-Locked Humanitarian Vault)"]:::protocolStyle
+    Legacy["Graded Sovereign Sonod <br/>(Career Legacy & National Empowerment)"]:::protocolStyle
+
+    %% Interactions & Flows
+    State -->|Direct Statistical Feed (No Paperwork)| Telemetry
+    Enterprise -->|Automated 15-Point ERAP Compliance| Telemetry
+    Telemetry -->|Validates Real-Time Production & Honesty| State
+
+    Enterprise -->|Performance / On-Site Senior Training| Worker
+    Worker -->|Productivity & Ethical Telemetry| Enterprise
+
+    %% Humanitarian & Legacy Overrides
+    Worker -.->|Verified Hardship Appeal| Grace
+    Grace -.->|Compassionate Override / Restorative Grace| Enterprise
+
+    Worker -->|Tenure & Skill Growth Verification| Legacy
+    Legacy -->|Certified Sovereign Specialist Returns Home| State
+
+    %% Sub-graph styling
+    subgraph Tripartite Ecosystem & Vision 2030
+        State
+        Enterprise
+        Worker
+    end
