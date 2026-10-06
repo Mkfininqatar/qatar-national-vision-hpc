@@ -1986,3 +1986,61 @@ if __name__ == "__main__":
         humanitarian_appeal=True,
         hardship_verified=True
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Master Engine with Worker Legacy & Graded Certification
+Purpose: Tracks workforce performance over time, prevents endless exile, 
+         evaluates real contributions, and issues a Graded Sovereign Sonod (Certificate) 
+         for national empowerment upon completion.
+"""
+
+import time
+import logging
+
+logging.basicConfig(
+    filename='erap_worker_legacy.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPWorkerLegacyEngine:
+    def __init__(self, worker_id, enterprise_id):
+        self.worker_id = worker_id
+        self.enterprise_id = enterprise_id
+
+    def evaluate_and_issue_legacy_sonod(self, tenure_years, productivity_score, ethics_score, skill_growth_met):
+        """
+        Evaluates the worker's tenure, contribution, and ethical conduct.
+        If criteria are met, transitions them from temporary exile to a 
+        Certified Sovereign Legacy with a Graded Sonod for national development.
+        """
+        print(f"\n[WORKER-{self.worker_id}] Evaluating Sovereign Legacy & Certification...")
+
+        # Calculation of overall career contribution grade
+        composite_score = (productivity_score * 0.4) + (ethics_score * 0.4) + (min(tenure_years * 10, 20) * 0.2)
+
+        if composite_score >= 80.0 and skill_growth_met:
+            grade = "Grade-A Sovereign Infrastructure Specialist"
+            logging.info(f"Worker {self.worker_id} successfully graduated with {grade}.")
+            print(f"[WORKER-{self.worker_id}] STATUS: CERTIFIED WITH HONORS.")
+            print(f" > Legacy Status: Proven contribution recorded permanently.")
+            print(f" > Issued Sonod: {grade}")
+            print(f" > Action: Empowered to return home with dignity to serve nation/family.")
+            return True, grade
+        else:
+            grade = "Pending Development / Review"
+            logging.warning(f"Worker {self.worker_id} requires further skill growth or ethical alignment before certification.")
+            print(f"[WORKER-{self.worker_id}] STATUS: DEVELOPMENT IN PROGRESS. Target metrics not fully met.")
+            return False, grade
+
+# Test Execution of Worker Legacy Protocol
+if __name__ == "__main__":
+    legacy_engine = ERAPWorkerLegacyEngine(worker_id="WRK-8840-DOHA", enterprise_id="DOHA-MEGA-PROJ-01")
+    
+    # Simulating evaluation for a dedicated workforce member
+    legacy_engine.evaluate_and_issue_legacy_sonod(
+        tenure_years=3.5,
+        productivity_score=90.0,
+        ethics_score=92.0,
+        skill_growth_met=True
+    )
