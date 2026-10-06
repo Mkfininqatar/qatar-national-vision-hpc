@@ -1807,3 +1807,111 @@ if __name__ == "__main__":
         resilience_active=True,    # Self-correcting loop active
         dic_met=True               # Fully aligned with November DIC cycle standard
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Master Telemetry & Compliance Engine (Points 1 to 15)
+Purpose: Unified execution script for real-time hardware telemetry recovery, 
+         sovereign compliance, supervisory oversight, and moral/ethical validation.
+"""
+
+import time
+import logging
+
+# Configure Master Audit Logging
+logging.basicConfig(
+    filename='erap_master_audit.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPMasterEngine:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+        self.is_system_stable = True
+
+    def run_complete_evaluation(self, metrics):
+        """
+        Executes the entire 15-point ERAP evaluation suite.
+        If any point fails, it marks the exact violation and engages the restoration loop.
+        """
+        print(f"\n[{self.enterprise_id}] === RUNNING ERAP MASTER 15-POINT EVALUATION ===")
+        violations = []
+
+        # --- POINTS 1 TO 5: Foundation, Subsidies, Analog, Audits, Transactionalism ---
+        if not metrics.get("gov_comp", True):
+            violations.append("Point 1: Constitutional/Administrative Alignment Breach")
+        if metrics.get("sub_rec", False) and not metrics.get("audit_passed", True):
+            violations.append("Point 2: Sovereign Subsidy Misuse Without Audit")
+        if metrics.get("manual_rep", False):
+            violations.append("Point 3: Analog Bottleneck / Missing Digital Tracking")
+        if not metrics.get("rev_sub", True) or not metrics.get("eco_val", True):
+            violations.append("Point 4: Mandatory Annual Performance Audit Missing")
+        if metrics.get("greed_idx", 0.0) > 30.0:
+            violations.append("Point 5: Rootless Transactional Mindset Detected")
+
+        # --- POINTS 6 TO 10: Supervisory, Reputation, Ownership, Mindset, Feedback ---
+        if metrics.get("sup_negligence", False):
+            violations.append("Point 6: Supervisory Negligence / Oversight Gap")
+        if metrics.get("rep_risk", 0.0) > 20.0:
+            violations.append("Point 7: National Reputation Risk Threshold Exceeded")
+        if not metrics.get("own_align", True):
+            violations.append("Point 8: Sovereign Ownership Misalignment")
+        if metrics.get("empathy_score", 0.0) > 25.0:
+            violations.append("Point 9: Weak Human Mindset / Empathy Deficit")
+        if not metrics.get("feedback_active", True):
+            violations.append("Point 10: Real-time Feedback Channels Inactive")
+
+        # --- POINTS 11 TO 15: Citizen Mandate, Attik-Bondon, Telemetry, Resilience, DIC ---
+        if metrics.get("growth_idx", 100.0) < 80.0:
+            violations.append("Point 11: 'No Citizen Left Behind' Mandate Breach")
+        if metrics.get("bonding_score", 100.0) < 75.0:
+            violations.append("Point 12: Insufficient Attik-Bondon / Ethical Bonding")
+        if metrics.get("hw_anomaly", False) or metrics.get("telemetry_breach", False):
+            violations.append("Point 13: Socio-Constitutional Telemetry Failure")
+        if not metrics.get("resilience_active", True):
+            violations.append("Point 14: Systemic Resilience Loop Inactive")
+        if not metrics.get("dic_met", True):
+            violations.append("Point 15: November DIC Application Cycle Standard Not Met")
+
+        # --- EVALUATION RESULT & MARKING ---
+        if violations:
+            self.is_system_stable = False
+            print(f"[{self.enterprise_id}] STATUS: POLICY BREACH MARKED ({len(violations)} violations found).")
+            for v in violations:
+                logging.error(f"[{self.enterprise_id}] VIOLATION MARKED -> {v}")
+                print(>   - {v})
+            print(f"[{self.enterprise_id}] ACTION: Engaging Automated Restoration & Penalty Loop...")
+            return False
+        else:
+            self.is_system_stable = True
+            logging.info(f"[{self.enterprise_id}] All 15 ERAP points verified successfully. System stable.")
+            print(f"[{self.enterprise_id}] STATUS: ALL 15 POINTS COMPLIANT. System Equilibrium Maintained.")
+            return True
+
+# Master execution test
+if __name__ == "__main__":
+    master_engine = ERAPMasterEngine(enterprise_id="DOHA-MASTER-NODE-01")
+    
+    # Test dataset representing a fully compliant state
+    test_metrics = {
+        "gov_comp": True,
+        "sub_rec": True,
+        "audit_passed": True,
+        "manual_rep": False,
+        "rev_sub": True,
+        "eco_val": True,
+        "greed_idx": 12.0,
+        "sup_negligence": False,
+        "rep_risk": 5.0,
+        "own_align": True,
+        "empathy_score": 10.0,
+        "feedback_active": True,
+        "growth_idx": 92.0,
+        "bonding_score": 88.0,
+        "hw_anomaly": False,
+        "telemetry_breach": False,
+        "resilience_active": True,
+        "dic_met": True
+    }
+    
+    master_engine.run_complete_evaluation(test_metrics)
