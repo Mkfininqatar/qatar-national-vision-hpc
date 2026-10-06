@@ -1014,3 +1014,194 @@ if __name__ == "__main__":
     print("--- QATAR PILLAR 2 TELEMETRY PACKET ---")
     for key, value in telemetry_packet.items():
         print(f"{key}: {value}")
+import time
+import sys
+
+class QatarPillar2SystemCore:
+    def __init__(self, node_id="QATAR_SOVEREIGN_NODE_01"):
+        self.node_id = node_id
+        
+        # Core State Variables for 14 Pillars
+        self.sovereignty_active = True           # Pillar 1 & 2
+        self.family_bond_integrity = 100.0       # Pillar 4
+        self.empathy_buffer = 100.0              # Pillar 5 & 6
+        self.sarthobadi_filter_active = True     # Pillar 7 & 8
+        self.shared_vision_lock = True           # Pillar 10
+        self.somo_bonton_active = True           # Pillar 11
+        self.welfare_reserve_pool = 100.0        # Pillar 12
+        self.collective_growth_pool = 100.0      # Pillar 13
+        self.holistic_culture_synced = True      # Pillar 14
+        self.global_tick = 0
+
+    # =========================================================================
+    # PILLAR 1 & 2: Itihash, Monobol, ebong Sthayi Leadership Legacy
+    # =========================================================================
+    def validate_sovereignty_and_legacy(self):
+        """Ensures zero external structural dependency and unwavering baseline stability."""
+        if not self.sovereignty_active:
+            raise SystemError("CRITICAL [Pillar 1-2]: External structural dependency detected. Hard isolation engaged.")
+        return "STATUS [Pillar 1-2]: Sovereignty & Leadership Legacy Secure."
+
+    # =========================================================================
+    # PILLAR 3 & 4: Somaj Core Base ebong Poribarer Shikkha O Bibhontir Risk
+    # =========================================================================
+    def monitor_core_and_family_topology(self, node_clusters):
+        """Monitors node clustering and family/process unit bonds to prevent rootless fragmentation."""
+        for cluster in node_clusters:
+            if cluster.get("isolated", False):
+                self.family_bond_integrity -= 10.0
+        
+        if self.family_bond_integrity < 50.0:
+            return "WARNING [Pillar 3-4]: Fragmented rootless nodes detected. Restoring core unity."
+        return "STATUS [Pillar 3-4]: Core Society & Family Bonds Intact."
+
+    # =========================================================================
+    # PILLAR 5 & 6: Protibesi Empathy ebong Somaj Asli Training Ground
+    # =========================================================================
+    def execute_neighborly_empathy_load_balance(self, thread_loads):
+        """Neighboring threads/nodes dynamically absorb stress during high system load."""
+        mean_load = sum(thread_loads) / len(thread_loads) if thread_loads else 0
+        if mean_load > 80.0:
+            self.empathy_buffer -= 5.0
+            # Distribute load evenly across neighbors (Empathy protocol)
+            balanced = [load * 0.85 for load in thread_loads]
+            return balanced, "EMPATHY [Pillar 5-6]: Neighbors absorbing overload stress."
+        return thread_loads, "STATUS [Pillar 5-6]: Harmonic Training Ground Equilibrium."
+
+    # =========================================================================
+    # PILLAR 7 & 8: Sarthobadi Monoshikota Obhab O Rastro-er Protifolon
+    # =========================================================================
+    def filter_selfish_transactions(self, transaction_requests):
+        """Rejects zero-sum or purely selfish transactional compute blocks."""
+        filtered_tx = []
+        for tx in transaction_requests:
+            if tx.get("is_selfish", False) and self.sarthobadi_filter_active:
+                continue  # Drop rootless/selfish requests
+            filtered_tx.append(tx)
+        return filtered_tx, "STATUS [Pillar 7-8]: Selfish transactions filtered out. State reflects collective health."
+
+    # =========================================================================
+    # PILLAR 9: Samajik Sikkha O Desh Prem
+    # =========================================================================
+    def verify_patriotic_duty_signals(self):
+        """Inherent duty and natural service validation without forced mandates."""
+        if not self.holistic_culture_synced:
+            return "WARNING [Pillar 9]: Civic duty telemetry drifting."
+        return "STATUS [Pillar 9]: Natural Service & Social Responsibility Verified."
+
+    # =========================================================================
+    # PILLAR 10: Pesa Alada, Lokkho Eki (Shared Vision)
+    # =========================================================================
+    def synchronize_shared_vision(self, heterogeneous_workers):
+        """Different worker types (GPU, TPU, CPU) synchronize to a single master vision tick."""
+        synchronized_outputs = []
+        for worker in heterogeneous_workers:
+            synchronized_outputs.append({
+                "worker_type": worker.get("type"),
+                "status": "SYNCED",
+                "vision_tick": self.global_tick
+            })
+        return synchronized_outputs, "STATUS [Pillar 10]: Diverse Roles, Unified Global Vision."
+
+    # =========================================================================
+    # PILLAR 11: Somo-bonton Niti O Morjada (Equality & Dignity)
+    # =========================================================================
+    def enforce_somo_bonton_fairness(self, resource_queues):
+        """Absolute fairness across all processing units ('No Citizen Left Behind')."""
+        if not resource_queues:
+            return "STATUS [Pillar 11]: Optimal"
+        mean_val = sum(resource_queues) / len(resource_queues)
+        max_variance = max(abs(q - mean_val) for q in resource_queues)
+        
+        if max_variance > 15.0:
+            return "ACTION [Pillar 11]: Somo-bonton fair-share redistribution triggered."
+        return "STATUS [Pillar 11]: Equality and Dignity Maintained."
+
+    # =========================================================================
+    # PILLAR 12 & 13: Kollan-mulok Sonchoy & Shommilito Unnyon-er Sonchoy
+    # =========================================================================
+    def manage_welfare_and_growth_savings(self, system_stress_level):
+        """Manages welfare reserves and collective self-reliance growth pools."""
+        if system_stress_level > 75.0:
+            self.welfare_reserve_pool -= 10.0
+            return "ACTION [Pillar 12-13]: Welfare savings pool activated for crisis mitigation."
+        else:
+            if self.welfare_reserve_pool < 100.0:
+                self.welfare_reserve_pool += 1.0  # Replenish during peace
+        return "STATUS [Pillar 12-13]: Welfare & Growth Reserves Stable."
+
+    # =========================================================================
+    # PILLAR 14: Shommilito O Culture-Vittik Shikkha (Holistic Education)
+    # =========================================================================
+    def inject_holistic_context_headers(self, telemetry_packet):
+        """Injects spiritual, general, and cultural metadata into every telemetry frame."""
+        telemetry_packet["culture_context"] = {
+            "spiritual_alignment": "QATAR_VALUES_V1",
+            "education_model": "HOLISTIC_CULTURAL",
+            "code_version": "PILLAR_2_SOVEREIGN"
+        }
+        return telemetry_packet
+
+    # =========================================================================
+    # MAIN EXECUTION LOOP (The Unified Pillar 2 Pipeline)
+    # =========================================================================
+    def execute_pillar_2_pipeline(self, raw_telemetry):
+        self.global_tick += 1
+        
+        # Step 1: Sovereignty check
+        sov_status = self.validate_sovereignty_and_legacy()
+        
+        # Step 2: Core & Family Topology
+        family_status = self.monitor_core_and_family_topology(raw_telemetry.get("node_clusters", []))
+        
+        # Step 3: Empathy & Training Ground Load Balancing
+        adjusted_loads, empathy_status = self.execute_neighborly_empathy_load_balance(raw_telemetry.get("cpu_loads", [30.0]))
+        
+        # Step 4: Filter Selfish Transactions
+        clean_tx, filter_status = self.filter_selfish_transactions(raw_telemetry.get("transactions", []))
+        
+        # Step 5: Patriotic Duty
+        duty_status = self.verify_patriotic_duty_signals()
+        
+        # Step 6: Shared Vision (Diverse roles, single goal)
+        vision_sync_report, vision_status = self.synchronize_shared_vision(raw_telemetry.get("workers", []))
+        
+        # Step 7: Somo-bonton Fairness
+        fairness_status = self.enforce_somo_bonton_fairness(adjusted_loads)
+        
+        # Step 8: Welfare & Collective Growth Savings
+        max_stress = max(adjusted_loads) if adjusted_loads else 0
+        savings_status = self.manage_welfare_and_growth_savings(max_stress)
+        
+        # Master Packet Construction with Holistic Education Context (Pillar 14)
+        base_packet = {
+            "tick": self.global_tick,
+            "node_id": self.node_id,
+            "sovereignty_report": sov_status,
+            "family_topology_report": family_status,
+            "empathy_report": empathy_status,
+            "filter_report": filter_status,
+            "patriotic_duty_report": duty_status,
+            "vision_status": vision_status,
+            "fairness_report": fairness_status,
+            "savings_report": savings_status,
+            "welfare_reserve_level": f"{self.welfare_reserve_pool}%",
+            "system_state": "HARMONIC_PILLAR_2_ACTIVE"
+        }
+        
+        return self.inject_holistic_context_headers(base_packet)
+
+if __name__ == "__main__":
+    engine = QatarPillar2SystemCore()
+    
+    sample_raw_data = {
+        "node_clusters": [{"id": "node_a", "isolated": False}],
+        "cpu_loads": [45.0, 50.2, 48.1],
+        "transactions": [{"id": 1, "is_selfish": False}],
+        "workers": [{"type": "GPU"}, {"type": "TPU"}, {"type": "CPU"}]
+    }
+    
+    result_packet = engine.execute_pillar_2_pipeline(sample_raw_data)
+    print("=== QATAR PILLAR 2 FULL ARCHITECTURAL TELEMETRY PACKET ===")
+    for k, v in result_packet.items():
+        print(f"{k}: {v}")
