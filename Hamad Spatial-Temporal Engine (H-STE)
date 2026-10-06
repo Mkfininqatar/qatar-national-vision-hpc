@@ -1717,3 +1717,93 @@ if __name__ == "__main__":
         empathy_score=12.0,       # Low empathy deficit score
         feedback_active=True      # Real-time feedback channels open
     )
+"""
+Module: h_ste_core.py
+Engine: ERAP Core Validation - Points 11 to 15
+Purpose: Enforces the 'No Citizen Left Behind' mandate, spiritual & ethical bonding,
+         automated socio-constitutional telemetry validation, systemic resilience, 
+         and November DIC application cycle compliance.
+"""
+
+import time
+import logging
+
+# Configure audit logging for ERAP points 11-15
+logging.basicConfig(
+    filename='erap_points_11_15_audit.log',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+class ERAPCorePoints11To15:
+    def __init__(self, enterprise_id):
+        self.enterprise_id = enterprise_id
+
+    def enforce_point_11_citizen_mandate(self, inclusive_growth_index):
+        """Point 11: 'No Citizen Left Behind' Mandate"""
+        # Threshold: inclusive growth / welfare index must be maintained above 80.0
+        if inclusive_growth_index < 80.0:
+            logging.error(f"[{self.enterprise_id}] Point 11 Failed: Inclusive growth below threshold (Index: {inclusive_growth_index}).")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 11 Passed: 'No Citizen Left Behind' mandate fully enforced.")
+        return True
+
+    def validate_point_12_attik_bondon(self, spiritual_bonding_score):
+        """Point 12: Spiritual and Ethical Bonding (Attik-Bondon)"""
+        if spiritual_bonding_score < 75.0:
+            logging.error(f"[{self.enterprise_id}] Point 12 Failed: Insufficient Attik-Bondon / moral respect score ({spiritual_bonding_score}).")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 12 Passed: Spiritual and ethical bonding active.")
+        return True
+
+    def execute_point_13_telemetry_validation(self, telemetry_breach_detected):
+        """Point 13: Automated Socio-Constitutional Validation (h_ste_core.py)"""
+        if telemetry_breach_detected:
+            logging.error(f"[{self.enterprise_id}] Point 13 Failed: Automated telemetry detected socio-constitutional policy breach.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 13 Passed: Telemetry engine state is stable and compliant.")
+        return True
+
+    def maintain_point_14_systemic_resilience(self, self_correcting_loop_active):
+        """Point 14: Systemic Resilience & Equilibrium"""
+        if not self_correcting_loop_active:
+            logging.error(f"[{self.enterprise_id}] Point 14 Failed: Self-correcting resilience loop inactive.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 14 Passed: Systemic resilience and market equilibrium verified.")
+        return True
+
+    def verify_point_15_dic_integration(self, november_dic_standard_met):
+        """Point 15: DIC Application Cycle Integration"""
+        if not november_dic_standard_met:
+            logging.error(f"[{self.enterprise_id}] Point 15 Failed: Failed to meet non-negotiable standards for November DIC cycle.")
+            return False
+        logging.info(f"[{self.enterprise_id}] Point 15 Passed: Successfully integrated into November DIC application cycle.")
+        return True
+
+    def execute_evaluation(self, growth_idx, bonding_score, breach_detected, resilience_active, dic_met):
+        """Executes verification across Points 11 through 15."""
+        print(f"[{self.enterprise_id}] Running ERAP Points 11-15 Compliance Checks...")
+        
+        p11 = self.enforce_point_11_citizen_mandate(growth_idx)
+        p12 = self.validate_point_12_attik_bondon(bonding_score)
+        p13 = self.execute_point_13_telemetry_validation(breach_detected)
+        p14 = self.maintain_point_14_systemic_resilience(resilience_active)
+        p15 = self.verify_point_15_dic_integration(dic_met)
+        
+        if all([p11, p12, p13, p14, p15]):
+            print(f"[{self.enterprise_id}] Result: ALL POINTS 11-15 COMPLIANT. Protocol fully executed.")
+            return True
+        else:
+            print(f"[{self.enterprise_id}] Result: COMPLIANCE BREACH IN POINTS 11-15. Execution halted/corrected.")
+            return False
+
+# Execution test for Points 11-15
+if __name__ == "__main__":
+    validator = ERAPCorePoints11To15(enterprise_id="DOHA-MEGA-PROJ-01")
+    validator.execute_evaluation(
+        growth_idx=88.5,           # High inclusive growth index
+        bonding_score=85.0,        # Strong Attik-Bondon moral score
+        breach_detected=False,     # No telemetry policy breaches
+        resilience_active=True,    # Self-correcting loop active
+        dic_met=True               # Fully aligned with November DIC cycle standard
+    )
