@@ -182,3 +182,42 @@ qc_status = qc_monitor.simulate_qc_phase(corporate_interference_introduced=False
 
 for key, value in qc_status.items():
     print(f"{key.replace('_', ' ').title()}: {value}")
+class TelemetryEnergyEngine:
+    """
+    Simulates the infant heart rate telemetry and fluid viscosity calibration,
+    ensuring that nutritional density matches real-time metabolic capacity.
+    """
+    def __init__(self, heart_rate_bpm: float = 140.0, feed_viscosity_cp: float = 15.0):
+        self.heart_rate_bpm = heart_rate_bpm
+        self.feed_viscosity_cp = feed_viscosity_cp
+        # Optimal viscosity range scales proportionally with heart rate
+        self.optimal_viscosity_target = self.heart_rate_bpm * 0.105
+
+    def evaluate_telemetry_sync(self) -> dict:
+        """
+        Calculates the synchronization index between feed density (viscosity) 
+        and the infant's master clock (heart rate).
+        """
+        viscosity_variance = abs(self.feed_viscosity_cp - self.optimal_viscosity_target)
+        sync_score = max(0.0, 100.0 - (viscosity_variance * 5.0))
+        
+        if sync_score < 75.0:
+            rejection_status = "Active Firewall: Viscosity mismatch detected. Rejection / Vomiting triggered."
+        else:
+            rejection_status = "Harmonic Flow: Perfect metabolic and fluid synchronization."
+
+        return {
+            "stage": "Heart Rate & Viscosity Telemetry",
+            "heart_rate_bpm": self.heart_rate_bpm,
+            "feed_viscosity_cp": self.feed_viscosity_cp,
+            "target_optimal_viscosity": round(self.optimal_viscosity_target, 2),
+            "telemetry_sync_percentage": round(sync_score, 2),
+            "digestive_response": rejection_status
+        }
+
+# Execution of Step 4 Telemetry Check
+telemetry_engine = TelemetryEnergyEngine(heart_rate_bpm=142.0, feed_viscosity_cp=15.5)
+telemetry_status = telemetry_engine.evaluate_telemetry_sync()
+
+for key, value in telemetry_status.items():
+    print(f"{key.replace('_', ' ').title()}: {value}")
