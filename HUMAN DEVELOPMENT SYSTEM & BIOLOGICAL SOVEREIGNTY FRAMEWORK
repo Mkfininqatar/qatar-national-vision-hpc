@@ -106,3 +106,44 @@ telemetry_status = fetal_sanctuary.monitor_cellular_growth(environmental_pulse=1
 
 for key, value in telemetry_status.items():
     print(f"{key.replace('_', ' ').title()}: {value}")
+class BirthTransitionTelemetry:
+    """
+    Simulates the infant's transition from the in-utero safety tube 
+    to the outer environment, tracking medical interventions and stomach defense responses.
+    """
+    def __init__(self, c_section_flag: bool = False, antibiotics_administered: bool = False):
+        self.c_section_flag = c_section_flag
+        self.antibiotics_administered = antibiotics_administered
+        self.microbiome_integrity = 100.0 if not antibiotics_administered else 65.0
+        self.stomach_defense_active = True
+
+    def evaluate_transition_shock(self, feed_type: str) -> dict:
+        """
+        Evaluates the infant's digestive and immunological response 
+        to initial feeding after birth.
+        """
+        rejection_risk = 0.0
+        if self.antibiotics_administered:
+            rejection_risk += 25.0
+            
+        if feed_type.lower() == "synthetic_formula":
+            rejection_risk += 50.0
+            status_message = "High rejection risk: Stomach firewall triggered (Vomiting/Digestive stress)"
+        else:
+            status_message = "Optimal synchronization with maternal biological output"
+
+        return {
+            "stage": "Birth & Outer World Transition",
+            "medical_intervention_detected": self.c_section_flag or self.antibiotics_administered,
+            "microbiome_integrity_percentage": self.microbiome_integrity,
+            "feed_type": feed_type,
+            "rejection_risk_score": min(rejection_risk, 100.0),
+            "defense_status": status_message
+        }
+
+# Execution of Step 2 Telemetry Check
+transition_monitor = BirthTransitionTelemetry(c_section_flag=True, antibiotics_administered=True)
+transition_status = transition_monitor.evaluate_transition_shock(feed_type="synthetic_formula")
+
+for key, value in transition_status.items():
+    print(f"{key.replace('_', ' ').title()}: {value}")
