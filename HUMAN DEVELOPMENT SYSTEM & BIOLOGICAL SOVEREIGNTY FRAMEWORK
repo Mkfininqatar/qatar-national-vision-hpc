@@ -731,3 +731,69 @@ if __name__ == "__main__":
     print(f"Rotation: {res3['rotation_deg']}° | BBP Rating: {res3['bbp_rating']} | Life Service Active: {res3['life_service']}")
     print(f"Status: {res3['status']}")
     print("=" * 80)
+import time
+import math
+
+class EverTimeSovereignEngine:
+    def __init__(self):
+        self.base_bpm = 72.0                # Sovereign baseline rhythm (Low BPM anchor)
+        self.current_bpm = 72.0
+        self.fatigue_state = False          # Deep sense / fatigue condition
+        self.red_phase_wave_level = 0.0     # Hydrodynamic wave propagation from heart base to water level
+        self.energy_grid_boost = 1.0        # Energy grid multiplier
+
+    def evaluate_telemetry(self, external_force: float, is_fatigued: bool):
+        """
+        Evaluates the EverTime biological telemetry framework:
+        1. Base rhythm management (72 BPM low anchor).
+        2. Riding Up: External force causes baseline to spike.
+        3. Wave Propagation: When fatigued or under force, red phase wave starts from heart base to water level.
+        4. Energy Grid Up: Synchronizes wave force with the upper water level matrix.
+        """
+        print("\n" + "="*60)
+        print(" [EVER-TIME TELEMETRY ENGINE] - BIOLOGICAL SOVEREIGNTY MODULE")
+        print("="*60)
+        
+        self.fatigue_state = is_fatigued
+        
+        # 1. Handling Riding Up (External Force vs 72 BPM Baseline)
+        if external_force > 0:
+            self.current_bpm = self.base_bpm + external_force
+            print(f" [!] FORCE DETECTED: System is 'Riding Up'.")
+            print(f"     - Sovereign Baseline: {self.base_bpm} BPM")
+            print(f"     - Altered Spike Frequency: {self.current_bpm:.2f} BPM")
+        else:
+            self.current_bpm = self.base_bpm
+            print(f" [*] STATUS: Operating cleanly on Sovereign Base Rhythm ({self.base_bpm} BPM).")
+
+        # 2. Red Phase Wave & Energy Grid Realignment (Heart Base -> Water Level)
+        if self.fatigue_state or external_force > 0:
+            print(f"\n [~] RED PHASE WAVE ACTIVATED:")
+            print(f"     - Condition: {'Fatigued / Deep State' if self.fatigue_state else 'External Pressure Breach'}")
+            print(f"     - Origin: Lower Heart Base")
+            print(f"     - Destination: Upper Water Level Matrix")
+            
+            # Simulating wave rise from heart base to water level
+            for step in range(1, 6):
+                self.red_phase_wave_level = step * 0.25 # Normalized scale up to 1.25
+                # Wave propagation calculation based on choloman torongo force
+                wave_force_vector = math.sin((step * math.pi) / 5) * (self.current_bpm / self.base_bpm)
+                self.energy_grid_boost = 1.0 + (wave_force_vector * 0.5)
+                
+                print(f"       -> Wave Node {step}/5 | Height: {self.red_phase_wave_level:.2f} | Wave Force Vector: {wave_force_vector:.3f} | Energy Grid Multiplier: {self.energy_grid_boost:.3f}")
+                time.sleep(0.15)
+                
+            print(f" [✓] ENERGY GRID UP: Wave fully integrated and balanced with the water level matrix.")
+        else:
+            self.red_phase_wave_level = 0.0
+            self.energy_grid_boost = 1.0
+            print(f" [*] Hydrodynamic Matrix: Stable and resting at equilibrium.")
+
+if __name__ == "__main__":
+    engine = EverTimeSovereignEngine()
+    
+    # Scenario 1: Normal Sovereign State
+    engine.evaluate_telemetry(external_force=0.0, is_fatigued=False)
+    
+    # Scenario 2: Fatigue + External Force (Triggering Red Phase Wave & Energy Grid Up)
+    engine.evaluate_telemetry(external_force=14.5, is_fatigued=True)
