@@ -306,3 +306,166 @@
 
 </body>
 </html>
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# DATA & SYSTEM ARCHITECTURE DEFINITION
+# ---------------------------------------------------------
+# Control Hub Dependency Breakdown
+data_dependencies = {
+    "Component": [
+        "Satellite Downlink (LEO/GPS)",
+        "Co-pilot AI Signal Processing",
+        "Unit 8200 Telemetry Feed",
+        "Global Cloud Backbone",
+        "Local Physical Utilities (Power/Water)"
+    ],
+    "Dependency Level (%)": [95, 90, 85, 88, 100],
+    "Vulnerability Category": [
+        "Signal Interception / Jamming",
+        "Data Packet Isolation",
+        "Internal Quarantine (Red Ring)",
+        "Outbound Routing Block",
+        "Physical Infrastructure Fail"
+    ]
+}
+
+df_dep = pd.DataFrame(data_dependencies)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Strategic Signal Architecture Analysis"
+
+# ---------------------------------------------------------
+# LAYOUT DESIGN
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#0b0f19',
+    'color': '#f3f4f6',
+    'fontFamily': 'Arial, sans-serif',
+    'padding': '20px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("⚠️ Strategic Signal Architecture & Control Hub Dashboard", 
+                style={'color': '#ef4444', 'marginBottom': '5px'}),
+        html.P("Theoretical framework analyzing digital signal pathways, AI co-pilot telemetry, and quarantine perimeters.",
+               style={'color': '#9ca3af'})
+    ], style={'borderBottom': '1px solid #1f2937', 'paddingBottom': '15px'}),
+
+    # Main Metrics Grid
+    html.Div([
+        html.Div([
+            html.H4("🌐 Global Signal Flow", style={'color': '#3b82f6'}),
+            html.H2("HIGH DEPENDENCY", style={'color': '#fbbf24'}),
+            html.P("Relies 90%+ on unbroken external telemetry.")
+        ], style={'backgroundColor': '#111827', 'padding': '15px', 'borderRadius': '8px', 'width': '30%'}),
+
+        html.Div([
+            html.H4("🧠 Co-pilot AI Status", style={'color': '#3b82f6'}),
+            html.H2("VULNERABLE", style={'color': '#ef4444'}),
+            html.P("Zero-predictability if data packets are refused.")
+        ], style={'backgroundColor': '#111827', 'padding': '15px', 'borderRadius': '8px', 'width': '30%'}),
+
+        html.Div([
+            html.H4("🛡️ Isolation Perimeter", style={'color': '#3b82f6'}),
+            html.H2("RED RING ACTIVE", style={'color': '#10b981'}),
+            html.P("Simulating complete signal quarantine.")
+        ], style={'backgroundColor': '#111827', 'padding': '15px', 'borderRadius': '8px', 'width': '30%'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '20px'}),
+
+    # Interactive Controls & Charts
+    html.Div([
+        html.Div([
+            html.H3("🚨 Network Dependency Analysis", style={'color': '#f97316'}),
+            dcc.Graph(id='bar-chart-vulnerability')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🛰️ Signal Routing Topology", style={'color': '#f97316'}),
+            dcc.Graph(id='network-topology')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '20px'}),
+
+    # Red Ring Control Simulation
+    html.Div([
+        html.H3("🔴 Simulation: Red Ring Signal Blockade Level", style={'color': '#ef4444'}),
+        dcc.Slider(
+            id='blockade-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=0,
+            marks={i: f'{i}% Blocked' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='blockade-status-output', style={'marginTop': '20px', 'fontSize': '18px', 'fontWeight': 'bold'})
+    ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'marginTop': '20px'})
+])
+
+# ---------------------------------------------------------
+# CALLBACKS & INTERACTIVITY
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-vulnerability', 'figure'),
+     Output('network-topology', 'figure'),
+     Output('blockade-status-output', 'children')],
+    [Input('blockade-slider', 'value')]
+)
+def update_dashboard(blockade_level):
+    # 1. Bar Chart Update
+    fig_bar = px.bar(
+        df_dep, 
+        x="Dependency Level (%)", 
+        y="Component", 
+        color="Vulnerability Category",
+        orientation='h',
+        template="plotly_dark",
+        title="Infrastructure Vulnerability Index"
+    )
+    fig_bar.update_layout(paper_bgcolor='#111827', plot_bgcolor='#111827')
+
+    # 2. Topology Diagram Update
+    nodes_x = [0, 1, 2, 1]
+    nodes_y = [1, 2, 1, 0]
+    node_names = ["Satellite (LEO)", "Control Hub (Unit 8200)", "Global Server", "Co-pilot AI Feed"]
+    
+    # Color logic based on blockade
+    color = "#ef4444" if blockade_level > 50 else "#3b82f6"
+
+    fig_topo = go.Figure()
+    fig_topo.add_trace(go.Scatter(
+        x=nodes_x, y=nodes_y,
+        mode='markers+text',
+        marker=dict(size=[30, 45, 30, 35], color=color),
+        text=node_names,
+        textposition="top center"
+    ))
+    fig_topo.update_layout(
+        template="plotly_dark",
+        paper_bgcolor='#111827',
+        plot_bgcolor='#111827',
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)
+    )
+
+    # 3. Text Status Update
+    if blockade_level == 0:
+        status_text = "🟢 STATUS: Normal Signal Flow. Control Hub receiving full data."
+    elif blockade_level < 80:
+        status_text = f"🟡 WARNING: {blockade_level}% Data Packets Refused. AI Targeting delayed."
+    else:
+        status_text = f"🔴 CRITICAL: {blockade_level}% Red Ring Enforced. Control Hub is BLIND & DEAF."
+
+    return fig_bar, fig_topo, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8050)
