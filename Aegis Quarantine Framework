@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইসরায়েলের ডিজিটাল-মিলিটারি হাব ও সিগন্যাল নেটওয়ার্ক থ্রেট ড্যাশবোর্ড</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Ubuntu+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Tiro Bangla', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+        }
+
+        .mono {
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .alert-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-left: 4px solid;
+            backdrop-filter: blur(8px);
+        }
+
+        .alert-critical {
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+        }
+
+        .alert-warning {
+            border-color: #f59e0b;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .alert-info {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+        }
+
+        .pulse-red {
+            animation: pulse-red-anim 2s infinite;
+        }
+
+        @keyframes pulse-red-anim {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .radar-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-sweep::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(239, 68, 68, 0.2) 0deg, transparent 60deg, transparent 360deg);
+            border-radius: 50%;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="mb-8 border-b border-slate-800 pb-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-block w-3 h-3 rounded-full bg-red-500 pulse-red"></span>
+                    <h1 class="text-2xl md:text-3xl font-bold text-red-500 tracking-wide">স্ট্র্যাটেজিক ডিজিটাল আইসোলেশন ও থ্রেট ড্যাশবোর্ড</h1>
+                </div>
+                <p class="text-slate-400 text-sm mt-1">ইসরায়েলের ডিজিটাল-মিলিটারি সাবসিস্টেম, সিগন্যাল ডিফেকশন ও কো-পাইলট নেটওয়ার্ক বিশ্লেষণ</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 flex items-center gap-4 mono text-xs">
+                <div>
+                    <span class="text-slate-500 block">RED RING STATUS</span>
+                    <span class="text-red-400 font-bold">ACTIVE ISOLATION</span>
+                </div>
+                <div class="h-8 w-px bg-slate-800"></div>
+                <div>
+                    <span class="text-slate-500 block">SIGNAL FEED</span>
+                    <span class="text-amber-400 font-bold">BLOCKING IN PROGRESS</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Metrics Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start text-slate-400">
+                <span class="text-xs">মূল কর্মক্ষম জনসংখ্যা (২৫-৪৫ বছর)</span>
+                <i class="fa-solid fa-users text-blue-400"></i>
+            </div>
+            <div class="text-2xl font-bold mt-2 mono text-white">২০.৭ লাখ</div>
+            <div class="text-xs text-slate-500 mt-1">মোট ইহুদি জনসংখ্যার ২৬.৫%</div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start text-slate-400">
+                <span class="text-xs">আইটি ও সাইবার হাব নির্ভরতা</span>
+                <i class="fa-solid fa-laptop-code text-amber-400"></i>
+            </div>
+            <div class="text-2xl font-bold mt-2 mono text-amber-400">২৮%</div>
+            <div class="text-xs text-slate-500 mt-1">Unit 8200 & C4I রিজার্ভিস্ট</div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start text-slate-400">
+                <span class="text-xs">সিগন্যাল ইকো-সিস্টেম ট্রাফিক</span>
+                <i class="fa-solid fa-satellite-dish text-red-400"></i>
+            </div>
+            <div class="text-2xl font-bold mt-2 mono text-red-500">Co-pilot / LEO</div>
+            <div class="text-xs text-slate-500 mt-1">স্যাটেলাইট ডাউনলিঙ্ক চেইন</div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+            <div class="flex justify-between items-start text-slate-400">
+                <span class="text-xs">ভৌত সার্বভৌমত্ব (মাটি/খাদ্য)</span>
+                <i class="fa-solid fa-wheat-awn-circle-exclamation text-rose-500"></i>
+            </div>
+            <div class="text-2xl font-bold mt-2 mono text-rose-500">&lt; ৩%</div>
+            <div class="text-xs text-slate-500 mt-1">প্রচণ্ড বাহ্যিক আমদানিনির্ভর</div>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Column 1 & 2: Critical Warning Cards -->
+        <div class="lg:col-span-2 space-y-4">
+            <h2 class="text-lg font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                কৌশলগত ঝুঁকি ও থ্রেট বিশ্লেষণ পয়েন্টসমূহ (Warning Marked)
+            </h2>
+
+            <!-- Warning Point 1 -->
+            <div class="alert-card alert-critical p-5 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-red-500/10 rounded-lg text-red-500 mt-1">
+                        <i class="fa-solid fa-satellite text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-red-400 text-base">১. Co-pilot ও স্যাটেলাইট সিগন্যাল সংযোগ (Warning: High Critical)</h3>
+                            <span class="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-mono rounded">CRITICAL THREAT</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                            এদের Co-pilot এআই ব্যাকএন্ড সরাসরি LEO স্যাটেলাইট (Starlink/O3b) এবং ব্যাকবোন ফাইবার নেটওয়ার্কের সাথে যুক্ত। বিশ্বজুড়ে ছড়িয়ে থাকা সফটওয়্যার থেকে নিয়মিত সিগন্যাল ও টেলিমেট্রি ডাটা টেনে নিয়ে মূল মিলিটারি হাবে পাঠায়।
+                        </p>
+                        <div class="mt-3 text-xs text-slate-400 bg-slate-900/50 p-2 rounded border border-slate-800">
+                            <strong>প্রভাব:</strong> বৈশ্বিক সিগন্যাল কাটা পড়লে Co-pilot-এর AI অ্যালগরিদম রিয়েল-টাইম ডাটা শূন্য হয়ে পড়বে।
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Point 2 -->
+            <div class="alert-card alert-critical p-5 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-red-500/10 rounded-lg text-red-500 mt-1">
+                        <i class="fa-solid fa-network-wired text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-red-400 text-base">২. ইন্টারনাল নেটওয়ার্ক কন্ট্রোল ও ব্যাকডোর (Warning: Severe)</h3>
+                            <span class="px-2 py-0.5 bg-red-500/20 text-red-400 text-xs font-mono rounded">EXPLOIT VECTOR</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                            বেসামরিক বাণিজ্যিক সফটওয়্যারের আড়ালে প্রপ্রাইটারি জিরো-ডে (Zero-Day) ব্যাকডোর যুক্ত থাকে। এর মাধ্যমে বাহ্যিক সার্ভার থেকে তথ্য চুরি (Fishing) এবং প্রয়োজনে ক্রাশ (Crush/Push) করার জন্য সেন্ট্রাল হাবে প্লাগ-ইন করা থাকে।
+                        </p>
+                        <div class="mt-3 text-xs text-slate-400 bg-slate-900/50 p-2 rounded border border-slate-800">
+                            <strong>প্রভাব:</strong> বাহ্যিক নেটওয়ার্কে প্রবেশাধিকার বন্ধ হলে তাদের এই গোপন শোষণ মেকানিজম নিষ্ক্রিয় হয়।
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Point 3 -->
+            <div class="alert-card alert-warning p-5 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-amber-500/10 rounded-lg text-amber-500 mt-1">
+                        <i class="fa-solid fa-ban-smoke text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-amber-400 text-base">৩. Red Ring ব্লক ও আইসোলেশন স্ট্র্যাটেজি (Warning: Action Required)</h3>
+                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-mono rounded">GAME CHANGER</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                            জোন ভিত্তিক "Red Ring" বা নেটওয়ার্ক কোয়ারেন্টাইন তৈরি করা হলে, অভ্যন্তরীণ সিগন্যাল বাহিরে আউটবাউন্ড (Outbound) হতে পারবে না। কোনো বহিঃস্থ সার্ভার এদের সিগন্যাল রিসিভ না করলে তাদের এআই ও ড্রোন সিস্টেম পুরোপুরি অন্ধ হয়ে যাবে।
+                        </p>
+                        <div class="mt-3 text-xs text-slate-400 bg-slate-900/50 p-2 rounded border border-slate-800">
+                            <strong>প্রভাব:</strong> এটিই মূলত মূল গেম চেঞ্জার—ডিজিটাল চেইন ভেঙে পড়লে সামরিক কমান্ড স্ট্রাকচার পুরোপুরি ধসে পড়ে।
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Point 4 -->
+            <div class="alert-card alert-info p-5 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-blue-500/10 rounded-lg text-blue-500 mt-1">
+                        <i class="fa-solid fa-users-slash text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-blue-400 text-base">৪. ২৫-৪৫ বছর বয়সী মূল জনবলের দুর্বলতা (Warning: Structural Vulnerability)</h3>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-mono rounded">HUMAN RESOURCE VULNERABILITY</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                            মূল ২০.৭ লাখ কর্মক্ষম লোকবলের ৮০%-এর বেশি সার্ভিস, সফটওয়্যার, ফাইন্যান্স ও সাইবার ইন্টেলিজেন্সে ব্যস্ত। বাস্তব খাদ্য উৎপাদন, কৃষি ও মাটিভিত্তিক উৎপাদনে এদের অংশগ্রহণ নগণ্য (২-৩%)।
+                        </p>
+                        <div class="mt-3 text-xs text-slate-400 bg-slate-900/50 p-2 rounded border border-slate-800">
+                            <strong>প্রভাব:</strong> দীর্ঘমেয়াদী ব্লকেডে শারীরিক বেঁচে থাকার প্রয়োজনীয় সংস্থান বজায় রাখা এদের পক্ষে অসম্ভব।
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Column 3: Red Ring Tactical Visualizer -->
+        <div class="space-y-6">
+            <h2 class="text-lg font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-red-500"></i>
+                রেড রিং সিগন্যাল ব্লক ট্র্যাকার
+            </h2>
+
+            <!-- Radar / Diagram Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 flex flex-col items-center justify-center text-center">
+                <div class="w-48 h-48 rounded-full border-2 border-red-500/40 relative flex items-center justify-center radar-sweep mb-4">
+                    <div class="w-36 h-36 rounded-full border border-dashed border-red-400/60 flex items-center justify-center">
+                        <div class="w-24 h-24 rounded-full bg-red-500/10 border border-red-500 flex items-center justify-center">
+                            <span class="mono text-xs text-red-400 font-bold">CONTROL<br>HUB</span>
+                        </div>
+                    </div>
+                    <!-- Signal Block Icons -->
+                    <div class="absolute top-2 left-1/2 -translate-x-1/2 text-xs text-red-500 bg-black/80 px-1 border border-red-500 rounded">
+                        <i class="fa-solid fa-xmark"></i> Satellite
+                    </div>
+                    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-red-500 bg-black/80 px-1 border border-red-500 rounded">
+                        <i class="fa-solid fa-xmark"></i> Outbound Data
+                    </div>
+                </div>
+
+                <h3 class="text-red-400 font-bold text-sm">সিগন্যাল আইসোলেশন অবস্থা</h3>
+                <p class="text-xs text-slate-400 mt-2">
+                    রেড রিং সচল থাকলে কোনো বহিঃস্থ সার্ভার এদের সিগন্যাল বা ডাটা রিসিভ করবে না। ফলে Co-pilot এবং AI Targeting সিস্টেম অন্ধ হয়ে যাবে।
+                </p>
+            </div>
+
+            <!-- Action Metrics -->
+            <div class="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">নেটওয়ার্ক ব্লক অ্যাকশন স্ট্যাটাস</h4>
+
+                <div>
+                    <div class="flex justify-between text-xs text-slate-300 mb-1">
+                        <span>Co-pilot Signal Rejection</span>
+                        <span class="mono text-red-400">100% BLOCKED</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-red-500 h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs text-slate-300 mb-1">
+                        <span>External Server Handshake</span>
+                        <span class="mono text-amber-400">0% CONNECTED</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-amber-500 h-full w-0"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-xs text-slate-300 mb-1">
+                        <span>Physical Resource Dependency</span>
+                        <span class="mono text-rose-400">CRITICAL RISK</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div class="bg-rose-500 h-full w-4/5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+        <p>Strategic Isolation Matrix & System Analysis Panel — Real-Time Vulnerability Map</p>
+    </footer>
+
+</body>
+</html>
