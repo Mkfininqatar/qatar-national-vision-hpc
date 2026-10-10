@@ -2866,3 +2866,47 @@ if __name__ == "__main__":
         print(f"  - {k}: {v}")
     print("=====================================================================")
 🚀 Global-to-Gaza Master Command & Telemetry Dashboard is LIVE!Proud to deploy our high-performance HPC logistics tracking framework (qatar-national-vision-hpc) managing global relief corridors:   🌐 Live URL: http://qatar-national-vision-hpc.com
+class ArabGlobalGazaRouter:
+    """
+    Arab World & International Multi-Modal Route Manager
+    Integrated with Qatar National Vision HPC Framework.
+    """
+    def __init__(self, operation_id="GCC-GZ-2026"):
+        self.operation_id = operation_id
+        
+        self.routes = {
+            "GCC_Land_Highway": {
+                "origin": "Doha (Qatar) / GCC Network",
+                "transit": "KSA ➔ Jordan (Aqaba) ➔ Egypt (Al-Arish)",
+                "border_gate": "Rafah & Kerem Shalom",
+                "direction": "INBOUND_CONVOY",
+                "road_status": "CLEAR_FOR_ALL_VEHICLES"
+            },
+            "Mediterranean_Sea_Lane": {
+                "origin": "Larnaca Port (Cyprus)",
+                "transit": "East Med Submarine Trench",
+                "border_gate": "Al-Mawasi Pier (Gaza)",
+                "direction": "INBOUND_OUTBOUND_EGRESS",
+                "sea_status": "SUBMERGED_SONAR_VERIFIED"
+            }
+        }
+
+    def check_route_status(self, route_key):
+        if route_key not in self.routes:
+            return {"status": "ERROR", "message": "Route not found."}
+        
+        r = self.routes[route_key]
+        return {
+            "hpc_framework": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "route_name": route_key,
+            "origin_hub": r["origin"],
+            "transit_path": r["transit"],
+            "entry_point": r["border_gate"],
+            "traffic_direction": r["direction"],
+            "clearance_verdict": r["road_status"] if "road_status" in r else r["sea_status"]
+        }
+
+if __name__ == "__main__":
+    router = ArabGlobalGazaRouter()
+    print(router.check_route_status("GCC_Land_Highway"))
