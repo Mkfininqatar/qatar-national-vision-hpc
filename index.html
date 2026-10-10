@@ -5079,3 +5079,210 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global-to-Gaza Unified Master Command & Infrastructure Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --panel-bg: rgba(11, 24, 43, 0.92);
+            --border-color: #00ffcc;
+            --accent-green: #00ff66;
+            --accent-cyan: #00ffff;
+            --accent-orange: #ffaa00;
+            --accent-purple: #ff00ff;
+            --accent-yellow: #ffff00;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; overflow-x: hidden; }
+        
+        header { text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; background: linear-gradient(90deg, rgba(138,10,35,0.4), rgba(11,24,43,0.95)); border-radius: 6px; }
+        header h1 { color: var(--accent-cyan); font-size: 1.3rem; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: var(--text-dim); font-size: 0.75rem; margin-top: 5px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 1024px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; box-shadow: 0 0 15px rgba(0,255,204,0.12); }
+        .panel h2 { font-size: 0.85rem; color: var(--accent-green); margin-bottom: 8px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px; text-transform: uppercase; }
+
+        .card { background: rgba(0,0,0,0.6); border-left: 3px solid var(--accent-cyan); padding: 8px; margin-bottom: 8px; font-size: 0.75rem; }
+        .card.drone { border-left-color: var(--accent-purple); }
+        .card.sat { border-left-color: var(--accent-orange); }
+        .card.power { border-left-color: var(--accent-yellow); }
+        .card.clearing { border-left-color: #ff3300; }
+
+        .card b { color: var(--accent-cyan); }
+        .status-badge { display: inline-block; padding: 2px 5px; font-size: 0.65rem; border-radius: 3px; background: rgba(0,255,102,0.2); color: var(--accent-green); border: 1px solid var(--accent-green); margin-top: 4px; }
+
+        .map-container { position: relative; width: 100%; height: 180px; background: #02060c; border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .terminal-box { background: #000; color: var(--accent-green); padding: 8px; font-size: 0.7rem; height: 140px; overflow-y: scroll; border: 1px solid #1a3a3a; border-radius: 4px; margin-top: 10px; }
+        
+        .footer-note { text-align: center; margin-top: 15px; font-size: 0.7rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>UNIFIED MASTER COMMAND & GAZA REBUILD DASHBOARD</h1>
+        <p>Framework: qatar-national-vision-hpc | Domain: http://qatar-national-vision-hpc.com/ | GitHub: Mkfininqatar</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Panel 1: Global Hubs & Highway Corridors -->
+        <div class="panel">
+            <h2>🌍 Global Hubs & Highways</h2>
+            <div class="card">
+                <b>Doha & Cyprus Hubs</b><br>
+                Hamad Port & Larnaca Maritime Gateway.<br>
+                <span class="status-badge">GATEWAYS: ONLINE</span>
+            </div>
+            <div class="card">
+                <b>Internal Highway Corridors</b><br>
+                Salah al-Din & Al-Rashid Coastal Trunk.<br>
+                <span class="status-badge">TRAFFIC: OPTIMIZED</span>
+            </div>
+            <div class="card">
+                <b>Border Gateways</b><br>
+                Rafah, Kerem Shalom & Erez Crossings.<br>
+                <span class="status-badge">GATEWAYS: SECURED</span>
+            </div>
+        </div>
+
+        <!-- Panel 2: Satellite, Telecom & Fiber Optic -->
+        <div class="panel">
+            <h2>📡 Satellite & Fiber Network</h2>
+            <div class="card sat">
+                <b>QATARSAT-HPC-01 & Auto RF</b><br>
+                UHF/VHF + 35.5 kHz Sonar Echo Ping.<br>
+                <span class="status-badge">RF SYNC: ACTIVE</span>
+            </div>
+            <div class="card">
+                <b>Submarine & Terrestrial Fiber</b><br>
+                Larnaca-to-Mawasi cable & Branch Drop Lines.<br>
+                <span class="status-badge">FIBER: HIGH-SPEED</span>
+            </div>
+            <div class="card">
+                <b>Free Telecom & Live Broadcast</b><br>
+                Solar tower relays & Mobile app sync.<br>
+                <span class="status-badge">COMMUNICATION: LIVE</span>
+            </div>
+        </div>
+
+        <!-- Panel 3: Debris Clearance & Heavy Fleet -->
+        <div class="panel">
+            <h2>🚜 Heavy Fleet & Debris Clearance</h2>
+            <div class="card clearing">
+                <b>Spine Clearance Fleet</b><br>
+                Heavy Bulldozers & 360-degree Excavators.<br>
+                <span class="status-badge" style="background:rgba(255,51,0,0.2); color:#ff3300; border-color:#ff3300;">HIGHWAY CLEARING</span>
+            </div>
+            <div class="card drone">
+                <b>Drone GPS Co-Pilot</b><br>
+                HPC-AERO-SCOUT-X1 RTK Precision Escort.<br>
+                <span class="status-badge">PATH GUIDANCE: LOCK</span>
+            </div>
+            <div class="card">
+                <b>Recycling Staging Hubs</b><br>
+                Coastal waste processing & sorting zones.<br>
+                <span class="status-badge">PROCESSING: READY</span>
+            </div>
+        </div>
+
+        <!-- Panel 4: Emergency Power Grid & Radar Visualizer -->
+        <div class="panel">
+            <h2>⚡ Power Grid & Live Radar</h2>
+            <div class="card power">
+                <b>Modular Solar Supply</b><br>
+                Hospital & Telecom load balancing units.<br>
+                <span class="status-badge" style="background:rgba(255,255,0,0.2); color:#ffff00; border-color:#ffff00;">SOLAR: 100% STABLE</span>
+            </div>
+            <div class="map-container">
+                <canvas id="unifiedRadar" width="220" height="170"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Telemetry Log -->
+    <div class="panel" style="margin-top: 15px;">
+        <h2>💻 Unified HPC Telemetry Stream & System Logs</h2>
+        <div class="terminal-box" id="unifiedTerminal">
+            [00:00:01] BOOT COMPLETE: Master Blueprint Architecture online. All modules synced.<br>
+            [00:00:02] HIGHWAY CLEARANCE: Bulldozer Fleet Alpha clearing Salah al-Din north route.<br>
+            [00:00:03] FIBER NETWORK: Armored subsea fiber ping back to Cyprus Hub -> 0ms loss.<br>
+            [00:00:04] POWER GRID: Solar storage array charging hospital emergency backup.<br>
+            [00:00:05] TELECOM & BROADCAST: Satellite backhaul streaming live news feed.
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Unified Master System &copy; 2026 | Qatar National Vision HPC Framework
+    </div>
+
+    <script>
+        // Radar Animation
+        const canvas = document.getElementById('unifiedRadar');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function renderRadar() {
+            ctx.fillStyle = '#02060c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            ctx.strokeStyle = '#003333';
+            ctx.lineWidth = 1;
+            [25, 50, 75].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * 75, cy + Math.sin(angle) * 75);
+            ctx.stroke();
+
+            const x = cx + Math.cos(-angle) * 35;
+            const y = cy + Math.sin(-angle) * 35;
+            ctx.fillStyle = '#ff00ff';
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            angle += 0.04;
+            requestAnimationFrame(renderRadar);
+        }
+        renderRadar();
+
+        // Dynamic Terminal Stream
+        setInterval(() => {
+            const term = document.getElementById('unifiedTerminal');
+            const time = new Date().toTimeString().split(' ')[0];
+            const logs = [
+                `[${time}] DEBRIS CLEARANCE: Obstacle cleared near Khan Yunis branch route.`,
+                `[${time}] DRONE COPILOT: RTK precision updated for convoy escort #7.`,
+                `[${time}] SATELLITE COMM: QATARSAT-HPC-01 backhaul operating at full throughput.`,
+                `[${time}] SOLAR POWER: Grid load balanced across central relief posts.`
+            ];
+            const log = logs[Math.floor(Math.random() * logs.length)];
+            term.innerHTML += `<br>${log}`;
+            term.scrollTop = term.scrollHeight;
+        }, 3000);
+    </script>
+</body>
+</html>
