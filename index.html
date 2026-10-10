@@ -2190,3 +2190,367 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Gaza - Global Airport Terminal Network</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --panel-bg: #161b26;
+            --card-bg: #1f293d;
+            --border-color: #2d3b55;
+            --accent-gold: #fbbf24;
+            --accent-qatar: #8a1538;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --text-main: #e2e8f0;
+            --text-bright: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--panel-bg);
+            padding: 20px 40px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            color: var(--text-bright);
+        }
+
+        .ref-badge {
+            background-color: var(--accent-gold);
+            color: #000;
+            padding: 5px 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--accent-gold);
+            font-size: 20px;
+        }
+
+        .section-header p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* TERMINAL SHOWCASE GRID */
+        .terminal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .terminal-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .terminal-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-blue);
+        }
+
+        .terminal-card.qatar-hub {
+            border: 2px solid var(--accent-qatar);
+            background: linear-gradient(180deg, var(--card-bg) 0%, #2a111a 100%);
+        }
+
+        .terminal-header {
+            padding: 15px 20px;
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-card.qatar-hub .terminal-header {
+            background-color: rgba(138, 21, 56, 0.3);
+        }
+
+        .terminal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: var(--text-bright);
+        }
+
+        .flag-tag {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            background-color: #334155;
+            color: #fff;
+        }
+
+        .qatar-tag {
+            background-color: var(--accent-qatar);
+            color: #fff;
+        }
+
+        .terminal-body {
+            padding: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #94a3b8;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: var(--text-bright);
+        }
+
+        .status-active {
+            color: var(--accent-green);
+        }
+
+        .status-free {
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--panel-bg);
+            border-top: 1px solid var(--border-color);
+            font-size: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sovereign Gaza Master Blueprint</h1>
+        <div class="ref-badge">GLOBAL TERMINAL NETWORK & LIVE TRANSIT</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="section-header">
+            <h2>🛫 1. Global Volunteer Main Airport Terminal Network</h2>
+            <p>গাজা পুনর্গঠন ও প্রযুক্তি টিমের আন্তর্জাতিক যাতায়াতের প্রধান এয়ারপোর্ট টার্মিনাল হাবসমূহ</p>
+        </div>
+
+        <div class="terminal-grid">
+            
+            <!-- QATAR TERMINAL -->
+            <div class="terminal-card qatar-hub">
+                <div class="terminal-header">
+                    <h3>🇶🇦 Hamad Int'l Airport (DOH)</h3>
+                    <span class="flag-tag qatar-tag">MAIN HUB</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Terminal 1 (Gate A/B)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Sovereign Airfare:</span>
+                        <span class="info-value status-free">100% Free (Qatar Airways)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">HT-Visa Desk:</span>
+                        <span class="info-value status-active">Fast-Track Active</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Cargo Duty:</span>
+                        <span class="info-value">0% Duty Exemption</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BANGLADESH TERMINAL -->
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <h3>🇧🇩 Hazrat Shahjalal Int'l (DAC)</h3>
+                    <span class="flag-tag">SOUTH ASIA HUB</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Terminal 3 (Int'l)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Volunteer Registry:</span>
+                        <span class="info-value">Software & Civil Team</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">HT-Visa Pass:</span>
+                        <span class="info-value status-active">Sync Approved</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Transit Connection:</span>
+                        <span class="info-value">DOH / CAI Corridor</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KSA TERMINAL -->
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <h3>🇸🇦 King Khalid Int'l (RUH)</h3>
+                    <span class="flag-tag">GCC REGIONAL HUB</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Terminal 1 & 2</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Sovereign Subsidy:</span>
+                        <span class="info-value status-free">Saudia CSR Pass</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">HT-Visa Desk:</span>
+                        <span class="info-value status-active">Active</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Cargo Duty:</span>
+                        <span class="info-value">0% Custom Clearance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EGYPT TRANSIT TERMINAL -->
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <h3>🇪🇬 Cairo Int'l Airport (CAI)</h3>
+                    <span class="flag-tag">OVERLAND GATEWAY</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Terminal 3 (Hall 4)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Primary Route:</span>
+                        <span class="info-value">R-01 (Rafah Corridor)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Transit Point:</span>
+                        <span class="info-value status-active">Al-Arish Logistic Hub</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Security Escort:</span>
+                        <span class="info-value">UN/OIC Coordinated</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TURKEY TERMINAL -->
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <h3>🇹🇷 Istanbul Airport (IST)</h3>
+                    <span class="flag-tag">EUROPE/ASIA HUB</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Main Int'l Terminal</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Airfare Subsidy:</span>
+                        <span class="info-value status-free">THY Travel Allowance</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">HT-Visa Pass:</span>
+                        <span class="info-value status-active">Active</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Corridor Access:</span>
+                        <span class="info-value">Larnaca / Cairo Route</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UK TERMINAL -->
+            <div class="terminal-card">
+                <div class="terminal-header">
+                    <h3>🇬🇧 London Heathrow (LHR)</h3>
+                    <span class="flag-tag">EUROPEAN HUB</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="info-row">
+                        <span class="info-label">Terminal:</span>
+                        <span class="info-value">Terminal 2 & 5</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Volunteer Registry:</span>
+                        <span class="info-value">Medical & Environmental</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">HT-Visa Clearance:</span>
+                        <span class="info-value status-active">Approved</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Financial Corridor:</span>
+                        <span class="info-value">Zero Banking Remittance Fee</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        Sovereign Gaza Master Blueprint &copy; 2026 | Global Terminal Alignment & Telemetry
+    </footer>
+
+</body>
+</html>
