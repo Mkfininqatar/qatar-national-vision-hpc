@@ -199,3 +199,174 @@ if __name__ == "__main__":
     print("📡 [4] NETWORK SELF-HEALING ROUTER:")
     print(json.dumps(network_status, indent=2))
     print("\n=========================================================")
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
+
+# ---------------------------------------------------------
+# PHASE 1 PIPELINE TELEMETRY DATA
+# ---------------------------------------------------------
+pipeline_nodes_data = {
+    "Module": [
+        "Food: MREs & Rations",
+        "Food: Grain & Bakery Hubs",
+        "Water: Solar Desalination",
+        "Water: Tanker Distribution",
+        "Medical: Field Hospitals & ICU",
+        "Medical: Mobile Clinics"
+    ],
+    "Category": ["Food Security", "Food Security", "Water & Sanitation", "Water & Sanitation", "Medical Support", "Medical Support"],
+    "Supply Flow Rate (%)": [92, 85, 95, 88, 90, 84],
+    "Operational Status": ["ACTIVE", "ACTIVE", "STABLE", "ACTIVE", "PRIORITY", "DEPLOYED"],
+    "Daily Target (Units)": [50000, 30000, 100000, 80000, 2000, 5000]
+}
+
+df_pipeline = pd.DataFrame(pipeline_nodes_data)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Phase 1 Emergency Pipeline Network Dashboard"
+
+# ---------------------------------------------------------
+# UI LAYOUT (EMERGENCY TOPOLOGY THEME)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#0b0f19', # Deep dark network grid background
+    'color': '#f8fafc',
+    'fontFamily': 'Segoe UI, Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header Section
+    html.Div([
+        html.H1("🚨 PHASE 1: EMERGENCY HUMANITARIAN PIPELINE DASHBOARD", 
+                style={'color': '#10b981', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Live Telemetry & Network Monitoring: Food, Water & Emergency Healthcare Distribution",
+               style={'color': '#94a3b8', 'fontSize': '15px'})
+    ], style={'borderBottom': '1px solid #1e293b', 'paddingBottom': '15px'}),
+
+    # Key Status Indicators
+    html.Div([
+        html.Div([
+            html.H4("🍲 Food Pipeline", style={'color': '#f59e0b', 'margin': '0 0 5px 0'}),
+            html.H2("88.5% ACTIVE", style={'color': '#f59e0b', 'margin': '0 0 5px 0'}),
+            html.P("Rations & Bakery Hubs Operational", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1e1b4b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #f59e0b'}),
+
+        html.Div([
+            html.H4("💧 Clean Water Network", style={'color': '#38bdf8', 'margin': '0 0 5px 0'}),
+            html.H2("91.5% STABLE", style={'color': '#38bdf8', 'margin': '0 0 5px 0'}),
+            html.P("Solar Desalination & Tankers Active", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1e1b4b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #38bdf8'}),
+
+        html.Div([
+            html.H4("🏥 Healthcare Infrastructure", style={'color': '#ef4444', 'margin': '0 0 5px 0'}),
+            html.H2("87.0% DEPLOYED", style={'color': '#ef4444', 'margin': '0 0 5px 0'}),
+            html.P("Trauma Care & Field ICU Online", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1e1b4b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #ef4444'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Visualizations Section
+    html.Div([
+        # Bar Chart for Modules Flow
+        html.Div([
+            html.H3("📊 Supply Pipeline Flow Rate by Module", style={'color': '#10b981'}),
+            dcc.Graph(id='bar-chart-pipeline')
+        ], style={'backgroundColor': '#182232', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        # Sunburst / Network Distribution Chart
+        html.Div([
+            html.H3("🌐 Resource Category Allocation", style={'color': '#10b981'}),
+            dcc.Graph(id='pie-chart-pipeline')
+        ], style={'backgroundColor': '#182232', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Live Interactive Controls
+    html.Div([
+        html.H3("🎛️ Network Throughput Simulation Control", style={'color': '#10b981'}),
+        html.P("Adjust overall logistics capacity to monitor emergency dispatch readiness:", style={'color': '#cbd5e1'}),
+        dcc.Slider(
+            id='pipeline-slider',
+            min=0,
+            max=100,
+            step=5,
+            value=90,
+            marks={i: f'{i}% Capacity' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='pipeline-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '14px', 
+            'backgroundColor': '#0b0f19', 
+            'borderRadius': '6px', 
+            'textAlign': 'center',
+            'border': '1px solid #10b981'
+        })
+    ], style={'backgroundColor': '#182232', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# CALLBACK LOGIC
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-pipeline', 'figure'),
+     Output('pie-chart-pipeline', 'figure'),
+     Output('pipeline-status-output', 'children')],
+    [Input('pipeline-slider', 'value')]
+)
+def update_dashboard(slider_value):
+    # Dynamic update based on slider
+    df_updated = df_pipeline.copy()
+    df_updated["Supply Flow Rate (%)"] = (df_updated["Supply Flow Rate (%)"] * (slider_value / 100.0)).round(1)
+
+    # Bar Chart Visual
+    fig_bar = px.bar(
+        df_updated, 
+        x="Supply Flow Rate (%)", 
+        y="Module", 
+        color="Category",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_map={
+            "Food Security": "#f59e0b",
+            "Water & Sanitation": "#38bdf8",
+            "Medical Support": "#ef4444"
+        }
+    )
+    fig_bar.update_layout(paper_bgcolor='#182232', plot_bgcolor='#182232', font=dict(color='#f8fafc'))
+
+    # Pie Chart Visual
+    fig_pie = px.pie(
+        df_updated,
+        values="Daily Target (Units)",
+        names="Category",
+        color="Category",
+        hole=0.4,
+        template="plotly_dark",
+        color_discrete_map={
+            "Food Security": "#f59e0b",
+            "Water & Sanitation": "#38bdf8",
+            "Medical Support": "#ef4444"
+        }
+    )
+    fig_pie.update_layout(paper_bgcolor='#182232', plot_bgcolor='#182232', font=dict(color='#f8fafc'))
+
+    # Status Message Logic
+    if slider_value >= 80:
+        status_msg = f"🟢 OPTIMAL PIPELINE FLOW ({slider_value}%): All food, clean water, and field hospitals receiving direct supply."
+    elif slider_value >= 50:
+        status_msg = f"🟡 CONGESTION ALERT ({slider_value}%): Supply bottlenecks detected. Prioritizing emergency medical & water tankers."
+    else:
+        status_msg = f"🔴 CRITICAL DISRUPTION ({slider_value}%): Flow rate insufficient. Re-routing through secondary micro-distribution nodes."
+
+    return fig_bar, fig_pie, status_msg
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8070)
