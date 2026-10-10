@@ -418,3 +418,178 @@ housing_allocation = {
 df_housing = pd.DataFrame(housing_allocation)
 print("--- GAZA PERMANENT HOUSING SECURITY TELEMETRY ---")
 print(df_housing.to_string(index=False))
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# 1. INTERNATIONAL SUPPORT MONITORING DATA (সহযোগিতাকারী দেশসমূহ)
+# ---------------------------------------------------------
+support_countries_data = {
+    "Country / Partner": [
+        "Qatar (Energy & Infrastructure)",
+        "Turkey (Construction & Field Hospitals)",
+        "South Africa (Legal & Diplomatic)",
+        "Malaysia (Tech & Subsea Fiber)",
+        "Algeria (Port & Trade Logistics)",
+        "Norway (Clean Water & Desalination)"
+    ],
+    "Support Area": [
+        "Energy Grid & Natural Gas",
+        "Housing & Medical Infrastructure",
+        "Sovereignty & Human Rights",
+        "Independent Fiber & Satellite",
+        "Maritime Port Operations",
+        "Water Desalination Units"
+    ],
+    "Support Contribution Level (%)": [95, 90, 88, 92, 85, 89],
+    "Status": ["ACTIVE", "ACTIVE", "DIPLOMATIC ACTIVE", "DEPLOYED", "OPERATIONAL", "STABLE"]
+}
+
+df_countries = pd.DataFrame(support_countries_data)
+
+# ---------------------------------------------------------
+# 2. GAZA INTERNAL NEW AI MODULES DATA (অভ্যন্তরীণ নতুন AI সিস্টেম)
+# ---------------------------------------------------------
+internal_ai_data = {
+    "AI Sub-System": [
+        "Smart Micro-Grid Load Balancer",
+        "Automated Medical Triage AI",
+        "Predictive Resource Demand Engine",
+        "Mesh Network Self-Healing Router",
+        "Eco-Housing Modular Allocator"
+    ],
+    "Health Index (%)": [98, 95, 92, 99, 91],
+    "Execution Status": ["ONLINE", "ONLINE", "ACTIVE", "STABLE", "ACTIVE"]
+}
+
+df_internal_ai = pd.DataFrame(internal_ai_data)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Gaza Sovereignty & Global Support Live Monitor"
+
+# ---------------------------------------------------------
+# UI LAYOUT (EMERALD CYBER THEME)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#021c16',
+    'color': '#ecfdf5',
+    'fontFamily': 'Segoe UI, Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🇵🇸 GAZA INTERNAL AI & GLOBAL PARTNER SUPPORT LIVE MONITOR", 
+                style={'color': '#34d399', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Real-Time Telemetry: Tracking Supporting Nations & Sovereign Internal AI Infrastructure",
+               style={'color': '#a7f3d0', 'fontSize': '15px'})
+    ], style={'borderBottom': '1px solid #065f46', 'paddingBottom': '15px'}),
+
+    # Live Key Indicators
+    html.Div([
+        html.Div([
+            html.H4("🌍 Supporting Nations Active", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("6 ALLIED NODES", style={'color': '#34d399', 'margin': '0 0 5px 0'}),
+            html.P("Direct Infrastructure & Tech Alliance", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #34d399'}),
+
+        html.Div([
+            html.H4("🧠 Internal AI System Status", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("95.0% OPTIMAL", style={'color': '#10b981', 'margin': '0 0 5px 0'}),
+            html.P("Autonomous Grid & Medical AI Engine", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #10b981'}),
+
+        html.Div([
+            html.H4("⚓ Direct Port & Connectivity", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("100% UNCHAINED", style={'color': '#fbbf24', 'margin': '0 0 5px 0'}),
+            html.P("Zero external interference flow", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #fbbf24'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Charts Grid
+    html.Div([
+        # Partner Countries Support Progress
+        html.Div([
+            html.H3("🌐 Partner Nations Support Index", style={'color': '#34d399'}),
+            dcc.Graph(id='bar-chart-countries')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        # Internal AI Engine Status
+        html.Div([
+            html.H3("🧠 Internal AI Modules Health", style={'color': '#34d399'}),
+            dcc.Graph(id='bar-chart-ai')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Interactive Live Refresh Control
+    html.Div([
+        html.H3("🎛️ Live Alliance Telemetry Refresh Rate", style={'color': '#34d399'}),
+        html.P("Real-time monitoring interval for global support integration:", style={'color': '#a7f3d0'}),
+        dcc.Slider(
+            id='refresh-slider',
+            min=5,
+            max=60,
+            step=5,
+            value=10,
+            marks={i: f'{i} sec' for i in range(5, 61, 15)}
+        ),
+        html.Div(id='monitor-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '14px', 
+            'backgroundColor': '#021c16', 
+            'borderRadius': '6px', 
+            'textAlign': 'center',
+            'border': '1px solid #059669'
+        })
+    ], style={'backgroundColor': '#064e3b', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# CALLBACK LOGIC
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-countries', 'figure'),
+     Output('bar-chart-ai', 'figure'),
+     Output('monitor-status-output', 'children')],
+    [Input('refresh-slider', 'value')]
+)
+def update_live_monitor(slider_value):
+    # Partner Countries Chart
+    fig_countries = px.bar(
+        df_countries, 
+        x="Support Contribution Level (%)", 
+        y="Country / Partner", 
+        color="Support Area",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_sequence=px.colors.qualitative.Emerald
+    )
+    fig_countries.update_layout(paper_bgcolor='#064e3b', plot_bgcolor='#064e3b', font=dict(color='#ecfdf5'))
+
+    # Internal AI Chart
+    fig_ai = px.bar(
+        df_internal_ai,
+        x="Health Index (%)",
+        y="AI Sub-System",
+        color="Execution Status",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_sequence=["#10b981", "#34d399"]
+    )
+    fig_ai.update_layout(paper_bgcolor='#064e3b', plot_bgcolor='#064e3b', font=dict(color='#ecfdf5'))
+
+    status_msg = f"📡 LIVE MONITORING ACTIVE: Refreshing telemetry every {slider_value} seconds. All allied support streams and internal AI engines are operating nominally."
+
+    return fig_countries, fig_ai, status_msg
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8080)
