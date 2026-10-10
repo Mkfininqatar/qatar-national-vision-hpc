@@ -1028,3 +1028,302 @@ app.layout = html.Div(style={
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8052)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Gaza Master Blueprint - Documentary & Network Grid</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS & JS for Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; border-radius: 0.75rem; }
+        .glow { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        .glow-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <i data-lucide="globe" class="w-8 h-8 text-emerald-400"></i>
+            <div>
+                <h1 class="text-xl font-bold tracking-wider text-slate-100">SOVEREIGN GAZA <span class="text-emerald-400">BLUEPRINT</span></h1>
+                <p class="text-xs text-slate-400">Documentary & Global Telemetry Network Grid • Status: Active</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4 text-xs font-mono">
+            <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-emerald-400">HPC / Digital Twin Online</span>
+            </div>
+            <div class="bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 text-slate-300">
+                Oct 10, 2026
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-8">
+
+        <!-- Top Metrics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-4 glow">
+                <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-lg">
+                    <i data-lucide="send" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Outreach Sent</p>
+                    <h3 class="text-2xl font-bold text-white">7/7 Verified</h3>
+                    <p class="text-xs text-emerald-400">100% Delivery Rate</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-4 glow-blue">
+                <div class="p-3 bg-blue-500/10 text-blue-400 rounded-lg">
+                    <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">HPC Latency</p>
+                    <h3 class="text-2xl font-bold text-white">12.4 ms</h3>
+                    <p class="text-xs text-blue-400">Telemetry Sync Active</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-4">
+                <div class="p-3 bg-purple-500/10 text-purple-400 rounded-lg">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Nodes Connected</p>
+                    <h3 class="text-2xl font-bold text-white">6 Global Hubs</h3>
+                    <p class="text-xs text-purple-400">White House, Qatar, KSA, EU</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl flex items-center space-x-4">
+                <div class="p-3 bg-amber-500/10 text-amber-400 rounded-lg">
+                    <i data-lucide="zap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Grid Autonomous</p>
+                    <h3 class="text-2xl font-bold text-white">Solar/Water/Med</h3>
+                    <p class="text-xs text-amber-400">Phase 1 Reconstruction</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Network Grid Map Section -->
+        <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="network" class="text-emerald-400"></i>
+                        Global Telemetry & Alliance Network Grid
+                    </h2>
+                    <p class="text-xs text-slate-400">Real-time routing map connecting Gaza Digital Twin Core with Global Diplomatic & Tech Nodes.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="focusNode(31.35, 34.30)" class="text-xs px-3 py-1.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/40 rounded-lg hover:bg-emerald-600/30 transition">Focus Gaza Core</button>
+                    <button onclick="resetView()" class="text-xs px-3 py-1.5 bg-slate-800 text-slate-300 border border-slate-700 rounded-lg hover:bg-slate-700 transition">Global View</button>
+                </div>
+            </div>
+
+            <!-- Leaflet Map Container -->
+            <div id="map" class="z-10"></div>
+        </section>
+
+        <!-- Documentary & Log Journal Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Timeline Documentary (2 Columns) -->
+            <section class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="film" class="text-amber-400"></i>
+                        Documentary Chronicle: Sovereign Gaza Master Blueprint
+                    </h2>
+                    <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2.5 py-1 rounded-md">Live Executive Log</span>
+                </div>
+
+                <!-- Storyline Entries -->
+                <div class="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-slate-800">
+
+                    <!-- Chapter 1 -->
+                    <div class="relative pl-8 space-y-1">
+                        <span class="absolute left-0 top-1 w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 text-xs">01</span>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-white">Strategic Foundation & Visionary Guidance</h3>
+                            <span class="text-xs text-slate-500 font-mono">Initiation</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Under the strategic vision of <strong>HH Sheikh Tamim bin Hamad Al Thani</strong> and <strong>Father Amir Sheikh Hamad bin Khalifa Al Thani</strong>, technical architect Abdul Majeed spearheaded the deployment of an autonomous infrastructure framework designed for Gaza’s reconstruction using Digital Twin and High-Performance Computing (HPC).
+                        </p>
+                    </div>
+
+                    <!-- Chapter 2 -->
+                    <div class="relative pl-8 space-y-1">
+                        <span class="absolute left-0 top-1 w-7 h-7 rounded-full bg-blue-500/20 border border-blue-400 flex items-center justify-center text-blue-400 text-xs">02</span>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-white">Three-Tier Architecture Deployment</h3>
+                            <span class="text-xs text-slate-500 font-mono">Technical Stack</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Engineered `app.py` and `global_map_dashboard.py` to establish a 3-layer pipeline:
+                            <br><span class="text-slate-300">• Layer 1: IoT Telemetry Sensor Grid</span>
+                            <br><span class="text-slate-300">• Layer 2: HPC/AI Decision Simulation Engine</span>
+                            <br><span class="text-slate-300">• Layer 3: Autonomous Infrastructure Sync (Solar Energy, Desalination, Smart Medical)</span>
+                        </p>
+                    </div>
+
+                    <!-- Chapter 3 -->
+                    <div class="relative pl-8 space-y-1">
+                        <span class="absolute left-0 top-1 w-7 h-7 rounded-full bg-purple-500/20 border border-purple-400 flex items-center justify-center text-purple-400 text-xs">03</span>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-semibold text-white">Global Diplomatic & Tech Outreach Campaign</h3>
+                            <span class="text-xs text-slate-500 font-mono">Oct 10, 2026</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Successfully dispatched formal blueprints and personal proposals to key international leadership:
+                            <span class="block mt-1 text-slate-300 font-mono bg-slate-950 p-2 rounded border border-slate-800 text-[11px]">
+                                Sent: White House (US Administration), HRH Crown Prince Mohammed bin Salman (KSA), Elon Musk (Tech Partner), Tareq Rahman (Bangladesh), Donald Trump (Personal Proposal & WWE Retrospective), Mr. Grim & Tamil.
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Real-time Sent Log & Status (1 Column) -->
+            <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                    <i data-lucide="check-circle" class="text-emerald-400"></i>
+                    Sent Outbox Log Verification
+                </h2>
+
+                <div class="space-y-3 font-mono text-xs">
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span class="text-emerald-400 font-bold">To: MBS (Saudi Arabia)</span>
+                            <span class="text-slate-500">2:42 PM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Subject: Sovereign Gaza Blueprint & Regional Alliance</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span class="text-blue-400 font-bold">To: Donald Trump</span>
+                            <span class="text-slate-500">2:40 PM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Subject: Personal Proposal, WWE Legacy & Peace Blueprint</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span class="text-purple-400 font-bold">To: Tareq Rahman</span>
+                            <span class="text-slate-500">2:34 PM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Subject: Sovereign Gaza Framework & Collaboration</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span class="text-amber-400 font-bold">To: Elon Musk</span>
+                            <span class="text-slate-500">2:33 PM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Subject: HPC & Digital Twin Infrastructure Integration</p>
+                    </div>
+
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
+                        <div class="flex justify-between text-slate-300">
+                            <span class="text-slate-300 font-bold">To: White House</span>
+                            <span class="text-slate-500">2:31 PM</span>
+                        </div>
+                        <p class="text-slate-400 truncate">Subject: Global Alliance & Digital Twin Initiative</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900 py-4 px-6 text-center text-xs text-slate-500">
+        Sovereign Gaza Master Blueprint © 2026 • Led by Abdul Majeed under Strategic Guidance of HH Sheikh Tamim bin Hamad Al Thani. All Systems Operational.
+    </footer>
+
+    <!-- JavaScript logic for Map & Icons -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize Map
+        const map = L.map('map').setView([25.0, 35.0], 3);
+
+        // Dark Theme Tile Layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Node Locations
+        const nodes = [
+            { name: "Gaza Core (Digital Twin HQ)", lat: 31.35, lng: 34.30, color: "#10b981", main: true },
+            { name: "Doha, Qatar (Strategic Command)", lat: 25.2867, lng: 51.5333, color: "#3b82f6" },
+            { name: "Riyadh, KSA (Crown Prince MBS Office)", lat: 24.7136, lng: 46.6753, color: "#8b5cf6" },
+            { name: "Washington D.C. (White House & Trump)", lat: 38.8977, lng: -77.0365, color: "#f59e0b" },
+            { name: "Starlink / xAI Hub (Austin, TX)", lat: 30.2672, lng: -97.7431, color: "#ec4899" },
+            { name: "Dhaka (Tareq Rahman Network)", lat: 23.8103, lng: 90.4125, color: "#06b6d4" }
+        ];
+
+        // Draw Markers & Polyline Connections
+        const gazaCoords = [31.35, 34.30];
+
+        nodes.forEach(node => {
+            // Marker
+            const marker = L.circleMarker([node.lat, node.lng], {
+                radius: node.main ? 10 : 6,
+                fillColor: node.color,
+                color: "#ffffff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(map);
+
+            marker.bindPopup(`<b>${node.name}</b><br>Status: Connected to Mesh`);
+
+            // Draw Connection Line to Gaza Core
+            if (!node.main) {
+                const polyline = L.polyline([gazaCoords, [node.lat, node.lng]], {
+                    color: node.color,
+                    weight: 1.5,
+                    opacity: 0.6,
+                    dashArray: '5, 10'
+                }).addTo(map);
+            }
+        });
+
+        function focusNode(lat, lng) {
+            map.flyTo([lat, lng], 10, { duration: 1.5 });
+        }
+
+        function resetView() {
+            map.flyTo([25.0, 35.0], 3, { duration: 1.5 });
+        }
+    </script>
+</body>
+</html>
