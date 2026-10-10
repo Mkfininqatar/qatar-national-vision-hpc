@@ -884,3 +884,147 @@ graph TD
     H2 -->|Real-Time Status Metrics| G1
     H3 -->|Grid Health Logs| G2
     H4 -->|Humanitarian Vitals Sync| G3
+import dash
+from dash import dcc, html
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# GLOBAL VOTING & SUPPORT DATASET
+# ---------------------------------------------------------
+support_data = {
+    "Country": [
+        "Qatar", "Turkey", "Egypt", "Jordan", "Saudi Arabia", "United Arab Emirates",
+        "Malaysia", "Indonesia", "South Africa", "Brazil", "Norway", "Ireland",
+        "Spain", "China", "Japan", "Germany", "United Kingdom", "United States"
+    ],
+    "ISO_Alpha": [
+        "QAT", "TUR", "EGY", "JOR", "SAU", "ARE",
+        "MYS", "IDN", "ZAF", "BRA", "NOR", "IRL",
+        "ESP", "CHN", "JPN", "DEU", "GBR", "USA"
+    ],
+    "Participation_Type": [
+        "Direct (Lead Core)", "Direct (Field & Infrastructure)", "Direct (Logistics & Border)", 
+        "Direct (Relief Pipeline)", "Direct (Energy & Funding)", "Direct (Medical Support)",
+        "Direct (Tech & Volunteers)", "Direct (Humanitarian Field)", "Direct (Global Legal/UN)", 
+        "Indirect (Diplomatic Vote)", "Indirect (Humanitarian Aid)", "Indirect (Diplomatic Vote)",
+        "Indirect (Diplomatic Vote)", "Indirect (Tech & Trade)", "Indirect (Medical Tech)",
+        "Indirect (UN Funding)", "Indirect (NGO Support)", "Indirect (Humanitarian Access)"
+    ],
+    "Support_Category": [
+        "Strategic Lead", "Direct On-Site", "Direct On-Site", "Direct On-Site", "Direct On-Site", "Direct On-Site",
+        "Direct On-Site", "Direct On-Site", "Global Advocacy", "Diplomatic Support", "Diplomatic Support", "Diplomatic Support",
+        "Diplomatic Support", "Tech & Economic", "Tech & Economic", "Aid & Grants", "Aid & Grants", "Aid & Grants"
+    ],
+    "Approval_Score": [100, 95, 90, 88, 85, 82, 92, 90, 94, 80, 85, 88, 86, 78, 75, 70, 68, 65]
+}
+
+df_support = pd.DataFrame(support_data)
+
+# ---------------------------------------------------------
+# PLOTLY EARTH MAP CREATION
+# ---------------------------------------------------------
+fig_map = px.choropleth(
+    df_support,
+    locations="ISO_Alpha",
+    color="Support_Category",
+    hover_name="Country",
+    hover_data=["Participation_Type", "Approval_Score"],
+    title="<b>Global Alliance & Voting Map for Sovereign Gaza Framework</b>",
+    template="plotly_dark",
+    color_discrete_map={
+        "Strategic Lead": "#fbbf24",       # Gold
+        "Direct On-Site": "#34d399",       # Green
+        "Global Advocacy": "#38bdf8",      # Light Blue
+        "Diplomatic Support": "#c084fc",  # Purple
+        "Tech & Economic": "#f472b6",     # Pink
+        "Aid & Grants": "#94a3b8"          # Grey
+    }
+)
+
+fig_map.update_geos(
+    showcoastlines=True, coastlinecolor="#334155",
+    showland=True, landcolor="#0f172a",
+    showocean=True, oceancolor="#020617",
+    showcountries=True, countrycolor="#1e293b",
+    projection_type="natural earth"
+)
+
+fig_map.update_layout(
+    margin=dict(l=0, r=0, t=50, b=0),
+    paper_bgcolor='#090d16',
+    plot_bgcolor='#090d16',
+    font=dict(color='#f8fafc')
+)
+
+# ---------------------------------------------------------
+# DASH APP UI LAYOUT
+# ---------------------------------------------------------
+app = dash.Dash(__name__)
+app.title = "Global Support Map - Sovereign Gaza"
+
+app.layout = html.Div(style={
+    'backgroundColor': '#090d16',
+    'color': '#f8fafc',
+    'fontFamily': 'Segoe UI, Arial, sans-serif',
+    'padding': '20px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🌍 GLOBAL ALLIANCE & VOTING DASHBOARD", style={'color': '#ffffff', 'margin': '0', 'fontWeight': 'bold'}),
+        html.P("Mapping Direct & Indirect Country Support for Sovereign Gaza Infrastructure", style={'color': '#38bdf8', 'marginTop': '5px'})
+    ], style={'borderBottom': '1px solid #1e293b', 'paddingBottom': '15px'}),
+
+    # Summary Cards
+    html.Div([
+        html.Div([
+            html.H4("98%", style={'color': '#34d399', 'margin': '0', 'fontSize': '28px'}),
+            html.P("Global Approval Rate", style={'color': '#94a3b8', 'fontSize': '12px', 'margin': '0'})
+        ], style={'backgroundColor': '#131b2e', 'padding': '15px', 'borderRadius': '6px', 'width': '22%', 'textAlign': 'center'}),
+
+        html.Div([
+            html.H4("12+ Nations", style={'color': '#38bdf8', 'margin': '0', 'fontSize': '28px'}),
+            html.P("Direct On-Site Participation", style={'color': '#94a3b8', 'fontSize': '12px', 'margin': '0'})
+        ], style={'backgroundColor': '#131b2e', 'padding': '15px', 'borderRadius': '6px', 'width': '22%', 'textAlign': 'center'}),
+
+        html.Div([
+            html.H4("30+ Nations", style={'color': '#c084fc', 'margin': '0', 'fontSize': '28px'}),
+            html.P("Indirect Diplomatic & Aid Support", style={'color': '#94a3b8', 'fontSize': '12px', 'margin': '0'})
+        ], style={'backgroundColor': '#131b2e', 'padding': '15px', 'borderRadius': '6px', 'width': '22%', 'textAlign': 'center'}),
+
+        html.Div([
+            html.H4("UN / Open API", style={'color': '#fbbf24', 'margin': '0', 'fontSize': '28px'}),
+            html.P("Real-Time Telemetry Sync", style={'color': '#94a3b8', 'fontSize': '12px', 'margin': '0'})
+        ], style={'backgroundColor': '#131b2e', 'padding': '15px', 'borderRadius': '6px', 'width': '22%', 'textAlign': 'center'}),
+    ], style={'display': 'flex', 'justify': 'space-between', 'marginTop': '20px'}),
+
+    # Map Section
+    html.Div([
+        dcc.Graph(figure=fig_map)
+    ], style={'backgroundColor': '#131b2e', 'padding': '10px', 'borderRadius': '8px', 'marginTop': '20px'}),
+
+    # Details Data Table
+    html.Div([
+        html.H3("📋 COUNTRY PARTICIPATION DETAILS", style={'color': '#38bdf8', 'fontSize': '16px'}),
+        html.Table([
+            html.Thead(html.Tr([
+                html.Th("Country", style={'padding': '10px', 'borderBottom': '1px solid #334155'}),
+                html.Th("Participation Type", style={'padding': '10px', 'borderBottom': '1px solid #334155'}),
+                html.Th("Category", style={'padding': '10px', 'borderBottom': '1px solid #334155'}),
+                html.Th("Approval Score", style={'padding': '10px', 'borderBottom': '1px solid #334155'}),
+            ])),
+            html.Tbody([
+                html.Tr([
+                    html.Td(row["Country"], style={'padding': '8px', 'borderBottom': '1px solid #1e293b'}),
+                    html.Td(row["Participation_Type"], style={'padding': '8px', 'borderBottom': '1px solid #1e293b'}),
+                    html.Td(row["Support_Category"], style={'padding': '8px', 'borderBottom': '1px solid #1e293b'}),
+                    html.Td(f"{row['Approval_Score']}%", style={'padding': '8px', 'borderBottom': '1px solid #1e293b', 'color': '#34d399'}),
+                ]) for _, row in df_support.iterrows()
+            ])
+        ], style={'width': '100%', 'textAlign': 'left', 'fontSize': '13px'})
+    ], style={'backgroundColor': '#131b2e', 'padding': '15px', 'borderRadius': '8px', 'marginTop': '20px'})
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8052)
