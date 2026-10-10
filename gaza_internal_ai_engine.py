@@ -1980,3 +1980,49 @@ if __name__ == "__main__":
     
     # লাইভ ট্র্যাকিং ফিড রান করা
     tracker.start_live_satellite_feed()
+class GazaScanTrackMatrix:
+    def __init__(self, matrix_id):
+        self.matrix_id = matrix_id
+        # সংকুচিত স্ক্যান ট্র্যাক মেট্রিক্স গ্রিড (ওয়েপয়েন্ট এবং জিও-কোঅর্ডিনেট)
+        self.scan_grid = [
+            {"id": "MC-01", "name": "Rafah Entry Hub", "gps": (31.2825, 34.2541), "type": "Medical/Entry"},
+            {"id": "FC-01", "name": "Deir al-Balah Depot", "gps": (31.4170, 34.3533), "type": "Food Distribution"},
+            {"id": "MC-03", "name": "Jabalia Station", "gps": (31.5016, 34.4668), "type": "Medical Station"}
+        ]
+
+    def execute_matrix_scan(self, target_gps):
+        """
+        কনভয়ের লাইভ জিপিএস কোঅর্ডিনেট স্ক্যান করে মেট্রিক্স অবজেক্টের সাথে ট্র্যাক ও ম্যাচ করে।
+        """
+        matrix_results = []
+        for node in self.scan_grid:
+            lat_delta = abs(node["gps"][0] - target_gps[0])
+            lon_delta = abs(node["gps"][1] - target_gps[1])
+            
+            # প্রক্সিমিটি বা দূরত্ব ম্যাচিং লজিক
+            proximity_status = "LOCKED_IN_RANGE" if lat_delta < 0.05 and lon_delta < 0.05 else "OUT_OF_SECTOR"
+            
+            matrix_results.append({
+                "node_id": node["id"],
+                "node_name": node["name"],
+                "node_type": node["type"],
+                "status": proximity_status
+            })
+
+        return {
+            "matrix_id": self.matrix_id,
+            "target_scanned_gps": target_gps,
+            "scan_matrix_output": matrix_results,
+            "telemetry_verdict": "MATRIX_SCAN_OPTIMIZED"
+        }
+
+# টেস্ট এক্সিকিউশন
+if __name__ == "__main__":
+    matrix_object = GazaScanTrackMatrix(matrix_id="GZ-MATRIX-01")
+    
+    # রাফাহ এন্ট্রি হাবের জিপিএস দিয়ে মেট্রিক্স স্ক্যান রান করা
+    scan_report = matrix_object.execute_matrix_scan(target_gps=(31.2825, 34.2541))
+
+    print("=== Gaza Scan Track Matrix Report ===")
+    for key, val in scan_report.items():
+        print(f"  - {key}: {val}")
