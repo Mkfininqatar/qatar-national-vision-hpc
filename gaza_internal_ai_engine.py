@@ -1930,3 +1930,53 @@ if __name__ == "__main__":
     print("Gaza Emergency GPS Route Tracking Report:")
     for key, val in tracking_report.items():
         print(f"  - {key}: {val}")
+import time
+import random
+
+class GazaLiveSatelliteTracker:
+    def __init__(self, convoy_id, corridor_name):
+        self.convoy_id = convoy_id
+        self.corridor_name = corridor_name
+        # সুনির্দিষ্ট জিপিএস ওয়েপয়েন্ট
+        self.waypoints = [
+            {"name": "Al-Arish & Rafah Land Port (Entry Hub)", "lat": 31.2825, "lon": 34.2541},
+            {"name": "Khan Younis Central Point", "lat": 31.3467, "lon": 34.3061},
+            {"name": "Deir al-Balah Central Grid (Distribution Node)", "lat": 31.4170, "lon": 34.3533},
+            {"name": "Jabalia / Gaza City Medical Station", "lat": 31.5016, "lon": 34.4668}
+        ]
+
+    def start_live_satellite_feed(self):
+        """
+        লাইভ স্যাটেলাইট ট্র্যাকিং এবং রিয়েল-টাইম কনভয় মুভমেন্ট সিমুলেট করে।
+        """
+        print(f"\n[🛰️] INITIALIZING LIVE SATELLITE FEED FOR CONVOY: {self.convoy_id}")
+        print(f"[🛣️] ACTIVE CORRIDOR: {self.corridor_name}\n")
+        print("-" * 75)
+
+        for i, wp in enumerate(self.waypoints):
+            # রিয়েল-টাইম জিও-সিমুলেশনের জন্য সামান্য ডেভিয়েশন বা লাইভ পজিশন তৈরি
+            live_lat = wp["lat"] + round(random.uniform(-0.001, 0.001), 4)
+            live_lon = wp["lon"] + round(random.uniform(-0.001, 0.001), 4)
+            
+            timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+            
+            print(f"[{timestamp}] -> Convoy ID: {self.convoy_id}")
+            print(f"  📍 Target Waypoint: {wp['name']}")
+            print(f"  📡 Live Satellite GPS: ({live_lat}° N, {live_lon}° E)")
+            print(f"  🟢 Feed Status: LOCKED | Signal: OPTIMAL | Security: SECURE")
+            print("-" * 75)
+            
+            # লাইভ ট্র্যাকিংয়ের জন্য ১ সেকেন্ড বিরতি (সিমুলেশন গ্যাপ)
+            time.sleep(1)
+
+        print(f"\n[✅] CONVOY {self.convoy_id} SUCCESSFULLY REACHED DESTINATION UNDER LIVE SATELLITE MONITORING.")
+
+# লাইভ এক্সিকিউশন
+if __name__ == "__main__":
+    tracker = GazaLiveSatelliteTracker(
+        convoy_id="GZ-LIVE-CONVOY-9907", 
+        corridor_name="The Southern Humanitarian Lifeline (Corridor Route 1)"
+    )
+    
+    # লাইভ ট্র্যাকিং ফিড রান করা
+    tracker.start_live_satellite_feed()
