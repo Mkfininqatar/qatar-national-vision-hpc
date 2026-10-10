@@ -1327,3 +1327,87 @@ if __name__ == '__main__':
     </script>
 </body>
 </html>
+{
+  "policy_metadata": {
+    "title": "Global Volunteer & Charge-Free Logistics Framework",
+    "version": "1.0.0",
+    "status": "DRAFT_READY"
+  },
+  "pillars": [
+    {
+      "code": "HT_VISA",
+      "name": "Humanitarian Transit Visa",
+      "exemption": "100% Visa & Immigration Fees Mapped"
+    },
+    {
+      "code": "TRAVEL_SPONSOR",
+      "name": "Volunteer Airfare Waiver",
+      "exemption": "Sovereign Discretion / Free Transit Allowance"
+    },
+    {
+      "code": "ZERO_DUTY",
+      "name": "Tax-Free Equipment Logistics",
+      "exemption": "0% Customs, 0% Banking Remittance Fees"
+    }
+  ],
+  "routes": [
+    {"id": "R01", "name": "Rafah/Al-Arish", "status": "ACTIVE_LOGISTICS"},
+    {"id": "R02", "name": "Cyprus Marine Corridor", "status": "SEA_TRANSIT"},
+    {"id": "R03", "name": "Kerem Shalom", "status": "HEAVY_CARGO"}
+  ]
+{
+  "policy_metadata": {
+    "title": "Global Volunteer & Charge-Free Logistics Framework",
+    "version": "1.0.0",
+    "status": "DRAFT_READY"
+  },
+  "pillars": [
+    {
+      "code": "HT_VISA",
+      "name": "Humanitarian Transit Visa",
+      "exemption": "100% Visa & Immigration Fees Mapped"
+    },
+    {
+      "code": "TRAVEL_SPONSOR",
+      "name": "Volunteer Airfare Waiver",
+      "exemption": "Sovereign Discretion / Free Transit Allowance"
+    },
+    {
+      "code": "ZERO_DUTY",
+      "name": "Tax-Free Equipment Logistics",
+      "exemption": "0% Customs, 0% Banking Remittance Fees"
+    }
+  ],
+  "routes": [
+    {"id": "R01", "name": "Rafah/Al-Arish", "status": "ACTIVE_LOGISTICS"},
+    {"id": "R02", "name": "Cyprus Marine Corridor", "status": "SEA_TRANSIT"},
+    {"id": "R03", "name": "Kerem Shalom", "status": "HEAVY_CARGO"}
+  {
+  "policy_metadata": {
+    "title": "Global Volunteer & Charge-Free Logistics Framework",
+    "version": "1.0.0",
+    "status": "DRAFT_READY"
+  },
+  "pillars": [
+    {
+      "code": "HT_VISA",
+      "name": "Humanitarian Transit Visa",
+      "exemption": "100% Visa & Immigration Fees Mapped"
+    },
+    {
+      "code": "TRAVEL_SPONSOR",
+      "name": "Volunteer Airfare Waiver",
+      "exemption": "Sovereign Discretion / Free Transit Allowance"
+    },
+    {
+      "code": "ZERO_DUTY",
+      "name": "Tax-Free Equipment Logistics",
+      "exemption": "0% Customs, 0% Banking Remittance Fees"
+    }
+  ],
+  "routes": [
+    {"id": "R01", "name": "Rafah/Al-Arish", "status": "ACTIVE_LOGISTICS"},
+    {"id": "R02", "name": "Cyprus Marine Corridor", "status": "SEA_TRANSIT"},
+    {"id": "R03", "name": "Kerem Shalom", "status": "HEAVY_CARGO"}
+  ]
+}
