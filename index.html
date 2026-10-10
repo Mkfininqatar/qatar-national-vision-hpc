@@ -4696,3 +4696,174 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global-to-Gaza Master Command & Autonomous Navigation Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --panel-bg: rgba(11, 24, 43, 0.88);
+            --border-color: #00ffcc;
+            --accent-green: #00ff66;
+            --accent-cyan: #00ffff;
+            --accent-orange: #ffaa00;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; overflow-x: hidden; }
+        
+        header { text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; }
+        header h1 { color: var(--accent-cyan); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: var(--text-dim); font-size: 0.8rem; margin-top: 5px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 900px) { .dashboard-grid { grid-template-columns: 1fr 1fr; } }
+
+        .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; box-shadow: 0 0 15px rgba(0,255,204,0.15); }
+        .panel h2 { font-size: 1rem; color: var(--accent-green); margin-bottom: 10px; border-bottom: 1px dashed var(--border-color); padding-bottom: 5px; text-transform: uppercase; }
+
+        .route-card { background: rgba(0,0,0,0.5); border-left: 4px solid var(--accent-cyan); padding: 10px; margin-bottom: 10px; font-size: 0.85rem; }
+        .route-card.drone { border-left-color: #ff00ff; }
+        .route-card.sat { border-left-color: var(--accent-orange); }
+
+        .route-card b { color: var(--accent-cyan); }
+        .status-badge { display: inline-block; padding: 2px 6px; font-size: 0.7rem; border-radius: 3px; background: rgba(0,255,102,0.2); color: var(--accent-green); border: 1px solid var(--accent-green); margin-top: 5px; }
+
+        .map-canvas-container { position: relative; width: 100%; height: 260px; background: #02060c; border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        .terminal-box { background: #000; color: var(--accent-green); padding: 10px; font-size: 0.75rem; height: 160px; overflow-y: scroll; border: 1px solid #1a3a3a; margin-top: 10px; border-radius: 4px; }
+        
+        .footer-note { text-align: center; margin-top: 20px; font-size: 0.75rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gaza Master Command & Drone Co-Pilot Navigation Map</h1>
+        <p>Framework: qatar-national-vision-hpc | Drone GPS Co-Pilot & Satellite RF System</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Panel 1: Drone GPS Co-Pilot & Satellite System -->
+        <div class="panel">
+            <h2>🛸 Autonomous Drone Co-Pilot & Satellite RF</h2>
+            
+            <div class="route-card drone">
+                <b>Drone GPS Co-Pilot (HPC-AERO-SCOUT-X1)</b><br>
+                Mode: Active Real-Time Autonomous Guidance<br>
+                Telemetry: Locked on Land & Sea Convoy Grid<br>
+                <span class="status-badge">CO-PILOT: REAL-TIME PATH CORRECTION ACTIVE</span>
+            </div>
+
+            <div class="route-card sat">
+                <b>Satellite Predictive Scan (QATARSAT-HPC-01)</b><br>
+                Orbit: Polar Low Earth Orbit Scan<br>
+                RF Band: UHF/VHF Sync + 35.5 kHz Sonar Echo<br>
+                <span class="status-badge">AUTO RF TRIGGER: LOCKED & ACTIVATED</span>
+            </div>
+
+            <div class="route-card">
+                <b>GCC & Arab Road Highway Network</b><br>
+                Path: Doha ➔ Riyadh ➔ Aqaba ➔ Al-Arish ➔ Rafah<br>
+                <span class="status-badge">ROAD CORRIDOR: CLEAR FOR DISPATCH</span>
+            </div>
+        </div>
+
+        <!-- Panel 2: Live Radar & Co-Pilot Telemetry Visualizer -->
+        <div class="panel">
+            <h2>📡 Drone & Satellite Radar Visualizer</h2>
+            <div class="map-canvas-container">
+                <canvas id="radarCanvas" width="360" height="240"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Log Panel -->
+    <div class="panel" style="margin-top: 15px;">
+        <h2>💻 Live HPC Co-Pilot & RF Telemetry Stream</h2>
+        <div class="terminal-box" id="terminalLog">
+            [00:00:01] SYSTEM INITIALIZED: qatar-national-vision-hpc...<br>
+            [00:00:02] SATELLITE LINK: QATARSAT-HPC-01 online. Predictive scan clear.<br>
+            [00:00:03] DRONE CO-PILOT: GPS RTK precision lock acquired.<br>
+            [00:00:04] RF CHANNELS: 433.92 MHz UHF & Marine VHF Ch-16 Auto-Activated.<br>
+            [00:00:05] COMMAND STATUS: All land, sea & air corridors ready for transit.
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Gaza Master Command Dashboard &copy; 2026 | Powered by Qatar National Vision HPC Telemetry
+    </div>
+
+    <script>
+        // Radar Canvas Animation with Drone Tracking Marker
+        const canvas = document.getElementById('radarCanvas');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function drawRadar() {
+            ctx.fillStyle = '#02060c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            // Draw radar grid
+            ctx.strokeStyle = '#003333';
+            ctx.lineWidth = 1;
+            [30, 60, 90, 110].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Crosshairs
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            // Sweep Line
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * 110, cy + Math.sin(angle) * 110);
+            ctx.stroke();
+
+            // Drone Marker (Co-Pilot Position)
+            const droneX = cx + Math.cos(-angle) * 50;
+            const droneY = cy + Math.sin(-angle) * 50;
+            ctx.fillStyle = '#ff00ff';
+            ctx.beginPath();
+            ctx.arc(droneX, droneY, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.font = '8px Courier New';
+            ctx.fillStyle = '#ff00ff';
+            ctx.fillText('DRONE-COPILOT', droneX + 6, droneY - 2);
+
+            angle += 0.03;
+            requestAnimationFrame(drawRadar);
+        }
+        drawRadar();
+
+        // Terminal Updates
+        setInterval(() => {
+            const term = document.getElementById('terminalLog');
+            const now = new Date().toTimeString().split(' ')[0];
+            const msgs = [
+                `[${now}] DRONE GPS: Route guidance synced with Sinai Convoy #4.`,
+                `[${now}] SATELLITE: Early obstruction scan -> CLEAR (0 hazards).`,
+                `[${now}] RF TRANSMITTER: Emergency UHF frequency locked & operational.`,
+                `[${now}] MARITIME SONAR: 35.5 kHz underwater corridor clear.`
+            ];
+            const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
+            term.innerHTML += `<br>${randomMsg}`;
+            term.scrollTop = term.scrollHeight;
+        }, 3500);
+    </script>
+</body>
+</html>
