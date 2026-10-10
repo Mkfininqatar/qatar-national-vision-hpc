@@ -2171,3 +2171,87 @@ if __name__ == "__main__":
                 print(f"      * {sub_k}: {sub_v}")
         else:
             print(f"  - {key}: {val}")
+class GazaEmergencyRescueDeploymentEngine:
+    def __init__(self, operation_id):
+        self.operation_id = operation_id
+        
+        # রুট, দূরত্ব এবং জরুরি যানবাহন ডেটাবেজ (বিশেষ করে শিশু ও ট্রমা কেয়ারের জন্য)
+        self.deployment_matrix = {
+            "Sector_A_Rafah_To_KhanYounis": {
+                "route_name": "Southern Humanitarian Lifeline",
+                "distance_km": 12.5,
+                "estimated_transit_mins": 25,
+                "target_zone": "Rafah South Hub (MC-01) to Khan Younis",
+                "vulnerable_demographic": "High concentration of displaced families & infants",
+                "required_vehicles": [
+                    {"type": "Pediatric Neonatal Ambulances", "qty": 5, "purpose": "Critical infant oxygen & incubator support"},
+                    {"type": "All-Terrain Mobile Clinic Vans", "qty": 8, "purpose": "Reaching tight alleyways for children triage"}
+                ],
+                "rescue_priority": "URGENT_CHILD_EVACUATION_AND_THERMAL_SHIELD"
+            },
+            "Sector_B_Central_DeirAlBalah": {
+                "route_name": "Central Grid & Coastal Bypass",
+                "distance_km": 18.0,
+                "estimated_transit_mins": 35,
+                "target_zone": "Deir al-Balah Central Depot (FC-01)",
+                "vulnerable_demographic": "Child nutrition distribution and emergency shelters",
+                "required_vehicles": [
+                    {"type": "Refrigerated Food & Formula Trucks", "qty": 6, "purpose": "Carrying infant formula, milk, and nutritional packs"},
+                    {"type": "Light Utility Medical Jeeps", "qty": 4, "purpose": "Rapid transit for pediatric first-aid teams"}
+                ],
+                "rescue_priority": "INFANT_NUTRITION_AND_HYDRATION_DEPLOYMENT"
+            },
+            "Sector_C_North_Jabalia": {
+                "route_name": "Northern Medical Axis",
+                "distance_km": 32.0,
+                "estimated_transit_mins": 55,
+                "target_zone": "Jabalia / Gaza City Station (MC-03)",
+                "vulnerable_demographic": "Severe infrastructure stress, trapped children",
+                "required_vehicles": [
+                    {"type": "Heavy Trauma Response Units", "qty": 3, "purpose": "Emergency structural rescue & severe burn care for minors"},
+                    {"type": "Armored Medical Convoys", "qty": 4, "purpose": "High-risk corridor penetration for child evacuation"}
+                ],
+                "rescue_priority": "CRITICAL_LIFE_SAVING_TRAUMA_RESCUE"
+            }
+        }
+
+    def evaluate_realtime_rescue_matrix(self, sector_key):
+        """
+        রিয়েল-টাইম দূরত্ব, সময় এবং বিশেষ করে ছোট বাচ্চাদের দ্রুত উদ্ধারের জন্য 
+        প্রয়োজনীয় যানবাহন ও রুট অ্যাক্টিভেশন প্রোটোকল জেনারেট করে।
+        """
+        if sector_key not in self.deployment_matrix:
+            return {"status": "ERROR", "message": "Invalid Sector Key specified."}
+
+        sector = self.deployment_matrix[sector_key]
+
+        return {
+            "operation_id": self.operation_id,
+            "active_sector": sector["route_name"],
+            "target_destination": sector["target_zone"],
+            "realtime_distance": f"{sector['distance_km']} km",
+            "estimated_travel_time": f"{sector['estimated_transit_mins']} minutes",
+            "demographic_focus": sector["vulnerable_demographic"],
+            "mandated_vehicles_required": sector["required_vehicles"],
+            "emergency_rescue_verdict": sector["rescue_priority"],
+            "protocol_status": "DEPLOYMENT_READY_IMMEDIATE_EXECUTION"
+        }
+
+# টেস্ট এক্সিকিউশন: রাফাহ থেকে খান ইউনিস রুটে শিশু উদ্ধার ও যানবাহন ডিপ্লয়মেন্ট
+if __name__ == "__main__":
+    engine = GazaEmergencyRescueDeploymentEngine(operation_id="GZ-RESCUE-OP-2026")
+    
+    # সেক্টর এ (শিশু ও পেডিয়াট্রিক রেসকিউ ফোকাস) রিপোর্ট জেনারেট করা
+    rescue_report = engine.evaluate_realtime_rescue_matrix(sector_key="Sector_A_Rafah_To_KhanYounis")
+
+    print("=== Gaza Real-Time Child Rescue & Vehicle Deployment Matrix ===")
+    for key, val in report_val if isinstance(rescue_report, dict) else []:
+        pass
+        
+    for k, v in rescue_report.items():
+        if isinstance(v, list):
+            print(f"  - {k}:")
+            for item in v:
+                print(f"      * Vehicle: {item['type']} (Qty: {item['qty']}) | Role: {item['purpose']}")
+        else:
+            print(f"  - {k}: {v}")
