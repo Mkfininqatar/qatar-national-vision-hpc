@@ -4893,3 +4893,189 @@
         </div>
     </div>
 </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global-to-Gaza Master Blueprint & HPC Command Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --panel-bg: rgba(11, 24, 43, 0.9);
+            --border-color: #00ffcc;
+            --accent-green: #00ff66;
+            --accent-cyan: #00ffff;
+            --accent-orange: #ffaa00;
+            --accent-purple: #ff00ff;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; overflow-x: hidden; }
+        
+        header { text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; background: linear-gradient(90deg, rgba(138,10,35,0.3), rgba(11,24,43,0.9)); border-radius: 6px; }
+        header h1 { color: var(--accent-cyan); font-size: 1.3rem; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: var(--text-dim); font-size: 0.75rem; margin-top: 5px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 1024px) { .dashboard-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; box-shadow: 0 0 15px rgba(0,255,204,0.12); }
+        .panel h2 { font-size: 0.9rem; color: var(--accent-green); margin-bottom: 8px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px; text-transform: uppercase; }
+
+        .card { background: rgba(0,0,0,0.6); border-left: 3px solid var(--accent-cyan); padding: 8px; margin-bottom: 8px; font-size: 0.75rem; }
+        .card.drone { border-left-color: var(--accent-purple); }
+        .card.sat { border-left-color: var(--accent-orange); }
+        .card.power { border-left-color: #ffff00; }
+
+        .card b { color: var(--accent-cyan); }
+        .status-badge { display: inline-block; padding: 2px 5px; font-size: 0.65rem; border-radius: 3px; background: rgba(0,255,102,0.2); color: var(--accent-green); border: 1px solid var(--accent-green); margin-top: 4px; }
+
+        .map-container { position: relative; width: 100%; height: 200px; background: #02060c; border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .terminal-box { background: #000; color: var(--accent-green); padding: 8px; font-size: 0.7rem; height: 130px; overflow-y: scroll; border: 1px solid #1a3a3a; border-radius: 4px; margin-top: 10px; }
+        
+        .footer-note { text-align: center; margin-top: 15px; font-size: 0.7rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Master Blueprint: Global-to-Gaza Command & HPC Telemetry Dashboard</h1>
+        <p>Framework: qatar-national-vision-hpc | Domain: http://qatar-national-vision-hpc.com/ | Handle: Mkfininqatar</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Column 1: Hubs & Road/Sea Routing -->
+        <div class="panel">
+            <h2>🌍 Global Hubs & Routing Matrix</h2>
+            <div class="card">
+                <b>Doha Hub (Qatar)</b><br>
+                Hamad Port & Air Cargo Staging.<br>
+                <span class="status-badge">GATEWAY: ACTIVE</span>
+            </div>
+            <div class="card">
+                <b>Cyprus & Al-Arish Hubs</b><br>
+                Larnaca Maritime & Al-Arish Road Depot.<br>
+                <span class="status-badge">CORRIDORS: OPEN</span>
+            </div>
+            <div class="card">
+                <b>Land & Sea Ingress/Egress</b><br>
+                Rafah & Kerem Shalom to Deir al-Balah[cite: 1, 2].<br>
+                <span class="status-badge">CONVOY: CLEAR</span>
+            </div>
+        </div>
+
+        <!-- Column 2: Satellite, Drone & Telecom -->
+        <div class="panel">
+            <h2>🛰️ Satellite, Drone & Telecom</h2>
+            <div class="card sat">
+                <b>QATARSAT-HPC-01 & Auto-RF</b><br>
+                Predictive scan + 35.5 kHz Sonar & UHF/VHF Sync[cite: 1].<br>
+                <span class="status-badge">RF LOCK: ENABLED</span>
+            </div>
+            <div class="card drone">
+                <b>Drone GPS Co-Pilot</b><br>
+                HPC-AERO-SCOUT-X1 RTK Precision Guidance[cite: 1].<br>
+                <span class="status-badge">NAVIGATION: ACTIVE</span>
+            </div>
+            <div class="card">
+                <b>Free Telecom & Apps</b><br>
+                Solar-powered towers & mobile app push notification sync[cite: 1].<br>
+                <span class="status-badge">NETWORK: ONLINE</span>
+            </div>
+        </div>
+
+        <!-- Column 3: Power Grid & Live Telemetry Canvas -->
+        <div class="panel">
+            <h2>⚡ Power Grid & Radar Telemetry</h2>
+            <div class="card power">
+                <b>Solar & Emergency Grid</b><br>
+                Modular solar units & hospital power load balancing[cite: 1].<br>
+                <span class="status-badge" style="background:rgba(255,255,0,0.2); color:#ffff00; border-color:#ffff00;">GRID: STABLE</span>
+            </div>
+            <div class="map-container">
+                <canvas id="masterRadar" width="280" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Terminal Stream -->
+    <div class="panel" style="margin-top: 15px;">
+        <h2>💻 Master HPC Telemetry Stream & Live Telecast Log</h2>
+        <div class="terminal-box" id="masterTerminal">
+            [00:00:01] SYSTEM BOOT: qatar-national-vision-hpc master architecture initialized[cite: 1].<br>
+            [00:00:02] SATELLITE: QATARSAT-HPC-01 connected. Obstruction check -> CLEAR.<br>
+            [00:00:03] DRONE CO-PILOT: RTK GPS coordinates locked for Sinai-Gaza transit[cite: 1].<br>
+            [00:00:04] TELECOM & POWER: Solar grid active; Free data gateway synchronized.<br>
+            [00:00:05] COMMAND STATUS: All international hubs & live broadcast operational.
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Master Blueprint Architecture &copy; 2026 | Qatar National Vision HPC Framework[cite: 1]
+    </div>
+
+    <script>
+        // Master Radar Animation Script
+        const canvas = document.getElementById('masterRadar');
+        const ctx = canvas.getContext('2d');
+        let theta = 0;
+
+        function renderMasterRadar() {
+            ctx.fillStyle = '#02060c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            ctx.strokeStyle = '#003333';
+            ctx.lineWidth = 1;
+            [30, 60, 90].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(theta) * 90, cy + Math.sin(theta) * 90);
+            ctx.stroke();
+
+            // Tracking Node
+            const nodeX = cx + Math.cos(-theta) * 45;
+            const nodeY = cy + Math.sin(-theta) * 45;
+            ctx.fillStyle = '#ff00ff';
+            ctx.beginPath();
+            ctx.arc(nodeX, nodeY, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            theta += 0.04;
+            requestAnimationFrame(renderMasterRadar);
+        }
+        renderMasterRadar();
+
+        // Terminal Live Log Stream
+        setInterval(() => {
+            const term = document.getElementById('masterTerminal');
+            const timeStr = new Date().toTimeString().split(' ')[0];
+            const logs = [
+                `[${timeStr}] DRONE COPILOT: Path verified along Al-Arish to Rafah corridor.`,
+                `[${timeStr}] SATELLITE RF: UHF/VHF emergency frequencies operating at 100%.`,
+                `[${timeStr}] MARITIME SONAR: 35.5 kHz underwater scan reports zero obstacles.`,
+                `[${timeStr}] POWER GRID: Hospital solar units operating with stable battery reserve.`
+            ];
+            const selectedLog = logs[Math.floor(Math.random() * logs.length)];
+            term.innerHTML += `<br>${selectedLog}`;
+            term.scrollTop = term.scrollHeight;
+        }, 3000);
+    </script>
+</body>
+</html>
