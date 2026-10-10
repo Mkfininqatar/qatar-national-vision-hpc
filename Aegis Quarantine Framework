@@ -633,3 +633,170 @@ def update_dashboard(blockade_level):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# DATA ARCHITECTURE: SUPPLY CHAIN & SIGNAL DEPENDENCIES
+# ---------------------------------------------------------
+data_chain = {
+    "Sector / Node": [
+        "Food Imports",
+        "Semiconductor Supply",
+        "Natural Gas & Power",
+        "Water Supply (Desalination)",
+        "Satellite Downlink (LEO)",
+        "Co-pilot AI Feed"
+    ],
+    "Baseline Import Dependency (%)": [71, 83, 62, 48, 95, 90],
+    "Risk Level": [
+        "High Rejection Risk",
+        "Critical Shortage",
+        "Energy Vulnerability",
+        "Infrastructure Threat",
+        "Signal Isolation",
+        "Data Packet Refusal"
+    ]
+}
+
+df_chain = pd.DataFrame(data_chain)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Aegis Quarantine Framework - Full Chain Analysis"
+
+# ---------------------------------------------------------
+# LAYOUT DESIGN
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#0b0f19',
+    'color': '#f3f4f6',
+    'fontFamily': 'Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🛡️ Aegis Quarantine Framework: Full Chain Rejection Dashboard", 
+                style={'color': '#ef4444', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Simulating Total Signal Isolation & Supply Chain Rejection Dynamics",
+               style={'color': '#9ca3af', 'fontSize': '16px'})
+    ], style={'borderBottom': '1px solid #1f2937', 'paddingBottom': '15px'}),
+
+    # Key Metrics Grid
+    html.Div([
+        html.Div([
+            html.H4("🥩 Food & Agri Rejection", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("71% RISK", style={'color': '#ef4444', 'margin': '0 0 5px 0'}),
+            html.P("EU & Regional import embargos threat.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #ef4444'}),
+
+        html.Div([
+            html.H4("🛰️ LEO Signal Network", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("95% DEPENDENCE", style={'color': '#fbbf24', 'margin': '0 0 5px 0'}),
+            html.P("Highly vulnerable to Red Ring quarantine.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #fbbf24'}),
+
+        html.Div([
+            html.H4("🧠 Co-pilot AI Telemetry", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("ISOLATION READY", style={'color': '#10b981', 'margin': '0 0 5px 0'}),
+            html.P("Packet rejection stops automated processing.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #10b981'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Charts Section
+    html.Div([
+        html.Div([
+            html.H3("📊 Supply Chain Dependency & Vulnerability", style={'color': '#f97316'}),
+            dcc.Graph(id='bar-chart-chain')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🔴 Full Chain Rejection Status", style={'color': '#f97316'}),
+            dcc.Graph(id='pie-chart-rejection')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Simulation Controls
+    html.Div([
+        html.H3("⛔ Aegis Full Rejection Simulation Level", style={'color': '#ef4444'}),
+        html.P("Simulate total packet isolation and trade rejection percentage:", style={'color': '#9ca3af'}),
+        dcc.Slider(
+            id='rejection-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=20,
+            marks={i: f'{i}% Blocked' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='rejection-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '12px', 
+            'backgroundColor': '#1f2937', 
+            'borderRadius': '6px', 
+            'textAlign': 'center'
+        })
+    ], style={'backgroundColor': '#111827', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# INTERACTIVITY & CALLBACKS
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-chain', 'figure'),
+     Output('pie-chart-rejection', 'figure'),
+     Output('rejection-status-output', 'children')],
+    [Input('rejection-slider', 'value')]
+)
+def update_dashboard(rejection_level):
+    # 1. Bar Chart
+    fig_bar = px.bar(
+        df_chain, 
+        x="Baseline Import Dependency (%)", 
+        y="Sector / Node", 
+        color="Risk Level",
+        orientation='h',
+        template="plotly_dark",
+        title="Supply Chain & Signal Vulnerability Index"
+    )
+    fig_bar.update_layout(paper_bgcolor='#111827', plot_bgcolor='#111827', margin=dict(t=40, b=20, l=20, r=20))
+
+    # 2. Rejection Impact Gauge / Donut
+    rejection_data = pd.DataFrame({
+        "Status": ["Rejected / Blocked", "Active Infrastructure"],
+        "Percentage": [rejection_level, 100 - rejection_level]
+    })
+    
+    fig_pie = px.pie(
+        rejection_data,
+        values="Percentage",
+        names="Status",
+        color="Status",
+        color_discrete_map={"Rejected / Blocked": "#ef4444", "Active Infrastructure": "#3b82f6"},
+        hole=0.5,
+        template="plotly_dark",
+        title="Overall Network & Trade Quarantine Impact"
+    )
+    fig_pie.update_layout(paper_bgcolor='#111827', plot_bgcolor='#111827', margin=dict(t=40, b=20, l=20, r=20))
+
+    # 3. Dynamic Output Message
+    if rejection_level == 0:
+        status_text = "🟢 SYSTEM NORMAL: Full signal flow and trade supply active."
+    elif rejection_level < 60:
+        status_text = f"🟡 PARTIAL REJECTION: {rejection_level}% Signal & Trade Rejection. Latency increases across AI nodes."
+    else:
+        status_text = f"🔴 CRITICAL REJECTION: {rejection_level}% Red Ring Enforced. Complete Isolation of Hub & Supply Depletion."
+
+    return fig_bar, fig_pie, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8050)
