@@ -3148,3 +3148,52 @@ if __name__ == "__main__":
         </div>
     </div>
 </div>
+class GazaFiberRebuildRouter:
+    """
+    Underground & Submarine Fiber Optic Cable Rebuild Layout Manager.
+    Integrated with Qatar National Vision HPC Framework.
+    """
+    def __init__(self, operation_id="GZ-FIBER-REBUILD-2026"):
+        self.operation_id = operation_id
+        self.fiber_layout = {
+            "Submarine_Segment": {
+                "origin": "Larnaca Port Hub (Cyprus)",
+                "landing_point": "Al-Mawasi Coastal Pier (Gaza)",
+                "cable_type": "Armored Submarine Fiber Optic",
+                "status": "READY_FOR_DEPLOYMENT"
+            },
+            "Terrestrial_Spine": {
+                "primary_route": "Salah al-Din Road North-South Spine",
+                "coastal_route": "Al-Rashid Highway Trunk",
+                "status": "LAYOUT_OPTIMIZED"
+            },
+            "Gateway_Interlinks": {
+                "egypt_border": "Rafah & Kerem Shalom Fiber Node",
+                "satellite_backup": "QATARSAT-HPC-01 Hybrid Sync",
+                "status": "SECURED"
+            }
+        }
+
+    def get_fiber_layout_report(self, segment_key):
+        if segment_key not in self.fiber_layout:
+            return {"status": "ERROR", "message": "Invalid Fiber Segment specified."}
+        
+        segment = self.fiber_layout[segment_key]
+        return {
+            "hpc_repository": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "target_segment": segment_key,
+            "layout_details": segment,
+            "network_status": "HIGH_SPEED_FIBER_READY"
+        }
+
+if __name__ == "__main__":
+    router = GazaFiberRebuildRouter()
+    report = router.get_fiber_layout_report("Submarine_Segment")
+    
+    print("=====================================================================")
+    print("          GAZA FIBER OPTIC CABLE REBUILD LAYOUT REPORT               ")
+    print("=====================================================================")
+    for k, v in report.items():
+        print(f"  - {k}: {v}")
+    print("=====================================================================")
