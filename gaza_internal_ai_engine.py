@@ -816,3 +816,71 @@ if __name__ == "__main__":
     print("======================================================================\n")
     print(json.dumps(love_engine.broadcast_love_call(), indent=2))
     print("\n======================================================================")
+graph TD
+    %% Define Visual Styles
+    classDef leadership fill:#1e293b,stroke:#fbbf24,stroke-width:2px,color:#fff
+    classDef inputSensors fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#fff
+    classDef aiEngine fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#fff
+    classDef hpcTelemetry fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#fff
+    classDef distribution fill:#4c1d95,stroke:#c084fc,stroke-width:2px,color:#fff
+    classDef globalOut fill:#1e1b4b,stroke:#f43f5e,stroke-width:2px,color:#fff
+
+    %% 1. LEADERSHIP & STRATEGIC GOVERNANCE
+    subgraph STRATEGIC_LAYER ["🏛️ 1. Executive Leadership & Strategic Vision"]
+        L1["HH Sheikh Tamim Sir<br/><i>Strategic Director</i>"] ::: leadership
+        L2["Father Amir Sheikh Hamad (R.A.)<br/><i>Foundational Visionary</i>"] ::: leadership
+        L3["Abdul Majeed<br/><i>Technical Architect</i>"] ::: leadership
+    end
+
+    %% 2. SENSOR NETWORKS & TELEMETRY INGESTION
+    subgraph INGESTION_LAYER ["📡 2. Physical Sensing & Data Ingestion Pipeline"]
+        S1["Solar Micro-Grid Inverters<br/>(500 kW Power Stream)"] ::: inputSensors
+        S2["Water Tankers & Desalination Sensors<br/>(Flow & Quality Metrics)"] ::: inputSensors
+        S3["Field Hospital Triage Vitals<br/>(Heart Rate, SpO2, ISS)"] ::: inputSensors
+        S4["Satellite & Mesh Network Routers<br/>(Uplink Health)"] ::: inputSensors
+    end
+
+    %% 3. HIGH-PERFORMANCE COMPUTING & SPATIAL ENGINE
+    subgraph HPC_ENGINE ["🧠 3. Core HPC & Spatial-Temporal AI Engine (Gaza-Central-AI-01)"]
+        H1["Data Normalization & Filter Pipeline"] ::: hpcTelemetry
+        H2["Predictive Resource Sensing AI<br/>(Water, Rations, Trauma Kits)"] ::: aiEngine
+        H3["Micro-Grid Autonomous Load Balancer<br/>(Priority Matrix: ICU > Desalination > Telecom)"] ::: aiEngine
+        H4["Automated Medical Triage Model<br/>(Triage Category Generation)"] ::: aiEngine
+    end
+
+    %% 4. PHYSICAL & LOGISTICS INFRASTRUCTURE DEPLOYMENT
+    subgraph PHYSICAL_LAYER ["🏗️ 4. Sovereign Infrastructure Execution"]
+        P1["Field Hospitals & ICUs<br/>(Allocated: 200 kW)"] ::: distribution
+        P2["Solar Desalination Plants<br/>(Allocated: 150 kW)"] ::: distribution
+        P3["Coastal Light Rail (LRT) & Eco-Housing Grid"] ::: distribution
+        P4["Emergency Relief Pipeline<br/>(88% Water | 92% Food | 85% Trauma Kits)"] ::: distribution
+    end
+
+    %% 5. GLOBAL MEDIA TELECAST & OPEN API GATEWAY
+    subgraph BROADCAST_LAYER ["🌐 5. Global Telecast & Open API Gateway"]
+        G1["Uncensored Live Telemetry Stream<br/>(Plotly/Dash App Dashboard)"] ::: globalOut
+        G2["Open JSON/REST API Hub<br/>(UN, Red Cross & Media Sync)"] ::: globalOut
+        G3["Global Media Broadcast<br/>(SRT/RTMP Video Overlays)"] ::: globalOut
+    end
+
+    %% PIPELINE CONNECTIONS & DATA FLOW
+    STRATEGIC_LAYER -->|Directs Governance & Policy| INGESTION_LAYER
+    
+    S1 -->|Raw Power Telemetry| H1
+    S2 -->|Water Supply Data| H1
+    S3 -->|Vital Patient Signals| H1
+    S4 -->|Network Metrics| H1
+
+    H1 -->|Clean Stream| H2
+    H1 -->|Clean Stream| H3
+    H1 -->|Clean Stream| H4
+
+    H2 -->|Dispatches Load Orders| P4
+    H3 -->|Power Distribution Commands| P1
+    H3 -->|Power Distribution Commands| P2
+    H3 -->|Power Distribution Commands| P3
+    H4 -->|Priority Triage Queue| P1
+
+    H2 -->|Real-Time Status Metrics| G1
+    H3 -->|Grid Health Logs| G2
+    H4 -->|Humanitarian Vitals Sync| G3
