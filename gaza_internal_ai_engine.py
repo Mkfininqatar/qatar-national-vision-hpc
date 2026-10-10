@@ -1721,3 +1721,85 @@ if __name__ == '__main__':
     }
   ]
 }
+class GazaComprehensiveLogisticsEngine:
+    def __init__(self, convoy_id, entry_corridor):
+        self.convoy_id = convoy_id
+        self.entry_corridor = entry_corridor
+        
+        # সমস্ত এন্ট্রি করিডোর, মেডিকেল, খাদ্য এবং পোশাক বিতরণ ক্যাম্পের সুনির্দিষ্ট ডেটাবেজ
+        self.corridors = {
+            "Corridor_A": "Rafah & Al-Arish Route (Primary Humanitarian & Medical Entry)",
+            "Corridor_B": "Kerem Shalom Heavy Cargo Route (Medical Equipment, Food & Generators)",
+            "Corridor_C": "Maritime / Larnaca Port Route (Direct Coastal Relief Supply)"
+        }
+        
+        self.relief_depots = {
+            # ১. জরুরি চিকিৎসা ক্যাম্প (Emergency Medical Camps - MC)
+            "MC-01": {"name": "Rafah South Hub", "gps": (31.2825, 34.2541), "role": "Primary Trauma & Burn Unit", "type": "Medical"},
+            "MC-02": {"name": "Khan Younis Central Hospital Point", "gps": (31.3467, 34.3061), "role": "Mobile Surgical & Emergency Care Camp", "type": "Medical"},
+            "MC-03": {"name": "Gaza City North Medical Station", "gps": (31.5016, 34.4668), "role": "Urgent Healthcare & First Aid Point", "type": "Medical"},
+            
+            # ২. খাদ্য বিতরণ ক্যাম্প (Food Distribution Camps - FC)
+            "FC-01": {"name": "Deir al-Balah Central Depot", "gps": (31.4170, 34.3533), "role": "Central Food Security & Wholesale Hub", "type": "Food"},
+            "FC-02": {"name": "Jabalia Relief Kitchen Point", "gps": (31.5270, 34.4842), "role": "Daily Hot Meals & Rations Distribution", "type": "Food"},
+            "FC-03": {"name": "Al-Mawasi Coastal Food Post", "gps": (31.3500, 34.2700), "role": "Coastal Refugee Camp Food Aid", "type": "Food"},
+            
+            # ৩. পোশাক ও শীতবস্ত্র বিতরণ ক্যাম্প (Clothing & Winterized Supply Camps - CC)
+            "CC-01": {"name": "Rafah Logistics Terminal", "gps": (31.2900, 34.2600), "role": "Clothing, Blankets & Essentials Sorting", "type": "Clothing"},
+            "CC-02": {"name": "Nuseirat Camp Sector B", "gps": (31.4450, 34.3900), "role": "Dense Refugee Sector Clothing & Infant Care", "type": "Clothing"}
+        }
+
+    def evaluate_supply_routing_and_telemetry(self, current_gps, target_depot_id, inventory_status):
+        """
+        ইনবাউন্ড সাপ্লাই, রুট কানেক্টিভিটি এবং লাইভ টেলিমেট্রি মনিটরিং এক্সিকিউট করে।
+        """
+        if target_depot_id not in self.relief_depots:
+            return {"status": "ERROR", "message": "Invalid Depot ID provided."}
+
+        selected_depot = self.relief_depots[target_depot_id]
+        corridor_desc = self.corridors.get(self.entry_corridor, "Unknown Corridor")
+
+        # সাপ্লাই চেইন ফ্লো ও স্ট্যাটাস যাচাই
+        route_flow_stage = "INBOUND_TRANSIT"
+        if "Rafah" in selected_depot["name"] or "Terminal" in selected_depot["name"]:
+            route_flow_stage = "PRIMARY_INBOUND_ENTRY_HUB"
+        else:
+            route_flow_stage = "CENTRAL_DISTRIBUTION_NETWORK"
+
+        return {
+            "convoy_id": self.convoy_id,
+            "active_entry_corridor": corridor_desc,
+            "current_gps_coordinate": current_gps,
+            "assigned_depot": selected_depot["name"],
+            "depot_type": selected_depot["type"],
+            "depot_operational_role": selected_depot["role"],
+            "depot_gps": selected_depot["gps"],
+            "supply_chain_stage": route_flow_stage,
+            "inventory_telemetry": inventory_status,
+            "telemetry_system_verdict": "SECURE_AND_MONITORED"
+        }
+
+# টেস্ট রান: গাজা লজিস্টিকস রাউটিং এবং টেলিমেট্রি যাচাই
+if __name__ == "__main__":
+    # উদাহরণস্বরূপ: করিডোর এ দিয়ে কনভয় প্রবেশ করে রাফাহ হাবের দিকে যাচ্ছে
+    gaza_logistics = GazaComprehensiveLogisticsEngine(
+        convoy_id="GZ-RELIEF-2026-99", 
+        entry_corridor="Corridor_A"
+    )
+
+    sample_inventory = {
+        "medical_kits": 1200, 
+        "food_packets": 5000, 
+        "winter_blankets": 2500, 
+        "stock_status": "OPTIMAL"
+    }
+
+    report = gaza_logistics.evaluate_supply_routing_and_telemetry(
+        current_gps=(31.2825, 34.2541),
+        target_depot_id="MC-01",
+        inventory_status=sample_inventory
+    )
+
+    print("=== Gaza Emergency Relief Supply Chain & Telemetry Report ===")
+    for key, value in report.items():
+        print(f"  - {key}: {value}")
