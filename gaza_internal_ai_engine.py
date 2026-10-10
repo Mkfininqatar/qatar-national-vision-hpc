@@ -1411,3 +1411,31 @@ if __name__ == '__main__':
     {"id": "R03", "name": "Kerem Shalom", "status": "HEAVY_CARGO"}
   ]
 }
+{
+  "international_roadmap": {
+    "project": "Sovereign Gaza Master Blueprint",
+    "version": "2026.1",
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Diplomatic Consensus & Sovereign Approval",
+        "key_action": "OIC/UN Charter & Bilateral Agreements"
+      },
+      {
+        "phase": 2,
+        "name": "Fast-Track Visa & Duty-Free Logistics",
+        "key_action": "HT-Visa, Sovereign Free Airfare & Zero-Tax Banking"
+      },
+      {
+        "phase": 3,
+        "name": "Central Tech Registry & Digital Hub",
+        "key_action": "Skill Mapping, Govt Vetting & Real-time Telemetry"
+      },
+      {
+        "phase": 4,
+        "name": "Tri-Corridor Field Deployment",
+        "key_action": "Rafah, Cyprus Marine & Kerem Shalom Operations"
+      }
+    ]
+  }
+}
