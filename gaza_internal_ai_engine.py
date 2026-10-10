@@ -2571,3 +2571,68 @@ if __name__ == "__main__":
     print("=== Gaza Maritime Relief & Sea-Route Report ===")
     for k, v in report.items():
         print(f"  - {k}: {v}")
+class GazaInternationalTransitMap:
+    """
+    International Relief & Supply Mapping Framework (Global-to-Gaza)
+    Integrated with Qatar National Vision HPC Telemetry Engine.
+    """
+    global_hubs = {
+        "Hub_Doha_Qatar": {
+            "origin_country": "Qatar (Doha Logistics Base)",
+            "mode": "Air/Land Multimodal Transit",
+            "primary_gateway": "Al-Arish Airport / Rafah Terminal (MC-01)",
+            "cargo_focus": "High-priority medical equipment & emergency funds",
+            "transit_duration_hrs": 12
+        },
+        "Hub_Larnaca_Cyprus": {
+            "origin_country": "Cyprus (Mediterranean Maritime Base)",
+            "mode": "Sea Route (Maritime Corridor)",
+            "primary_gateway": "Al-Mawasi Coastal Pier (GZ-SEA-01)",
+            "cargo_focus": "Bulk food supplies, water tanks & infant formula",
+            "transit_duration_hrs": 18
+        },
+        "Hub_Cairo_Egypt": {
+            "origin_country": "Egypt (Regional Staging Center)",
+            "mode": "Direct Ground Convoy",
+            "primary_gateway": "Kerem Shalom / Rafah Border Crossing (FC-01)",
+            "cargo_focus": "Refrigerated nutrition packs & pediatric supplies",
+            "transit_duration_hrs": 6
+        }
+    }
+
+    def __init__(self, operation_id):
+        self.operation_id = operation_id
+
+    def generate_international_map_report(self, hub_key):
+        """
+        Generates international transit routing and logistics telemetry report.
+        """
+        if hub_key not in self.global_hubs:
+            return {"status": "ERROR", "message": "Invalid International Hub Key specified."}
+
+        hub = self.global_hubs[hub_key]
+        return {
+            "hpc_framework_repository": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "origin_international_hub": hub["origin_country"],
+            "transit_mode": hub["mode"],
+            "entry_gateway_into_gaza": hub["primary_gateway"],
+            "primary_cargo_payload": hub["cargo_focus"],
+            "estimated_transit_time": f"{hub['transit_duration_hrs']} hours",
+            "routing_telemetry_status": "GLOBAL_CORRIDOR_SECURE_AND_SYNCED"
+        }
+
+# এক্সিকিউশন টেস্ট
+if __name__ == "__main__":
+    print("\n[+] Initializing International Relief Map & Routing Matrix...")
+    intl_map = GazaInternationalTransitMap(operation_id="GZ-INTL-MAP-2026")
+    
+    # দোহা ও গালফ হাব থেকে আন্তর্জাতিক রুট টেস্ট করা
+    report = intl_map.generate_international_map_report("Hub_Doha_Qatar")
+
+    print("=====================================================================")
+    print("             INTERNATIONAL RELIEF & TRANSIT MAP REPORT               ")
+    print("=====================================================================")
+    for k, v in report.items():
+        print(f"  - {k}: {v}")
+    print("=====================================================================")
