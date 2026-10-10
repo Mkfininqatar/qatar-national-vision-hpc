@@ -1675,3 +1675,49 @@ if __name__ == '__main__':
 
 </body>
 </html>
+{
+  "policy_metadata": {
+    "title": "Sovereign Gaza Humanitarian Transit & Global Volunteer Framework",
+    "document_ref": "POLICY-DRAFT-SG-2026-V1",
+    "status": "APPROVED_DRAFT",
+    "version": "1.0.0"
+  },
+  "executive_summary": "Ei policy framework-er mul uddeshya holo antorjatik storer engineer, technician abong volunteer-der Gazay nirapod o druto upasthiti nishchit kora, ebong Digital Twin, HPC hardware, o micro-grid logisitics-er upor 100% duty/tax waiver nishchit kora.",
+  "strategic_pillars": [
+    {
+      "code": "HT_VISA",
+      "name": "Humanitarian Transit Visa (HT-Visa)",
+      "details": "Registered technical team o volunteers-der jonno international airport-ey fast-track immigration o free transit pass."
+    },
+    {
+      "code": "QATAR_FREE_TRANSIT",
+      "name": "Qatar Sovereign Airfare Allowance (Qatar Airways)",
+      "details": "State of Qatar-er tarof theke fully funded o sponsored 100% free airfare ticket pass for registered Gaza reconstruction volunteers."
+    },
+    {
+      "code": "ZERO_TAX_LOGISTICS",
+      "name": "Zero-Tax & Charge-Free Logistics",
+      "details": "HPC servers, sensors, o desalination equipment-er upor 100% customs waiver. Bank remittance fee o transfer tax completely prohibited."
+    }
+  ],
+  "transit_routes": [
+    {
+      "id": "R-01",
+      "corridor": "Rafah / Al-Arish Transit",
+      "type": "Southern Air/Land Route",
+      "function": "Cairo airport hoye Al-Arish hub-er madhyome technical response team o HPC hardware deployment."
+    },
+    {
+      "id": "R-02",
+      "corridor": "Larnaca Port (Cyprus Marine)",
+      "type": "Maritime Route",
+      "function": "Somudropothe heavy HPC servers, micro-grid hardware, o mobile data centers transport."
+    },
+    {
+      "id": "R-03",
+      "corridor": "Kerem Shalom Corridor",
+      "type": "Commercial Cargo Route",
+      "function": "International relief cargo o environmental sensor grid-er main customs-free entry."
+    }
+  ]
+}
