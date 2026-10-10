@@ -3647,3 +3647,864 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaza Humanitarian Master Command Dashboard - QNV2030 HPC Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cmd: {
+                            dark: '#030712',
+                            panel: '#090f1e',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e',
+                            purple: '#a855f7',
+                            maroon: '#8a1538'
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'radar-sweep': 'radar 4s linear infinite',
+                    },
+                    keyframes: {
+                        radar: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,500&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f1f5f9;
+        }
+
+        .font-cmd {
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .font-mono-tech {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(9, 15, 30, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 41, 59, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-panel-glow {
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #090f1e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0, 0, 0, 0.25) 50%,
+                rgba(0, 0, 0, 0.25)
+            );
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="bg-cmd-dark min-h-screen flex flex-col custom-scrollbar overflow-x-hidden selection:bg-cmd-cyan selection:text-black">
+
+    <header class="bg-cmd-panel/90 border-b border-cmd-border sticky top-0 z-50 px-4 lg:px-8 py-2.5 backdrop-blur-md">
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- BRANDING & TITLE -->
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cmd-maroon via-cmd-cyan to-cmd-emerald p-0.5 shadow-lg shadow-cmd-cyan/20">
+                        <div class="w-full h-full bg-cmd-dark rounded-[10px] flex items-center justify-center">
+                            <i data-lucide="shield-alert" class="w-6 h-6 text-cmd-cyan animate-pulse"></i>
+                        </div>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cmd-emerald opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-cmd-emerald"></span>
+                    </span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-cmd font-bold text-lg lg:text-xl text-white tracking-wider flex items-center gap-2">
+                            GAZA HUMANITARIAN MASTER COMMAND
+                        </h1>
+                        <span class="bg-cmd-maroon/60 text-cmd-cyan border border-cmd-cyan/40 font-mono-tech text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                            QNV-2030 HPC LINK
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono-tech flex items-center gap-2">
+                        <span>OPERATION ID: <strong class="text-cmd-cyan">GZ-GLOBAL-CMD-2026</strong></span>
+                        <span class="text-slate-600">•</span>
+                        <span>NET: <strong class="text-cmd-emerald">MKFININQATAR-DIRECT</strong></span>
+                        <span class="text-slate-600">•</span>
+                        <span class="text-cmd-emerald font-mono flex items-center gap-1">
+                            <i data-lucide="activity" class="w-3 h-3 animate-pulse"></i> ZERO-DRIFT TELEMETRY ACTIVE
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- LIVE TELEMETRY CLOCK & QUICK STATS -->
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="bg-cmd-dark/90 px-3.5 py-1.5 rounded-lg border border-cmd-border text-xs font-mono-tech flex items-center gap-3">
+                    <div>
+                        <p class="text-[9px] text-slate-500 uppercase">System Time (UTC)</p>
+                        <p id="utc-clock" class="font-bold text-cmd-cyan">00:00:00 UTC</p>
+                    </div>
+                    <div class="border-l border-cmd-border pl-3">
+                        <p class="text-[9px] text-slate-500 uppercase">Gaza Local (EEST)</p>
+                        <p id="gaza-clock" class="font-bold text-white">00:00:00 EEST</p>
+                    </div>
+                </div>
+
+                <div class="bg-cmd-dark/90 px-3.5 py-1.5 rounded-lg border border-cmd-border text-xs font-mono-tech flex items-center gap-3">
+                    <div>
+                        <p class="text-[9px] text-slate-500 uppercase">Active Air/Sea Passes</p>
+                        <p class="font-bold text-cmd-emerald flex items-center gap-1">
+                            <i data-lucide="check-circle-2" class="w-3 h-3"></i> 1,420 VALIDATED
+                        </p>
+                    </div>
+                    <div class="border-l border-cmd-border pl-3">
+                        <p class="text-[9px] text-slate-500 uppercase">Tariff Status</p>
+                        <p class="font-bold text-cmd-amber">0% EXEMPT (QNV-W-26)</p>
+                    </div>
+                </div>
+
+                <button onclick="triggerEmergencyScan()" class="bg-gradient-to-r from-cmd-rose to-red-600 hover:from-red-600 hover:to-cmd-rose text-white font-cmd font-bold px-4 py-2 rounded-lg text-xs flex items-center gap-2 shadow-lg shadow-cmd-rose/20 transition hover:scale-105 active:scale-95">
+                    <i data-lucide="radar" class="w-4 h-4 animate-spin-slow"></i>
+                    EXECUTE PROXIMITY SCAN
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1800px] mx-auto px-3 lg:px-6 py-6 flex-1 space-y-6 w-full">
+
+        <!-- SECTION 1: GLOBAL MAP & LIVE WEATHER/SECTOR INTEL -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- LEFT 8 COLUMNS: INTERACTIVE RADAR & TRANSIT CORRIDORS CANVAS -->
+            <div class="lg:col-span-8 glass-panel glass-panel-glow rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cmd-border pb-3 mb-4 z-10">
+                    <div>
+                        <h2 class="font-cmd font-bold text-lg text-white flex items-center gap-2">
+                            <i data-lucide="globe-2" class="w-5 h-5 text-cmd-cyan"></i>
+                            Global-to-Gaza Tri-Corridor Telemetry Map
+                        </h2>
+                        <p class="text-xs text-slate-400 font-mono-tech">
+                            Direct Air (Doha DOH), Sea (Larnaca Marine Node GZ-SEA-01), Overland (Cairo CAI ➔ Rafah MC-01)
+                        </p>
+                    </div>
+                    
+                    <div class="flex items-center gap-1 bg-cmd-dark p-1 rounded-xl border border-cmd-border">
+                        <button onclick="switchCorridorMode('all')" id="btn-mode-all" class="corridor-btn active bg-cmd-cyan text-cmd-dark font-bold text-xs px-3 py-1 rounded-lg transition font-mono-tech">ALL NODES</button>
+                        <button onclick="switchCorridorMode('air')" id="btn-mode-air" class="corridor-btn text-slate-400 hover:text-white font-medium text-xs px-3 py-1 rounded-lg transition font-mono-tech">AIR (DOH)</button>
+                        <button onclick="switchCorridorMode('sea')" id="btn-mode-sea" class="corridor-btn text-slate-400 hover:text-white font-medium text-xs px-3 py-1 rounded-lg transition font-mono-tech">SEA (LARNACA)</button>
+                        <button onclick="switchCorridorMode('land')" id="btn-mode-land" class="corridor-btn text-slate-400 hover:text-white font-medium text-xs px-3 py-1 rounded-lg transition font-mono-tech">OVERLAND</button>
+                    </div>
+                </div>
+
+                <!-- CANVAS / RADAR CONTAINER -->
+                <div class="relative w-full h-[420px] bg-slate-950 rounded-xl border border-cmd-border overflow-hidden flex items-center justify-center">
+                    
+                    <!-- Scanline Overlay -->
+                    <div class="absolute inset-0 scanlines pointer-events-none opacity-40 z-20"></div>
+
+                    <!-- Canvas for Transit Lines -->
+                    <canvas id="corridorCanvas" class="absolute inset-0 w-full h-full z-10 cursor-crosshair"></canvas>
+
+                    <!-- Radar Overlay in Corner -->
+                    <div class="absolute bottom-3 right-3 w-32 h-32 rounded-full border border-cmd-cyan/30 bg-cmd-dark/80 backdrop-blur-md pointer-events-none z-30 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 border border-cmd-cyan/10 rounded-full m-2"></div>
+                        <div class="absolute inset-0 border border-cmd-cyan/10 rounded-full m-6"></div>
+                        <div class="absolute w-full h-[1px] bg-cmd-cyan/20"></div>
+                        <div class="absolute h-full w-[1px] bg-cmd-cyan/20"></div>
+                        <div class="w-full h-full animate-radar-sweep origin-center bg-gradient-to-tr from-transparent via-cmd-cyan/10 to-cmd-cyan/40 rounded-full"></div>
+                        <span class="absolute top-2 text-[8px] font-mono-tech text-cmd-cyan">RADAR: ACTIVE</span>
+                    </div>
+
+                    <!-- MAP LEGEND -->
+                    <div class="absolute top-3 left-3 bg-cmd-panel/90 p-2.5 rounded-lg border border-cmd-border z-30 font-mono-tech text-[10px] space-y-1">
+                        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cmd-cyan"></span> Primary Hub (Doha DOH)</div>
+                        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cmd-purple"></span> Sea Transit (Larnaca Node)</div>
+                        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cmd-amber"></span> Overland Hub (Cairo / Rafah)</div>
+                        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-cmd-rose animate-pulse"></span> Gaza Target Terminals</div>
+                    </div>
+
+                    <div id="canvas-tooltip" class="hidden absolute bg-cmd-card border border-cmd-cyan text-white text-xs font-mono-tech p-2 rounded shadow-2xl z-40 pointer-events-none"></div>
+                </div>
+
+                <!-- BOTTOM CORRIDOR TELEMETRY METRICS -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-xs font-mono-tech z-10">
+                    <div class="bg-cmd-dark/80 p-2.5 rounded-xl border border-cmd-border">
+                        <p class="text-slate-500 text-[9px] uppercase">Doha Air Bridge</p>
+                        <p class="text-cmd-cyan font-bold flex items-center justify-between">
+                            <span>12 Cargo Sorties</span> <i data-lucide="plane" class="w-3.5 h-3.5"></i>
+                        </p>
+                    </div>
+                    <div class="bg-cmd-dark/80 p-2.5 rounded-xl border border-cmd-border">
+                        <p class="text-slate-500 text-[9px] uppercase">Cyprus Sea Corridor</p>
+                        <p class="text-cmd-purple font-bold flex items-center justify-between">
+                            <span>4 Ships En Route</span> <i data-lucide="anchor" class="w-3.5 h-3.5"></i>
+                        </p>
+                    </div>
+                    <div class="bg-cmd-dark/80 p-2.5 rounded-xl border border-cmd-border">
+                        <p class="text-slate-500 text-[9px] uppercase">Rafah Land Gate MC-01</p>
+                        <p class="text-cmd-emerald font-bold flex items-center justify-between">
+                            <span>84 Trucks Cleared</span> <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+                        </p>
+                    </div>
+                    <div class="bg-cmd-dark/80 p-2.5 rounded-xl border border-cmd-border">
+                        <p class="text-slate-500 text-[9px] uppercase">Gaza Sea Pier GZ-SEA-01</p>
+                        <p class="text-cmd-amber font-bold flex items-center justify-between">
+                            <span>BERTH 2 READY</span> <i data-lucide="ship" class="w-3.5 h-3.5"></i>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT 4 COLUMNS: WEATHER & SECTOR POPULATION INTELLIGENCE -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                
+                <div class="border-b border-cmd-border pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-cmd font-bold text-white text-base flex items-center gap-2">
+                            <i data-lucide="cloud-sun" class="w-5 h-5 text-cmd-amber"></i>
+                            Gaza Sector Environmental & Civilian Telemetry
+                        </h3>
+                        <p class="text-xs text-slate-400 font-mono-tech">Live IoT Sensor Feed • Sector Grid Alpha</p>
+                    </div>
+                    <span class="bg-cmd-amber/10 text-cmd-amber border border-cmd-amber/30 font-mono-tech text-[10px] px-2 py-0.5 rounded font-bold">
+                        32.5°C CRITICAL
+                    </span>
+                </div>
+
+                <!-- WEATHER WIDGET CARD -->
+                <div class="bg-gradient-to-br from-cmd-card to-slate-900 border border-cmd-border rounded-xl p-4 space-y-3 font-mono-tech">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="text-3xl font-bold font-cmd text-white">32.5°C</div>
+                            <div class="text-xs text-slate-400">
+                                <p class="text-cmd-amber font-semibold">Elevated Heat Stress</p>
+                                <p>Humidity: 68% | Wind: 14 km/h WSW</p>
+                            </div>
+                        </div>
+                        <i data-lucide="sun" class="w-8 h-8 text-cmd-amber animate-spin-slow"></i>
+                    </div>
+                    
+                    <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-cmd-border">
+                        <div class="bg-gradient-to-r from-cmd-emerald via-cmd-amber to-cmd-rose h-full w-[78%]"></div>
+                    </div>
+                    <div class="flex justify-between text-[9px] text-slate-400">
+                        <span>Solar Power Output: 94%</span>
+                        <span>Desalination Thermal Stress: High</span>
+                    </div>
+                </div>
+
+                <!-- SECTOR CIVILIAN DENSITY BREAKDOWN -->
+                <div class="space-y-3">
+                    <h4 class="font-cmd text-xs uppercase text-slate-300 font-bold tracking-wider flex items-center justify-between">
+                        <span>Sector Civilian Population Density</span>
+                        <span class="text-cmd-cyan font-mono-tech text-[11px]">Est. 2.1M Total</span>
+                    </h4>
+
+                    <!-- Sector 1: Rafah -->
+                    <div class="bg-cmd-dark p-3 rounded-xl border border-cmd-border space-y-1.5 font-mono-tech text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-semibold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-cmd-rose animate-ping"></span> Rafah Sector (MC-01)
+                            </span>
+                            <span class="text-cmd-rose font-bold">840,000 IDPs</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-cmd-rose h-full w-[85%]"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400">
+                            <span>Pediatric Triage Needs: Extreme</span>
+                            <span>Water Access: 3.2L/day</span>
+                        </div>
+                    </div>
+
+                    <!-- Sector 2: Deir al-Balah -->
+                    <div class="bg-cmd-dark p-3 rounded-xl border border-cmd-border space-y-1.5 font-mono-tech text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-semibold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-cmd-amber"></span> Deir al-Balah Sector (FC-01)
+                            </span>
+                            <span class="text-cmd-amber font-bold">620,000 IDPs</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-cmd-amber h-full w-[65%]"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400">
+                            <span>Field Hospital Capacity: 92%</span>
+                            <span>Formula Supply: 24h Left</span>
+                        </div>
+                    </div>
+
+                    <!-- Sector 3: Jabalia & North -->
+                    <div class="bg-cmd-dark p-3 rounded-xl border border-cmd-border space-y-1.5 font-mono-tech text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-semibold flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-cmd-cyan"></span> Jabalia / North (MC-03)
+                            </span>
+                            <span class="text-cmd-cyan font-bold">380,000 Civilians</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-cmd-cyan h-full w-[40%]"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400">
+                            <span>Convoy Route: High Risk</span>
+                            <span>Airdrop Target: Active</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <section class="glass-panel rounded-2xl p-6 space-y-6">
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cmd-border pb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="font-cmd font-bold text-xl text-white flex items-center gap-2">
+                            <i data-lucide="baby" class="w-6 h-6 text-cmd-rose animate-bounce"></i>
+                            PEDIATRIC & INFANT EMERGENCY CONVOY DEPLOYMENT CONSOLE
+                        </h2>
+                        <span class="bg-cmd-rose/20 text-cmd-rose border border-cmd-rose/40 font-mono-tech text-[10px] font-bold px-2.5 py-1 rounded-full animate-pulse">
+                            PRIORITY LEVEL: URGENT_CHILD_EVACUATION
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-mono-tech mt-1">
+                        Deployment matrix for Neonatal ICU Ambulances, Refrigerated Formula Carriers, and Mobile Triage Units across Gaza sectors.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="dispatchPediatricConvoy()" class="bg-gradient-to-r from-cmd-emerald to-teal-600 hover:from-teal-600 hover:to-cmd-emerald text-cmd-dark font-cmd font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-cmd-emerald/20 transition hover:scale-105 active:scale-95">
+                        <i data-lucide="truck" class="w-4 h-4"></i>
+                        DISPATCH PEDIATRIC CONVOY NOW
+                    </button>
+                    <button onclick="switchTransitCorridor('Emergency Overland')" class="bg-cmd-card border border-cmd-border hover:border-cmd-cyan text-slate-300 font-mono-tech text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-2">
+                        <i data-lucide="route" class="w-4 h-4 text-cmd-cyan"></i>
+                        Fast-Track Corridor
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARDS GRID FOR PEDIATRIC RESCUE UNITS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="pediatric-grid">
+                
+                <!-- UNIT 1: NEONATAL AMBULANCE CONVOY -->
+                <div class="bg-cmd-panel border border-cmd-rose/50 rounded-xl p-5 relative overflow-hidden group hover:border-cmd-rose transition duration-300 flex flex-col justify-between space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-cmd-rose/20 border border-cmd-rose/60 flex items-center justify-center">
+                                <i data-lucide="ambulance" class="w-6 h-6 text-cmd-rose"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cmd font-bold text-white text-base">Neonatal ICU Ambulance Squadron</h3>
+                                <p class="text-xs text-slate-400 font-mono-tech">Unit: ICU-NEO-ALPHA (6 Vehicles)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 font-mono-tech text-xs bg-cmd-dark p-3 rounded-lg border border-cmd-border">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Target Destination:</span>
+                            <span class="text-cmd-rose font-bold">Al-Shifa Pediatric Tent Annex</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Payload:</span>
+                            <span class="text-white">Incubators, Portable Oxygen, ECMO</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">ETA Countdown:</span>
+                            <span class="text-cmd-cyan font-bold" id="eta-unit-1">18 MINS (2.4 KM)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Status:</span>
+                            <span class="text-cmd-emerald font-bold flex items-center gap-1">
+                                <i data-lucide="navigation" class="w-3 h-3 animate-spin-slow"></i> ESCORT ACTIVE
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="overrideUnitStatus('ICU-NEO-ALPHA')" class="flex-1 bg-cmd-rose/20 hover:bg-cmd-rose/30 text-cmd-rose border border-cmd-rose/50 font-mono-tech font-bold py-2 rounded-lg text-xs transition flex items-center justify-center gap-1">
+                            <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Request Air Support
+                        </button>
+                    </div>
+                </div>
+
+                <!-- UNIT 2: REFRIGERATED INFANT FORMULA CARRIER -->
+                <div class="bg-cmd-panel border border-cmd-cyan/50 rounded-xl p-5 relative overflow-hidden group hover:border-cmd-cyan transition duration-300 flex flex-col justify-between space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-cmd-cyan/20 border border-cmd-cyan/60 flex items-center justify-center">
+                                <i data-lucide="milk" class="w-6 h-6 text-cmd-cyan"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cmd font-bold text-white text-base">Refrigerated Formula & Supply Fleet</h3>
+                                <p class="text-xs text-slate-400 font-mono-tech">Unit: FORMULA-COOL-04 (3 Trucks)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 font-mono-tech text-xs bg-cmd-dark p-3 rounded-lg border border-cmd-border">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Target Destination:</span>
+                            <span class="text-cmd-cyan font-bold">Deir al-Balah Hub FC-01</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Payload:</span>
+                            <span class="text-white">45,000 Infant Formula Tins & Electrolytes</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Cold Chain Temp:</span>
+                            <span class="text-cmd-emerald font-bold">3.2°C (Optimal)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">ETA Countdown:</span>
+                            <span class="text-cmd-cyan font-bold" id="eta-unit-2">34 MINS (8.1 KM)</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="overrideUnitStatus('FORMULA-COOL-04')" class="flex-1 bg-cmd-cyan/20 hover:bg-cmd-cyan/30 text-cmd-cyan border border-cmd-cyan/50 font-mono-tech font-bold py-2 rounded-lg text-xs transition flex items-center justify-center gap-1">
+                            <i data-lucide="thermometer" class="w-3.5 h-3.5"></i> Verify Cold Chain
+                        </button>
+                    </div>
+                </div>
+
+                <!-- UNIT 3: MOBILE SURGICAL TRIAGE POD -->
+                <div class="bg-cmd-panel border border-cmd-amber/50 rounded-xl p-5 relative overflow-hidden group hover:border-cmd-amber transition duration-300 flex flex-col justify-between space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-cmd-amber/20 border border-cmd-amber/60 flex items-center justify-center">
+                                <i data-lucide="stethoscope" class="w-6 h-6 text-cmd-amber"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-cmd font-bold text-white text-base">Mobile Pediatric Triage Pod</h3>
+                                <p class="text-xs text-slate-400 font-mono-tech">Unit: SURG-TRIAGE-09</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 font-mono-tech text-xs bg-cmd-dark p-3 rounded-lg border border-cmd-border">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Target Destination:</span>
+                            <span class="text-cmd-amber font-bold">Rafah Border Field Camp</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Capacity:</span>
+                            <span class="text-white">4 Operating Suites (Pediatric Specialty)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Power Supply:</span>
+                            <span class="text-cmd-emerald font-bold">Solar Microgrid Ready</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Status:</span>
+                            <span class="text-cmd-amber font-bold">DEPLOYED & OPERATIONAL</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button onclick="overrideUnitStatus('SURG-TRIAGE-09')" class="flex-1 bg-cmd-amber/20 hover:bg-cmd-amber/30 text-cmd-amber border border-cmd-amber/50 font-mono-tech font-bold py-2 rounded-lg text-xs transition flex items-center justify-center gap-1">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync Satellite Link
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- LEFT 8 COLUMNS: STREAMING TELEMETRY TERMINAL OUTPUT -->
+            <div class="lg:col-span-8 glass-panel rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+                <div class="flex items-center justify-between border-b border-cmd-border pb-3">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="terminal" class="w-5 h-5 text-cmd-cyan"></i>
+                        <h3 class="font-cmd font-bold text-white text-base">Live Telemetry & Satellite Dispatch Log</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-cmd-emerald animate-ping"></span>
+                        <span class="font-mono-tech text-[10px] text-cmd-emerald">STREAMING ACTIVE</span>
+                        <button onclick="clearTerminalLog()" class="text-slate-500 hover:text-white text-xs font-mono-tech ml-2">Clear</button>
+                    </div>
+                </div>
+
+                <!-- TERMINAL BOX -->
+                <div id="terminal-body" class="bg-slate-950 rounded-xl p-4 font-mono-tech text-xs text-slate-300 h-64 overflow-y-auto space-y-2 custom-scrollbar border border-cmd-border">
+                    <div class="text-slate-500">[SYSTEM] QNV-2030 HPC Network Initialized. Master Command Handshake Complete.</div>
+                    <div class="text-cmd-cyan">[SAT-LINK] Connected to Qatar Satellite Node (Es'hail-2). Latency: 12ms.</div>
+                    <div class="text-cmd-emerald">[TELEMETRY] Sector Alpha Proximity Check: Zero Interference detected on Air Transit Route DOH-CAI.</div>
+                    <div class="text-cmd-amber">[CONVOY-LOG] ICU-NEO-ALPHA cleared Rafah Gate MC-01. UN Escort assigned.</div>
+                </div>
+
+                <!-- QUICK INPUT SIMULATION -->
+                <div class="flex gap-2">
+                    <span class="font-mono-tech text-cmd-cyan text-sm flex items-center">&gt;</span>
+                    <input type="text" id="terminal-input" placeholder="Type command (e.g. /scan, /deploy, /clear)..." onkeypress="handleTerminalCommand(event)" class="flex-1 bg-cmd-dark border border-cmd-border rounded-lg px-3 py-1.5 text-xs font-mono-tech text-white focus:outline-none focus:border-cmd-cyan">
+                    <button onclick="sendManualCommand()" class="bg-cmd-cyan/20 hover:bg-cmd-cyan/30 text-cmd-cyan border border-cmd-cyan/50 font-mono-tech px-4 py-1.5 rounded-lg text-xs font-bold transition">EXECUTE</button>
+                </div>
+            </div>
+
+            <!-- RIGHT 4 COLUMNS: QUICK COMMAND BUTTONS & QNV-2030 CLEARANCE -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                <div class="border-b border-cmd-border pb-3">
+                    <h3 class="font-cmd font-bold text-white text-base flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-5 h-5 text-cmd-purple"></i>
+                        Quick Operational Controls
+                    </h3>
+                    <p class="text-xs text-slate-400 font-mono-tech">Qatar National Vision 2030 Air/Sea Hub Directives</p>
+                </div>
+
+                <div class="space-y-2.5 font-mono-tech text-xs">
+                    <button onclick="switchTransitCorridor('Air Corridor (Doha DOH)')" class="w-full bg-cmd-dark hover:bg-cmd-card border border-cmd-border hover:border-cmd-cyan p-3 rounded-xl text-left transition flex items-center justify-between group">
+                        <div>
+                            <p class="text-white font-bold group-hover:text-cmd-cyan transition">Priority Air Bridge Clearance</p>
+                            <p class="text-[10px] text-slate-400">Force 100% Free Pass Exemption</p>
+                        </div>
+                        <i data-lucide="plane-takeoff" class="w-5 h-5 text-cmd-cyan"></i>
+                    </button>
+
+                    <button onclick="switchTransitCorridor('Cyprus Sea Maritime Corridor')" class="w-full bg-cmd-dark hover:bg-cmd-card border border-cmd-border hover:border-cmd-purple p-3 rounded-xl text-left transition flex items-center justify-between group">
+                        <div>
+                            <p class="text-white font-bold group-hover:text-cmd-purple transition">Maritime Sea Terminal GZ-SEA-01</p>
+                            <p class="text-[10px] text-slate-400">Deploy Floating Desalination Module</p>
+                        </div>
+                        <i data-lucide="anchor" class="w-5 h-5 text-cmd-purple"></i>
+                    </button>
+
+                    <button onclick="switchTransitCorridor('Rafah Overland Customs Free Zone')" class="w-full bg-cmd-dark hover:bg-cmd-card border border-cmd-border hover:border-cmd-emerald p-3 rounded-xl text-left transition flex items-center justify-between group">
+                        <div>
+                            <p class="text-white font-bold group-hover:text-cmd-emerald transition">Zero-Tax Cargo Release</p>
+                            <p class="text-[10px] text-slate-400">Override Customs Delays</p>
+                        </div>
+                        <i data-lucide="file-check-2" class="w-5 h-5 text-cmd-emerald"></i>
+                    </button>
+                </div>
+
+                <div class="bg-cmd-maroon/20 border border-cmd-maroon/50 p-3 rounded-xl flex items-center gap-3">
+                    <i data-lucide="award" class="w-6 h-6 text-cmd-amber shrink-0"></i>
+                    <div class="text-[10px] font-mono-tech text-slate-300">
+                        <strong class="text-white">QNV 2030 HPC Sovereign Compliance:</strong> All data packets encrypted via QNV-HPC Quantum Shield. 0% Tariffs applied under International Relief Treaty.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-cmd-panel border-t border-cmd-border py-4 px-4 text-xs font-mono-tech text-slate-400 mt-6">
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+            <div>
+                <span class="font-bold text-white font-cmd">GAZA HUMANITARIAN MASTER COMMAND DASHBOARD</span> © 2026
+                <span class="text-slate-600">|</span> Qatar National Vision 2030 HPC Framework (Mkfininqatar)
+            </div>
+            <div class="flex items-center gap-4 text-[11px]">
+                <span class="text-cmd-cyan flex items-center gap-1"><i data-lucide="wifi" class="w-3.5 h-3.5"></i> Es'hailSat-2 Sync Active</span>
+                <span class="text-slate-600">•</span>
+                <span class="text-cmd-emerald">0% Duty Exemption Protocol Verified</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // System Clocks Logic
+        function updateClocks() {
+            const now = new Date();
+            document.getElementById('utc-clock').innerText = now.toUTCString().split(' ')[4] + ' UTC';
+            
+            // Gaza Time (EEST UTC+3)
+            const gazaTime = new Date(now.getTime() + (3 * 3600 * 1000));
+            document.getElementById('gaza-clock').innerText = gazaTime.toUTCString().split(' ')[4] + ' EEST';
+        }
+        setInterval(updateClocks, 1000);
+        updateClocks();
+
+        // Terminal Logging System
+        function logTerminal(message, type = 'info') {
+            const body = document.getElementById('terminal-body');
+            const entry = document.createElement('div');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            let colorClass = 'text-slate-300';
+            if (type === 'cyan') colorClass = 'text-cmd-cyan';
+            if (type === 'emerald') colorClass = 'text-cmd-emerald';
+            if (type === 'amber') colorClass = 'text-cmd-amber';
+            if (type === 'rose') colorClass = 'text-cmd-rose';
+
+            entry.className = colorClass;
+            entry.innerText = `[${timestamp}] ${message}`;
+            body.appendChild(entry);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function clearTerminalLog() {
+            document.getElementById('terminal-body').innerHTML = '<div class="text-slate-500">[SYSTEM] Terminal logs cleared by operator.</div>';
+        }
+
+        function handleTerminalCommand(e) {
+            if (e.key === 'Enter') {
+                sendManualCommand();
+            }
+        }
+
+        function sendManualCommand() {
+            const input = document.getElementById('terminal-input');
+            const cmd = input.value.trim();
+            if (!cmd) return;
+
+            logTerminal(`COMMAND EXECUTED: ${cmd}`, 'cyan');
+            
+            if (cmd.toLowerCase().includes('scan')) {
+                triggerEmergencyScan();
+            } else if (cmd.toLowerCase().includes('deploy')) {
+                dispatchPediatricConvoy();
+            } else if (cmd.toLowerCase().includes('clear')) {
+                clearTerminalLog();
+            } else {
+                logTerminal(`ACK: Command '${cmd}' dispatched to satellite queue.`, 'emerald');
+            }
+
+            input.value = '';
+        }
+
+        // Action Handlers
+        function triggerEmergencyScan() {
+            logTerminal("INITIATING HIGH-RESOLUTION SATELLITE & RADAR SCAN OVER GAZA SECTORS...", "rose");
+            setTimeout(() => logTerminal("RADAR SCAN COMPLETE: 12 Convoy Nodes Tracked. Zero Signal Interruption.", "emerald"), 1200);
+        }
+
+        function dispatchPediatricConvoy() {
+            logTerminal("DISPATCH PROTOCOL URGENT_CHILD_EVACUATION TRIGGERED!", "rose");
+            logTerminal("SQUADRON ICU-NEO-ALPHA ASSIGNED TOP-PRIORITY ROAD CORRIDOR AT RAFAH MC-01.", "amber");
+            alert("PEDIATRIC EMERGENCY CONVOY DISPATCHED: Satellite clearance broadcasts active across all sector checkpoints.");
+        }
+
+        function switchTransitCorridor(corridorName) {
+            logTerminal(`TRANSIT CORRIDOR SWITCHED TO: ${corridorName.toUpperCase()}`, 'amber');
+            logTerminal("0% Tariff & Priority Signal Flags injected into checkpoint queue.", "emerald");
+        }
+
+        function overrideUnitStatus(unitId) {
+            logTerminal(`MANUAL OVERRIDE ISSUED FOR UNIT [${unitId}]. Satellite link re-synchronized.`, 'cyan');
+        }
+
+        // Canvas Map & Transit Route Visualizer
+        const canvas = document.getElementById('corridorCanvas');
+        const ctx = canvas.getContext('2d');
+        let currentMode = 'all';
+
+        // Hub Coordinates (Normalized)
+        const nodes = [
+            { id: 'DOH', name: "Doha Hub (Qatar Airways Air Bridge)", x: 0.15, y: 0.3, type: 'air', color: '#06b6d4' },
+            { id: 'LAR', name: "Larnaca Sea Terminal (Cyprus Node)", x: 0.35, y: 0.2, type: 'sea', color: '#a855f7' },
+            { id: 'CAI', name: "Cairo Logistics Terminal (Egypt)", x: 0.3, y: 0.7, type: 'land', color: '#f59e0b' },
+            { id: 'RAF', name: "Rafah Entry Gate MC-01", x: 0.65, y: 0.75, type: 'gaza', color: '#f43f5e' },
+            { id: 'DEIR', name: "Deir al-Balah Node FC-01", x: 0.75, y: 0.5, type: 'gaza', color: '#f43f5e' },
+            { id: 'JAB', name: "Jabalia / North MC-03", x: 0.85, y: 0.25, type: 'gaza', color: '#f43f5e' },
+            { id: 'SEA01', name: "Al-Mawasi Sea Pier GZ-SEA-01", x: 0.7, y: 0.6, type: 'gaza', color: '#a855f7' }
+        ];
+
+        const connections = [
+            { from: 'DOH', to: 'RAF', type: 'air', color: '#06b6d4' },
+            { from: 'DOH', to: 'CAI', type: 'air', color: '#06b6d4' },
+            { from: 'LAR', to: 'SEA01', type: 'sea', color: '#a855f7' },
+            { from: 'CAI', to: 'RAF', type: 'land', color: '#f59e0b' },
+            { from: 'RAF', to: 'DEIR', type: 'land', color: '#10b981' },
+            { from: 'DEIR', to: 'JAB', type: 'land', color: '#10b981' }
+        ];
+
+        let pulseOffset = 0;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function switchCorridorMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.corridor-btn').forEach(btn => {
+                btn.classList.remove('bg-cmd-cyan', 'text-cmd-dark', 'font-bold');
+                btn.classList.add('text-slate-400');
+            });
+            event.target.classList.add('bg-cmd-cyan', 'text-cmd-dark', 'font-bold');
+            event.target.classList.remove('text-slate-400');
+            logTerminal(`Map View Filtered to Mode: ${mode.toUpperCase()}`, 'cyan');
+        }
+
+        function drawMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Draw Background Grid
+            ctx.strokeStyle = 'rgba(30, 41, 59, 0.4)';
+            ctx.lineWidth = 1;
+            const gridSize = 30;
+            for (let x = 0; x < w; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+            for (let y = 0; y < h; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+
+            // Draw Connections
+            connections.forEach(conn => {
+                if (currentMode !== 'all' && conn.type !== currentMode && currentMode !== 'gaza') return;
+
+                const start = nodes.find(n => n.id === conn.from);
+                const end = nodes.find(n => n.id === conn.to);
+
+                const x1 = start.x * w;
+                const y1 = start.y * h;
+                const x2 = end.x * w;
+                const y2 = end.y * h;
+
+                // Line
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = conn.color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([6, 6]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Animated Moving Packet Dot
+                const dist = Math.hypot(x2 - x1, y2 - y1);
+                const progress = ((pulseOffset % 100) / 100);
+                const px = x1 + (x2 - x1) * progress;
+                const py = y1 + (y2 - y1) * progress;
+
+                ctx.beginPath();
+                ctx.arc(px, py, 4, 0, Math.PI * 2);
+                ctx.fillStyle = conn.color;
+                ctx.shadowColor = conn.color;
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Draw Nodes
+            nodes.forEach(node => {
+                const nx = node.x * w;
+                const ny = node.y * h;
+
+                // Outer Ring Pulsing
+                ctx.beginPath();
+                ctx.arc(nx, ny, 12 + Math.sin(pulseOffset * 0.05) * 3, 0, Math.PI * 2);
+                ctx.strokeStyle = node.color;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Core Node
+                ctx.beginPath();
+                ctx.arc(nx, ny, 6, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+
+                // Label
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "10px 'JetBrains Mono'";
+                ctx.fillText(node.id, nx + 10, ny + 4);
+            });
+
+            pulseOffset += 0.8;
+            requestAnimationFrame(drawMap);
+        }
+
+        drawMap();
+
+        // ETA Countdown Timers Simulation
+        let etaSec1 = 18 * 60;
+        let etaSec2 = 34 * 60;
+
+        setInterval(() => {
+            if (etaSec1 > 0) etaSec1--;
+            if (etaSec2 > 0) etaSec2--;
+
+            const m1 = Math.floor(etaSec1 / 60);
+            const s1 = etaSec1 % 60;
+            document.getElementById('eta-unit-1').innerText = `${m1} MINS ${s1 < 10 ? '0' : ''}${s1}S (2.4 KM)`;
+
+            const m2 = Math.floor(etaSec2 / 60);
+            const s2 = etaSec2 % 60;
+            document.getElementById('eta-unit-2').innerText = `${m2} MINS ${s2 < 10 ? '0' : ''}${s2}S (8.1 KM)`;
+        }, 1000);
+    </script>
+</body>
+</html>
+```
+
+### Key Highlights of this Master Dashboard:
+1. **Header & Title System**: Features the requested QNV 2030 HPC branding, zero-drift active telemetry status, dual synchronized UTC and Gaza Local clocks, and quick command scan triggers.
+2. **Tri-Corridor Interactive Canvas & Radar**: Custom JavaScript Canvas rendering connecting Doha (Air), Cyprus (Sea), and Cairo (Overland) directly into Gaza nodes with active moving telemetry pulse markers, map filtering controls, and a rotating radar visualizer.
+3. **Live Environmental & Civilian Sector Intelligence**: Displays temperature (`32.5°C`), thermal stress levels, solar output metrics, and sector-by-sector civilian density breakdowns for Rafah, Deir al-Balah, and Jabalia.
+4. **Pediatric & Child Rescue Console**: Dedicated deployment matrix featuring Neonatal ICU Ambulances, Refrigerated Infant Formula carriers, and Mobile Surgical Triage Pods with active ETA countdown timers and priority `URGENT_CHILD_EVACUATION` status flags.
+5. **Streaming Terminal Output & Interactive Controls**: Command console with real-time log streaming, custom command execution input, and quick-toggle operational mode triggers.
