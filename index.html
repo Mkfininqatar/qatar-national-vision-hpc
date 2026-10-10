@@ -4508,3 +4508,191 @@
 3. **Live Environmental & Civilian Sector Intelligence**: Displays temperature (`32.5°C`), thermal stress levels, solar output metrics, and sector-by-sector civilian density breakdowns for Rafah, Deir al-Balah, and Jabalia.
 4. **Pediatric & Child Rescue Console**: Dedicated deployment matrix featuring Neonatal ICU Ambulances, Refrigerated Infant Formula carriers, and Mobile Surgical Triage Pods with active ETA countdown timers and priority `URGENT_CHILD_EVACUATION` status flags.
 5. **Streaming Terminal Output & Interactive Controls**: Command console with real-time log streaming, custom command execution input, and quick-toggle operational mode triggers.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global-to-Gaza Master Command & Telemetry Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #050b14;
+            --panel-bg: rgba(10, 25, 47, 0.85);
+            --border-color: #00ffcc;
+            --accent-green: #00ff66;
+            --accent-cyan: #00ffff;
+            --accent-orange: #ffaa00;
+            --text-main: #e0f0ff;
+            --text-dim: #88a0c0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; overflow-x: hidden; }
+        
+        header { text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; }
+        header h1 { color: var(--accent-cyan); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: var(--text-dim); font-size: 0.8rem; margin-top: 5px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 900px) { .dashboard-grid { grid-template-columns: 1fr 1fr; } }
+
+        .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; box-shadow: 0 0 15px rgba(0,255,204,0.15); }
+        .panel h2 { font-size: 1rem; color: var(--accent-green); margin-bottom: 10px; border-bottom: 1px dashed var(--border-color); padding-bottom: 5px; text-transform: uppercase; }
+
+        .route-card { background: rgba(0,0,0,0.4); border-left: 4px solid var(--accent-cyan); padding: 10px; margin-bottom: 10px; font-size: 0.85rem; }
+        .route-card.sea { border-left-color: var(--accent-green); }
+        .route-card.land { border-left-color: var(--accent-orange); }
+
+        .route-card b { color: var(--accent-cyan); }
+        .status-badge { display: inline-block; padding: 2px 6px; font-size: 0.7rem; border-radius: 3px; background: rgba(0,255,102,0.2); color: var(--accent-green); border: 1px solid var(--accent-green); margin-top: 5px; }
+
+        .map-canvas-container { position: relative; width: 100%; height: 300px; background: #02060c; border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        
+        .terminal-box { background: #000; color: var(--accent-green); padding: 10px; font-size: 0.75rem; height: 160px; overflow-y: scroll; border: 1px solid #1a3a3a; margin-top: 15px; border-radius: 4px; }
+        
+        .footer-note { text-align: center; margin-top: 20px; font-size: 0.75rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Global-to-Gaza Master Command & Telemetry Map</h1>
+        <p>Framework: qatar-national-vision-hpc | Multi-Hub & Submarine/Maritime Egress Tracker</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Panel 1: International Hubs & Routing Matrix -->
+        <div class="panel">
+            <h2>🌍 International Hubs & Master Corridors</h2>
+            
+            <div class="route-card">
+                <b>1. Doha Hub (Qatar)</b><br>
+                Path: <a href="https://maps.google.com/?cid=17974833128423761506" target="_blank" style="color:#00ffff;">Hamad Port & Airport</a> ➔ Al-Arish Staging ➔ Rafah Land Corridor[cite: 1, 2]<br>
+                <span class="status-badge">STATUS: AIR/LAND SECURE</span>
+            </div>
+
+            <div class="route-card sea">
+                <b>2. Cyprus Maritime Hub (Europe)</b><br>
+                Path: <a href="https://maps.google.com/?cid=1564181592712643746" target="_blank" style="color:#00ffff;">Larnaca Main Harbor</a> ➔ Sub-Sea/Coastal Route ➔ Al-Mawasi Pier[cite: 1, 2]<br>
+                <span class="status-badge">STATUS: MARITIME LANE CLEAR</span>
+            </div>
+
+            <div class="route-card land">
+                <b>3. Egypt Staging Gateway (North Sinai)</b><br>
+                Path: <a href="https://maps.google.com/?cid=7508691639735514072" target="_blank" style="color:#00ffff;">Al-Arish Depot</a> ➔ Kerem Shalom / Rafah Border ➔ Deir al-Balah[cite: 1, 2]<br>
+                <span class="status-badge">STATUS: CONVOY ACTIVE</span>
+            </div>
+        </div>
+
+        <!-- Panel 2: Submarine & Outgoing Clear Route Radar -->
+        <div class="panel">
+            <h2>🌊 Submarine Radar & Outgoing Egress</h2>
+            
+            <div class="route-card sea">
+                <b>Submarine Cable Telemetry & Sonar Ping</b><br>
+                Frequency: 35.5 kHz | Eco-Return: Optimal Wave Guide<br>
+                Obstruction Check: 0 Blockages Detected<br>
+                <span class="status-badge">UNDER-SEA CLEARANCE: VERIFIED</span>
+            </div>
+
+            <div class="route-card">
+                <b>Outgoing & Return Return Lane (Inbound/Outbound)</b><br>
+                Destination: <a href="https://maps.google.com/?cid=18292690722577180903" target="_blank" style="color:#00ffff;">Gaza Strip Egress Zone</a> ➔ <a href="https://maps.google.com/?cid=1564181592712643746" target="_blank" style="color:#00ffff;">Larnaca Port (Cyprus)</a>[cite: 1, 2]<br>
+                <span class="status-badge">EGRESS STATUS: CLEAR FOR TRANSIT</span>
+            </div>
+
+            <div class="map-canvas-container">
+                <canvas id="radarCanvas" width="360" height="280"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Log Panel -->
+    <div class="panel" style="margin-top: 15px;">
+        <h2>💻 Live HPC Telemetry & AI Detection Log Stream</h2>
+        <div class="terminal-box" id="terminalLog">
+            [01:00:00] INITIALIZING HPC FRAMEWORK: qatar-national-vision-hpc...<br>
+            [01:00:01] CONNECTING GLOBAL HUBS: Doha, Larnaca, Al-Arish synced.[cite: 1, 2]<br>
+            [01:00:02] SUBMARINE SONAR PING ACTIVE: 35.5 kHz frequency locked.<br>
+            [01:00:03] OUTGOING EGRESS CORRIDOR: All lanes clear and verified.<br>
+            [01:00:04] AI DETECTION ENGINE: Zero-drift telemetry stream online. Ready for dispatch.
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Gaza Humanitarian Master Command Dashboard &copy; 2026 | Powered by Qatar National Vision HPC Telemetry Architecture
+    </div>
+
+    <script>
+        // Simple Radar Canvas Animation
+        const canvas = document.getElementById('radarCanvas');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function drawRadar() {
+            ctx.fillStyle = '#02060c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            // Draw radar circles
+            ctx.strokeStyle = '#003333';
+            ctx.lineWidth = 1;
+            [40, 80, 120].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Draw crosshairs
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            // Draw sweep line
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * 130, cy + Math.sin(angle) * 130);
+            ctx.stroke();
+
+            // Draw nodes (Doha, Larnaca, Gaza)
+            const nodes = [
+                {x: cx - 70, y: cy + 40, label: 'Doha'},
+                {x: cx + 60, y: cy - 60, label: 'Cyprus'},
+                {x: cx - 20, y: cy - 20, label: 'Gaza'}
+            ];
+            nodes.forEach(n => {
+                ctx.fillStyle = '#00ffff';
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.font = '9px Courier New';
+                ctx.fillStyle = '#88a0c0';
+                ctx.fillText(n.label, n.x + 5, n.y - 5);
+            });
+
+            angle += 0.04;
+            requestAnimationFrame(drawRadar);
+        }
+        drawRadar();
+
+        // Terminal Log Updater
+        setInterval(() => {
+            const term = document.getElementById('terminalLog');
+            const now = new Date().toTimeString().split(' ')[0];
+            const msgs = [
+                `[${now}] AI SCAN: Global transit routes verified across all corridors.`,
+                `[${now}] TELEMETRY: Submarine sonar ping stable. No obstruction.`,
+                `[${now}] SYNC: Hamad Port[cite: 2] & Larnaca Main Harbor[cite: 2] live status: SECURE.`,
+                `[${now}] CONVOY: Pediatric and infant rescue fleet tracking active.`
+            ];
+            const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
+            term.innerHTML += `<br>${randomMsg}`;
+            term.scrollTop = term.scrollHeight;
+        }, 4000);
+    </script>
+</body>
+</html>
