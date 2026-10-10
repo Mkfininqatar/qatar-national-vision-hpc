@@ -1143,3 +1143,169 @@ def update_boycott_dashboard(boycott_level):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8052)
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# SYSTEM DATA: BOYCOTT, ISOLATION & SOVEREIGNTY METRICS
+# ---------------------------------------------------------
+system_data = {
+    "Operational Node": [
+        "Regional Trade Severance",
+        "Maritime & Port Refusal",
+        "State Arms & Tech Embargo",
+        "Corporate Divestment Matrix",
+        "International Legal Sanctions",
+        "Gaza Sovereign Infrastructure"
+    ],
+    "Isolation Pressure (%)": [95, 88, 92, 85, 78, 100],
+    "Execution Status": [
+        "Trade Cutoff Active",
+        "Port Entry Denied",
+        "Full Embargo Enforced",
+        "Divestment Complete",
+        "ICJ/ICC Compliance",
+        "Unconditional Freedom Required"
+    ]
+}
+
+df_system = pd.DataFrame(system_data)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Gaza Freedom & Systemic Rejection Engine"
+
+# ---------------------------------------------------------
+# UI LAYOUT (MAROON & RED REJECTION PALETTE)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#0f0507', # Deep maroon dark background
+    'color': '#f8fafc',
+    'fontFamily': 'Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header Section
+    html.Div([
+        html.H1("🇵🇸 GAZA FREEDOM & SYSTEMIC REJECTION ENGINE", 
+                style={'color': '#ef4444', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Systemic Pressure Matrix: Enforcing Total Trade Isolation & Unconditional Sovereignty",
+               style={'color': '#cbd5e1', 'fontSize': '15px'})
+    ], style={'borderBottom': '1px solid #331018', 'paddingBottom': '15px'}),
+
+    # Key Indicator Cards
+    html.Div([
+        html.Div([
+            html.H4("🚫 Global Trade Isolation", style={'color': '#f87171', 'margin': '0 0 5px 0'}),
+            html.H2("90% CUTOFF", style={'color': '#ef4444', 'margin': '0 0 5px 0'}),
+            html.P("Active state-level embargoes.", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1f0a10', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #ef4444'}),
+
+        html.Div([
+            html.H4("⛓️ Chain Release Metric", style={'color': '#f87171', 'margin': '0 0 5px 0'}),
+            html.H2("FULL DEMAND", style={'color': '#fbbf24', 'margin': '0 0 5px 0'}),
+            html.P("Zero condition, absolute freedom.", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1f0a10', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #fbbf24'}),
+
+        html.Div([
+            html.H4("⚖️ Systemic Justice Index", style={'color': '#f87171', 'margin': '0 0 5px 0'}),
+            html.H2("NON-CHARITY", style={'color': '#22c55e', 'margin': '0 0 5px 0'}),
+            html.P("Focus on liberation over aid.", style={'color': '#94a3b8', 'margin': '0'})
+        ], style={'backgroundColor': '#1f0a10', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #22c55e'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Visualizations Grid
+    html.Div([
+        html.Div([
+            html.H3("📊 Isolation & Boycott Intensity Index", style={'color': '#ef4444'}),
+            dcc.Graph(id='bar-chart-system')
+        ], style={'backgroundColor': '#1f0a10', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🍩 Global Network Neutralization Ratio", style={'color': '#ef4444'}),
+            dcc.Graph(id='pie-chart-system')
+        ], style={'backgroundColor': '#1f0a10', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Simulation Controls
+    html.Div([
+        html.H3("🎛️ Total Isolation & Liberation Escalation Slider", style={'color': '#ef4444'}),
+        html.P("Adjust systemic pressure level to simulate total rejection and siege dismantlement:", style={'color': '#cbd5e1'}),
+        dcc.Slider(
+            id='system-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=90,
+            marks={i: f'{i}% Cutoff' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='system-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '14px', 
+            'backgroundColor': '#0f0507', 
+            'borderRadius': '6px', 
+            'textAlign': 'center',
+            'border': '1px solid #7f1d1d'
+        })
+    ], style={'backgroundColor': '#1f0a10', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# CALLBACK LOGIC
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-system', 'figure'),
+     Output('pie-chart-system', 'figure'),
+     Output('system-status-output', 'children')],
+    [Input('system-slider', 'value')]
+)
+def update_system_dashboard(isolation_level):
+    # Bar Chart
+    fig_bar = px.bar(
+        df_system, 
+        x="Isolation Pressure (%)", 
+        y="Operational Node", 
+        color="Execution Status",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_sequence=px.colors.sequential.Reds_r
+    )
+    fig_bar.update_layout(paper_bgcolor='#1f0a10', plot_bgcolor='#1f0a10', font=dict(color='#f8fafc'))
+
+    # Pie/Donut Chart
+    donut_data = pd.DataFrame({
+        "System State": ["Systemically Rejection Enforced", "Remaining External Link"],
+        "Percentage": [isolation_level, 100 - isolation_level]
+    })
+    
+    fig_pie = px.pie(
+        donut_data,
+        values="Percentage",
+        names="System State",
+        color="System State",
+        color_discrete_map={"Systemically Rejection Enforced": "#ef4444", "Remaining External Link": "#475569"},
+        hole=0.5,
+        template="plotly_dark"
+    )
+    fig_pie.update_layout(paper_bgcolor='#1f0a10', plot_bgcolor='#1f0a10', font=dict(color='#f8fafc'))
+
+    # Status Message Execution
+    if isolation_level >= 80:
+        status_text = f"🇵🇸 MAXIMUM SYSTEMIC PRESSURE ({isolation_level}%): Full trade rejection active. Siege dismantlement & unconditional Gaza liberation required."
+    elif isolation_level >= 50:
+        status_text = f"🟡 ESCALATING BOYCOTT ({isolation_level}%): Widespread diplomatic embargoes and port closures underway."
+    else:
+        status_text = f"🔴 INSUFFICIENT PRESSURE ({isolation_level}%): Global actions require immediate escalation for absolute justice."
+
+    return fig_bar, fig_pie, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8055)
