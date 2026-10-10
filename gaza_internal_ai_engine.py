@@ -1439,3 +1439,239 @@ if __name__ == '__main__':
     ]
   }
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Gaza Master Blueprint - Global Transit Portal</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+            --accent-green: #2ea043;
+            --accent-blue: #58a6ff;
+            --accent-gold: #d29922;
+            --text-main: #c9d1d9;
+            --text-bright: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        header {
+            background-color: var(--panel-bg);
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--text-bright);
+            letter-spacing: 1px;
+        }
+
+        header span {
+            background: var(--accent-green);
+            color: #000;
+            padding: 4px 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .container {
+            padding: 30px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #21262d;
+            color: var(--text-bright);
+        }
+
+        .framework-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .framework-list li {
+            background-color: #21262d;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .framework-list h3 {
+            margin: 0 0 5px 0;
+            font-size: 15px;
+            color: var(--text-bright);
+        }
+
+        .framework-list p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        .region-card {
+            background: #21262d;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        .region-card strong {
+            color: var(--accent-green);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 12px;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sovereign Gaza Master Blueprint</h1>
+        <span>GLOBAL TRANSIT SYSTEM LIVE</span>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECTION 1: TRANSIT ROADMAP -->
+        <div class="card" style="margin-bottom: 25px;">
+            <h2>🗺️ 1. International Transit Roadmap & Entry Points</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entry Corridor</th>
+                        <th>Route Type</th>
+                        <th>Operational Function & Scope</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Rafah Crossing</strong></td>
+                        <td>Egypt - Gaza Overland</td>
+                        <td>Cairo International Airport ➔ Al-Arish Transit Hub. Humanitarian personnel & HPC hardware deployment.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kerem Shalom</strong></td>
+                        <td>International Logistics Route</td>
+                        <td>Heavy infrastructure, Solido grid equipment, water desalination plants, and energy modules.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cyprus Marine Corridor (Amalthea Initiative)</strong></td>
+                        <td>Larnaca Port - Gaza Coast</td>
+                        <td>Direct maritime delivery of international relief supplies and digital signaling satellite hardware.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="grid-2">
+            <!-- SECTION 2: REGIONAL VOLUNTEER REGISTRY -->
+            <div class="card">
+                <h2>🌍 2. Regional Volunteer & Talent Registry</h2>
+                
+                <div class="region-card">
+                    <strong>GCC Region (Qatar, KSA, UAE):</strong>
+                    <p style="margin: 5px 0 0 0; font-size: 13px;">Global Digital Twin Architecture, Field Logistics, and HPC Telemetry Engineering Teams.</p>
+                </div>
+
+                <div class="region-card">
+                    <strong>South Asia (Bangladesh, Pakistan, India):</strong>
+                    <p style="margin: 5px 0 0 0; font-size: 13px;">Software Developers, Telecom Engineers, Civil and Infrastructure Surveyors.</p>
+                </div>
+
+                <div class="region-card">
+                    <strong>Europe & Americas (USA, EU Countries):</strong>
+                    <p style="margin: 5px 0 0 0; font-size: 13px;">Green Environmental Technology Specialists, Satellite Communications, and Medical Topology Experts.</p>
+                </div>
+            </div>
+
+            <!-- SECTION 3: CHARGE-FREE FRAMEWORK -->
+            <div class="card">
+                <h2>✈️ 3. Charge-Free & Tax-Exempt Policy Framework</h2>
+                <ul class="framework-list">
+                    <li>
+                        <h3>1. Humanitarian Transit Visa (HT-Visa)</h3>
+                        <p>Special fast-track transit passes & zero-fee immigration clearance at international airports for all registered experts.</p>
+                    </li>
+                    <li>
+                        <h3>2. Zero-Tax Humanitarian Cargo</h3>
+                        <p>100% customs & import duty waiver on Digital Twin servers, sensor nodes, solar panels, and signaling devices.</p>
+                    </li>
+                    <li>
+                        <h3>3. Free Transit Allowance</h3>
+                        <p>Airline partnerships and government sponsorships providing free transit tickets for technical response teams.</p>
+                    </li>
+                    <li>
+                        <h3>4. Tax-Free International Donations</h3>
+                        <p>0% banking fees, remittance charges, or cross-border taxes on all incoming Reconstruction Fund transactions.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Sovereign Gaza Master Blueprint &copy; 2026 | High-Performance Computing & Spatial Digital Twin Infrastructure
+    </footer>
+
+</body>
+</html>
