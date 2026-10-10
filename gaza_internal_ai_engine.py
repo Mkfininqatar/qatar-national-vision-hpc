@@ -394,3 +394,27 @@ reconstruction_data = {
 df_reconstruction = pd.DataFrame(reconstruction_data)
 print("--- GAZA PHASE 2: RECONSTRUCTION & TRANSPORT ROADMAP ---")
 print(df_reconstruction.to_string(index=False))
+import pandas as pd
+
+# Housing Security Tracking Metrics
+housing_allocation = {
+    "Housing Zone": [
+        "North Gaza Residential Cluster",
+        "Gaza City Central Housing Hub",
+        "Deir al-Balah Eco-Village",
+        "Khan Yunis Modular Units",
+        "Rafah Secure Settlement Zone"
+    ],
+    "Allocation Status (%)": [88, 92, 85, 90, 86],
+    "Infrastructure Readiness": [
+        "Solar Grid Connected",
+        "Water & Sanitation Active",
+        "Fully Operational",
+        "Modular Assembly Active",
+        "Water Desalination Linked"
+    ]
+}
+
+df_housing = pd.DataFrame(housing_allocation)
+print("--- GAZA PERMANENT HOUSING SECURITY TELEMETRY ---")
+print(df_housing.to_string(index=False))
