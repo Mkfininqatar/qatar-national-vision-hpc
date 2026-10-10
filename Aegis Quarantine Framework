@@ -800,3 +800,179 @@ def update_dashboard(rejection_level):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# GREEN DATABASE MATRIX & ECO-TELEMETRY DATA
+# ---------------------------------------------------------
+green_matrix_data = {
+    "Database Node": [
+        "Core Agri-Telemetry DB",
+        "Semiconductor Supply Log",
+        "Energy Grid Matrix",
+        "Desalination Eco-Node",
+        "LEO Signal Backbone",
+        "AI Co-pilot Ledger"
+    ],
+    "Eco-Efficiency Score (%)": [88, 92, 79, 85, 94, 91],
+    "Status": [
+        "Optimized",
+        "Secured",
+        "Low Emission",
+        "Stable",
+        "Encrypted",
+        "Synced"
+    ]
+}
+
+df_green = pd.DataFrame(green_matrix_data)
+
+# Initialize Dash App with Green Theme
+app = dash.Dash(__name__)
+app.title = "Aegis Green Database Matrix Dashboard"
+
+# ---------------------------------------------------------
+# LAYOUT DESIGN (EMERALD & MATRIX GREEN PALETTE)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#022c22', # Deep forest/matrix dark green background
+    'color': '#ecfdf5',
+    'fontFamily': 'Courier New, monospace',
+    'padding': '25px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🟢 AEGIS: Green Database Matrix & Eco-Telemetry", 
+                style={'color': '#34d399', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Tracking Sustainable Resource Nodes, Carbon Offset, and System Redundancy",
+               style={'color': '#a7f3d0', 'fontSize': '15px'})
+    ], style={'borderBottom': '1px solid #065f46', 'paddingBottom': '15px'}),
+
+    # Key Metrics Grid
+    html.Div([
+        html.Div([
+            html.H4("🌱 Eco-Resilience Index", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("89.8%", style={'color': '#34d399', 'margin': '0 0 5px 0'}),
+            html.P("Average database sustainability score.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #34d399'}),
+
+        html.Div([
+            html.H4("♻️ Resource Recovery Rate", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("80.0% ACTIVE", style={'color': '#10b981', 'margin': '0 0 5px 0'}),
+            html.P("Alternative supply route resilience.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #10b981'}),
+
+        html.Div([
+            html.H4("⚡ Carbon Neutrality Goal", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("ZERO-EMIT", style={'color': '#6366f1', 'margin': '0 0 5px 0'}),
+            html.P("Autonomous off-grid processing.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #6366f1'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Charts Section
+    html.Div([
+        html.Div([
+            html.H3("📊 Database Node Eco-Efficiency Matrix", style={'color': '#34d399'}),
+            dcc.Graph(id='bar-chart-green')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🔄 Sustainable Recovery Distribution", style={'color': '#34d399'}),
+            dcc.Graph(id='pie-chart-green')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Simulation Controls
+    html.Div([
+        html.H3("🎛️ Green Matrix Reallocation Level", style={'color': '#34d399'}),
+        html.P("Adjust sustainable resource distribution and local autonomy percentage:", style={'color': '#a7f3d0'}),
+        dcc.Slider(
+            id='green-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=80,
+            marks={i: f'{i}% Autonomy' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='green-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '12px', 
+            'backgroundColor': '#022c22', 
+            'borderRadius': '6px', 
+            'textAlign': 'center',
+            'border': '1px solid #059669'
+        })
+    ], style={'backgroundColor': '#064e3b', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# INTERACTIVITY & CALLBACKS
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-green', 'figure'),
+     Output('pie-chart-green', 'figure'),
+     Output('green-status-output', 'children')],
+    [Input('green-slider', 'value')]
+)
+def update_green_dashboard(autonomy_level):
+    # 1. Bar Chart
+    fig_bar = px.bar(
+        df_green, 
+        x="Eco-Efficiency Score (%)", 
+        y="Database Node", 
+        color="Status",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_sequence=px.colors.sequential.Greens
+    )
+    fig_bar.update_layout(
+        paper_bgcolor='#064e3b', 
+        plot_bgcolor='#064e3b', 
+        margin=dict(t=40, b=20, l=20, r=20),
+        font=dict(color='#ecfdf5')
+    )
+
+    # 2. Donut Chart for Autonomy vs External Dependence
+    autonomy_data = pd.DataFrame({
+        "Category": ["Local Autonomous Green Nodes", "External Dependent Nodes"],
+        "Value": [autonomy_level, 100 - autonomy_level]
+    })
+    
+    fig_pie = px.pie(
+        autonomy_data,
+        values="Value",
+        names="Category",
+        color="Category",
+        color_discrete_map={"Local Autonomous Green Nodes": "#10b981", "External Dependent Nodes": "#047857"},
+        hole=0.5,
+        template="plotly_dark"
+    )
+    fig_pie.update_layout(
+        paper_bgcolor='#064e3b', 
+        plot_bgcolor='#064e3b', 
+        margin=dict(t=40, b=20, l=20, r=20),
+        font=dict(color='#ecfdf5')
+    )
+
+    # 3. Dynamic Output Message
+    if autonomy_level >= 80:
+        status_text = f"🟢 MAXIMUM GREEN AUTONOMY: {autonomy_level}% local sustainable network active. Zero external vulnerability."
+    elif autonomy_level >= 40:
+        status_text = f"🟡 HYBRID ECO-STATE: {autonomy_level}% autonomy. Balancing local resources with external supply channels."
+    else:
+        status_text = f"🔴 LOW AUTONOMY WARNING: Only {autonomy_level}% local green nodes active. High dependency on external flows."
+
+    return fig_bar, fig_pie, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8051)
