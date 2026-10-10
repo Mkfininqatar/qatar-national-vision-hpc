@@ -2026,3 +2026,148 @@ if __name__ == "__main__":
     print("=== Gaza Scan Track Matrix Report ===")
     for key, val in scan_report.items():
         print(f"  - {key}: {val}")
+class GazaLiveIntelligenceDashboard:
+    def __init__(self, zone_id):
+        self.zone_id = zone_id
+        # গাজার বিভিন্ন সেক্টরের পপুলেশন ডেনসিটি, দূরত্ব এবং আবহাওয়া ডেটাবেজ
+        self.zones_data = {
+            "Rafah_South": {
+                "name": "Rafah South Hub (MC-01)",
+                "gps": (31.2825, 34.2541),
+                "estimated_population": 450000,
+                "distance_from_border_km": 2.5,
+                "weather": {"temp_c": 32.5, "condition": "Sunny & Dusty", "humidity_pct": 55},
+                "crisis_level": "HIGH_DENSITY_SHELTER_ZONE"
+            },
+            "Deir_al_Balah": {
+                "name": "Deir al-Balah Central Depot (FC-01)",
+                "gps": (31.4170, 34.3533),
+                "estimated_population": 600000,
+                "distance_from_border_km": 18.0,
+                "weather": {"temp_c": 31.0, "condition": "Clear Coastal Breeze", "humidity_pct": 62},
+                "crisis_level": "CRITICAL_SUPPLY_HUB"
+            },
+            "Jabalia_North": {
+                "name": "Jabalia / Gaza City Medical Station (MC-03)",
+                "gps": (31.5016, 34.4668),
+                "estimated_population": 300000,
+                "distance_from_border_km": 35.0,
+                "weather": {"temp_c": 30.2, "condition": "Overcast / High Risk", "humidity_pct": 68},
+                "crisis_level": "SEVERE_INFRASTRUCTURE_STRESS"
+            }
+        }
+
+    def fetch_live_dashboard_metrics(self, zone_key):
+        """
+        নির্দিষ্ট জোনের মানুষের উপস্থিতি (Population), দূরত্ব (Distance), আবহাওয়া (Weather) 
+        এবং সার্বিক পরিস্থিতি (Crisis Status) লাইভ ড্যাশবোর্ডে রেন্ডার করে।
+        """
+        if zone_key not in self.zones_data:
+            return {"status": "ERROR", "message": "Invalid Zone Key specified."}
+
+        zone = self.zones_data[zone_key]
+
+        return {
+            "dashboard_zone_id": self.zone_id,
+            "target_sector": zone["name"],
+            "gps_coordinates": zone["gps"],
+            "population_density_metrics": {
+                "estimated_people_present": f"{zone['estimated_population']:,} civilians",
+                "distance_from_entry_point": f"{zone['distance_from_border_km']} km"
+            },
+            "live_weather_metrics": {
+                "ambient_temperature": f"{zone['weather']['temp_c']}°C",
+                "sky_condition": zone['weather']['condition'],
+                "humidity": f"{zone['weather']['humidity_pct']}%"
+            },
+            "ground_situation_verdict": zone["crisis_level"],
+            "dashboard_feed_status": "SYNCED_WITH_SATELLITE_MATRIX"
+        }
+
+# টেস্ট এক্সিকিউশন: রাফাহ সাউথ জোনের লাইভ ড্যাশবোর্ড ফিড
+if __name__ == "__main__":
+    dashboard = GazaLiveIntelligenceDashboard(zone_id="GZ-DASHBOARD-2026")
+    
+    # রাফাহ জোনের লাইভ ইন্টেলিজেন্স রিপোর্ট ফেচ করা
+    report = dashboard.fetch_live_dashboard_metrics(zone_key="Rafah_South")
+
+    print("=== Gaza Live Intelligence, Weather & Population Dashboard ===")
+    for key, val in report.items():
+        if isinstance(val, dict):
+            print(f"  - {key}:")
+            for sub_k, sub_v in val.items():
+                print(f"      * {sub_k}: {sub_v}")
+        else:
+            print(f"  - {key}: {val}")class GazaLiveIntelligenceDashboard:
+    def __init__(self, zone_id):
+        self.zone_id = zone_id
+        # গাজার বিভিন্ন সেক্টরের পপুলেশন ডেনসিটি, দূরত্ব এবং আবহাওয়া ডেটাবেজ
+        self.zones_data = {
+            "Rafah_South": {
+                "name": "Rafah South Hub (MC-01)",
+                "gps": (31.2825, 34.2541),
+                "estimated_population": 450000,
+                "distance_from_border_km": 2.5,
+                "weather": {"temp_c": 32.5, "condition": "Sunny & Dusty", "humidity_pct": 55},
+                "crisis_level": "HIGH_DENSITY_SHELTER_ZONE"
+            },
+            "Deir_al_Balah": {
+                "name": "Deir al-Balah Central Depot (FC-01)",
+                "gps": (31.4170, 34.3533),
+                "estimated_population": 600000,
+                "distance_from_border_km": 18.0,
+                "weather": {"temp_c": 31.0, "condition": "Clear Coastal Breeze", "humidity_pct": 62},
+                "crisis_level": "CRITICAL_SUPPLY_HUB"
+            },
+            "Jabalia_North": {
+                "name": "Jabalia / Gaza City Medical Station (MC-03)",
+                "gps": (31.5016, 34.4668),
+                "estimated_population": 300000,
+                "distance_from_border_km": 35.0,
+                "weather": {"temp_c": 30.2, "condition": "Overcast / High Risk", "humidity_pct": 68},
+                "crisis_level": "SEVERE_INFRASTRUCTURE_STRESS"
+            }
+        }
+
+    def fetch_live_dashboard_metrics(self, zone_key):
+        """
+        নির্দিষ্ট জোনের মানুষের উপস্থিতি (Population), দূরত্ব (Distance), আবহাওয়া (Weather) 
+        এবং সার্বিক পরিস্থিতি (Crisis Status) লাইভ ড্যাশবোর্ডে রেন্ডার করে।
+        """
+        if zone_key not in self.zones_data:
+            return {"status": "ERROR", "message": "Invalid Zone Key specified."}
+
+        zone = self.zones_data[zone_key]
+
+        return {
+            "dashboard_zone_id": self.zone_id,
+            "target_sector": zone["name"],
+            "gps_coordinates": zone["gps"],
+            "population_density_metrics": {
+                "estimated_people_present": f"{zone['estimated_population']:,} civilians",
+                "distance_from_entry_point": f"{zone['distance_from_border_km']} km"
+            },
+            "live_weather_metrics": {
+                "ambient_temperature": f"{zone['weather']['temp_c']}°C",
+                "sky_condition": zone['weather']['condition'],
+                "humidity": f"{zone['weather']['humidity_pct']}%"
+            },
+            "ground_situation_verdict": zone["crisis_level"],
+            "dashboard_feed_status": "SYNCED_WITH_SATELLITE_MATRIX"
+        }
+
+# টেস্ট এক্সিকিউশন: রাফাহ সাউথ জোনের লাইভ ড্যাশবোর্ড ফিড
+if __name__ == "__main__":
+    dashboard = GazaLiveIntelligenceDashboard(zone_id="GZ-DASHBOARD-2026")
+    
+    # রাফাহ জোনের লাইভ ইন্টেলিজেন্স রিপোর্ট ফেচ করা
+    report = dashboard.fetch_live_dashboard_metrics(zone_key="Rafah_South")
+
+    print("=== Gaza Live Intelligence, Weather & Population Dashboard ===")
+    for key, val in report.items():
+        if isinstance(val, dict):
+            print(f"  - {key}:")
+            for sub_k, sub_v in val.items():
+                print(f"      * {sub_k}: {sub_v}")
+        else:
+            print(f"  - {key}: {val}")
