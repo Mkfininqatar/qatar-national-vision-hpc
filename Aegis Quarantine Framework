@@ -1309,3 +1309,169 @@ def update_system_dashboard(isolation_level):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8055)
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# SOVEREIGN GAZA DEVELOPMENT DATA
+# ---------------------------------------------------------
+gaza_dev_data = {
+    "Sovereign Sector": [
+        "Deep-Sea Port & Logistics",
+        "Off-Grid Solar & Gas Energy",
+        "Advanced Desalination Grid",
+        "Independent Fiber & Satellite",
+        "Local Agri-Tech & Vertical Farming",
+        "Gaza Autonomous Tech Hub"
+    ],
+    "Sovereignty & Capacity (%)": [85, 90, 88, 95, 82, 92],
+    "Development Status": [
+        "Autonomous Trade Active",
+        "100% Off-Grid Power",
+        "Clean Water Secured",
+        "Direct Fiber Online",
+        "Agri-Self Sufficiency",
+        "Tech Export Operational"
+    ]
+}
+
+df_gaza = pd.DataFrame(gaza_dev_data)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Sovereign Gaza Development Dashboard"
+
+# ---------------------------------------------------------
+# UI LAYOUT (PALESTINIAN EMERALD GREEN THEME)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#022c22', # Deep emerald background
+    'color': '#ecfdf5',
+    'fontFamily': 'Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🇵🇸 SOVEREIGN GAZA DEVELOPMENT FRAMEWORK", 
+                style={'color': '#34d399', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+        html.P("Autonomous Infrastructure, Energy Autonomy, and Sustainable Economic Growth Engine",
+               style={'color': '#a7f3d0', 'fontSize': '15px'})
+    ], style={'borderBottom': '1px solid #065f46', 'paddingBottom': '15px'}),
+
+    # Key Metrics Cards
+    html.Div([
+        html.Div([
+            html.H4("⚓ Independent Port Access", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("100% DIRECT", style={'color': '#34d399', 'margin': '0 0 5px 0'}),
+            html.P("Unrestricted global trade connectivity.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #34d399'}),
+
+        html.Div([
+            html.H4("⚡ Off-Grid Energy Grid", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("90% AUTONOMOUS", style={'color': '#10b981', 'margin': '0 0 5px 0'}),
+            html.P("Solar & Offshore natural gas power.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #10b981'}),
+
+        html.Div([
+            html.H4("🌾 Local Food Sufficiency", style={'color': '#6ee7b7', 'margin': '0 0 5px 0'}),
+            html.H2("82% SECURED", style={'color': '#fbbf24', 'margin': '0 0 5px 0'}),
+            html.P("Vertical farming & smart irrigation.", style={'color': '#a7f3d0', 'margin': '0'})
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #fbbf24'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Charts Grid
+    html.Div([
+        html.Div([
+            html.H3("📊 Sector-Wise Capacity Index", style={'color': '#34d399'}),
+            dcc.Graph(id='bar-chart-gaza')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🌐 System Autonomy Share", style={'color': '#34d399'}),
+            dcc.Graph(id='pie-chart-gaza')
+        ], style={'backgroundColor': '#064e3b', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Control Slider
+    html.Div([
+        html.H3("🎛️ Gaza Infrastructure Autonomy Escalation", style={'color': '#34d399'}),
+        html.P("Adjust sovereign capacity level to simulate full economic independence:", style={'color': '#a7f3d0'}),
+        dcc.Slider(
+            id='gaza-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=88,
+            marks={i: f'{i}% Autonomy' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='gaza-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '14px', 
+            'backgroundColor': '#022c22', 
+            'borderRadius': '6px', 
+            'textAlign': 'center',
+            'border': '1px solid #059669'
+        })
+    ], style={'backgroundColor': '#064e3b', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# CALLBACK LOGIC
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-gaza', 'figure'),
+     Output('pie-chart-gaza', 'figure'),
+     Output('gaza-status-output', 'children')],
+    [Input('gaza-slider', 'value')]
+)
+def update_gaza_dashboard(autonomy_level):
+    # Bar Chart
+    fig_bar = px.bar(
+        df_gaza, 
+        x="Sovereignty & Capacity (%)", 
+        y="Sovereign Sector", 
+        color="Development Status",
+        orientation='h',
+        template="plotly_dark",
+        color_discrete_sequence=px.colors.sequential.Greens_r
+    )
+    fig_bar.update_layout(paper_bgcolor='#064e3b', plot_bgcolor='#064e3b', font=dict(color='#ecfdf5'))
+
+    # Pie/Donut Chart
+    donut_data = pd.DataFrame({
+        "System Control": ["Autonomous Local Control", "External Dependency"],
+        "Value": [autonomy_level, 100 - autonomy_level]
+    })
+    
+    fig_pie = px.pie(
+        donut_data,
+        values="Value",
+        names="System Control",
+        color="System Control",
+        color_discrete_map={"Autonomous Local Control": "#10b981", "External Dependency": "#047857"},
+        hole=0.5,
+        template="plotly_dark"
+    )
+    fig_pie.update_layout(paper_bgcolor='#064e3b', plot_bgcolor='#064e3b', font=dict(color='#ecfdf5'))
+
+    # Status Message
+    if autonomy_level >= 80:
+        status_text = f"🇵🇸 MAXIMUM SOVEREIGNTY ({autonomy_level}%): Complete independent infrastructure operational. Gaza is fully self-reliant."
+    elif autonomy_level >= 50:
+        status_text = f"🟡 PROGRESSIVE AUTONOMY ({autonomy_level}%): Key infrastructure active, moving toward total independence."
+    else:
+        status_text = f"🔴 DEVELOPMENT WARNING ({autonomy_level}%): Requires full unchaining to build autonomous capacity."
+
+    return fig_bar, fig_pie, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8060)
