@@ -2766,3 +2766,54 @@ if __name__ == "__main__":
         else:
             print(f"[+] {k}: {v}")
     print("=====================================================================")
+class GlobalGazaTransitRouter:
+    """
+    Global-to-Gaza International Transit Mapping & Route Verification Module
+    Integrated with Qatar National Vision HPC Framework.
+    """
+    def __init__(self, operation_id):
+        self.operation_id = operation_id
+        self.international_corridors = {
+            "Doha_Air_Land_Corridor": {
+                "hub_name": "Hamad Port & Airport Hub (Doha, Qatar)",
+                "map_ref": "https://maps.google.com/?cid=17974833128423761506",
+                "transit_mode": "Air/Sea to Al-Arish ➔ Rafah Land Port",
+                "clearance_status": "LOCKED_AND_OPTIMIZED"
+            },
+            "Cyprus_Maritime_Corridor": {
+                "hub_name": "Larnaca Main Harbor (Cyprus)",
+                "map_ref": "https://maps.google.com/?cid=996382945164898799",
+                "transit_mode": "Sea Route to Al-Mawasi Coastal Terminal",
+                "clearance_status": "CLEAR_ROUTE_VERIFIED"
+            },
+            "Egypt_Staging_Corridor": {
+                "hub_name": "Al-Arish Logistic Zone (North Sinai, Egypt)",
+                "map_ref": "https://maps.google.com/?cid=7508691639735514072",
+                "transit_mode": "Direct Truck Convoy via Rafah/Kerem Shalom",
+                "clearance_status": "ACTIVE_LIFELINE"
+            }
+        }
+
+    def fetch_corridor_details(self, corridor_key):
+        if corridor_key not in self.international_corridors:
+            return {"status": "ERROR", "message": "Invalid Corridor Key."}
+        
+        corridor = self.international_corridors[corridor_key]
+        return {
+            "hpc_repository": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "selected_corridor": corridor_key,
+            "origin_hub": corridor["hub_name"],
+            "google_maps_reference": corridor["map_ref"],
+            "routing_path": corridor["transit_mode"],
+            "status": corridor["clearance_status"]
+        }
+
+# এক্সিকিউশন টেস্ট
+if __name__ == "__main__":
+    router = GlobalGazaTransitRouter(operation_id="GZ-GLOBAL-MAP-2026")
+    report = router.fetch_corridor_details("Cyprus_Maritime_Corridor")
+    
+    print("=== Global-to-Gaza Transit Route Report ===")
+    for k, v in report.items():
+        print(f"  - {k}: {v}")
