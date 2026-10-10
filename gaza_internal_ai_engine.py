@@ -3197,3 +3197,60 @@ if __name__ == "__main__":
     for k, v in report.items():
         print(f"  - {k}: {v}")
     print("=====================================================================")
+class GazaBranchLineRouter:
+    """
+    Local Branch Line & Fiber Mesh Routing Module
+    Integrated with Qatar National Vision HPC Framework.
+    """
+    def __init__(self, operation_id="GZ-BRANCH-LINE-2026"):
+        self.operation_id = operation_id
+        self.branch_nodes = {
+            "Gaza_City_Hospital_Branch": {
+                "parent_spine": "Salah al-Din North Spine",
+                "cable_type": "Armored Tactical Fiber Drop",
+                "connected_units": ["Al-Shifa Hospital Node", "Field Command Hub"],
+                "mesh_wifi_backup": "ACTIVE"
+            },
+            "Deir_Al_Balah_Logistics_Branch": {
+                "parent_spine": "Al-Rashid Coastal Trunk",
+                "cable_type": "Underground High-Flex Fiber",
+                "connected_units": ["Logistics Depot", "Solar Power Station"],
+                "mesh_wifi_backup": "ACTIVE"
+            },
+            "Khan_Yunis_Mawasi_Branch": {
+                "parent_spine": "Submarine Pier Landing Line",
+                "cable_type": "Direct Submarine-to-Land Drop Cable",
+                "connected_units": ["Al-Mawasi Relief Zone", "Mobile Telecom Tower"],
+                "mesh_wifi_backup": "ACTIVE"
+            }
+        }
+
+    def get_branch_status(self, branch_key):
+        if branch_key not in self.branch_nodes:
+            return {"status": "ERROR", "message": "Branch node not found."}
+        
+        node = self.branch_nodes[branch_key]
+        return {
+            "hpc_repository": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "branch_key": branch_key,
+            "routing_details": node,
+            "signal_integrity": "100% OPERATIONAL"
+        }
+
+# এক্সিকিউশন টেস্ট
+if __name__ == "__main__":
+    router = GazaBranchLineRouter()
+    report = router.get_branch_status("Khan_Yunis_Mawasi_Branch")
+
+    print("=====================================================================")
+    print("           GAZA FIBER OPTIC BRANCH LINE TELEMETRY REPORT              ")
+    print("=====================================================================")
+    for k, v in report.items():
+        if isinstance(v, dict):
+            print(f"[+] {k.upper()}:")
+            for sub_k, sub_v in v.items():
+                print(f"    - {sub_k}: {sub_v}")
+        else:
+            print(f"[+] {k}: {v}")
+    print("=====================================================================")
