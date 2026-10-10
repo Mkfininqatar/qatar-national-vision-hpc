@@ -976,3 +976,170 @@ def update_green_dashboard(autonomy_level):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8051)
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------------------------------------
+# GLOBAL BOYCOTT & DIPLOMATIC SANCTIONS DATA FOR GAZA
+# ---------------------------------------------------------
+boycott_data = {
+    "Region / Country Block": [
+        "Middle East (Regional Alliance)",
+        "European Union (State Boycotts)",
+        "Latin America (Trade Cutoff)",
+        "Global Maritime & Port Bans",
+        "Tech & Corporate Divestment",
+        "International Legal Sanctions"
+    ],
+    "Boycott & Embargo Pressure (%)": [92, 68, 75, 85, 80, 70],
+    "Action Status": [
+        "Complete Trade Isolation",
+        "Partial Arms & Food Embargo",
+        "Diplomatic Ties Severed",
+        "Port Entry Refusal",
+        "Systemic Divestment",
+        "ICJ / ICC Compliance"
+    ]
+}
+
+df_boycott = pd.DataFrame(boycott_data)
+
+# Initialize Dash App
+app = dash.Dash(__name__)
+app.title = "Global Boycott & Gaza Solidarity Dashboard"
+
+# ---------------------------------------------------------
+# LAYOUT DESIGN (SOLIDARITY & RESISTANCE THEME)
+# ---------------------------------------------------------
+app.layout = html.Div(style={
+    'backgroundColor': '#090d16',
+    'color': '#f3f4f6',
+    'fontFamily': 'Arial, sans-serif',
+    'padding': '25px'
+}, children=[
+
+    # Header
+    html.Div([
+        html.H1("🇵🇸 Global Boycott & Gaza Solidarity Dashboard", 
+                style={'color': '#ef4444', 'marginBottom': '5px', 'fontWeight': 'bold'}),
+                # Note: Red used for urgent political urgency, green/white/black accents for Palestine solidarity
+        html.P("Tracking International Decisions, Trade Boycotts, and Systemic Isolation to Save Gaza",
+               style={'color': '#9ca3af', 'fontSize': '16px'})
+    ], style={'borderBottom': '1px solid #1f2937', 'paddingBottom': '15px'}),
+
+    # Key Metrics Grid
+    html.Div([
+        html.Div([
+            html.H4("🚫 Global Trade Boycott", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("82% ENFORCED", style={'color': '#ef4444', 'margin': '0 0 5px 0'}),
+            html.P("International commercial restrictions.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #ef4444'}),
+
+        html.Div([
+            html.H4("⚖️ Legal & Diplomatic Cutoff", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("75% ACTIVE", style={'color': '#fbbf24', 'margin': '0 0 5px 0'}),
+            html.P("State-level sanctions & boycotts.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #fbbf24'}),
+
+        html.Div([
+            html.H4("✊ Solidarity Resistance", style={'color': '#3b82f6', 'margin': '0 0 5px 0'}),
+            html.H2("100% UNCONDITIONAL", style={'color': '#10b981', 'margin': '0 0 5px 0'}),
+            html.P("People's mandate: No donation, total justice.", style={'color': '#9ca3af', 'margin': '0'})
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '30%', 'borderLeft': '4px solid #10b981'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Charts Section
+    html.Div([
+        html.Div([
+            html.H3("📊 Regional Boycott & Embargo Pressure Index", style={'color': '#f97316'}),
+            dcc.Graph(id='bar-chart-boycott')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'}),
+
+        html.Div([
+            html.H3("🌐 Global Diplomatic Action Distribution", style={'color': '#f97316'}),
+            dcc.Graph(id='pie-chart-boycott')
+        ], style={'backgroundColor': '#111827', 'padding': '20px', 'borderRadius': '8px', 'width': '48%'})
+    ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '25px'}),
+
+    # Simulation Controls
+    html.Div([
+        html.H3("🎛️ Global Boycott Escalation Level (Gaza Liberation Matrix)", style={'color': '#ef4444'}),
+        html.P("Simulate the intensification of worldwide trade cutoffs and systemic isolation:", style={'color': '#9ca3af'}),
+        dcc.Slider(
+            id='boycott-slider',
+            min=0,
+            max=100,
+            step=10,
+            value=80,
+            marks={i: f'{i}% Boycott' for i in range(0, 101, 20)}
+        ),
+        html.Div(id='boycott-status-output', style={
+            'marginTop': '20px', 
+            'fontSize': '18px', 
+            'fontWeight': 'bold', 
+            'padding': '12px', 
+            'backgroundColor': '#1f2937', 
+            'borderRadius': '6px', 
+            'textAlign': 'center'
+        })
+    ], style={'backgroundColor': '#111827', 'padding': '25px', 'borderRadius': '8px', 'marginTop': '25px'})
+])
+
+# ---------------------------------------------------------
+# INTERACTIVITY & CALLBACKS
+# ---------------------------------------------------------
+@app.callback(
+    [Output('bar-chart-boycott', 'figure'),
+     Output('pie-chart-boycott', 'figure'),
+     Output('boycott-status-output', 'children')],
+    [Input('boycott-slider', 'value')]
+)
+def update_boycott_dashboard(boycott_level):
+    # 1. Bar Chart
+    fig_bar = px.bar(
+        df_boycott, 
+        x="Boycott & Embargo Pressure (%)", 
+        y="Region / Country Block", 
+        color="Action Status",
+        orientation='h',
+        template="plotly_dark",
+        title="International Boycott Metrics"
+    )
+    fig_bar.update_layout(paper_bgcolor='#111827', plot_bgcolor='#111827', margin=dict(t=40, b=20, l=20, r=20))
+
+    # 2. Donut Chart
+    boycott_pie_data = pd.DataFrame({
+        "Status": ["Enforced Boycott / Cutoff", "Pending Diplomatic Action"],
+        "Value": [boycott_level, 100 - boycott_level]
+    })
+    
+    fig_pie = px.pie(
+        boycott_pie_data,
+        values="Value",
+        names="Status",
+        color="Status",
+        color_discrete_map={"Enforced Boycott / Cutoff": "#ef4444", "Pending Diplomatic Action": "#3b82f6"},
+        hole=0.5,
+        template="plotly_dark",
+        title="Global Pressure Distribution"
+    )
+    fig_pie.update_layout(paper_bgcolor='#111827', plot_bgcolor='#111827', margin=dict(t=40, b=20, l=20, r=20))
+
+    # 3. Dynamic Output Message
+    if boycott_level >= 80:
+        status_text = f"🇵🇸 TOTAL SYSTEMIC BOYCOTT ({boycott_level}%): Full international trade severance and diplomatic isolation achieved to protect Gaza."
+    elif boycott_level >= 40:
+        status_text = f"🟡 ESCALATING PRESSURE ({boycott_level}%): Widespread public boycotts and growing state-level trade bans."
+    else:
+        status_text = f"🔴 INSUFFICIENT ACTION ({boycott_level}%): Global response needs total escalation to enforce immediate justice."
+
+    return fig_bar, fig_pie, status_text
+
+# ---------------------------------------------------------
+# RUN SERVER
+# ---------------------------------------------------------
+if __name__ == '__main__':
+    app.run_server(debug=True, port=8052)
