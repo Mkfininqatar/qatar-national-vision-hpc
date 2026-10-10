@@ -3310,3 +3310,59 @@ if __name__ == "__main__":
         else:
             print(f"[+] {k}: {v}")
     print("=====================================================================")
+class GazaDebrisClearanceManager:
+    """
+    Debris Clearance, Heavy Machinery Fleet & Site Cleanup System.
+    Integrated with Qatar National Vision HPC Framework.
+    """
+    def __init__(self, operation_id="GZ-CLEANUP-2026"):
+        self.operation_id = operation_id
+        self.machinery_fleet = {
+            "Spine_Clearance_Team_Alpha": {
+                "machinery": ["Bulldozer D8T x 5", "Excavator 336 x 8", "Dump Trucks x 15"],
+                "target_route": "Salah al-Din Highway (North-South Spine)",
+                "drone_copilot_sync": "HPC-AERO-SCOUT-X1 Active",
+                "status": "CLEARING_PRIMARY_CORRIDOR"
+            },
+            "Branch_Line_Team_Bravo": {
+                "machinery": ["Excavator 320 x 6", "Compact Loaders x 10", "Trenchers x 4"],
+                "target_route": "Hospital & Solar Grid Access Routes",
+                "drone_copilot_sync": "Active Lock",
+                "status": "CLEARING_LOCAL_BRANCHES"
+            },
+            "Coastal_Recycling_Hub": {
+                "location": "Al-Mawasi Staging Zone",
+                "capacity": "Heavy Debris Sorting & Crushing",
+                "status": "OPERATIONAL"
+            }
+        }
+
+    def track_clearance_progress(self, team_key):
+        if team_key not in self.machinery_fleet:
+            return {"status": "ERROR", "message": "Clearance team not found."}
+        
+        team_data = self.machinery_fleet[team_key]
+        return {
+            "hpc_repository": "qatar-national-vision-hpc",
+            "operation_id": self.operation_id,
+            "assigned_unit": team_key,
+            "fleet_telemetry": team_data,
+            "clearance_status": "PATH_OPENING_IN_PROGRESS"
+        }
+
+# এক্সিকিউশন টেস্ট
+if __name__ == "__main__":
+    manager = GazaDebrisClearanceManager()
+    report = manager.track_clearance_progress("Spine_Clearance_Team_Alpha")
+
+    print("=====================================================================")
+    print("      GAZA DEBRIS CLEARANCE & HEAVY MACHINERY TELEMETRY REPORT       ")
+    print("=====================================================================")
+    for k, v in report.items():
+        if isinstance(v, dict):
+            print(f"[+] {k.upper()}:")
+            for sub_k, sub_v in v.items():
+                print(f"    - {sub_k}: {sub_v}")
+        else:
+            print(f"[+] {k}: {v}")
+    print("=====================================================================")
