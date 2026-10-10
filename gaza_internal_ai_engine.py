@@ -370,3 +370,27 @@ def update_dashboard(slider_value):
 # ---------------------------------------------------------
 if __name__ == '__main__':
     app.run_server(debug=True, port=8070)
+import pandas as pd
+
+# Housing & Transport Telemetry Data
+reconstruction_data = {
+    "Infrastructure Sector": [
+        "Eco-Modular Housing Units",
+        "Rooftop Solar & Local Energy Storage",
+        "Coastal Light Rail (LRT) Network",
+        "Electric BRT & Solar Charging Hubs",
+        "Recycled Aggregate Material Plants"
+    ],
+    "Completion Capacity (%)": [75, 88, 65, 82, 90],
+    "Operational Readiness": [
+        "ACTIVE CONSTRUCTION",
+        "GRID CONNECTED",
+        "TRACK LAYING & TESTING",
+        "FLEET DEPLOYED",
+        "FULL OUTPUT"
+    ]
+}
+
+df_reconstruction = pd.DataFrame(reconstruction_data)
+print("--- GAZA PHASE 2: RECONSTRUCTION & TRANSPORT ROADMAP ---")
+print(df_reconstruction.to_string(index=False))
