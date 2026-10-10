@@ -663,3 +663,37 @@ if __name__ == "__main__":
     print("=========================================================\n")
     print(json.dumps(engine.track_eco_and_gateways(), indent=2))
     print("\n=========================================================")
+import pandas as pd
+
+# Gaza Reconstruction Road & Zone Telemetry
+map_nodes_data = {
+    "Network Zone / Route": [
+        "North Gaza Eco-Agricultural Corridor",
+        "Coastal Light Rail Transit (LRT)",
+        "Gaza City Central Urban Hub",
+        "Deir al-Balah Water & Desalination Grid",
+        "Khan Yunis Modular Housing Network",
+        "Rafah Secure Emergency Gateway"
+    ],
+    "Infrastructure Type": [
+        "Eco-Sensitive Buffer Zone",
+        "Rail Transit",
+        "Urban Housing & Tech Hub",
+        "Water & Sanitation Pipeline",
+        "Modular Residential Zone",
+        "Emergency Transit Gateway"
+    ],
+    "Reconstruction Status (%)": [92, 70, 95, 88, 85, 90],
+    "Operational Readiness": [
+        "PROTECTED & ACTIVE",
+        "TRACK LAYING",
+        "GRID CONNECTED",
+        "FULLY OPERATIONAL",
+        "ASSEMBLY ACTIVE",
+        "MONITORED LIVE"
+    ]
+}
+
+df_map_roadmap = pd.DataFrame(map_nodes_data)
+print("--- GAZA SOVEREIGN RECONSTRUCTION & ROAD NETWORK TELEMETRY ---")
+print(df_map_roadmap.to_string(index=False))
