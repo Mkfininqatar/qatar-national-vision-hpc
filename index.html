@@ -2825,3 +2825,825 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Gaza Master Blueprint - Global Reconstruction Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#fbbf24',
+                            maroon: '#8a1538',
+                            green: '#10b981',
+                            blue: '#3b82f6',
+                            dark: '#0b0f19',
+                            card: '#161b26',
+                            border: '#2d3b55'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 5px rgba(251, 191, 36, 0.2)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(251, 191, 36, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+        }
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2d3b55;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark min-h-screen flex flex-col custom-scrollbar overflow-x-hidden">
+
+    <!-- TOP TELEMETRY STATUS BAR -->
+    <header class="bg-brand-card/90 backdrop-blur-md border-b border-brand-border sticky top-0 z-40 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-maroon to-brand-gold p-0.5 shadow-lg">
+                        <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+                            <i data-lucide="globe" class="w-5 h-5 text-brand-gold animate-spin-slow"></i>
+                        </div>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
+                    </span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-lg text-white tracking-wide">SOVEREIGN GAZA MASTER BLUEPRINT</h1>
+                        <span class="bg-brand-maroon/40 text-brand-gold border border-brand-maroon/60 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">v2026.1 Live</span>
+                    </div>
+                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                        <span>Global Reconstruction & Humanitarian Corridor Network</span>
+                        <span class="text-slate-600">•</span>
+                        <span class="text-brand-green font-mono flex items-center gap-1"><i data-lucide="wifi" class="w-3 h-3"></i> Sync Active</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- LIVE STATS STRIP -->
+            <div class="flex items-center gap-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-brand-border/60 text-xs font-mono">
+                <div class="text-center px-2 border-r border-slate-700">
+                    <p class="text-slate-400 text-[10px]">TOTAL VOLUNTEERS</p>
+                    <p class="font-bold text-brand-gold" id="stat-volunteers">14,280</p>
+                </div>
+                <div class="text-center px-2 border-r border-slate-700">
+                    <p class="text-slate-400 text-[10px]">AIRFARE ALLOWANCE</p>
+                    <p class="font-bold text-brand-green">100% FREE PASS</p>
+                </div>
+                <div class="text-center px-2 border-r border-slate-700">
+                    <p class="text-slate-400 text-[10px]">CARGO DUTY</p>
+                    <p class="font-bold text-brand-blue">0% EXEMPT</p>
+                </div>
+                <div class="text-center px-2">
+                    <p class="text-slate-400 text-[10px]">DESTINATION</p>
+                    <p class="font-bold text-rose-500 animate-pulse">GAZA 🇵🇸</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="openModal('register-modal')" class="bg-gradient-to-r from-brand-gold to-amber-500 hover:from-amber-400 hover:to-brand-gold text-slate-950 font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow-lg transition-all duration-200 hover:scale-105">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                    Join Volunteer Network
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- DESTINATION HERO BANNER -->
+    <div class="bg-gradient-to-r from-slate-950 via-brand-maroon/30 to-slate-950 border-b border-brand-border py-6 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-2 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 px-3 py-1 rounded-full text-xs font-semibold">
+                    <i data-lucide="navigation-2" class="w-3.5 h-3.5 animate-bounce"></i>
+                    FINAL DESTINATION: GAZA RECONSTRUCTION ZONE (PA)
+                </div>
+                <h2 class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+                    Unified Humanitarian Transit & Digital Infrastructure Corridor
+                </h2>
+                <p class="text-sm text-slate-300 max-w-2xl">
+                    Deploying verified civil engineers, healthcare specialists, HPC hardware, and solar grid equipment through zero-tax airfare and sea transit networks.
+                </p>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="flex flex-wrap items-center gap-3">
+                <button onclick="openPassGenerator()" class="bg-brand-card hover:bg-slate-800 text-brand-gold border border-brand-gold/40 px-4 py-2.5 rounded-xl font-medium text-xs flex items-center gap-2 transition">
+                    <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i>
+                    Generate Qatar Airways Pass
+                </button>
+                <button onclick="scrollToSection('calculator-section')" class="bg-brand-card hover:bg-slate-800 text-brand-blue border border-brand-blue/40 px-4 py-2.5 rounded-xl font-medium text-xs flex items-center gap-2 transition">
+                    <i data-lucide="calculator" class="w-4 h-4 text-brand-blue"></i>
+                    0% Duty Calculator
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 flex-1 space-y-10 w-full">
+
+        <!-- SECTION 1: GLOBAL AIRPORT TERMINAL SHOWCASE -->
+        <section class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4 border-brand-gold pl-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i data-lucide="plane-takeoff" class="w-5 h-5 text-brand-gold"></i>
+                        Global Airport Terminal Network
+                    </h3>
+                    <p class="text-xs text-slate-400">Integrated departure points offering free airfare passes, fast-track HT-Visas, and customs exemption</p>
+                </div>
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+                    <button onclick="filterTerminals('all')" class="term-btn active bg-brand-gold text-slate-950 font-semibold px-3 py-1.5 rounded-lg text-xs transition">All Hubs</button>
+                    <button onclick="filterTerminals('gcc')" class="term-btn bg-brand-card text-slate-300 hover:text-white border border-brand-border px-3 py-1.5 rounded-lg text-xs transition">GCC Hubs</button>
+                    <button onclick="filterTerminals('asia')" class="term-btn bg-brand-card text-slate-300 hover:text-white border border-brand-border px-3 py-1.5 rounded-lg text-xs transition">South Asia</button>
+                    <button onclick="filterTerminals('europe')" class="term-btn bg-brand-card text-slate-300 hover:text-white border border-brand-border px-3 py-1.5 rounded-lg text-xs transition">Europe/Turkey</button>
+                </div>
+            </div>
+
+            <!-- TERMINAL CARDS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="terminal-grid">
+                
+                <!-- HAMAD INT'L DOHA (PRIMARY QATAR HUB) -->
+                <div class="term-card gcc bg-gradient-to-b from-brand-card to-slate-900 border-2 border-brand-maroon/80 rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-brand-gold transition duration-300">
+                    <div class="absolute top-0 right-0 bg-brand-maroon text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider flex items-center gap-1">
+                        <i data-lucide="star" class="w-3 h-3 fill-brand-gold text-brand-gold"></i> Primary Sovereign Hub
+                    </div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-brand-maroon/30 border border-brand-maroon flex items-center justify-center text-2xl">🇶🇦</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-gold transition">Hamad Int'l Airport (DOH)</h4>
+                            <p class="text-xs text-slate-400">Doha, Qatar • Terminal 1 (Gate A/B)</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Sovereign Airfare:</span>
+                            <span class="text-brand-gold font-bold bg-brand-gold/10 px-2 py-0.5 rounded border border-brand-gold/30">100% Free (Qatar Airways)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">HT-Visa Fast-Track:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Active (Desk A4)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Cargo Duty Waiver:</span>
+                            <span class="text-brand-blue font-bold">0% HPC & Tech Custom</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Connecting Route:</span>
+                            <span class="text-white font-semibold">DOH ➔ CAI / Larnaca ➔ GAZA</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('DOH')" class="w-full mt-4 bg-brand-maroon/60 hover:bg-brand-maroon text-white font-semibold py-2 rounded-xl text-xs transition border border-brand-maroon/80 flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue DOH Transit Pass
+                    </button>
+                </div>
+
+                <!-- HAZRAT SHAHJALAL DHAKA -->
+                <div class="term-card asia bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg group hover:border-brand-blue transition duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950/40 border border-emerald-600/30 flex items-center justify-center text-2xl">🇧🇩</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-blue transition">Hazrat Shahjalal Int'l (DAC)</h4>
+                            <p class="text-xs text-slate-400">Dhaka, Bangladesh • Terminal 3</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Volunteer Registry:</span>
+                            <span class="text-emerald-400 font-bold">Civil & Telecom Engineers</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">HT-Visa Sync:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Embassy Cleared</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Transit Pass Status:</span>
+                            <span class="text-brand-gold font-bold">Free Flight Sponsored</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Connecting Route:</span>
+                            <span class="text-white font-semibold">DAC ➔ DOH ➔ CAI ➔ GAZA</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('DAC')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-brand-border flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue DAC Transit Pass
+                    </button>
+                </div>
+
+                <!-- KING KHALID RIYADH -->
+                <div class="term-card gcc bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg group hover:border-brand-gold transition duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-950/30 border border-amber-600/30 flex items-center justify-center text-2xl">🇸🇦</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-gold transition">King Khalid Int'l (RUH)</h4>
+                            <p class="text-xs text-slate-400">Riyadh, KSA • Terminals 1 & 2</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">GCC Support:</span>
+                            <span class="text-brand-gold font-bold">Saudia CSR Pass Active</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">HT-Visa Verification:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Fast-Track Enabled</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Medical Logistics:</span>
+                            <span class="text-brand-blue font-bold">Priority Medical Desk</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Connecting Route:</span>
+                            <span class="text-white font-semibold">RUH ➔ CAI ➔ GAZA</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('RUH')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-brand-border flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue RUH Transit Pass
+                    </button>
+                </div>
+
+                <!-- CAIRO INT'L AIRPORT (PRIMARY OVERLAND GATEWAY) -->
+                <div class="term-card africa gcc bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg group hover:border-rose-500 transition duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-rose-950/30 border border-rose-600/30 flex items-center justify-center text-2xl">🇪🇬</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-rose-400 transition">Cairo Int'l Airport (CAI)</h4>
+                            <p class="text-xs text-slate-400">Cairo, Egypt • Terminal 3 (Hall 4)</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Primary Gateway:</span>
+                            <span class="text-rose-400 font-bold">Overland Route R-01</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Al-Arish Escort:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> UN/OIC Escort Ready</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Transit Processing:</span>
+                            <span class="text-brand-gold font-bold">Zero-Tax Customs Corridor</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Direct Entry Point:</span>
+                            <span class="text-white font-semibold">Rafah Border Crossing</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('CAI')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-brand-border flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue CAI Transit Pass
+                    </button>
+                </div>
+
+                <!-- ISTANBUL AIRPORT -->
+                <div class="term-card europe bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg group hover:border-brand-blue transition duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-950/30 border border-blue-600/30 flex items-center justify-center text-2xl">🇹🇷</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-blue transition">Istanbul Airport (IST)</h4>
+                            <p class="text-xs text-slate-400">Istanbul, Turkey • Main Int'l Terminal</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Eurasia Hub:</span>
+                            <span class="text-brand-blue font-bold">THY Relief Allowance</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">HT-Visa Verification:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Verified</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Maritime Access:</span>
+                            <span class="text-brand-gold font-bold">Larnaca Cyprus Corridor</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Connecting Route:</span>
+                            <span class="text-white font-semibold">IST ➔ Larnaca / CAI ➔ GAZA</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('IST')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-brand-border flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue IST Transit Pass
+                    </button>
+                </div>
+
+                <!-- LONDON HEATHROW -->
+                <div class="term-card europe bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg group hover:border-purple-500 transition duration-300">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-950/30 border border-purple-600/30 flex items-center justify-center text-2xl">🇬🇧</div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-purple-400 transition">London Heathrow (LHR)</h4>
+                            <p class="text-xs text-slate-400">London, UK • Terminals 2 & 5</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2.5 text-xs font-mono border-t border-brand-border/60 pt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">European Hub:</span>
+                            <span class="text-purple-400 font-bold">Medical & HPC Registry</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">HT-Visa Status:</span>
+                            <span class="text-brand-green font-bold flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Cleared</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Financial Corridor:</span>
+                            <span class="text-brand-gold font-bold">0% Remittance Fee</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Connecting Route:</span>
+                            <span class="text-white font-semibold">LHR ➔ DOH ➔ Larnaca ➔ GAZA</span>
+                        </div>
+                    </div>
+                    <button onclick="openPassGenerator('LHR')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-xs transition border border-brand-border flex items-center justify-center gap-2">
+                        <i data-lucide="ticket" class="w-4 h-4 text-brand-gold"></i> Issue LHR Transit Pass
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: INTERACTIVE TRI-CORRIDOR MAP & FLOW VISUALIZER -->
+        <section class="space-y-6">
+            <div class="border-l-4 border-brand-blue pl-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-brand-blue"></i>
+                    Interactive Tri-Corridor Gaza Logistics Map
+                </h3>
+                <p class="text-xs text-slate-400">Real-time simulation of volunteer transit routes and zero-tax hardware shipment into Gaza</p>
+            </div>
+
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+                
+                <!-- MAP VISUALIZATION CANVAS / INTERACTIVE SCHEMATIC -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- ROUTE 1 CARD -->
+                    <div class="route-box bg-slate-900/90 border border-rose-500/40 rounded-xl p-5 hover:border-rose-500 transition cursor-pointer" onclick="highlightRoute('R01')">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-rose-500/20 text-rose-400 text-xs font-bold px-2.5 py-1 rounded-md border border-rose-500/30">ROUTE R-01</span>
+                            <span class="text-[10px] text-brand-green font-mono flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span> OPEN & ACTIVE</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="truck" class="w-4 h-4 text-rose-400"></i> Southern Overland Corridor
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-4">Dedicated fast-track route for humanitarians, healthcare teams, and mobile emergency equipment.</p>
+                        
+                        <!-- STEP BY STEP FLOW -->
+                        <div class="space-y-2 text-xs font-mono border-l-2 border-rose-500/50 pl-3">
+                            <div class="text-slate-300">1. Cairo Int'l Airport (CAI) Departure</div>
+                            <div class="text-slate-300">2. Al-Arish Humanitarian Logistics Hub</div>
+                            <div class="text-slate-300">3. Rafah Border Crossing Fast-Track</div>
+                            <div class="text-rose-400 font-bold flex items-center gap-1">4. 🎯 GAZA RECONSTRUCTION ZONE</div>
+                        </div>
+                    </div>
+
+                    <!-- ROUTE 2 CARD -->
+                    <div class="route-box bg-slate-900/90 border border-brand-blue/40 rounded-xl p-5 hover:border-brand-blue transition cursor-pointer" onclick="highlightRoute('R02')">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-brand-blue/20 text-brand-blue text-xs font-bold px-2.5 py-1 rounded-md border border-brand-blue/30">ROUTE R-02</span>
+                            <span class="text-[10px] text-brand-green font-mono flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span> MARITIME CLEAR</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="anchor" class="w-4 h-4 text-brand-blue"></i> Cyprus Maritime Hardware Corridor
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-4">Direct sea corridor for HPC digital twin servers, solar grid batteries, and heavy machinery.</p>
+                        
+                        <div class="space-y-2 text-xs font-mono border-l-2 border-brand-blue/50 pl-3">
+                            <div class="text-slate-300">1. Larnaca Port (Cyprus Inspection)</div>
+                            <div class="text-slate-300">2. UN Maritime Escort Vessel</div>
+                            <div class="text-slate-300">3. Gaza Coastal Floating Terminal</div>
+                            <div class="text-brand-blue font-bold flex items-center gap-1">4. 🎯 GAZA PORT & DATA CENTER</div>
+                        </div>
+                    </div>
+
+                    <!-- ROUTE 3 CARD -->
+                    <div class="route-box bg-slate-900/90 border border-brand-gold/40 rounded-xl p-5 hover:border-brand-gold transition cursor-pointer" onclick="highlightRoute('R03')">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-brand-gold/20 text-brand-gold text-xs font-bold px-2.5 py-1 rounded-md border border-brand-gold/30">ROUTE R-03</span>
+                            <span class="text-[10px] text-brand-green font-mono flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-brand-green animate-ping"></span> FREIGHT OPERATIONAL</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-lucide="container" class="w-4 h-4 text-brand-gold"></i> Commercial Heavy Freight Corridor
+                        </h4>
+                        <p class="text-xs text-slate-400 mb-4">Zero-tax commercial supply chain for civil construction materials and desalination hardware.</p>
+                        
+                        <div class="space-y-2 text-xs font-mono border-l-2 border-brand-gold/50 pl-3">
+                            <div class="text-slate-300">1. GCC & Global Freight Logistics</div>
+                            <div class="text-slate-300">2. Kerem Shalom Border Customs-Free</div>
+                            <div class="text-slate-300">3. Digital Twin Inventory Tagging</div>
+                            <div class="text-brand-gold font-bold flex items-center gap-1">4. 🎯 GAZA INFRASTRUCTURE SITES</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- DYNAMIC MAP STATUS PANEL -->
+                <div class="mt-6 bg-slate-950 p-4 rounded-xl border border-brand-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-brand-green animate-ping"></div>
+                        <span class="font-mono text-slate-300">CORRIDOR TELEMETRY STATUS: <strong class="text-brand-green">100% CLEAR / ZERO CUSTOMS TARIFF APPLIED</strong></span>
+                    </div>
+                    <div class="flex items-center gap-4 text-slate-400">
+                        <span><strong class="text-white">Active Ships:</strong> 4 Cargo Vessels</span>
+                        <span>•</span>
+                        <span><strong class="text-white">Active Flight Passes:</strong> 820 Today</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: POLICY CALCULATOR & TELEMETRY SIMULATOR -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="calculator-section">
+            
+            <!-- 0% CUSTOMS & TARIFF CALCULATOR -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl space-y-5">
+                <div class="border-b border-brand-border pb-4 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i data-lucide="calculator" class="w-5 h-5 text-brand-gold"></i>
+                            Zero-Tax Customs Exemption Calculator
+                        </h3>
+                        <p class="text-xs text-slate-400">Calculate total cost savings under the Gaza Sovereign Duty Waiver Framework</p>
+                    </div>
+                    <span class="bg-brand-gold/10 text-brand-gold border border-brand-gold/30 text-[10px] font-mono px-2.5 py-1 rounded-full font-bold">0% DUTY POLICY</span>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block text-slate-300 font-medium mb-1.5">Select Equipment Category:</label>
+                        <select id="calc-category" class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-brand-gold font-sans">
+                            <option value="0.25">HPC High-Performance Computing & GPU Servers (Standard Duty: 25%)</option>
+                            <option value="0.18">Digital Twin Sensor Nodes & IoT Grid (Standard Duty: 18%)</option>
+                            <option value="0.20">Solar Micro-Grid Batteries & Inverters (Standard Duty: 20%)</option>
+                            <option value="0.15">Desalination & Water Filtration Modules (Standard Duty: 15%)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-medium mb-1.5">Declared Hardware Value ($ USD):</label>
+                        <input type="number" id="calc-value" value="250000" placeholder="e.g. 100000" class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2.5 text-white font-mono focus:outline-none focus:border-brand-gold">
+                    </div>
+
+                    <button onclick="calculateTariff()" class="w-full bg-brand-gold hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i> Calculate Exemption
+                    </button>
+
+                    <!-- RESULT DISPLAY -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-brand-border space-y-2 font-mono">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Standard Customs Tariff:</span>
+                            <span id="res-standard" class="text-rose-400 line-through">$62,500 USD</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Sovereign Gaza Policy Duty:</span>
+                            <span class="text-brand-green font-bold">$0.00 USD (100% EXEMPT)</span>
+                        </div>
+                        <div class="flex justify-between border-t border-slate-800 pt-2 text-sm font-bold">
+                            <span class="text-brand-gold">Total Direct Savings:</span>
+                            <span id="res-savings" class="text-brand-gold">$62,500 USD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HT-VISA & REMITTANCE STATUS VERIFIER -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 shadow-xl space-y-5">
+                <div class="border-b border-brand-border pb-4 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-brand-green"></i>
+                            HT-Visa & Remittance Verification
+                        </h3>
+                        <p class="text-xs text-slate-400">Live passport verification and zero-fee bank transaction clearance</p>
+                    </div>
+                    <span class="bg-brand-green/10 text-brand-green border border-brand-green/30 text-[10px] font-mono px-2.5 py-1 rounded-full font-bold">FAST-TRACK ACTIVE</span>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block text-slate-300 font-medium mb-1.5">Volunteer HT-Visa / Passport Number:</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="verify-input" value="HTV-2026-8894-QAT" class="flex-1 bg-slate-900 border border-brand-border rounded-xl px-3 py-2.5 text-white font-mono uppercase focus:outline-none focus:border-brand-green">
+                            <button onclick="verifyHTVisa()" class="bg-brand-green hover:bg-emerald-600 text-slate-950 font-bold px-4 py-2.5 rounded-xl transition">Verify</button>
+                        </div>
+                    </div>
+
+                    <!-- VERIFICATION OUTPUT -->
+                    <div id="verify-result" class="bg-slate-950 p-4 rounded-xl border border-brand-border space-y-3">
+                        <div class="flex items-center gap-2 text-brand-green font-bold text-sm">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                            <span>HT-VISA APPROVED & SYNCED WITH AIRPORT DESK</span>
+                        </div>
+                        <div class="space-y-1.5 font-mono text-[11px] text-slate-300">
+                            <div>• Holder: <span class="text-white font-bold">DR. SAMIR AL-HASSAN</span> (Civil Engineer)</div>
+                            <div>• Free Airfare Pass: <span class="text-brand-gold font-bold">QATAR AIRWAYS VALIDATED</span></div>
+                            <div>• Departure Hub: <span class="text-white">Hamad Int'l Airport (DOH)</span></div>
+                            <div>• Zero-Fee Financial Clearance: <span class="text-brand-blue font-bold">CLEARED (0% Remittance Charge)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-brand-maroon/20 border border-brand-maroon/40 rounded-xl flex items-center gap-3">
+                        <i data-lucide="info" class="w-5 h-5 text-brand-gold shrink-0"></i>
+                        <p class="text-[11px] text-slate-300">
+                            All bank remittances for Gaza construction materials are exempt from international SWIFT transfer fees under OIC & GCC sovereign agreements.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-brand-border py-8 px-4 mt-12 text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-white text-sm">Sovereign Gaza Master Blueprint © 2026</p>
+                <p class="text-slate-500">Global Transit, Digital Twin & Zero-Tax Reconstruction Framework</p>
+            </div>
+            <div class="flex items-center gap-6 font-mono text-[11px]">
+                <a href="https://github.com/Mkfininqatar/qatar-national-vision-hpc" target="_blank" class="hover:text-brand-gold transition flex items-center gap-1">
+                    <i data-lucide="github" class="w-4 h-4"></i> GitHub Codebase
+                </a>
+                <span class="text-slate-700">•</span>
+                <span class="text-brand-green flex items-center gap-1">
+                    <i data-lucide="shield" class="w-4 h-4"></i> Sovereign Clearance Active
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: REGISTER VOLUNTEER MODAL -->
+    <div id="register-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-brand-card border border-brand-border rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeModal('register-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="border-b border-brand-border pb-3">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="user-plus" class="w-5 h-5 text-brand-gold"></i>
+                    Register Gaza Reconstruction Volunteer
+                </h3>
+                <p class="text-xs text-slate-400">Get verified for free airfare and fast-track HT-Visa entry</p>
+            </div>
+
+            <form onsubmit="handleRegister(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1">Full Name (As in Passport):</label>
+                    <input type="text" required placeholder="e.g. Tariq Rahman" class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-300 font-medium mb-1">Expertise Field:</label>
+                        <select class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+                            <option>Civil / Structural Engineer</option>
+                            <option>Software & Digital Twin Specialist</option>
+                            <option>Healthcare / Medical Specialist</option>
+                            <option>Solar & Power Grid Technician</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-medium mb-1">Nearest Hub Airport:</label>
+                        <select class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-gold">
+                            <option value="DOH">Doha (DOH)</option>
+                            <option value="DAC">Dhaka (DAC)</option>
+                            <option value="RUH">Riyadh (RUH)</option>
+                            <option value="CAI">Cairo (CAI)</option>
+                            <option value="IST">Istanbul (IST)</option>
+                            <option value="LHR">London (LHR)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-medium mb-1">Passport / National ID Number:</label>
+                    <input type="text" required placeholder="A12345678" class="w-full bg-slate-900 border border-brand-border rounded-xl px-3 py-2 text-white font-mono focus:outline-none focus:border-brand-gold">
+                </div>
+
+                <button type="submit" class="w-full bg-brand-gold hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl transition shadow-lg">
+                    Submit & Generate Fast-Track HT-Visa
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: QATAR AIRWAYS BOARDING PASS GENERATOR MODAL -->
+    <div id="pass-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-brand-card border border-brand-maroon rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl relative">
+            <button onclick="closeModal('pass-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="border-b border-brand-maroon/60 pb-3 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="ticket" class="w-5 h-5 text-brand-gold"></i>
+                        Qatar Airways Sovereign Transit Voucher
+                    </h3>
+                    <p class="text-xs text-slate-400">100% Free Humanitarian Flight Voucher to Gaza Transit Hub</p>
+                </div>
+                <span class="text-xl">🇶🇦</span>
+            </div>
+
+            <!-- BOARDING PASS CARD PREVIEW -->
+            <div class="bg-gradient-to-r from-brand-maroon/40 via-slate-900 to-brand-maroon/40 border border-brand-maroon rounded-xl p-5 space-y-4 font-mono text-xs text-white shadow-inner">
+                <div class="flex justify-between items-center border-b border-brand-maroon/40 pb-2">
+                    <span class="font-bold text-brand-gold">QATAR AIRWAYS • HUMANITARIAN PASS</span>
+                    <span class="bg-brand-green/20 text-brand-green border border-brand-green/30 text-[9px] px-2 py-0.5 rounded">100% SPONSORED</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[10px] text-slate-400">PASSENGER NAME</p>
+                        <p class="font-bold text-sm" id="pass-name">VOLUNTEER ENGINEER</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-400">HT-VISA CLEARANCE ID</p>
+                        <p class="font-bold text-sm text-brand-gold" id="pass-htid">HTV-2026-GAZA-88</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center bg-slate-950 p-3 rounded-lg border border-slate-800">
+                    <div>
+                        <p class="text-[10px] text-slate-400">DEPARTURE</p>
+                        <p class="font-bold text-lg text-brand-gold" id="pass-from">DOH</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-5 h-5 text-brand-gold"></i>
+                    <div>
+                        <p class="text-[10px] text-slate-400">TRANSIT HUB</p>
+                        <p class="font-bold text-lg text-rose-400">CAI (Cairo)</p>
+                    </div>
+                    <i data-lucide="arrow-right" class="w-5 h-5 text-rose-400"></i>
+                    <div class="text-right">
+                        <p class="text-[10px] text-slate-400">FINAL DESTINATION</p>
+                        <p class="font-bold text-lg text-rose-500 animate-pulse">GAZA 🇵🇸</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <div id="qrcode" class="bg-white p-2 rounded-lg"></div>
+                    <div class="text-right text-[10px] text-slate-400 space-y-1">
+                        <p>Class: <strong class="text-white">Sovereign Relief (Y)</strong></p>
+                        <p>Baggage: <strong class="text-white">40KG (Zero Tariff)</strong></p>
+                        <p>Status: <strong class="text-brand-green">APPROVED & CONFIRMED</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="downloadPass()" class="w-full bg-gradient-to-r from-brand-gold to-amber-500 text-slate-950 font-bold py-2.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Download & Save Digital Pass
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Terminal Filtering Logic
+        function filterTerminals(category) {
+            const cards = document.querySelectorAll('.term-card');
+            const buttons = document.querySelectorAll('.term-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-gold', 'text-slate-950');
+                btn.classList.add('bg-brand-card', 'text-slate-300');
+            });
+
+            event.target.classList.add('active', 'bg-brand-gold', 'text-slate-950');
+            event.target.classList.remove('bg-brand-card', 'text-slate-300');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Controls
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Qatar Airways Pass Generator with QRCode
+        function openPassGenerator(hubCode = 'DOH') {
+            document.getElementById('pass-from').innerText = hubCode;
+            document.getElementById('pass-htid').innerText = 'HTV-2026-' + hubCode + '-' + Math.floor(1000 + Math.random() * 9000);
+            
+            // Generate QR Code
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: "SOVEREIGN-GAZA-PASS-" + hubCode + "-100%-FREE-AIRFARE",
+                width: 64,
+                height: 64,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            openModal('pass-modal');
+        }
+
+        // Customs Calculator
+        function calculateTariff() {
+            const catRate = parseFloat(document.getElementById('calc-category').value);
+            const val = parseFloat(document.getElementById('calc-value').value) || 0;
+            
+            const standardDuty = val * catRate;
+            
+            document.getElementById('res-standard').innerText = '$' + standardDuty.toLocaleString() + ' USD';
+            document.getElementById('res-savings').innerText = '$' + standardDuty.toLocaleString() + ' USD';
+        }
+
+        // HT-Visa Verification Logic
+        function verifyHTVisa() {
+            const val = document.getElementById('verify-input').value;
+            const resBox = document.getElementById('verify-result');
+            
+            resBox.innerHTML = `
+                <div class="flex items-center gap-2 text-brand-green font-bold text-sm">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    <span>HT-VISA PASSPORT VERIFIED & SYNCED</span>
+                </div>
+                <div class="space-y-1.5 font-mono text-[11px] text-slate-300">
+                    <div>• Verified ID: <span class="text-white font-bold">${val.toUpperCase()}</span></div>
+                    <div>• Flight Status: <span class="text-brand-gold font-bold">QATAR AIRWAYS SPONSORED PASS READY</span></div>
+                    <div>• Route: <span class="text-white">Hub Terminal ➔ Cairo (CAI) / Larnaca ➔ GAZA</span></div>
+                    <div>• Customs Duty: <span class="text-brand-blue font-bold">0% TAX EXEMPTION ACTIVE</span></div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // Registration Handle
+        function handleRegister(e) {
+            e.preventDefault();
+            alert("Registration successful! Your HT-Visa and Free Qatar Airways Flight Voucher have been queued and verified.");
+            closeModal('register-modal');
+            openPassGenerator('DOH');
+        }
+
+        function downloadPass() {
+            alert("Digital Pass downloaded successfully! Please present this pass at the fast-track HT-Visa airport desk.");
+            closeModal('pass-modal');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function highlightRoute(code) {
+            console.log("Route selected:", code);
+        }
+    </script>
+</body>
+</html>
