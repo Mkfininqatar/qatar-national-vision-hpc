@@ -1882,3 +1882,51 @@ if __name__ == "__main__":
     print("=== Gaza Satellite & GPS Transit Tracking Report ===")
     for key, value in audit_report.items():
         print(f"  - {key}: {value}")
+class GazaEmergencyLogisticsRouter:
+    def __init__(self, convoy_id, destination_hub):
+        self.convoy_id = convoy_id
+        self.destination_hub = destination_hub
+        self.camps_mapping = {
+            "MC-01": {"name": "Rafah South Trauma & Medical Camp", "gps": (31.2825, 34.2541), "type": "Medical"},
+            "FC-01": {"name": "Deir al-Balah Central Food Depot", "gps": (31.4170, 34.3533), "type": "Food"},
+            "CC-01": {"name": "Jabalia Clothing & Winterized Supply Post", "gps": (31.5016, 34.4668), "type": "Clothing"}
+        }
+
+    def track_convoy_route(self, current_gps, active_corridor):
+        """
+        Gaza-r satelite view ebong GPS waypoint onujai emergency convoy-er route ebong camp point track kore.
+        """
+        route_status = "SECURE_TRANSIT"
+        assigned_camp = None
+
+        # Corridor route check
+        if active_corridor == "Corridor_A_Rafah_Lifeline":
+            assigned_camp = self.camps_mapping["MC-01"]
+        elif active_corridor == "Central_Axis":
+            assigned_camp = self.camps_mapping["FC-01"]
+        else:
+            assigned_camp = self.camps_mapping["CC-01"]
+
+        return {
+            "convoy_id": self.convoy_id,
+            "current_location_gps": current_gps,
+            "active_corridor": active_corridor,
+            "nearest_emergency_camp": assigned_camp["name"],
+            "camp_type": assigned_camp["type"],
+            "camp_gps": assigned_camp["gps"],
+            "transit_status": route_status
+        }
+
+# Test execution for Gaza Logistics Tracking
+if __name__ == "__main__":
+    router = GazaEmergencyLogisticsRouter(convoy_id="GZ-CONVOY-2026-01", destination_hub="Rafah_Hub")
+    
+    # Convoy tracking simulation
+    tracking_report = router.track_convoy_route(
+        current_gps=(31.2825, 34.2541),
+        active_corridor="Corridor_A_Rafah_Lifeline"
+    )
+    
+    print("Gaza Emergency GPS Route Tracking Report:")
+    for key, val in tracking_report.items():
+        print(f"  - {key}: {val}")
