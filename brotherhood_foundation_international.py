@@ -908,3 +908,179 @@ class BrotherhoodFoundationInternational:
 if __name__ == "__main__":
     foundation_system = BrotherhoodFoundationInternational()
     foundation_system.export_to_json()
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+===============================================================================
+TITLE       : Global Brotherhood Foundation - Social Media Automation Broadcaster
+FILE NAME   : brotherhood_social_broadcaster.py
+ORGANIZATION: Global Brotherhood Foundation
+VERSION     : 3.6.0 (MULTI-PLATFORM BROADCASTER)
+PLATFORMS   : Facebook, Instagram, X (Twitter)
+===============================================================================
+"""
+
+import json
+import requests
+import os
+
+# ==========================================
+# 1. API CONFIGURATION & CREDENTIALS
+# ==========================================
+CONFIG = {
+    "FACEBOOK_PAGE_ID": "YOUR_FACEBOOK_PAGE_ID",
+    "FACEBOOK_PAGE_ACCESS_TOKEN": "YOUR_FACEBOOK_PAGE_ACCESS_TOKEN",
+    
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID": "YOUR_INSTAGRAM_BUSINESS_ACCOUNT_ID",
+    "INSTAGRAM_ACCESS_TOKEN": "YOUR_INSTAGRAM_ACCESS_TOKEN",
+    
+    "X_BEARER_TOKEN": "YOUR_X_BEARER_TOKEN",
+    "X_API_KEY": "YOUR_X_API_KEY",
+    "X_API_SECRET": "YOUR_X_API_SECRET",
+    "X_ACCESS_TOKEN": "YOUR_X_ACCESS_TOKEN",
+    "X_ACCESS_TOKEN_SECRET": "YOUR_X_ACCESS_TOKEN_SECRET",
+
+    # Image URL for Instagram/FB/X (Must be publicly accessible URL for Meta API)
+    "IMAGE_URL": "http://qatar-national-vision-hpc.com/assets/master_dashboard_v3.6.0.jpg"
+}
+
+# ==========================================
+# 2. CAPTION TEMPLATES
+# ==========================================
+CAPTION_FACEBOOK = """🏛️ THE HEART OF UNITY: Gaza Brotherhood Parliament & Scientific Rebuilding Charter (v3.6.0)
+
+আমরা আনন্দের সাথে গ্লোবাল ব্রাদারহুড ফাউন্ডেশন এবং Gaza Brotherhood Parliament-এর মাস্টার প্ল্যান প্রকাশ করছি।
+
+🔑 Key Highlights:
+• 🕌 Al-Aqsa Spiritual Axis: পবিত্র আল-আকসা আধ্যাত্মিক অক্ষের সাথে সংসংগতি রেখে নকশা করা।
+• 🧲 Magnetic Telemetry: গাজার ভূগর্ভস্থ ৪৩২ Hz রেসোন্যান্স ডেটা স্ক্যানিং।
+• 🤝 9-Nation Charter: চীন, জাপান, ভারত, পাকিস্তান, কাতার, ইউএই, তুরস্ক, জর্ডান এবং মিশর।
+• 🤖 Autonomous Robotics: Tesla Optimus ও China Tech Alliance রোবট বাহিনীর স্বায়ত্তশাসিত অপারেশন।
+• 📡 HPC Digital Twin: QATARSAT-HPC-01 স্যাটেলাইটের মাধ্যমে লাইভ টেলিমেট্রি।
+
+Unity • Resilience • Humanity 🕊️
+
+📍 Location: Gaza Ground Zero
+👨‍💻 Tech Consultant: Mazed Abdul
+🌐 Portal: http://qatar-national-vision-hpc.com/
+💻 Repository: Mkfininqatar/qatar-national-vision-hpc
+
+#GlobalBrotherhoodFoundation #GazaBrotherhoodParliament #AlAqsaAxis #RebuildGaza #DigitalTwin #MazedAbdul"""
+
+CAPTION_INSTAGRAM = """🏛️ THE HEART OF UNITY: Gaza Brotherhood Parliament & Scientific Master Plan (v3.6.0)
+
+Unveiling the tech-driven rebuilding charter at Gaza Ground Zero under the Global Brotherhood Foundation.
+
+🔑 Key Scientific Highlights:
+• 🕌 Al-Aqsa Spiritual Axis Alignment
+• 🧲 Magnetic Frequency Telemetry (432 Hz Sub-surface Resonance)
+• 🤝 9-Nation Equal Governance Charter (China, Japan, India, Pakistan, Qatar, UAE, Turkey, Jordan, Egypt)
+• 🤖 Autonomous Robotics Fleet (Tesla Optimus & China Tech Alliance)
+• 📡 HPC Digital Twin & QATARSAT-HPC-01 Satellite Link
+
+"Unity • Resilience • Humanity"
+
+📍 Location: Gaza Ground Zero
+👨‍💻 Architect: Mazed Abdul
+🌐 Portal: qatar-national-vision-hpc.com
+💻 Repo: Mkfininqatar/qatar-national-vision-hpc
+
+#GlobalBrotherhoodFoundation #GazaBrotherhoodParliament #AlAqsaAxis #RebuildGaza #DigitalTwin #HPC #TeslaOptimus #MazedAbdul"""
+
+CAPTION_X = """🏛️ THE HEART OF UNITY: Gaza Brotherhood Parliament & Scientific Master Plan (v3.6.0)
+
+Rebuilding Gaza Ground Zero with AI, High-Performance Computing & Global Solidarity.
+
+🕌 Al-Aqsa Axis
+🧲 432Hz Magnetic Scanning
+🤝 9-Nation Equal Charter
+🤖 Tesla Optimus & China Tech Fleet
+📡 Satellite Sync
+
+Unity • Resilience • Humanity
+
+📍 Gaza Ground Zero
+🌐 qatar-national-vision-hpc.com
+💻 Mkfininqatar/qatar-national-vision-hpc
+
+#GlobalBrotherhoodFoundation #GazaBrotherhoodParliament #AlAqsaAxis #RebuildGaza #MazedAbdul"""
+
+
+# ==========================================
+# 3. BROADCASTER FUNCTIONS
+# ==========================================
+
+def post_to_facebook(image_url, message):
+    """Post photo with caption to Facebook Page via Graph API"""
+    print("[FB] Publishing to Facebook Page...")
+    url = f"https://graph.facebook.com/v19.0/{CONFIG['FACEBOOK_PAGE_ID']}/photos"
+    payload = {
+        'url': image_url,
+        'caption': message,
+        'access_token': CONFIG['FACEBOOK_PAGE_ACCESS_TOKEN']
+    }
+    response = requests.post(url, data=payload)
+    if response.status_code == 200:
+        print(f"[FB SUCCESS] Facebook Post ID: {response.json().get('id')}")
+    else:
+        print(f"[FB ERROR] {response.status_code}: {response.text}")
+
+def post_to_instagram(image_url, caption):
+    """Post photo to Instagram Business Account via Graph API Container Method"""
+    print("[IG] Publishing to Instagram...")
+    # Step 1: Create Media Container
+    container_url = f"https://graph.facebook.com/v19.0/{CONFIG['INSTAGRAM_BUSINESS_ACCOUNT_ID']}/media"
+    container_payload = {
+        'image_url': image_url,
+        'caption': caption,
+        'access_token': CONFIG['INSTAGRAM_ACCESS_TOKEN']
+    }
+    res_container = requests.post(container_url, data=container_payload)
+    
+    if res_container.status_code == 200:
+        creation_id = res_container.json().get('id')
+        # Step 2: Publish Media Container
+        publish_url = f"https://graph.facebook.com/v19.0/{CONFIG['INSTAGRAM_BUSINESS_ACCOUNT_ID']}/media_publish"
+        publish_payload = {
+            'creation_id': creation_id,
+            'access_token': CONFIG['INSTAGRAM_ACCESS_TOKEN']
+        }
+        res_publish = requests.post(publish_url, data=publish_payload)
+        if res_publish.status_code == 200:
+            print(f"[IG SUCCESS] Instagram Post ID: {res_publish.json().get('id')}")
+        else:
+            print(f"[IG ERROR Publish] {res_publish.text}")
+    else:
+        print(f"[IG ERROR Container] {res_container.text}")
+
+def post_to_x(message):
+    """Post text/tweet to X (Twitter) using API v2"""
+    print("[X] Publishing to X (Twitter)...")
+    url = "https://api.twitter.com/2/tweets"
+    headers = {
+        "Authorization": f"Bearer {CONFIG['X_BEARER_TOKEN']}",
+        "Content-Type": "application/json"
+    }
+    payload = {"text": message}
+    response = requests.post(url, headers=headers, json=payload)
+    
+    if response.status_code == 201:
+        print(f"[X SUCCESS] Tweet ID: {response.json().get('data', {}).get('id')}")
+    else:
+        print(f"[X ERROR] {response.status_code}: {response.text}")
+
+# ==========================================
+# 4. EXECUTION
+# ==========================================
+if __name__ == "__main__":
+    print("=========================================================")
+    print("GLOBAL BROTHERHOOD FOUNDATION - AUTOMATED BROADCASTER v3.6.0")
+    print("=========================================================")
+    
+    # Run Broadcasters
+    # post_to_facebook(CONFIG['IMAGE_URL'], CAPTION_FACEBOOK)
+    # post_to_instagram(CONFIG['IMAGE_URL'], CAPTION_INSTAGRAM)
+    # post_to_x(CAPTION_X)
+    
+    print("\n[SYSTEM READY] Fill API credentials in CONFIG dictionary to broadcast automatically.")
