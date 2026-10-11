@@ -7454,3 +7454,830 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Brotherhood Foundation - Master Command & Parliament Control Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            glow: '#d4af37'
+                        },
+                        darkbg: '#030712',
+                        panelbg: '#0b1329',
+                        cardbg: '#111c38'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(11, 19, 41, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.6);
+        }
+        .glass-card {
+            background: rgba(17, 28, 56, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.15);
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+        }
+        .map-zone {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .map-zone:hover {
+            filter: brightness(1.35) drop-shadow(0 0 10px rgba(234, 179, 8, 0.7));
+        }
+        .map-zone.active {
+            stroke: #facc15;
+            stroke-width: 3;
+            filter: brightness(1.5) drop-shadow(0 0 16px rgba(56, 189, 248, 0.9));
+        }
+        @keyframes radar-pulse {
+            0% { transform: scale(0.95); opacity: 0.85; }
+            50% { transform: scale(1.2); opacity: 0.35; }
+            100% { transform: scale(0.95); opacity: 0.85; }
+        }
+        .pulse-marker {
+            animation: radar-pulse 2.2s infinite ease-in-out;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <header class="sticky top-0 z-50 glass-panel border-b border-gold-glow/30 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
+            <!-- Organization Branding -->
+            <div class="flex items-center space-x-3.5">
+                <div class="w-13 h-13 p-2.5 rounded-full border-2 border-gold-500/90 bg-gradient-to-br from-amber-600/30 via-emerald-900/40 to-slate-900 flex items-center justify-center text-gold-400 shadow-xl gold-border-glow">
+                    <i class="fa-solid fa-hands-holding-child text-2xl"></i>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h1 class="text-xl font-black tracking-wider text-gold-400 uppercase">Global Brotherhood Foundation</h1>
+                        <span class="px-2.5 py-0.5 text-[10px] font-extrabold bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 rounded-full flex items-center gap-1.5 shadow">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> SYSTEM LOCKED v3.3.0
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-300 flex flex-wrap items-center gap-2 mt-0.5">
+                        <span><i class="fa-solid fa-calendar-check text-gold-500"></i> Oct 11, 2026</span> | 
+                        <span class="text-gold-300 font-semibold italic">"Unity • Resilience • Humanity"</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Meta Telemetry Identifiers -->
+            <div class="flex flex-wrap items-center gap-3 text-xs">
+                <!-- Commander -->
+                <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2.5">
+                    <i class="fa-solid fa-user-shield text-gold-400 text-sm"></i>
+                    <div>
+                        <span class="text-gray-400 block text-[9px] leading-3 uppercase font-bold">Commander & Architect</span>
+                        <span class="font-bold text-gray-100">Mazed Abdul</span>
+                    </div>
+                </div>
+
+                <!-- Live Clock -->
+                <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2.5">
+                    <i class="fa-solid fa-clock text-cyan-400 text-sm"></i>
+                    <div>
+                        <span class="text-gray-400 block text-[9px] leading-3 uppercase font-bold">UTC Time</span>
+                        <span id="liveClock" class="font-mono text-cyan-300 font-bold">00:00:00 UTC</span>
+                    </div>
+                </div>
+
+                <!-- Repository & Portal Link Indicator -->
+                <div class="bg-slate-900/90 border border-slate-700/80 px-3 py-1.5 rounded-xl flex items-center gap-2.5">
+                    <i class="fa-brands fa-github text-purple-400 text-sm"></i>
+                    <div>
+                        <span class="text-gray-400 block text-[9px] leading-3 uppercase font-bold">HPC Repo & Portal</span>
+                        <a href="http://qatar-national-vision-hpc.com/" target="_blank" class="font-mono text-xs text-gold-400 hover:underline font-bold">qatar-national-vision-hpc</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto w-full px-4 py-6 space-y-6 flex-grow">
+
+        <section class="glass-panel rounded-2xl p-6 relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-72 h-72 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -left-16 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-slate-700/80 pb-4 mb-5">
+                <div>
+                    <h2 class="text-2xl font-black text-white tracking-wide flex items-center gap-2.5">
+                        <i class="fa-solid fa-landmark-dome text-gold-400"></i>
+                        Gaza Brotherhood Parliament & Master Telemetry Command
+                    </h2>
+                    <p class="text-xs text-gray-300 mt-0.5">Ground Zero Gaza HQ Aligned with Al-Aqsa Spiritual Axis & Coastal Reconstruction Corridor • 9 Equal Stakeholder Nations</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button id="btnToggleSim" onclick="toggleTelemetryStream()" class="px-4 py-2 bg-emerald-600/90 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-lg">
+                        <i class="fa-solid fa-play" id="simIcon"></i> <span id="simBtnText">Start Telemetry Stream</span>
+                    </button>
+                    <button onclick="exportTelemetryJSON()" class="px-4 py-2 bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-slate-950 rounded-xl text-xs font-black flex items-center gap-2 transition shadow-xl gold-border-glow">
+                        <i class="fa-solid fa-file-export"></i> Export Master JSON
+                    </button>
+                </div>
+            </div>
+
+            <!-- Global High Level Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-gold-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">Gaza Population</span>
+                    <span class="text-xl font-black text-white">2.2 Million</span>
+                    <span class="text-[10px] text-gold-400 block mt-0.5 font-semibold">5 Operational Zones</span>
+                </div>
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-cyan-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">Equal Partners</span>
+                    <span class="text-xl font-black text-cyan-300">9 Countries</span>
+                    <span class="text-[10px] text-cyan-400 block mt-0.5 font-semibold">Sovereign Assembly</span>
+                </div>
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-emerald-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">Eco-Greenhouses</span>
+                    <span class="text-xl font-black text-emerald-300">4,400 Units</span>
+                    <span class="text-[10px] text-emerald-400 block mt-0.5 font-semibold">Agro-Heritage Grid</span>
+                </div>
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-red-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">Container Clinics</span>
+                    <span class="text-xl font-black text-red-300">80,000 Beds</span>
+                    <span class="text-[10px] text-red-400 block mt-0.5 font-semibold">Field Medical Triage</span>
+                </div>
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-purple-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">ICU Evacuations</span>
+                    <span class="text-xl font-black text-purple-300">20,000 Target</span>
+                    <span class="text-[10px] text-purple-400 block mt-0.5 font-semibold">Airlift Corridors</span>
+                </div>
+                <div class="glass-card p-3.5 rounded-xl border-l-4 border-l-amber-500">
+                    <span class="text-gray-400 text-[10px] uppercase font-bold block">Heritage Vaults</span>
+                    <span class="text-xl font-black text-amber-300">45 Hubs</span>
+                    <span class="text-[10px] text-amber-400 block mt-0.5 font-semibold">Seed & Culture Pres.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 space-y-5">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-700/80 pb-3.5">
+                <div>
+                    <h2 class="text-xl font-black text-gold-400 flex items-center gap-2.5">
+                        <i class="fa-solid fa-kaaba text-cyan-400"></i>
+                        Gaza Brotherhood Parliament & Al-Aqsa Architectural Master Plan
+                    </h2>
+                    <p class="text-xs text-gray-300 mt-0.5">Architectural Layout & Equal Governance Charter for the 9 Signatory Nations</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 bg-gold-500/20 text-gold-300 border border-gold-500/40 rounded-lg text-xs font-bold">
+                        <i class="fa-solid fa-compass text-cyan-400 mr-1.5"></i> Al-Aqsa Spiritual Axis: 63.4° North-East Alignment
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Parliament Architectural Layout Vector Graphic -->
+                <div class="lg:col-span-7 bg-slate-950/90 rounded-xl border border-slate-800 p-4 flex flex-col justify-between relative overflow-hidden">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-[11px] font-extrabold text-gold-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-drafting-compass"></i> Interactive Architectural Floorplan
+                        </span>
+                        <span class="text-[10px] font-mono text-gray-400">GROUND ZERO HQ COMPLEX</span>
+                    </div>
+
+                    <!-- SVG Representation of Parliament Blueprint -->
+                    <svg viewBox="0 0 500 300" class="w-full h-auto max-h-[320px] drop-shadow-2xl">
+                        <!-- Background Grid -->
+                        <pattern id="archGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+                        </pattern>
+                        <rect width="500" height="300" fill="url(#archGrid)" />
+
+                        <!-- Spiritual Axis Vector Line -->
+                        <line x1="50" y1="270" x2="450" y2="30" stroke="#facc15" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+                        <text x="320" y="70" fill="#facc15" font-size="8" font-weight="bold" font-family="sans-serif">AL-AQSA SPIRITUAL AXIS (63.4°)</text>
+
+                        <!-- Outer Octagonal Courtyard -->
+                        <polygon points="250,30 370,80 370,220 250,270 130,220 130,80" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.4"/>
+
+                        <!-- Central Circular Plenary Hall -->
+                        <circle cx="250" cy="150" r="65" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5"/>
+                        <circle cx="250" cy="150" r="45" fill="#1e293b" stroke="#eab308" stroke-width="1.5"/>
+                        <circle cx="250" cy="150" r="15" fill="#facc15" fill-opacity="0.8"/>
+                        <text x="228" y="154" fill="#0f172a" font-size="9" font-weight="black">PODIUM</text>
+
+                        <!-- 9 Circular Seats for Partner Nations -->
+                        <g fill="#38bdf8" stroke="#ffffff" stroke-width="1">
+                            <circle cx="250" cy="95" r="7" /> <!-- Qatar -->
+                            <circle cx="285" cy="110" r="7" /> <!-- UAE -->
+                            <circle cx="300" cy="145" r="7" /> <!-- Saudi/Oman/Other -->
+                            <circle cx="285" cy="185" r="7" /> <!-- Turkey -->
+                            <circle cx="250" cy="200" r="7" /> <!-- Egypt -->
+                            <circle cx="215" cy="185" r="7" /> <!-- Jordan -->
+                            <circle cx="200" cy="145" r="7" /> <!-- Pakistan -->
+                            <circle cx="215" cy="110" r="7" /> <!-- China -->
+                            <circle cx="232" cy="100" r="7" fill="#eab308"/> <!-- Japan / India -->
+                        </g>
+
+                        <!-- HPC Command Tower Wing -->
+                        <rect x="380" y="110" width="80" height="80" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+                        <text x="390" y="145" fill="#c7d2fe" font-size="8" font-weight="bold">HPC DATA TOWER</text>
+                        <text x="393" y="158" fill="#818cf8" font-size="7" font-family="monospace">QATARSAT-01</text>
+
+                        <!-- Coastal Heritage Wing -->
+                        <rect x="40" y="110" width="80" height="80" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+                        <text x="50" y="145" fill="#a7f3d0" font-size="8" font-weight="bold">HERITAGE WING</text>
+                        <text x="52" y="158" fill="#34d399" font-size="7" font-family="monospace">SEED VAULTS</text>
+
+                        <!-- Connecting Corridors -->
+                        <line x1="120" y1="150" x2="185" y2="150" stroke="#10b981" stroke-width="3"/>
+                        <line x1="315" y1="150" x2="380" y2="150" stroke="#6366f1" stroke-width="3"/>
+                    </svg>
+
+                    <!-- Blueprint Legend -->
+                    <div class="grid grid-cols-3 gap-2 text-[10px] bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 mt-2">
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-gold-400"></span> Central Plenary Assembly</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-indigo-500"></span> HPC Digital Twin Tower</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-emerald-500"></span> Heritage & Seed Vaults</div>
+                    </div>
+                </div>
+
+                <!-- Equal Stakeholder Governance Charter Details -->
+                <div class="lg:col-span-5 glass-card p-5 rounded-xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <span class="text-[10px] font-extrabold text-gold-400 uppercase tracking-widest block mb-1">Parliamentary Charter</span>
+                        <h3 class="text-lg font-bold text-white">9-Nation Equal Stakeholder Model</h3>
+                        <p class="text-xs text-gray-300 mt-1 leading-relaxed">
+                            Established under the October 11, 2026 Charter, the Gaza Brotherhood Parliament operates on an <strong>Equal Stakeholder Governance</strong> framework where all 9 partner nations hold equal voting power, policy oversight, and administrative stewardship.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2.5 text-xs">
+                        <div class="bg-slate-900/90 p-3 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span class="text-gray-300 font-semibold"><i class="fa-solid fa-check-double text-emerald-400 mr-2"></i> Voting Power:</span>
+                            <span class="font-bold text-emerald-400">Equal 11.11% per Nation</span>
+                        </div>
+                        <div class="bg-slate-900/90 p-3 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span class="text-gray-300 font-semibold"><i class="fa-solid fa-scale-balanced text-gold-400 mr-2"></i> Budget Approval:</span>
+                            <span class="font-bold text-gold-300">Unanimous Assembly Vote</span>
+                        </div>
+                        <div class="bg-slate-900/90 p-3 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span class="text-gray-300 font-semibold"><i class="fa-solid fa-microchip text-cyan-400 mr-2"></i> Telemetry Access:</span>
+                            <span class="font-bold text-cyan-300">Real-Time HPC Encryption</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-[11px] text-amber-200">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1.5"></i>
+                        All physical parliament wings and digital twin telemetry nodes are permanently synchronized to the <strong>Qatar National Vision HPC Cluster</strong>.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Map Section -->
+            <div class="lg:col-span-8 glass-panel rounded-2xl p-5 flex flex-col justify-between">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-700/80 pb-3 mb-4 gap-2">
+                    <div>
+                        <h3 class="text-base font-bold text-gold-400 flex items-center gap-2">
+                            <i class="fa-solid fa-map-location-dot text-cyan-400"></i> Gaza Interactive Spatial Operations Map
+                        </h3>
+                        <p class="text-xs text-gray-300">Click any zone to inspect live population, agricultural greenhouses, seed vaults, and field hospitals.</p>
+                    </div>
+                    <div class="flex items-center gap-2 text-[11px]">
+                        <span class="flex items-center gap-1.5 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span> Satellite Orbital Path
+                        </span>
+                        <span class="flex items-center gap-1.5 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-gold-400"></span> Drone Scout Escort
+                        </span>
+                    </div>
+                </div>
+
+                <!-- SVG Vector Map Area -->
+                <div class="relative w-full bg-slate-950/90 rounded-xl border border-slate-800 p-4 flex items-center justify-center overflow-hidden">
+                    <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none"></div>
+
+                    <!-- Gaza Strip Interactive SVG Vector Layout -->
+                    <svg viewBox="0 0 600 320" class="w-full h-auto max-h-[380px] drop-shadow-2xl">
+                        <defs>
+                            <linearGradient id="medSeaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"/>
+                                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.05"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Mediterranean Sea Canvas Representation -->
+                        <path d="M 0 0 L 600 0 L 600 320 L 0 320 Z" fill="url(#medSeaGrad)" />
+                        <text x="25" y="35" fill="#38bdf8" opacity="0.35" font-size="13" font-weight="black">MEDITERRANEAN SEA (NAVAL PATROL CORRIDOR)</text>
+
+                        <!-- Gaza Zone Polygons -->
+                        <!-- 1. North Gaza Rural Zone -->
+                        <path id="zone-NorthGaza" onclick="selectZone('North Gaza Rural Zone')" class="map-zone" d="M 440 20 L 560 40 L 520 100 L 410 80 Z" fill="#1e3a8a" fill-opacity="0.65" stroke="#3b82f6" stroke-width="1.5" />
+                        <text x="450" y="55" fill="#93c5fd" font-size="10" font-weight="bold" pointer-events="none">NORTH GAZA</text>
+
+                        <!-- 2. Gaza City Heritage Hub -->
+                        <path id="zone-GazaCity" onclick="selectZone('Gaza City Heritage Hub')" class="map-zone active" d="M 410 80 L 520 100 L 460 160 L 340 130 Z" fill="#854d0e" fill-opacity="0.65" stroke="#eab308" stroke-width="1.5" />
+                        <text x="390" y="115" fill="#fef08a" font-size="10" font-weight="bold" pointer-events="none">GAZA CITY HUB</text>
+
+                        <!-- 3. Deir al-Balah Agro Belt -->
+                        <path id="zone-DeiralBalah" onclick="selectZone('Deir al-Balah Agro Belt')" class="map-zone" d="M 340 130 L 460 160 L 390 210 L 270 170 Z" fill="#065f46" fill-opacity="0.65" stroke="#10b981" stroke-width="1.5" />
+                        <text x="320" y="165" fill="#a7f3d0" font-size="10" font-weight="bold" pointer-events="none">DEIR AL-BALAH</text>
+
+                        <!-- 4. Khan Younis Rural District -->
+                        <path id="zone-KhanYounis" onclick="selectZone('Khan Younis Rural District')" class="map-zone" d="M 270 170 L 390 210 L 310 270 L 180 220 Z" fill="#581c87" fill-opacity="0.65" stroke="#a855f7" stroke-width="1.5" />
+                        <text x="240" y="215" fill="#e9d5ff" font-size="10" font-weight="bold" pointer-events="none">KHAN YOUNIS</text>
+
+                        <!-- 5. Rafah Border Agro Zone -->
+                        <path id="zone-Rafah" onclick="selectZone('Rafah Border Agro Zone')" class="map-zone" d="M 180 220 L 310 270 L 250 310 L 100 270 Z" fill="#9f1239" fill-opacity="0.65" stroke="#f43f5e" stroke-width="1.5" />
+                        <text x="160" y="260" fill="#fecdd3" font-size="10" font-weight="bold" pointer-events="none">RAFAH BORDER</text>
+
+                        <!-- Dynamic Animated Markers -->
+                        <g id="satMarker" transform="translate(420, 90)">
+                            <circle r="18" fill="#0284c7" fill-opacity="0.25" class="pulse-marker"/>
+                            <circle r="6" fill="#38bdf8" />
+                            <text x="12" y="-12" fill="#38bdf8" font-size="9" font-family="monospace" font-weight="bold">QATARSAT-HPC-01</text>
+                        </g>
+
+                        <g id="droneMarker" transform="translate(280, 185)">
+                            <circle r="14" fill="#eab308" fill-opacity="0.25" class="pulse-marker"/>
+                            <polygon points="0,-6 6,6 -6,6" fill="#facc15" />
+                            <text x="12" y="16" fill="#facc15" font-size="9" font-family="monospace" font-weight="bold">HPC-AERO-SCOUT-X1</text>
+                        </g>
+
+                        <!-- Field Infrastructure Markers -->
+                        <circle cx="480" cy="70" r="4.5" fill="#10b981" />
+                        <rect x="420" y="120" width="8" height="8" fill="#ef4444" rx="1.5" />
+                        <circle cx="330" cy="190" r="4.5" fill="#10b981" />
+                        <rect x="220" y="240" width="8" height="8" fill="#ef4444" rx="1.5" />
+                    </svg>
+
+                    <!-- Map Legend -->
+                    <div class="absolute bottom-3 left-3 bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl text-[10px] space-y-1">
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span> Eco-Seed Banks</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-red-500 rounded-sm"></span> Container Field Clinics</div>
+                        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-cyan-400 rounded-full"></span> Orbital Satellite Orbit Path</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-between items-center text-xs text-gray-300 mt-3 pt-2 border-t border-slate-800">
+                    <span id="mapStatusText">Active Zone Inspector: <strong class="text-gold-400" id="selectedZoneName">Gaza City Heritage Hub</strong></span>
+                    <span class="font-mono text-[11px] text-cyan-300">Geospatial Coordinate: 31.5017° N, 34.4668° E</span>
+                </div>
+            </div>
+
+            <!-- Zone Telemetry Inspector -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                <div class="border-b border-slate-700/80 pb-3">
+                    <span class="text-[10px] font-extrabold text-gold-400 uppercase tracking-wider block">Zone Telemetry Inspector</span>
+                    <h3 id="inspectorTitle" class="text-lg font-bold text-white">Gaza City Heritage Hub</h3>
+                </div>
+
+                <div class="space-y-2.5 text-xs">
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span class="text-gray-300">Zone Population:</span>
+                        <span id="inspectorPop" class="font-mono font-bold text-white">660,000 (30%)</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span class="text-gray-300">Farmers Assigned:</span>
+                        <span id="inspectorFarmers" class="font-mono font-bold text-emerald-400">1,320 Units</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span class="text-gray-300">Eco-Greenhouses:</span>
+                        <span id="inspectorGreenhouses" class="font-mono font-bold text-emerald-300">1,320 Greenhouses</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span class="text-gray-300">Heritage Preservation Hubs:</span>
+                        <span id="inspectorCulture" class="font-mono font-bold text-purple-300">13 Hubs</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <span class="text-gray-300">Field Seed Vaults:</span>
+                        <span id="inspectorSeed" class="font-mono font-bold text-cyan-300">6 Vaults</span>
+                    </div>
+                </div>
+
+                <!-- Doughnut Chart Canvas -->
+                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex flex-col items-center">
+                    <span class="text-[10px] text-gray-300 font-bold uppercase mb-1">Population Distribution Share</span>
+                    <div class="relative w-full h-28 flex items-center justify-center">
+                        <canvas id="agroChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="glass-panel rounded-2xl p-6 space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-700/80 pb-3">
+                <div>
+                    <h2 class="text-lg font-bold text-gold-400 flex items-center gap-2.5">
+                        <i class="fa-solid fa-earth-asia text-cyan-400"></i>
+                        9-Nation Equal Parliamentary Partner Deployment Matrix
+                    </h2>
+                    <p class="text-xs text-gray-300">Active status and operational assignments for all 9 sovereign signatory nations.</p>
+                </div>
+
+                <!-- Filter Control -->
+                <div class="flex items-center gap-2 text-xs">
+                    <label for="countryFilter" class="text-gray-300 font-semibold">Filter Status:</label>
+                    <select id="countryFilter" onchange="filterCountries()" class="bg-slate-900 text-gray-200 border border-slate-700 rounded-xl px-3 py-1.5 focus:outline-none focus:border-gold-500 font-semibold">
+                        <option value="ALL">All Partner Nations (9)</option>
+                        <option value="Host Hub">Host Data Hub</option>
+                        <option value="Equal Partner">Equal Partners</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="diplomaticGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Cards dynamically injected via JavaScript -->
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Medical Evacuation & Container Triage Tracker -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                <h2 class="text-lg font-bold text-gold-400 flex items-center gap-2.5 border-b border-slate-700/80 pb-3">
+                    <i class="fa-solid fa-kit-medical text-red-400"></i>
+                    Medical Triage & Field Evacuation Status
+                </h2>
+
+                <div class="space-y-4">
+                    <!-- Critical ICU Evacuation -->
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-red-500/30 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-black text-red-400 uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-heart-pulse"></i> Critical ICU Evacuations (20%)
+                            </span>
+                            <span class="text-xs font-mono font-bold text-white">20,000 / 20,000 Target</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                            <div class="bg-gradient-to-r from-red-600 to-amber-500 h-2.5 rounded-full w-[88%] animate-pulse"></div>
+                        </div>
+                        <p class="text-[11px] text-gray-300">Active airlift corridors: Qatar, UAE, Turkey, Jordan Field Hospitals</p>
+                    </div>
+
+                    <!-- Local Field Container Clinics -->
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-emerald-500/30 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-black text-emerald-400 uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-hospital-user"></i> Field Container Clinics & Beds (80%)
+                            </span>
+                            <span class="text-xs font-mono font-bold text-white">80,000 / 80,000 Target</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                            <div class="bg-gradient-to-r from-emerald-600 to-teal-400 h-2.5 rounded-full w-[94%]"></div>
+                        </div>
+                        <p class="text-[11px] text-gray-300">Solar-powered modular container units with generic doctor rotations</p>
+                    </div>
+                </div>
+
+                <div class="text-[11px] text-gray-300 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+                    <i class="fa-solid fa-circle-info text-gold-400 mr-1.5"></i> Operations synchronized via <strong class="text-gray-100">Qatar National Vision HPC Portal</strong> & escort fleet <strong class="text-emerald-400">HPC-AERO-SCOUT-X1</strong>.
+                </div>
+            </div>
+
+            <!-- Satellite Terminal Log Console -->
+            <div class="glass-panel rounded-2xl p-6 space-y-3 flex flex-col justify-between">
+                <div class="flex justify-between items-center border-b border-slate-700/80 pb-2">
+                    <h3 class="text-xs font-black text-cyan-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-terminal"></i> Live Satellite & Operational Packet Console
+                    </h3>
+                    <span id="streamIndicator" class="text-[10px] px-2.5 py-0.5 rounded-full bg-gray-800 text-gray-400 font-mono font-bold">STREAM PAUSED</span>
+                </div>
+
+                <!-- Terminal Scroll Box -->
+                <div id="terminalLog" class="bg-black/95 p-3.5 rounded-xl font-mono text-[11px] text-emerald-400 h-52 overflow-y-auto space-y-1.5 border border-slate-800">
+                    <div>[00:00:00 UTC] Initializing Global Brotherhood Master Command Core...</div>
+                    <div>[00:00:00 UTC] Satellite QATARSAT-HPC-01 telemetry locked on Gaza Grid.</div>
+                    <div>[00:00:00 UTC] Gaza Brotherhood Parliament Charter status: LOCKED & OFFICIAL.</div>
+                    <div>[00:00:00 UTC] Connection verified with http://qatar-national-vision-hpc.com/</div>
+                </div>
+
+                <div class="flex justify-between items-center text-[11px] text-gray-300 pt-1">
+                    <span>Host Node: <strong class="text-gray-100">Doha HPC Cluster-01</strong></span>
+                    <span>Packets Processed: <strong id="packetCount" class="text-gold-400 font-mono font-bold">312</strong></span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="glass-panel border-t border-gold-glow/20 py-4 px-4 mt-8">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-gold-500"></i>
+                <span>&copy; 2026 <strong>Global Brotherhood Foundation</strong>. All rights reserved.</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>Commander: <strong class="text-gray-200">Mazed Abdul</strong></span>
+                <span>•</span>
+                <span>HQ: <strong class="text-gold-400">Gaza Brotherhood Parliament</strong></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Master Controller Logic -->
+    <script>
+        const foundationData = {
+            organization: "Global Brotherhood Foundation",
+            build_date: "October 11, 2026",
+            motto: "Unity • Resilience • Humanity",
+            commander: "Mazed Abdul",
+            parliament_hq: "Gaza Brotherhood Parliament Complex",
+            alignment_axis: "Al-Aqsa Mosque Spiritual Axis & Coastal Reconstruction Corridor",
+            portal: "http://qatar-national-vision-hpc.com/",
+            repository: "Mkfininqatar/qatar-national-vision-hpc",
+            satellite: "QATARSAT-HPC-01",
+            drone_escort: "HPC-AERO-SCOUT-X1",
+            total_population: 2200000,
+
+            // Gaza Operational Zones Data
+            agro_zones: [
+                { id: "NorthGaza", zone: "North Gaza Rural Zone", population: 440000, percentage: "20%", farmers: 880, greenhouses: 880, seed_banks: 4, cultural_hubs: 9 },
+                { id: "GazaCity", zone: "Gaza City Heritage Hub", population: 660000, percentage: "30%", farmers: 1320, greenhouses: 1320, seed_banks: 6, cultural_hubs: 13 },
+                { id: "DeiralBalah", zone: "Deir al-Balah Agro Belt", population: 330000, percentage: "15%", farmers: 660, greenhouses: 660, seed_banks: 3, cultural_hubs: 7 },
+                { id: "KhanYounis", zone: "Khan Younis Rural District", population: 550000, percentage: "25%", farmers: 1100, greenhouses: 1100, seed_banks: 5, cultural_hubs: 11 },
+                { id: "Rafah", zone: "Rafah Border Agro Zone", population: 220000, percentage: "10%", farmers: 440, greenhouses: 440, seed_banks: 2, cultural_hubs: 5 }
+            ],
+
+            // 9 Strategic Diplomatic Partner Nations
+            diplomatic_partners: [
+                { country: "China", flag: "fa-earth-asia", agency: "MFA / Red Cross", email: "fmprc_dcp@mfa.gov.cn", scope: "Modular Container Camps, Telemetry Sync & Infrastructure", status: "Equal Partner", telemetry_code: "CHN-SYNC-991" },
+                { country: "Japan", flag: "fa-sun", agency: "MOFA / JICA", email: "mofa-press@mofa.go.jp", scope: "Solar Power Grid Integration, Pediatric Medical Cold-Chain", status: "Equal Partner", telemetry_code: "JPN-SOLAR-882" },
+                { country: "India", flag: "fa-prescription-bottle-medical", agency: "MEA / Indian Red Cross", email: "media.mea@gov.in", scope: "Generic Pharmaceuticals & Volunteer Medical Rotation", status: "Equal Partner", telemetry_code: "IND-MED-403" },
+                { country: "Pakistan", flag: "fa-hand-holding-medical", agency: "MOFA / PRCS", email: "spokesperson.office@mofa.gov.pk", scope: "Emergency Relief Consignments & Surgical Team Dispatch", status: "Equal Partner", telemetry_code: "PAK-SURG-114" },
+                { country: "Qatar", flag: "fa-server", agency: "HPC Core Center", email: "hpc@qatar-national-vision-hpc.com", scope: "Host Data Center, Satellite Orbit Ping & Subsea Fiber Network", status: "Host Hub", telemetry_code: "QAT-HPC-001" },
+                { country: "UAE", flag: "fa-plane-departure", agency: "Health Authority", email: "evac@uae-aid.gov.ae", scope: "Trauma Care Intensive Evacuations & Specialized Airlift", status: "Equal Partner", telemetry_code: "UAE-AIR-302" },
+                { country: "Turkey", flag: "fa-hospital", agency: "AFAD / MoH", email: "info@afad.gov.tr", scope: "Field Hospital Infrastructure & Surgical Container Units", status: "Equal Partner", telemetry_code: "TUR-FIELD-705" },
+                { country: "Jordan", flag: "fa-truck-ramp-box", agency: "JHCO Corridor", email: "contact@jhco.org.jo", scope: "Border Supply Convoy Escorts & Emergency Field Logistics", status: "Equal Partner", telemetry_code: "JOR-LOG-506" },
+                { country: "Egypt", flag: "fa-person-shelter", agency: "Egyptian Red Crescent", email: "relief@egyptianrc.org", scope: "Rafah Border Logistics Hub & Direct Field Passage Corridor", status: "Equal Partner", telemetry_code: "EGY-PORT-207" }
+            ]
+        };
+
+        let isStreaming = false;
+        let streamInterval = null;
+        let satAnimInterval = null;
+        let packetCounter = 312;
+        let agroChartInstance = null;
+        let currentSatX = 420;
+        let currentSatY = 90;
+
+        window.onload = function() {
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            renderAgroChart(foundationData.agro_zones);
+            renderDiplomaticGrid(foundationData.diplomatic_partners);
+            selectZone('Gaza City Heritage Hub');
+
+            startSatelliteMotion();
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const utcStr = now.toISOString().substring(11, 19) + ' UTC';
+            document.getElementById('liveClock').textContent = utcStr;
+        }
+
+        function selectZone(zoneName) {
+            const zData = foundationData.agro_zones.find(z => z.zone === zoneName);
+            if (!zData) return;
+
+            document.querySelectorAll('.map-zone').forEach(el => el.classList.remove('active'));
+            const activeElem = document.getElementById(`zone-${zData.id}`);
+            if (activeElem) activeElem.classList.add('active');
+
+            document.getElementById('selectedZoneName').textContent = zData.zone;
+            document.getElementById('inspectorTitle').textContent = zData.zone;
+            document.getElementById('inspectorPop').textContent = `${zData.population.toLocaleString()} (${zData.percentage})`;
+            document.getElementById('inspectorFarmers').textContent = `${zData.farmers.toLocaleString()} Units`;
+            document.getElementById('inspectorGreenhouses').textContent = `${zData.greenhouses.toLocaleString()} Units`;
+            document.getElementById('inspectorCulture').textContent = `${zData.cultural_hubs} Hubs`;
+            document.getElementById('inspectorSeed').textContent = `${zData.seed_banks} Vaults`;
+        }
+
+        function renderAgroChart(zones) {
+            const ctx = document.getElementById('agroChart').getContext('2d');
+            const labels = zones.map(z => z.zone.replace(' Zone', '').replace(' District', '').replace(' Hub', ''));
+            const data = zones.map(z => z.population);
+
+            if (agroChartInstance) agroChartInstance.destroy();
+
+            agroChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#3b82f6', '#eab308', '#10b981', '#a855f7', '#f43f5e'],
+                        borderWidth: 2,
+                        borderColor: '#0b1329'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        function renderDiplomaticGrid(partners) {
+            const container = document.getElementById('diplomaticGrid');
+            container.innerHTML = '';
+
+            partners.forEach(partner => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-xl space-y-2.5 relative overflow-hidden";
+                
+                let statusBadge = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
+                if (partner.status === 'Host Hub') {
+                    statusBadge = "bg-gold-500/20 text-gold-400 border-gold-500/40";
+                }
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid ${partner.flag} text-cyan-400"></i> ${partner.country}
+                            </h3>
+                            <span class="text-[10px] text-gray-400 block mt-0.5">${partner.agency}</span>
+                        </div>
+                        <span class="px-2.5 py-0.5 text-[10px] font-bold border rounded-full ${statusBadge}">
+                            ${partner.status}
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">${partner.scope}</p>
+                    <div class="flex justify-between items-center text-[10px] font-mono text-gray-400 pt-2 border-t border-slate-800">
+                        <span><i class="fa-regular fa-envelope text-gold-500 mr-1"></i>${partner.email}</span>
+                        <span class="text-cyan-400 font-bold">${partner.telemetry_code}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCountries() {
+            const val = document.getElementById('countryFilter').value;
+            if (val === 'ALL') {
+                renderDiplomaticGrid(foundationData.diplomatic_partners);
+            } else {
+                const filtered = foundationData.diplomatic_partners.filter(p => p.status === val);
+                renderDiplomaticGrid(filtered);
+            }
+        }
+
+        function startSatelliteMotion() {
+            satAnimInterval = setInterval(() => {
+                const satMarker = document.getElementById('satMarker');
+                if (!satMarker) return;
+                
+                currentSatX += (Math.random() - 0.5) * 5;
+                currentSatY += (Math.random() - 0.5) * 5;
+
+                if (currentSatX < 380) currentSatX = 400;
+                if (currentSatX > 480) currentSatX = 450;
+                if (currentSatY < 60) currentSatY = 70;
+                if (currentSatY > 120) currentSatY = 100;
+
+                satMarker.setAttribute('transform', `translate(${currentSatX}, ${currentSatY})`);
+            }, 1200);
+        }
+
+        function toggleTelemetryStream() {
+            isStreaming = !isStreaming;
+            const btnText = document.getElementById('simBtnText');
+            const icon = document.getElementById('simIcon');
+            const indicator = document.getElementById('streamIndicator');
+
+            if (isStreaming) {
+                btnText.textContent = "Pause Telemetry Stream";
+                icon.className = "fa-solid fa-pause";
+                indicator.textContent = "LIVE STREAMING";
+                indicator.className = "text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono font-bold animate-pulse";
+
+                streamInterval = setInterval(() => {
+                    packetCounter++;
+                    document.getElementById('packetCount').textContent = packetCounter;
+                    appendTerminalLog();
+                }, 1500);
+            } else {
+                btnText.textContent = "Start Telemetry Stream";
+                icon.className = "fa-solid fa-play";
+                indicator.textContent = "STREAM PAUSED";
+                indicator.className = "text-[10px] px-2.5 py-0.5 rounded-full bg-gray-800 text-gray-400 font-mono font-bold";
+                clearInterval(streamInterval);
+            }
+        }
+
+        function appendTerminalLog() {
+            const terminal = document.getElementById('terminalLog');
+            const now = new Date().toISOString().substring(11, 19) + ' UTC';
+            
+            const sampleLogs = [
+                `[${now}] SATELLITE QATARSAT-HPC-01: Gaza City Seed Vault #2 telemetry verified.`,
+                `[${now}] GAZA PARLIAMENT: Plenary hall seat sync active for China & Japan delegations.`,
+                `[${now}] DIPLOMATIC NODE [Pakistan]: Emergency surgical consignment tracker online.`,
+                `[${now}] DIPLOMATIC NODE [India]: Generic medicine batch dispatch verified.`,
+                `[${now}] AGRO MATRIX: Soil pH telemetry packet received from Khan Younis District.`,
+                `[${now}] ESCORT SCOUT: Route safety greenlit for convoy via HPC-AERO-SCOUT-X1.`,
+                `[${now}] DIPLOMATIC NODE [Qatar]: Subsea fiber link health check nominal (100Gbps).`
+            ];
+
+            const randomLog = sampleLogs[Math.floor(Math.random() * sampleLogs.length)];
+            const div = document.createElement('div');
+            div.textContent = randomLog;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function exportTelemetryJSON() {
+            const payload = {
+                timestamp: new Date().toISOString(),
+                system_status: "LOCKED_v3.3.0",
+                organization_details: {
+                    name: foundationData.organization,
+                    build_date: foundationData.build_date,
+                    motto: foundationData.motto,
+                    commander: foundationData.commander,
+                    headquarters: foundationData.parliament_hq,
+                    alignment_axis: foundationData.alignment_axis,
+                    portal: foundationData.portal,
+                    repository: foundationData.repository
+                },
+                hardware_assets: {
+                    satellite: foundationData.satellite,
+                    drone_escort: foundationData.drone_escort,
+                    status: "OPERATIONAL"
+                },
+                demographics: {
+                    total_population: foundationData.total_population,
+                    icu_evacuation_target: 20000,
+                    local_container_care_target: 80000
+                },
+                operational_zones: foundationData.agro_zones,
+                diplomatic_matrix: foundationData.diplomatic_partners
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 4));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "telemetry_international_master.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+    </script>
+</body>
+</html>
