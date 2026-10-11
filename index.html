@@ -5478,3 +5478,217 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Brotherhood & Gaza Rebuild Command Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --panel-bg: rgba(11, 24, 43, 0.95);
+            --border-color: #00ffcc;
+            --accent-green: #00ff66;
+            --accent-cyan: #00ffff;
+            --accent-orange: #ffaa00;
+            --accent-purple: #ff00ff;
+            --accent-yellow: #ffff00;
+            --accent-blue: #3399ff;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 15px; overflow-x: hidden; }
+        
+        header { text-align: center; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; background: linear-gradient(90deg, rgba(138,10,35,0.4), rgba(11,24,43,0.95)); border-radius: 6px; }
+        header h1 { color: var(--accent-cyan); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: var(--text-dim); font-size: 0.8rem; margin-top: 5px; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 1024px) { .dashboard-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; box-shadow: 0 0 15px rgba(0,255,204,0.12); }
+        .panel h2 { font-size: 0.85rem; color: var(--accent-green); margin-bottom: 8px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px; text-transform: uppercase; }
+
+        .card { background: rgba(0,0,0,0.6); border-left: 3px solid var(--accent-cyan); padding: 8px; margin-bottom: 8px; font-size: 0.75rem; }
+        .card.diplomacy { border-left-color: var(--accent-blue); }
+        .card.drone { border-left-color: var(--accent-purple); }
+        .card.sat { border-left-color: var(--accent-orange); }
+        .card.power { border-left-color: var(--accent-yellow); }
+        .card.clearing { border-left-color: #ff3300; }
+
+        .card b { color: var(--accent-cyan); }
+        .status-badge { display: inline-block; padding: 2px 5px; font-size: 0.65rem; border-radius: 3px; background: rgba(0,255,102,0.2); color: var(--accent-green); border: 1px solid var(--accent-green); margin-top: 4px; }
+
+        .map-container { position: relative; width: 100%; height: 160px; background: #02060c; border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .terminal-box { background: #000; color: var(--accent-green); padding: 10px; font-size: 0.72rem; height: 150px; overflow-y: scroll; border: 1px solid #1a3a3a; border-radius: 4px; margin-top: 10px; }
+        
+        .footer-note { text-align: center; margin-top: 15px; font-size: 0.75rem; color: var(--text-dim); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GLOBAL BROTHERHOOD & GAZA REBUILD COMMAND DASHBOARD</h1>
+        <p>Framework: qatar-national-vision-hpc | Domain: http://qatar-national-vision-hpc.com/ | Architect: Abdul Majeed</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Panel 1: Diplomatic & Global Brotherhood Alliances -->
+        <div class="panel">
+            <h2>🤝 Brotherhood & Global Alliances</h2>
+            <div class="card diplomacy">
+                <b>Global State Outreach</b><br>
+                Humanitarian & diplomatic comms link active across strategic partners.<br>
+                <span class="status-badge" style="background:rgba(51,153,255,0.2); color:#3399ff; border-color:#3399ff;">LINK: BROADCAST ACTIVE</span>
+            </div>
+            <div class="card diplomacy">
+                <b>Inter-Agency Relief Hubs</b><br>
+                Doha (GCC), Larnaca Port (Cyprus) & Al-Arish Ground Logistics.<br>
+                <span class="status-badge">GATEWAYS: OPERATIONAL</span>
+            </div>
+            <div class="card diplomacy">
+                <b>Field Command & NGO Sync</b><br>
+                Real-time coordination with medical & aid convoys.<br>
+                <span class="status-badge">COORDINATION: LOCKED</span>
+            </div>
+        </div>
+
+        <!-- Panel 2: Infrastructure & Road Operations -->
+        <div class="panel">
+            <h2>🚜 Infrastructure & Roads</h2>
+            <div class="card clearing">
+                <b>Spine Clearance Fleet</b><br>
+                Bulldozers & Excavators clearing Salah al-Din Corridor.<br>
+                <span class="status-badge" style="background:rgba(255,51,0,0.2); color:#ff3300; border-color:#ff3300;">STATUS: ACTIVE CLEARANCE</span>
+            </div>
+            <div class="card">
+                <b>Internal Highway Corridors</b><br>
+                Salah al-Din North-South & Al-Rashid Coastal routes.<br>
+                <span class="status-badge">TRAFFIC: OPTIMIZED</span>
+            </div>
+            <div class="card">
+                <b>Border Ingress Gateways</b><br>
+                Rafah, Kerem Shalom & Erez Crossings.<br>
+                <span class="status-badge">GATEWAYS: OPEN</span>
+            </div>
+        </div>
+
+        <!-- Panel 3: Telecom & Subsea Fiber -->
+        <div class="panel">
+            <h2>📡 Fiber & Communications</h2>
+            <div class="card sat">
+                <b>QATARSAT-HPC-01 Sync</b><br>
+                Auto-RF frequency + 35.5 kHz sonar echo ping.<br>
+                <span class="status-badge">RF LOCK: ENABLED</span>
+            </div>
+            <div class="card">
+                <b>Submarine Cable Landing</b><br>
+                Armored subsea fiber line from Larnaca to Al-Mawasi Pier.<br>
+                <span class="status-badge">PRIMARY BACKBONE: ONLINE</span>
+            </div>
+            <div class="card">
+                <b>Last-Mile Mesh Gateways</b><br>
+                Hospital drops & local Wi-Fi 6 mesh distribution nodes.<br>
+                <span class="status-badge">CONNECTIVITY: 100%</span>
+            </div>
+        </div>
+
+        <!-- Panel 4: Emergency Power Grid & Radar -->
+        <div class="panel">
+            <h2>⚡ Power & Navigation Radar</h2>
+            <div class="card power">
+                <b>Emergency Solar Grid</b><br>
+                Modular solar units powering hospitals & telecom nodes.<br>
+                <span class="status-badge" style="background:rgba(255,255,0,0.2); color:#ffff00; border-color:#ffff00;">GRID: STABLE</span>
+            </div>
+            <div class="card drone">
+                <b>Drone GPS Co-Pilot</b><br>
+                HPC-AERO-SCOUT-X1 RTK guidance escorting relief units.<br>
+                <span class="status-badge">NAVIGATION: ESCORTING</span>
+            </div>
+            <div class="map-container">
+                <canvas id="brotherhoodRadar" width="200" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Master Log Stream -->
+    <div class="panel" style="margin-top: 15px;">
+        <h2>💻 Unified Master Telemetry & Diplomatic Comms Stream</h2>
+        <div class="terminal-box" id="brotherhoodTerminal">
+            [00:00:01] SYSTEM ONLINE: Qatar National Vision HPC Framework initialized.<br>
+            [00:00:02] BROTHERHOOD COMMS: Diplomatic outreach message dispatched to global partners.<br>
+            [00:00:03] CLEARANCE FLEET: Heavy excavators opening central route near Khan Yunis.<br>
+            [00:00:04] FIBER OPTICS: Subsea armored cable landing active at Al-Mawasi Pier.<br>
+            [00:00:05] EMERGENCY POWER: Solar grid maintaining uninterrupted hospital power supply.
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Unified Master Command & Global Brotherhood &copy; 2026 | Qatar National Vision HPC Framework
+    </div>
+
+    <script>
+        // Radar Visualizer
+        const canvas = document.getElementById('brotherhoodRadar');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+
+        function drawRadar() {
+            ctx.fillStyle = '#02060c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            ctx.strokeStyle = '#003333';
+            ctx.lineWidth = 1;
+            [20, 40, 60].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + Math.cos(angle) * 60, cy + Math.sin(angle) * 60);
+            ctx.stroke();
+
+            const x = cx + Math.cos(-angle) * 30;
+            const y = cy + Math.sin(-angle) * 30;
+            ctx.fillStyle = '#ff00ff';
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            angle += 0.04;
+            requestAnimationFrame(drawRadar);
+        }
+        drawRadar();
+
+        // Terminal Log Updating Stream
+        setInterval(() => {
+            const term = document.getElementById('brotherhoodTerminal');
+            const time = new Date().toTimeString().split(' ')[0];
+            const logs = [
+                `[${time}] DIPLOMACY: Global brotherhood channel maintaining zero loss sync.`,
+                `[${time}] INFRASTRUCTURE: Bulldozer Team Bravo expanded road lane capacity on Coastal Trunk.`,
+                `[${time}] TELECOM: Subsea fiber link providing high-bandwidth data to field command.`,
+                `[${time}] POWER GRID: Emergency solar units balanced across Deir al-Balah medical camps.`
+            ];
+            const log = logs[Math.floor(Math.random() * logs.length)];
+            term.innerHTML += `<br>${log}`;
+            term.scrollTop = term.scrollHeight;
+        }, 3000);
+    </script>
+</body>
+</html>
