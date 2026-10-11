@@ -8281,3 +8281,439 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Brotherhood Foundation - Master Command & Telemetry Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            900: '#070b19',
+                            800: '#0f172a',
+                            700: '#1e293b',
+                            600: '#334155',
+                            500: '#64748b',
+                            400: '#94a3b8',
+                            300: '#cbd5e1',
+                            100: '#f1f5f9',
+                        },
+                        neon: {
+                            green: '#10b981',
+                            cyan: '#06b6d4',
+                            amber: '#f59e0b',
+                            red: '#ef4444',
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070b19; color: #f1f5f9; }
+        .glow-cyan { text-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+        .glow-green { text-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+        .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.5); }
+        .radar-sweep { animation: sweep 4s linear infinite; }
+        @keyframes sweep { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-cyan-500 selection:text-white">
+
+    <header class="glass-panel sticky top-0 z-50 border-b border-cyan-900/40 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                <i class="fa-solid fa-earth-americas text-white text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide text-white flex items-center gap-2">
+                    GLOBAL BROTHERHOOD FOUNDATION <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">v3.6.0 LOCKED</span>
+                </h1>
+                <p class="text-xs text-cyan-400/80 font-mono">Gaza Brotherhood Parliament • Al-Aqsa Spiritual Axis Aligned</p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
+            <div class="flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-slate-300">QATARSAT-HPC-01: <strong class="text-emerald-400">ONLINE</strong></span>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+                <i class="fa-solid fa-satellite-dish text-cyan-400"></i>
+                <span class="text-slate-300">HPC-AERO-SCOUT-X1: <strong class="text-cyan-400">SYNCED</strong></span>
+            </div>
+            <button onclick="exportSystemJSON()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-4 py-2 rounded-lg transition shadow-lg shadow-cyan-600/30 flex items-center gap-2">
+                <i class="fa-solid fa-download"></i> Export Master JSON
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+        
+        <!-- Tab Navigation -->
+        <div class="flex overflow-x-auto gap-2 border-b border-slate-800 pb-2">
+            <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-cyan-600 text-white shadow-md shadow-cyan-600/20 flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i> Master Overview & Map
+            </button>
+            <button onclick="switchTab('parliament')" id="tab-parliament" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center gap-2">
+                <i class="fa-solid fa-landmark-dome"></i> Al-Aqsa Parliament & 9-Nations
+            </button>
+            <button onclick="switchTab('magnetic')" id="tab-magnetic" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center gap-2">
+                <i class="fa-solid fa-bolt"></i> Magnetic Frequency Telemetry
+            </button>
+            <button onclick="switchTab('robotics')" id="tab-robotics" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center gap-2">
+                <i class="fa-solid fa-robot"></i> Robotics & AI Fleets
+            </button>
+        </div>
+
+        <!-- TAB 1: OVERVIEW & MAP -->
+        <div id="content-overview" class="tab-content space-y-6">
+            
+            <!-- Hero Stats Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-cyan-500">
+                    <p class="text-xs text-slate-400 font-mono">TOTAL TARGET POPULATION</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">2,200,000</h3>
+                    <p class="text-xs text-cyan-400 mt-2 flex items-center gap-1"><i class="fa-solid fa-users"></i> 5 Strategic Operational Zones</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500">
+                    <p class="text-xs text-slate-400 font-mono">ACTIVE GREENHOUSES & SEED BANKS</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">4,200 Units</h3>
+                    <p class="text-xs text-emerald-400 mt-2 flex items-center gap-1"><i class="fa-solid fa-seedling"></i> Agro-Heritage Refoundation</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500">
+                    <p class="text-xs text-slate-400 font-mono">AUTONOMOUS ROBOTIC FLEET</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">600 Units</h3>
+                    <p class="text-xs text-amber-400 mt-2 flex items-center gap-1"><i class="fa-solid fa-robot"></i> Tesla Optimus & China Tech</p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-purple-500">
+                    <p class="text-xs text-slate-400 font-mono">GOVERNANCE PARTNERS</p>
+                    <h3 class="text-2xl font-bold text-white mt-1">9 Nations</h3>
+                    <p class="text-xs text-purple-400 mt-2 flex items-center gap-1"><i class="fa-solid fa-handshake"></i> Equal Stakeholder Charter</p>
+                </div>
+            </div>
+
+            <!-- Gaza Map & 5 Zones Matrix -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Map Simulation Panel -->
+                <div class="glass-panel p-6 rounded-2xl lg:col-span-1 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-map-location-dot text-cyan-400"></i> Gaza Strip Operational Map
+                        </h2>
+                        <p class="text-xs text-slate-400 mb-4">Interactive geographic pinpoints across the 5 strategic zones.</p>
+                        
+                        <!-- Visual Map Representation -->
+                        <div class="relative w-full h-64 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex flex-col justify-between p-4 font-mono text-xs">
+                            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            
+                            <!-- North Gaza -->
+                            <div onclick="selectZone(0)" class="cursor-pointer bg-slate-900/90 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 p-2 rounded transition flex justify-between items-center z-10">
+                                <span class="text-cyan-300">1. North Gaza Rural</span>
+                                <span class="text-[10px] text-slate-400">440k | 120 Bots</span>
+                            </div>
+                            <!-- Gaza City -->
+                            <div onclick="selectZone(1)" class="cursor-pointer bg-cyan-950/90 border border-cyan-600 p-2 rounded transition flex justify-between items-center z-10 shadow-lg shadow-cyan-900/50">
+                                <span class="text-cyan-200 font-bold">2. Gaza City Hub (Parliament)</span>
+                                <span class="text-[10px] text-cyan-400">660k | 180 Bots</span>
+                            </div>
+                            <!-- Deir al-Balah -->
+                            <div onclick="selectZone(2)" class="cursor-pointer bg-slate-900/90 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 p-2 rounded transition flex justify-between items-center z-10">
+                                <span class="text-cyan-300">3. Deir al-Balah Agro Belt</span>
+                                <span class="text-[10px] text-slate-400">330k | 90 Bots</span>
+                            </div>
+                            <!-- Khan Younis -->
+                            <div onclick="selectZone(3)" class="cursor-pointer bg-slate-900/90 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 p-2 rounded transition flex justify-between items-center z-10">
+                                <span class="text-cyan-300">4. Khan Younis District</span>
+                                <span class="text-[10px] text-slate-400">550k | 150 Bots</span>
+                            </div>
+                            <!-- Rafah -->
+                            <div onclick="selectZone(4)" class="cursor-pointer bg-slate-900/90 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 p-2 rounded transition flex justify-between items-center z-10">
+                                <span class="text-cyan-300">5. Rafah Border Agro Zone</span>
+                                <span class="text-[10px] text-slate-400">220k | 60 Bots</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+                        <h4 id="selected-zone-title" class="font-bold text-white text-sm text-cyan-400">Gaza City Heritage Hub & Parliament</h4>
+                        <p id="selected-zone-desc" class="text-xs text-slate-300 mt-1">Central command headquarters aligned with Al-Aqsa Mosque spiritual axis. Houses the Grand Assembly Dome and HPC telemetry tower.</p>
+                    </div>
+                </div>
+
+                <!-- 5 Zones Detailed Table -->
+                <div class="glass-panel p-6 rounded-2xl lg:col-span-2 overflow-x-auto">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-table-cells text-emerald-400"></i> Operational Zones & Infrastructure Matrix
+                    </h2>
+                    <p class="text-xs text-slate-400 mb-4">Demographics, agricultural capacity, and autonomous robotic deployments.</p>
+                    
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400">
+                                <th class="pb-3">Zone Name</th>
+                                <th class="pb-3">Population</th>
+                                <th class="pb-3">Greenhouses</th>
+                                <th class="pb-3">Seed Banks</th>
+                                <th class="pb-3">Robotic Units</th>
+                            </tr>
+                        </thead>
+                        <tbody id="zones-table-body" class="divide-y divide-slate-800/60">
+                            <!-- Populated dynamically via script -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TAB 2: AL-AQSA PARLIAMENT & 9 NATIONS -->
+        <div id="content-parliament" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Architecture Blueprint -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-landmark-dome text-amber-400"></i> Gaza Brotherhood Parliament Architecture
+                    </h2>
+                    <p class="text-xs text-slate-300">Designed along the <strong>Al-Aqsa Mosque Spiritual Axis</strong> and Coastal Reconstruction Corridor.</p>
+                    
+                    <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 space-y-4 font-mono text-xs">
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-300"><i class="fa-solid fa-compass text-cyan-400 mr-2"></i> Alignment Axis:</span>
+                            <span class="text-cyan-300 font-bold">Al-Aqsa Spiritual Axis</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-300"><i class="fa-solid fa-circle-dot text-emerald-400 mr-2"></i> Central Plenary:</span>
+                            <span class="text-emerald-300 font-bold">Grand Assembly Dome (9-Nation Hall)</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-300"><i class="fa-solid fa-tower-broadcast text-amber-400 mr-2"></i> Command Tower:</span>
+                            <span class="text-amber-300 font-bold">HPC Digital Twin Telemetry Hub</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-300"><i class="fa-solid fa-seedling text-purple-400 mr-2"></i> Agro Courtyard:</span>
+                            <span class="text-purple-300 font-bold">Seed Banks & Automated Greenhouses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9 Sovereign Partners Table -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-handshake-angle text-purple-400"></i> 9-Nation Equal Stakeholders Charter
+                    </h2>
+                    <p class="text-xs text-slate-300">Equal voting rights, budget oversight, and joint policy management.</p>
+                    
+                    <div class="overflow-x-auto max-h-80">
+                        <table class="w-full text-left text-xs font-mono">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400">
+                                    <th class="pb-3">Nation</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Operational Scope</th>
+                                </tr>
+                            </thead>
+                            <tbody id="partners-table-body" class="divide-y divide-slate-800/60">
+                                <!-- Populated via script -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 3: MAGNETIC FREQUENCY TELEMETRY -->
+        <div id="content-magnetic" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl space-y-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-cyan-400"></i> Sub-surface Magnetic Frequency Detection (432Hz Baseline)
+                        </h2>
+                        <p class="text-xs text-slate-300">Real-time electromagnetic resonance scanning and hyper-fast telemetry sync across Gaza.</p>
+                    </div>
+                    <button onclick="refreshMagneticTelemetry()" class="bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-800 px-4 py-2 rounded-xl text-xs font-mono transition flex items-center gap-2">
+                        <i class="fa-solid fa-rotate"></i> Run Frequency Scan
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" id="magnetic-cards-container">
+                    <!-- Populated via script -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: ROBOTICS & AI FLEETS -->
+        <div id="content-robotics" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Tesla Optimus Fleet -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border-t-4 border-t-cyan-500">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-robot text-cyan-400"></i> Tesla Optimus & xAI Fleet
+                        </h2>
+                        <span class="text-xs px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 font-mono">ACTIVE DEPLOYMENT</span>
+                    </div>
+                    <p class="text-xs text-slate-300">Advanced bipedal robots deployed for modular shelter assembly, heavy debris clearance, and material logistics.</p>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
+                        <div class="flex justify-between"><span class="text-slate-400">Total Units Deployed:</span> <span class="text-white font-bold">250 Units</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Sync Protocol:</span> <span class="text-cyan-400">Magnetic Ultra-Fast Uplink</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Operational Status:</span> <span class="text-emerald-400 font-bold">99.8% Efficiency</span></div>
+                    </div>
+                </div>
+
+                <!-- China Tech Alliance -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border-t-4 border-t-emerald-500">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid microchip text-emerald-400"></i> China Tech Alliance (Unitree / UBTECH)
+                        </h2>
+                        <span class="text-xs px-2.5 py-1 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">ACTIVE DEPLOYMENT</span>
+                    </div>
+                    <p class="text-xs text-slate-300">High-dexterity quadruped and humanoid robots for search & rescue, sub-surface magnetic mapping, and agro-greenhouse automation.</p>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
+                        <div class="flex justify-between"><span class="text-slate-400">Total Units Deployed:</span> <span class="text-white font-bold">350 Units</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Sync Protocol:</span> <span class="text-emerald-400">Sub-surface Resonance Telemetry</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Operational Status:</span> <span class="text-emerald-400 font-bold">100% Operational</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const zonesData = [
+            { zone: "North Gaza Rural Zone", population: 440000, greenhouses: 880, seed_banks: 4, robotic_units: 120, desc: "Primary agricultural & greenhouse zone with automated seeding & north corridor telemetry." },
+            { zone: "Gaza City Heritage Hub", population: 660000, greenhouses: 1320, seed_banks: 6, robotic_units: 180, desc: "Central headquarters housing the Gaza Brotherhood Parliament and HPC telemetry command tower." },
+            { zone: "Deir al-Balah Agro Belt", population: 330000, greenhouses: 660, seed_banks: 3, robotic_units: 90, desc: "Fertile agricultural belt featuring cold-chain logistics and solar power grid integration." },
+            { zone: "Khan Younis Rural District", population: 550000, greenhouses: 1100, seed_banks: 5, robotic_units: 150, desc: "High-density residential and medical trauma care coordination center." },
+            { zone: "Rafah Border Agro Zone", population: 220000, greenhouses: 440, seed_banks: 2, robotic_units: 60, desc: "International border corridor handling emergency relief consignments and field care." }
+        ];
+
+        const partnersData = {
+            "China": { status: "Equal Partner", scope: "Modular Camps, Magnetic Telemetry Sync" },
+            "Japan": { status: "Equal Partner", scope: "Solar Grid, Cold-Chain Automation" },
+            "India": { status: "Equal Partner", scope: "Generic Medicine, Physician Rotations" },
+            "Pakistan": { status: "Equal Partner", scope: "Relief Consignments, Logistics Tracking" },
+            "Qatar": { status: "Equal Partner", scope: "Host Data Center, HPC Portal Hub" },
+            "UAE": { status: "Equal Partner", scope: "Trauma Care, Air Evacuation" },
+            "Turkey": { status: "Equal Partner", scope: "Field Hospital, Medical Logistics" },
+            "Jordan": { status: "Equal Partner", scope: "Border Corridor, Logistics Hub" },
+            "Egypt": { status: "Equal Partner", scope: "Field Care Corridor, Border Logistics" }
+        };
+
+        function initDashboard() {
+            // Populate Zones Table
+            const tbody = document.getElementById('zones-table-body');
+            tbody.innerHTML = zonesData.map(z => `
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="py-3 font-medium text-white">${z.zone}</td>
+                    <td class="py-3 text-cyan-300">${z.population.toLocaleString()}</td>
+                    <td class="py-3 text-emerald-300">${z.greenhouses}</td>
+                    <td class="py-3 text-purple-300">${z.seed_banks}</td>
+                    <td class="py-3 text-amber-300">${z.robotic_units} Bots</td>
+                </tr>
+            `).join('');
+
+            // Populate Partners Table
+            const pbody = document.getElementById('partners-table-body');
+            pbody.innerHTML = Object.entries(partnersData).map(([country, info]) => `
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="py-3 font-medium text-white">${country}</td>
+                    <td class="py-3 text-cyan-400 font-semibold">${info.status}</td>
+                    <td class="py-3 text-slate-300">${info.scope}</td>
+                </tr>
+            `).join('');
+
+            refreshMagneticTelemetry();
+        }
+
+        function selectZone(index) {
+            const z = zonesData[index];
+            document.getElementById('selected-zone-title').innerText = z.zone;
+            document.getElementById('selected-zone-desc').innerText = z.desc;
+        }
+
+        function refreshMagneticTelemetry() {
+            const container = document.getElementById('magnetic-cards-container');
+            const zones = ["North Gaza", "Gaza City", "Deir al-Balah", "Khan Younis", "Rafah"];
+            
+            container.innerHTML = zones.map(zone => {
+                const freq = (432.0 + (Math.random() * 8.9)).toFixed(2);
+                const dbm = (-42.5 + (Math.random() * 10)).toFixed(1);
+                const speed = (150.0 + (Math.random() * 150)).toFixed(1);
+                
+                return `
+                    <div class="glass-panel p-4 rounded-xl border border-slate-800 space-y-3 font-mono">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-xs font-bold text-white">${zone}</h4>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        </div>
+                        <div class="space-y-1 text-[11px]">
+                            <p class="text-slate-400">Resonance: <strong class="text-cyan-400">${freq} Hz</strong></p>
+                            <p class="text-slate-400">Signal: <strong class="text-emerald-400">${dbm} dBm</strong></p>
+                            <p class="text-slate-400">Sync Speed: <strong class="text-amber-400">${speed} Gbps</strong></p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-cyan-600', 'text-white', 'shadow-md', 'shadow-cyan-600/20');
+                el.classList.add('bg-slate-800/80', 'text-slate-300');
+            });
+            
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.remove('bg-slate-800/80', 'text-slate-300');
+            activeBtn.classList.add('bg-cyan-600', 'text-white', 'shadow-md', 'shadow-cyan-600/20');
+        }
+
+        function exportSystemJSON() {
+            const payload = {
+                organization: "Global Brotherhood Foundation",
+                established: "October 11, 2026",
+                command_commander: "Mazed Abdul",
+                parliament: "Gaza Brotherhood Parliament",
+                alignment: "Al-Aqsa Spiritual Axis",
+                zones: zonesData,
+                partners: partnersData,
+                system_lock: "LOCKED"
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 4)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'telemetry_international_master.json';
+            a.click();
+        }
+
+        window.onload = initDashboard;
+    </script>
+</body>
+</html>
