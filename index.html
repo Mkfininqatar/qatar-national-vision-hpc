@@ -9163,3 +9163,503 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Golden Era of Unity - Commander's Express Dashboard (v5.0.0)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --qatar-maroon: #8A1538;
+            --qatar-maroon-dark: #580B22;
+            --gold-accent: #F59E0B;
+            --gold-bright: #FBBF24;
+            --dark-bg: #06090E;
+            --glass-bg: rgba(15, 23, 42, 0.85);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #F1F5F9;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(138, 21, 56, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+
+        /* Custom Qatar Flag Serrated Border */
+        .qatar-serrated-border {
+            border: 2px solid var(--qatar-maroon);
+            position: relative;
+            box-shadow: 0 0 25px rgba(138, 21, 56, 0.35), inset 0 0 15px rgba(138, 21, 56, 0.2);
+        }
+
+        .qatar-serrated-border::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; height: 6px;
+            background: repeating-linear-gradient(
+                135deg,
+                #FFFFFF,
+                #FFFFFF 10px,
+                var(--qatar-maroon) 10px,
+                var(--qatar-maroon) 20px
+            );
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            z-index: 20;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .gold-glow {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .pulse-gold {
+            animation: pulse-gold-anim 2s infinite;
+        }
+
+        @keyframes pulse-gold-anim {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .pulse-red {
+            animation: pulse-red-anim 1.8s infinite;
+        }
+
+        @keyframes pulse-red-anim {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 15, 26, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--qatar-maroon);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-accent);
+        }
+    </style>
+</head>
+<body class="p-3 md:p-6 min-h-screen flex flex-col justify-between space-y-6">
+
+    <div class="space-y-6">
+        <!-- Header with Qatar Flag Border -->
+        <header class="glass-panel rounded-2xl p-5 md:p-6 qatar-serrated-border flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="p-3.5 bg-gradient-to-br from-amber-500/20 to-rose-900/40 rounded-xl border border-amber-500/50 shadow-inner">
+                    <i class="fa-solid fa-crown text-amber-400 text-3xl md:text-4xl filter drop-shadow"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-[#8A1538] text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-widest font-mono-code">Qatar State Theme</span>
+                        <span class="text-xs text-amber-400 font-mono-code"><i class="fa-solid fa-shield-halved"></i> v5.0.0 LOCKED</span>
+                    </div>
+                    <h1 class="text-xl md:text-2xl lg:text-3xl font-extrabold font-cinzel tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 mt-1">
+                        THE GOLDEN ERA OF UNITY: EXPRESS TRANSIT COMMAND
+                    </h1>
+                    <p class="text-xs md:text-sm text-gray-300 font-mono-code">COMMANDER: MAZED ABDUL | GLOBAL BROTHERHOOD FOUNDATION & PARLIAMENT</p>
+                </div>
+            </div>
+
+            <!-- Top Header Stats & Clock -->
+            <div class="flex flex-wrap items-center justify-end gap-4 md:gap-6 font-mono-code text-xs md:text-sm w-full lg:w-auto border-t lg:border-t-0 border-gray-800 pt-3 lg:pt-0">
+                <div class="bg-gray-900/80 px-3.5 py-2 rounded-xl border border-amber-500/30 text-right">
+                    <span class="text-gray-400 block text-[10px] uppercase">Telemetry Link</span>
+                    <span class="text-emerald-400 font-bold flex items-center gap-1.5 justify-end">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-red"></span> QATARSAT-HPC-01
+                    </span>
+                </div>
+                <div class="bg-gray-900/80 px-3.5 py-2 rounded-xl border border-amber-500/30 text-right">
+                    <span class="text-gray-400 block text-[10px] uppercase">Resonance Frequency</span>
+                    <span class="text-amber-400 font-bold">432.0 Hz BASELINE</span>
+                </div>
+                <div class="bg-gray-900/80 px-3.5 py-2 rounded-xl border border-amber-500/30 text-right">
+                    <span class="text-gray-400 block text-[10px] uppercase">Live UTC Time</span>
+                    <span id="utc-clock" class="text-amber-300 font-bold">00:00:00 UTC</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Key Metrics Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-amber-500 hover:border-amber-400 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[11px] text-gray-400 uppercase font-mono-code">Sub-Sea Vacuum Corridor</p>
+                        <h2 class="text-2xl font-extrabold text-amber-300 mt-1">15 Mins</h2>
+                    </div>
+                    <span class="p-2 bg-amber-500/10 rounded-lg text-amber-400"><i class="fa-solid fa-water-submersion text-lg"></i></span>
+                </div>
+                <p class="text-xs text-emerald-400 mt-2 flex items-center gap-1 font-mono-code">
+                    <i class="fa-solid fa-circle-check"></i> Maglev Vacuum Pod (1,200 km/h)
+                </p>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-emerald-500 hover:border-emerald-400 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[11px] text-gray-400 uppercase font-mono-code">5-Zone Hyper-Loop</p>
+                        <h2 class="text-2xl font-extrabold text-emerald-300 mt-1">3 Mins Target</h2>
+                    </div>
+                    <span class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400"><i class="fa-solid fa-bolt text-lg"></i></span>
+                </div>
+                <p class="text-xs text-emerald-400 mt-2 flex items-center gap-1 font-mono-code">
+                    <i class="fa-solid fa-circle-check"></i> Points A1 to E1 Connected
+                </p>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-blue-500 hover:border-blue-400 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[11px] text-gray-400 uppercase font-mono-code">Surface Golden Corridor</p>
+                        <h2 class="text-2xl font-extrabold text-blue-300 mt-1">Zero Traffic</h2>
+                    </div>
+                    <span class="p-2 bg-blue-500/10 rounded-lg text-blue-400"><i class="fa-solid fa-road text-lg"></i></span>
+                </div>
+                <p class="text-xs text-blue-400 mt-2 flex items-center gap-1 font-mono-code">
+                    <i class="fa-solid fa-circle-check"></i> RFID Green Wave Pass Active
+                </p>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-purple-500 hover:border-purple-400 transition-all duration-300">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[11px] text-gray-400 uppercase font-mono-code">Presidential VTOL Fleet</p>
+                        <h2 class="text-2xl font-extrabold text-purple-300 mt-1">5 Mins Sky-Meeting</h2>
+                    </div>
+                    <span class="p-2 bg-purple-500/10 rounded-lg text-purple-400"><i class="fa-solid fa-helicopter text-lg"></i></span>
+                </div>
+                <p class="text-xs text-purple-400 mt-2 flex items-center gap-1 font-mono-code">
+                    <i class="fa-solid fa-circle-check"></i> 9-Nation Sovereign Air Network
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Workspace Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left Panel: Interactive Route Selector (4 Cols) -->
+            <div class="lg:col-span-4 glass-panel p-5 rounded-2xl space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2 font-cinzel">
+                        <i class="fa-solid fa-route text-amber-500"></i> EXPRESS ROUTE SELECTOR
+                    </h3>
+                    <span class="text-[10px] bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-600/40 font-mono-code">AUTO OPTIMIZED</span>
+                </div>
+
+                <div class="space-y-3" id="route-buttons-container">
+                    <!-- Button 1 -->
+                    <button onclick="selectExpressRoute(1)" id="btn-route-1" class="w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-amber-500/40 text-left transition-all duration-300 group focus:outline-none ring-2 ring-amber-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-bold text-sm text-amber-200 group-hover:text-amber-300">1. Sub-Sea Vacuum Tube</div>
+                                <div class="text-xs text-gray-400 mt-0.5 font-mono-code">International Sea ──> Gaza HQ</div>
+                            </div>
+                            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-lg border border-amber-500/40 font-mono-code font-bold">15 Mins</span>
+                        </div>
+                    </button>
+
+                    <!-- Button 2 -->
+                    <button onclick="selectExpressRoute(2)" id="btn-route-2" class="w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-gray-700/60 text-left transition-all duration-300 group focus:outline-none">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-bold text-sm text-amber-200 group-hover:text-amber-300">2. 5-Zone Underground Hyper-Loop</div>
+                                <div class="text-xs text-gray-400 mt-0.5 font-mono-code">Parliament ──> Points A1 to E1</div>
+                            </div>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-lg border border-emerald-500/40 font-mono-code font-bold">3 Mins</span>
+                        </div>
+                    </button>
+
+                    <!-- Button 3 -->
+                    <button onclick="selectExpressRoute(3)" id="btn-route-3" class="w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-gray-700/60 text-left transition-all duration-300 group focus:outline-none">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-bold text-sm text-amber-200 group-hover:text-amber-300">3. Surface Golden Expressway</div>
+                                <div class="text-xs text-gray-400 mt-0.5 font-mono-code">Rafah Border ──> Heritage Hub</div>
+                            </div>
+                            <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded-lg border border-blue-500/40 font-mono-code font-bold">8 Mins</span>
+                        </div>
+                    </button>
+
+                    <!-- Button 4 -->
+                    <button onclick="selectExpressRoute(4)" id="btn-route-4" class="w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-gray-700/60 text-left transition-all duration-300 group focus:outline-none">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="font-bold text-sm text-amber-200 group-hover:text-amber-300">4. Presidential VTOL Air-Relay</div>
+                                <div class="text-xs text-gray-400 mt-0.5 font-mono-code">Airborne 9-Nation Command Link</div>
+                            </div>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-lg border border-purple-500/40 font-mono-code font-bold">5 Mins</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- 9-Nation Sovereign Partner Grid -->
+                <div class="pt-3 border-t border-gray-800 space-y-2">
+                    <span class="text-xs font-bold text-gray-400 block font-mono-code uppercase">9-Nation Equal Diplomatic Partners</span>
+                    <div class="grid grid-cols-3 gap-1.5 text-center font-mono-code text-[11px]">
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇶🇦 Qatar</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇨🇳 China</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇯🇵 Japan</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇮🇳 India</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇵🇰 Pakistan</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇦🇪 UAE</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇹🇷 Turkey</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇯🇴 Jordan</div>
+                        <div class="p-1.5 bg-gray-900/80 rounded border border-gray-800 text-amber-300">🇪🇬 Egypt</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Live Route Telemetry & Controls (8 Cols) -->
+            <div class="lg:col-span-8 glass-panel p-5 md:p-6 rounded-2xl flex flex-col justify-between space-y-6">
+                <div>
+                    <!-- Dynamic Header -->
+                    <div class="flex flex-wrap justify-between items-center border-b border-gray-800 pb-4 gap-2">
+                        <div>
+                            <span class="text-xs text-amber-400 font-mono-code uppercase tracking-wider block">Selected Transit Telemetry</span>
+                            <h2 id="route-title" class="text-xl md:text-2xl font-bold font-cinzel text-amber-200">Sub-Sea Vacuum Tube Corridor</h2>
+                        </div>
+                        <span id="route-badge" class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full border border-amber-500/50 font-mono-code text-xs font-bold pulse-gold">
+                            SPEED: 1,200 KM/H MAGLEV
+                        </span>
+                    </div>
+
+                    <!-- Telemetry Output Display -->
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-900/90 rounded-xl border border-gray-800 space-y-3 font-mono-code text-xs">
+                            <div class="text-gray-400 uppercase text-[10px] tracking-wider border-b border-gray-800 pb-1">Route Specs & Infrastructure</div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Coverage Axis:</span>
+                                <span id="route-coverage" class="text-amber-300 font-bold">International Waters ──> Gaza Parliament</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Security Clearance:</span>
+                                <span id="route-security" class="text-emerald-400 font-bold">Sub-Surface Hydro-Acoustic Shield</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Transit Delay:</span>
+                                <span id="route-delay" class="text-emerald-400 font-bold">0.00 Seconds (Zero Latency)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Pacing Target:</span>
+                                <span id="route-pacing" class="text-amber-300 font-bold">15 Mins Guaranteed</span>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Chart Panel -->
+                        <div class="p-4 bg-gray-900/90 rounded-xl border border-gray-800 flex flex-col justify-between space-y-2">
+                            <div class="flex justify-between items-center font-mono-code text-[11px]">
+                                <span class="text-gray-400 uppercase">Velocity Telemetry Stream</span>
+                                <span class="text-amber-400">432 Hz Locked</span>
+                            </div>
+                            <div class="h-28 w-full">
+                                <canvas id="telemetryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description Box -->
+                    <div class="mt-4 p-4 bg-gradient-to-r from-amber-950/30 to-rose-950/20 rounded-xl border border-amber-500/30 font-mono-code text-xs text-gray-300 space-y-1">
+                        <div class="text-amber-400 font-bold uppercase text-[10px] tracking-wider">Mission Blueprint Overview</div>
+                        <p id="route-description" class="leading-relaxed text-gray-300">
+                            পানির ৫০ মিটার গভীরে নির্মিত সম্পূর্ণ বৈপ্লবিক ও অল-ওয়েদার ভ্যাকুয়াম মাগলেভ চ্যানেল। আন্তর্জাতিক জলসীমা থেকে ৯ দেশের ডেলিগেশনকে সরাসরি গাজা পার্লামেন্ট কমপ্লেক্সে দ্রুত ও নিরাপদে আনয়ন নিশ্চিত করে।
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Live Console & Action Buttons -->
+                <div class="space-y-4 pt-4 border-t border-gray-800">
+                    <div class="p-3 bg-black/80 rounded-xl border border-gray-800 font-mono-code text-[11px] h-28 overflow-y-auto space-y-1 text-emerald-400 shadow-inner" id="console-logs">
+                        <div>[SYSTEM INIT] Commander Express Dashboard v5.0.0 Online.</div>
+                        <div>[TELEMETRY] QATARSAT-HPC-01 connected. Baseline 432.0 Hz.</div>
+                        <div>[TRANSIT] All 4 express routes initialized with zero latency.</div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <div class="text-xs text-amber-400/90 italic font-cinzel">
+                            "ইতিহাসে প্রথম ভালোবাসার বার্তা নিয়ে সময়ের আগে পৌঁছে যাওয়ার চিরন্তন সিস্টেম।"
+                        </div>
+                        <button onclick="dispatchCommander()" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-black font-extrabold rounded-xl text-xs font-mono-code tracking-wider transition-all duration-300 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-sm"></i> DISPATCH COMMANDER MAZED ABDUL
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-6 pt-4 border-t border-gray-800 text-center font-mono-code text-xs text-gray-400 flex flex-col md:flex-row justify-between items-center gap-2">
+        <div>GLOBAL BROTHERHOOD FOUNDATION © 2026 | GAZA BROTHERHOOD PARLIAMENT</div>
+        <div class="text-amber-400">HISTORIC GOLDEN ERA MASTER PLAN (v5.0.0)</div>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Live UTC Clock
+        function updateClock() {
+            const now = new Date();
+            const utcString = now.toUTCString().split(' ')[4] + ' UTC';
+            document.getElementById('utc-clock').innerText = utcString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Express Routes Database
+        const routeData = {
+            1: {
+                title: "Sub-Sea Vacuum Tube Corridor",
+                speedBadge: "SPEED: 1,200 KM/H MAGLEV",
+                coverage: "International Waters ──> Gaza HQ",
+                security: "Sub-Surface Hydro-Acoustic Shield",
+                delay: "0.00 Seconds (Zero Latency)",
+                pacing: "15 Mins Guaranteed",
+                chartData: [800, 950, 1100, 1200, 1200, 1180, 1200],
+                desc: "পানির ৫০ মিটার গভীরে নির্মিত সম্পূর্ণ বৈপ্লবিক ও অল-ওয়েদার ভ্যাকুয়াম মাগলেভ চ্যানেল। আন্তর্জাতিক জলসীমা থেকে ৯ দেশের ডেলিগেশনকে সরাসরি গাজা পার্লামেন্ট কমপ্লেক্সে দ্রুত ও নিরাপদে আনয়ন নিশ্চিত করে।"
+            },
+            2: {
+                title: "5-Zone Underground Hyper-Loop",
+                speedBadge: "SPEED: 800 KM/H PODS",
+                coverage: "Parliament ──> Points A1 to E1",
+                security: "Bunkered 432 Hz Reinforced Wall",
+                delay: "0.00 Seconds (Zero Latency)",
+                pacing: "3 Mins Guaranteed",
+                chartData: [400, 650, 780, 800, 800, 790, 800],
+                desc: "গাজার ৫টি জোন ও সোলার গ্ৰিড হাবে (A1-E1) তাত্ক্ষণিক কমান্ড ও পরিদর্শনের জন্য ভূগর্ভস্থ আল্ট্রা-ফাস্ট হাইপার-লুপ টানেল।"
+            },
+            3: {
+                title: "Surface Golden Expressway",
+                speedBadge: "SPEED: UNLIMITED GREEN WAVE",
+                coverage: "Rafah Border ──> Heritage Hub",
+                security: "Automated RFID & Facial Green Pass",
+                delay: "0.00 Seconds (Zero Traffic)",
+                pacing: "8 Mins Guaranteed",
+                chartData: [60, 90, 110, 120, 120, 115, 120],
+                desc: "জিরো-ট্রাফিক প্রেসিডেন্সিয়াল গ্রিন লেন। স্বয়ংক্রিয় আরএফআইডি পাস দ্বারা সীমান্তে কোনো থামা ছাড়াই দ্রুততম চলাচলের সুগম পথ।"
+            },
+            4: {
+                title: "Presidential VTOL Air-Relay",
+                speedBadge: "SPEED: 350 KNOTS STEALTH",
+                coverage: "Airborne 9-Nation Command Link",
+                security: "432 Hz Encrypted Air Corridor",
+                delay: "0.00 Seconds (Zero Latency)",
+                pacing: "5 Mins Guaranteed",
+                chartData: [150, 250, 320, 350, 350, 345, 350],
+                desc: "৯ দেশের রাষ্ট্রপ্রধানদের সাথে সরাসরি আকাশপথে মিটিং, এয়ার-রেস্কিউ পর্যবেক্ষণ ও প্রেসিডেন্সিয়াল মুভমেন্টের জন্য বিশেষ চপার রিলে।"
+            }
+        };
+
+        // Initialize Chart
+        const ctx = document.getElementById('telemetryChart').getContext('2d');
+        let telemetryChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['T-0', 'T-2m', 'T-4m', 'T-6m', 'T-8m', 'T-10m', 'LIVE'],
+                datasets: [{
+                    label: 'Velocity (km/h)',
+                    data: routeData[1].chartData,
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                    fill: true,
+                    tension: 0.35,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#fbbf24'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { size: 9 } } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { size: 9 } } }
+                }
+            }
+        });
+
+        let currentRouteId = 1;
+
+        function selectExpressRoute(id) {
+            currentRouteId = id;
+            const r = routeData[id];
+
+            // Update UI Elements
+            document.getElementById('route-title').innerText = r.title;
+            document.getElementById('route-badge').innerText = r.speedBadge;
+            document.getElementById('route-coverage').innerText = r.coverage;
+            document.getElementById('route-security').innerText = r.security;
+            document.getElementById('route-delay').innerText = r.delay;
+            document.getElementById('route-pacing').innerText = r.pacing;
+            document.getElementById('route-description').innerText = r.desc;
+
+            // Update Active Button Styling
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById(`btn-route-${i}`);
+                if (i === id) {
+                    btn.className = "w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-amber-500/40 text-left transition-all duration-300 group focus:outline-none ring-2 ring-amber-500";
+                } else {
+                    btn.className = "w-full p-3.5 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-gray-700/60 text-left transition-all duration-300 group focus:outline-none";
+                }
+            }
+
+            // Update Chart
+            telemetryChart.data.datasets[0].data = r.chartData;
+            telemetryChart.update();
+
+            // Log Console
+            appendLog(`[ROUTE CHANGED] Selected Route ${id}: ${r.title}. Telemetry synced.`);
+        }
+
+        function dispatchCommander() {
+            const r = routeData[currentRouteId];
+            appendLog(`[DISPATCH EXECUTED] Commander Mazed Abdul dispatched via '${r.title}'. Estimated Time: ${r.pacing}.`);
+            
+            // Custom modal replacement alert box inside UI
+            const consoleBox = document.getElementById('console-logs');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'p-2 bg-amber-500/20 border border-amber-500 text-amber-200 rounded text-xs font-bold font-mono-code my-1';
+            alertDiv.innerText = `🚨 [DISPATCH OK] Commander Mazed Abdul launched on ${r.title}! Path clear!`;
+            consoleBox.appendChild(alertDiv);
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        function appendLog(msg) {
+            const consoleBox = document.getElementById('console-logs');
+            const newLog = document.createElement('div');
+            const time = new Date().toLocaleTimeString();
+            newLog.innerText = `[${time}] ${msg}`;
+            consoleBox.appendChild(newLog);
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
