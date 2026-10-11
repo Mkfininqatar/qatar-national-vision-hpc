@@ -1272,3 +1272,79 @@ if __name__ == "__main__":
     system = EmergencyTriSupplySystem()
     system.execute_airdrop_mission()
     system.live_countdown_timer(5)
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+===============================================================================
+TITLE       : Global Brotherhood Foundation - 3-Month Multimodal Supply Engine
+FILE NAME   : sustainment_3month_supply_engine.py
+ORGANIZATION: Global Brotherhood Foundation
+VERSION     : 3.9.0 (90-DAY BULK FOOD, CLOTHING, WATER & MED SUPPLY CHAIN)
+===============================================================================
+"""
+
+import json
+
+class SustainmentSupplyEngine:
+    def __init__(self):
+        self.duration_days = 90
+        self.population = 2200000  # 2.2 Million People
+        self.commander = "Mazed Abdul"
+        
+        # Daily requirement per person (Estimates for 90 days)
+        self.food_per_person_kg_day = 0.5    # Bulk food & dry ration
+        self.water_per_person_liters_day = 3 # Drinking & sanitation water
+        self.clothing_sets_per_person = 2    # Seasonal clothes/blankets
+
+    def calculate_90_day_requirements(self):
+        """Calculates total supply needed for 3 months"""
+        total_food_tons = (self.population * self.food_per_person_kg_day * self.duration_days) / 1000
+        total_water_liters = self.population * self.water_per_person_liters_day * self.duration_days
+        total_clothing_sets = self.population * self.clothing_sets_per_person
+        
+        return {
+            "duration_days": self.duration_days,
+            "target_population": self.population,
+            "total_bulk_food_tons": round(total_food_tons, 2),
+            "total_water_liters": total_water_liters,
+            "total_clothing_sets": total_clothing_sets,
+            "emergency_med_kits": 500000  # 500k Comprehensive Medical Kits
+        }
+
+    def generate_multimodal_transport_plan(self):
+        """Builds time-optimized multimodal transport dispatch system"""
+        reqs = self.calculate_90_day_requirements()
+        
+        return {
+            "mission_title": "3-Month Rapid Sustainment & Time-Optimized Supply Chain",
+            "commander": self.commander,
+            "requirements": reqs,
+            "transport_allocation": {
+                "land_freight": {
+                    "trucks_active": 400,
+                    "primary_cargo": "Rice, Wheat, Flour, Heavy Clothing & Blankets",
+                    "route": "Rafah / Border Corridors",
+                    "time_saving_strategy": "Pre-cleared magnetic RFID green channels"
+                },
+                "maritime_sea_link": {
+                    "vessels_active": 12,
+                    "primary_cargo": "Bulk Water Containers & Heavy Logistics",
+                    "route": "Gaza Coastal Reconstruction Corridor",
+                    "time_saving_strategy": "Direct beach-head automated offloading"
+                },
+                "air_fleet": {
+                    "c130_cargo_planes": 10,
+                    "heavy_choppers": 25,
+                    "heavy_drones": 350,
+                    "primary_cargo": "Emergency Medical Kits & Immediate Rations",
+                    "time_saving_strategy": "Hyper-fast air-drop directly into 5 zones"
+                }
+            },
+            "status": "3-MONTH SUSTAINMENT PLAN ACTIVE & LOCKED"
+        }
+
+if __name__ == "__main__":
+    engine = SustainmentSupplyEngine()
+    plan = engine.generate_multimodal_transport_plan()
+    print(json.dumps(plan, indent=4, ensure_ascii=False))
