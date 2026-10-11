@@ -5811,3 +5811,242 @@ function calculateEmergencyCareNeed(totalInjured, pctChildren, pctYouth, severit
 // Log loaded module details to developer console
 console.log("Global Brotherhood Foundation Master Module Loaded Successfully!");
 console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(100000, 0.28, 0.22, 0.40));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Brotherhood Foundation - Master Command Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --accent-gold: #d4af37;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --text-color: #f3f4f6;
+            --border-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--accent-gold);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--accent-gold);
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        .meta-bar {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .meta-bar span {
+            color: var(--accent-green);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--accent-blue);
+        }
+
+        .status-tag {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GLOBAL BROTHERHOOD FOUNDATION</h1>
+        <p>Unity • Resilience • Humanity | Established: October 11, 2026</p>
+    </header>
+
+    <div class="meta-bar">
+        <div>Commander: <span>Mazed Abdul</span></div>
+        <div>Portal: <span>qatar-national-vision-hpc.com</span></div>
+        <div>Repository: <span>Mkfininqatar</span></div>
+        <div>Satellite: <span>QATARSAT-HPC-01 (ACTIVE)</span></div>
+    </div>
+
+    <div class="grid-container">
+        <!-- Agro-Heritage Matrix -->
+        <div class="card" style="grid-column: span 2;">
+            <h2>🌾 Rural Agro & Heritage Refoundation Matrix (2.2M Target)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zone Name</th>
+                        <th>Population</th>
+                        <th>Farmers</th>
+                        <th>Greenhouses</th>
+                        <th>Seed Banks</th>
+                        <th>Cultural Hubs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North Gaza Rural Zone</td>
+                        <td>440,000 (20%)</td>
+                        <td>880</td>
+                        <td>880</td>
+                        <td>4</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>Gaza City Heritage Hub</td>
+                        <td>660,000 (30%)</td>
+                        <td>1,320</td>
+                        <td>1,320</td>
+                        <td>6</td>
+                        <td>13</td>
+                    </tr>
+                    <tr>
+                        <td>Deir al-Balah Agro Belt</td>
+                        <td>330,000 (15%)</td>
+                        <td>660</td>
+                        <td>660</td>
+                        <td>3</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Khan Younis Rural District</td>
+                        <td>550,000 (25%)</td>
+                        <td>1,100</td>
+                        <td>1,100</td>
+                        <td>5</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>Rafah Border Agro Zone</td>
+                        <td>220,000 (10%)</td>
+                        <td>440</td>
+                        <td>440</td>
+                        <td>2</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Diplomatic Partners -->
+        <div class="card">
+            <h2>🌐 Diplomatic Logistics & Hubs</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Role / Primary Scope</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>China</td>
+                        <td>Container Camps & Telemetry</td>
+                        <td><span class="status-tag">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Japan</td>
+                        <td>Solar Grid & Cold-Chain</td>
+                        <td><span class="status-tag">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>India</td>
+                        <td>Medicine & Volunteer Doctors</td>
+                        <td><span class="status-tag">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pakistan</td>
+                        <td>Relief Supplies & Logistics</td>
+                        <td><span class="status-tag">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>Qatar / UAE / TR / JO / EG</td>
+                        <td>HPC Data, Medical & Evacuation Hubs</td>
+                        <td><span class="status-tag">Synced</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Global Brotherhood Foundation | High-Performance Computing & Digital Twin Architecture
+    </footer>
+
+</body>
+</html>
