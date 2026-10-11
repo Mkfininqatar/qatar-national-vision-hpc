@@ -5692,3 +5692,122 @@
     </script>
 </body>
 </html>
+// =========================================================================
+// GLOBAL BROTHERHOOD FOUNDATION - MASTER DASHBOARD DATA MODULE (POINTS 1 - 6)
+// Portal: http://qatar-national-vision-hpc.com/ | GitHub: Mkfininqatar
+// =========================================================================
+
+const globalBrotherhoodMasterData = {
+  // 📌 1. Command Center & Technical Infrastructure
+  commandCenter: {
+    systemPortal: "http://qatar-national-vision-hpc.com/",
+    githubRepository: "Mkfininqatar",
+    satelliteAndRF: {
+      satName: "QATARSAT-HPC-01",
+      frequency: "35.5 kHz",
+      type: "Sonar Echo Ping",
+      signalsActive: ["UHF", "VHF"]
+    },
+    infrastructureOperations: {
+      debrisClearance: {
+        equipment: ["Heavy Bulldozers", "Excavators"],
+        primarySpinesCleared: ["Salah al-Din Road", "Al-Rashid Road"]
+      },
+      telecom: {
+        fiberLandingZone: "Al-Mawasi Subsea Fiber Cable Landing"
+      },
+      droneEscort: {
+        model: "HPC-AERO-SCOUT-X1",
+        navigation: "RTK Precision Navigation",
+        roles: ["Convoy Protection Escort", "Hospital Solar Storage Balancing"]
+      }
+    },
+    logisticsHubs: [
+      { location: "Doha Gateway", type: "Primary Air & Command Hub" },
+      { location: "Cyprus Maritime Hub", type: "Sea Cargo Gateway" },
+      { location: "Al-Arish", type: "Emergency Airbridge Corridor" }
+    ]
+  },
+
+  // 📊 2. Gaza Demographics (2.2 Million Total Population)
+  demographics: {
+    totalPopulation: 2200000,
+    ageCohorts: [
+      { ageGroup: "1-10 years", count: 660000, percentage: 30 },
+      { ageGroup: "10-20 years", count: 440000, percentage: 20 },
+      { ageGroup: "20-45 years", count: 660000, percentage: 30, note: "Primary Working & Adult Population" },
+      { ageGroup: "45+ years", count: 440000, percentage: 20, note: "Older Adults & Elderly" }
+    ]
+  },
+
+  // 🏛️ 3. Local Administrative Structures
+  localAdministration: {
+    governmentCommitteeHead: "Essam al-Da'alis",
+    interiorSecurityAndPoliceHead: "Major General Mahmoud Abu Watfa",
+    healthAndEmergencyLeadership: [
+      { name: "Dr. Munir al-Bursh", role: "Director General of Health" },
+      { name: "Dr. Youssef Abu al-Rish", role: "Deputy Health Minister" },
+      { name: "Dr. Ashraf al-Qidra", role: "Spokesperson & Field Coordinator" }
+    ],
+    fieldExecutionUnits: [
+      "Local Civil & Emergency Committees",
+      "Civil Defense Rescue Corps",
+      "Local Technical & Medical Engineer Cells"
+    ]
+  },
+
+  // 🏥 4. Emergency Rescue & Evacuation Matrix (20% Critical Cases)
+  evacuationMatrix: {
+    totalInjuredPopulation: 100000,
+    formula: "E = T * (p1 + p2) * fs",
+    calculatedCriticalCases: 20000, // 100000 * (0.28 + 0.22) * 0.40
+    countryAllocations: [
+      { country: "Qatar", capacity: "1,500 - 2,000+", specialization: "Critical Trauma, Advanced Surgery & Long-term Rehab" },
+      { country: "UAE", capacity: "1,000 - 1,500", specialization: "Pediatric Emergency & Complex Reconstruction" },
+      { country: "Turkey", capacity: "1,000+", specialization: "Specialized Burn Units, Cancer Care & Prosthetics" },
+      { country: "Jordan", capacity: "500 - 800", specialization: "Field Hospitals & Orthopedic Rehabilitation" },
+      { country: "Egypt", capacity: "Primary Triage Gateway", specialization: "Immediate Stabilization & Transit" },
+      { country: "EU Partners", capacity: "Special Quota", specialization: "Complex ICU Support & Specialized Care" }
+    ]
+  },
+
+  // 🏕️ 5. Local Container Camp & Volunteer Doctors (80% Local Care)
+  containerCampMatrix: {
+    remainingInjuredCases: 80000, // 80% of total injured
+    formula: "M_camp = R_local * SUM(D_k * C_k * V_k)",
+    participatingNations: [
+      { country: "Qatar", doctors: "150+", containers: "30+ Advanced Mobile ICUs", focus: "Trauma Surgery & Tele-Medicine" },
+      { country: "Turkey", doctors: "200+", containers: "40+ Integrated Field Containers", focus: "Burn Care & General Emergency" },
+      { country: "Egypt", doctors: "300+", containers: "50+ Primary Triage Hubs", focus: "Triage & Initial Stabilization" },
+      { country: "Jordan", doctors: "100+", containers: "20+ Specialized Rehab Containers", focus: "Fractures & Prosthetics" },
+      { country: "Malaysia & Indonesia", doctors: "150+", containers: "25+ Community Health Containers", focus: "Infection Control & Pediatrics" },
+      { country: "International NGOs", doctors: "250+", containers: "35+ Surgical Containers", focus: "Complex Post-Op Recovery" }
+    ]
+  },
+
+  // 📦 6. Medicine Collection & Supply Logistics
+  medicineSupplyMatrix: {
+    formula: "M_total = SUM(S_j * C_j * L_j)",
+    donorNations: [
+      { country: "Qatar", supplies: "ICU Drugs, Anesthesia, Antibiotics", route: "Doha Hub -> Al-Arish Airbridge" },
+      { country: "Turkey", supplies: "Surgical Consumables, Burn Care Ointments, Trauma Kits", route: "Maritime via Cyprus Port Route" },
+      { country: "UAE", supplies: "Pediatric Meds, Vaccines, ORS & Nutritional Kits", route: "Direct Humanitarian Flight Convoy" },
+      { country: "Jordan", supplies: "Chronic Disease Meds (Insulin, Cardiac), Painkillers", route: "Land Truck Convoy via Border Corridors" },
+      { country: "Egypt", supplies: "First-Aid Supplies, Saline, IV Fluids, Generic Drugs", route: "Rafah Field Transit Point" },
+      { country: "EU Partners", supplies: "Specialized Biologicals, Oncology Meds, Blood Products", route: "Humanitarian Air Corridors" }
+    ]
+  }
+};
+
+// =========================================================================
+// HELPER FUNCTIONS TO CALCULATE DYNAMIC METRICS
+// =========================================================================
+
+// Calculates Emergency Medical Need based on equation: E = T * (p1 + p2) * fs
+function calculateEmergencyCareNeed(totalInjured, pctChildren, pctYouth, severityFactor) {
+  return totalInjured * (pctChildren + pctYouth) * severityFactor;
+}
+
+// Log loaded module details to developer console
+console.log("Global Brotherhood Foundation Master Module Loaded Successfully!");
+console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(100000, 0.28, 0.22, 0.40));
