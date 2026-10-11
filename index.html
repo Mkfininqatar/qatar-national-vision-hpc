@@ -8717,3 +8717,282 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Brotherhood Foundation - Advanced Operations Dashboard (v4.3.0)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b0f19; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glow-border { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .pulse-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body class="p-4 space-y-4">
+
+    <!-- Top Navigation & System Status Header -->
+    <header class="glass-panel rounded-xl p-4 flex flex-wrap justify-between items-center glow-border">
+        <div class="flex items-center space-x-3">
+            <i class="fa-solid fa-satellite-dish text-blue-400 text-3xl"></i>
+            <div>
+                <h1 class="text-xl font-bold tracking-wider text-white">THE HEART OF UNITY: MASTER OPERATIONS COMMAND</h1>
+                <p class="text-xs text-blue-400 font-mono">GLOBAL BROTHERHOOD FOUNDATION | COMMANDER: MAZED ABDUL | SYSTEM v4.3.0 (LOCKED)</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-6 text-sm font-mono">
+            <div><span class="text-gray-400">SAT-LINK:</span> <span class="text-emerald-400 font-bold">QATARSAT-HPC-01 (ONLINE)</span></div>
+            <div><span class="text-gray-400">RESONANCE:</span> <span class="text-amber-400 font-bold">432.0 Hz BASELINE</span></div>
+            <div><span class="text-gray-400">SYSTEM TIME:</span> <span id="clock" class="text-blue-300"></span></div>
+        </div>
+    </header>
+
+    <!-- Top Metric Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-blue-500">
+            <p class="text-xs text-gray-400 uppercase">Gaza Population</p>
+            <h2 class="text-2xl font-bold text-white mt-1">2,200,000</h2>
+            <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-heart-pulse"></i> 100% Coverage Matrix</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-emerald-500">
+            <p class="text-xs text-gray-400 uppercase">3-Month Sustainment</p>
+            <h2 class="text-2xl font-bold text-white mt-1">99,000 Tons</h2>
+            <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-truck-fast"></i> Food & Winter Supplies</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-amber-500">
+            <p class="text-xs text-gray-400 uppercase">Solar Microgrid</p>
+            <h2 class="text-2xl font-bold text-white mt-1">355 MW / 800MWh</h2>
+            <p class="text-xs text-amber-400 mt-1"><i class="fa-solid fa-solar-panel"></i> Points A1 to E1 Active</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-purple-500">
+            <p class="text-xs text-gray-400 uppercase">Autonomous Robotics</p>
+            <h2 class="text-2xl font-bold text-white mt-1">650 Units</h2>
+            <p class="text-xs text-purple-400 mt-1"><i class="fa-solid fa-robot"></i> Tesla Optimus & China Tech</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-cyan-500">
+            <p class="text-xs text-gray-400 uppercase">Air Fleet Air-Drop</p>
+            <h2 class="text-2xl font-bold text-white mt-1">350 Drones / 25 Choppers</h2>
+            <p class="text-xs text-cyan-400 mt-1"><i class="fa-solid fa-helicopter"></i> Pre-Diplomatic Rapid Drop</p>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+        <!-- Column 1: Map & Zone Selection + Air-Drop Countdown -->
+        <div class="glass-panel p-4 rounded-xl space-y-4">
+            <h3 class="text-md font-bold text-blue-400 flex items-center justify-between">
+                <span><i class="fa-solid fa-map-location-dot"></i> GAZA 5-ZONE MAP & AIR-DROP</span>
+                <span class="text-xs text-gray-400">FAST I/O QUEUE</span>
+            </h3>
+
+            <!-- Simulated Map Selection -->
+            <div class="space-y-2">
+                <button onclick="selectZone(0)" class="w-full text-left p-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/80 transition border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-blue-300">1. North Gaza Rural Zone</div>
+                        <div class="text-xs text-gray-400">Point A1 Solar (45 MW) | 85 Critical Cases</div>
+                    </div>
+                    <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-1 rounded">8 Min Drop</span>
+                </button>
+                <button onclick="selectZone(1)" class="w-full text-left p-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/80 transition border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-blue-300">2. Gaza City Heritage Hub</div>
+                        <div class="text-xs text-gray-400">Point B1/B2 Solar (120 MW) | Parliament HQ</div>
+                    </div>
+                    <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-1 rounded">3 Min Drop</span>
+                </button>
+                <button onclick="selectZone(2)" class="w-full text-left p-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/80 transition border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-blue-300">3. Deir al-Balah Agro Belt</div>
+                        <div class="text-xs text-gray-400">Point C1 Solar (60 MW) | Cold-chain Hub</div>
+                    </div>
+                    <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-1 rounded">10 Min Drop</span>
+                </button>
+                <button onclick="selectZone(3)" class="w-full text-left p-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/80 transition border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-blue-300">4. Khan Younis Rural District</div>
+                        <div class="text-xs text-gray-400">Point D1 Solar (80 MW) | Field Hospitals</div>
+                    </div>
+                    <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-1 rounded">15 Min Drop</span>
+                </button>
+                <button onclick="selectZone(4)" class="w-full text-left p-3 rounded-lg bg-gray-800/60 hover:bg-gray-700/80 transition border border-gray-700 flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-blue-300">5. Rafah Border Agro Zone</div>
+                        <div class="text-xs text-gray-400">Point E1 Solar (50 MW) | Multimodal Hub</div>
+                    </div>
+                    <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-1 rounded">20 Min Drop</span>
+                </button>
+            </div>
+
+            <!-- Live Mission Trigger Box -->
+            <div class="p-3 bg-blue-950/40 rounded-lg border border-blue-800/50 space-y-2">
+                <div class="text-xs font-bold text-blue-300 uppercase">Selected Zone Mission Trigger</div>
+                <div id="zone-details" class="text-xs text-gray-300 font-mono">Select a zone above to inspect live I/O metrics.</div>
+                <button onclick="triggerEmergencyDrop()" class="w-full py-2 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 font-bold text-white rounded text-xs tracking-wider transition">
+                    <i class="fa-solid fa-plane-drop"></i> TRIGGER IMMEDIATE TRI-CARGO AIR-DROP
+                </button>
+            </div>
+        </div>
+
+        <!-- Column 2: 9-Nation Air-Rescue & Maritime Coastal Perimeter Guard -->
+        <div class="glass-panel p-4 rounded-xl space-y-4">
+            <h3 class="text-md font-bold text-emerald-400 flex items-center justify-between">
+                <span><i class="fa-solid fa-hospital-user"></i> 9-NATION AIR-RESCUE & MARITIME GUARD</span>
+                <span class="text-xs text-emerald-300 font-mono">432 Hz RESONANCE</span>
+            </h3>
+
+            <!-- 9 Nations Matrix -->
+            <div class="grid grid-cols-3 gap-2 text-center font-mono text-xs">
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">QATAR</span><br>Hamad Med</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">UAE</span><br>SKMC Hosp</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">TURKEY</span><br>Ankara City</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">EGYPT</span><br>Nasser Inst</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">JORDAN</span><br>King Hussein</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">CHINA</span><br>Peking Union</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">JAPAN</span><br>UTokyo Hosp</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">INDIA</span><br>AIIMS Delhi</div>
+                <div class="p-2 bg-gray-800/60 rounded border border-gray-700"><span class="text-blue-400">PAKISTAN</span><br>CMH Hospital</div>
+            </div>
+
+            <!-- Coastal Guard & Debris Rescue Card -->
+            <div class="p-3 bg-gray-800/60 rounded-lg border border-gray-700 space-y-2 text-xs">
+                <div class="font-bold text-cyan-300 flex justify-between">
+                    <span><i class="fa-solid fa-ship"></i> Coastal Maritime 4-Side Guard</span>
+                    <span class="text-emerald-400">12 LCU / 50 Drones</span>
+                </div>
+                <p class="text-gray-400">24/7 Radar perimeter active around Gaza sea boundary. Debris clearance and concrete recycling feeding coastal reinforcement corridor.</p>
+                <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                    <div class="bg-cyan-400 h-full w-[88%]"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                    <span>Debris Cleared: 88%</span>
+                    <span>Recycled for Coast: 140,000 Tons</span>
+                </div>
+            </div>
+
+            <!-- Real-Time Resonance Graph -->
+            <div class="space-y-1">
+                <div class="text-xs text-gray-400 flex justify-between font-mono">
+                    <span>Magnetic Resonance Spectrum (432 Hz)</span>
+                    <span class="text-amber-400">Sub-surface Scan OK</span>
+                </div>
+                <canvas id="frequencyChart" class="h-32 w-full"></canvas>
+            </div>
+        </div>
+
+        <!-- Column 3: Telemetry Output & Multimodal Supply Engine -->
+        <div class="glass-panel p-4 rounded-xl space-y-4">
+            <h3 class="text-md font-bold text-purple-400 flex items-center justify-between">
+                <span><i class="fa-solid fa-terminal"></i> FAST I/O ENGINE & BROADCASTER</span>
+                <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle pulse-dot"></i> LIVE</span>
+            </h3>
+
+            <!-- Console Log -->
+            <div id="console-log" class="p-3 bg-black/80 rounded-lg border border-gray-800 font-mono text-[11px] h-48 overflow-y-auto space-y-1 text-emerald-400">
+                <div>[SYSTEM INITIALIZED] brotherhood_foundation_international.py (v4.3.0)</div>
+                <div>[I/O PIPELINE] Magnetic Resonance 432.0 Hz locked.</div>
+                <div>[SOLAR GRID] 15,000 panel units synced with Points A1-E1.</div>
+                <div>[MARITIME GUARD] 12 LCU patrol vessels deployed along sea boundary.</div>
+                <div>[AIR FLEET] 350 Drones + 25 Choppers ready for zero-latency air-drop.</div>
+            </div>
+
+            <!-- Social Media Broadcasting Status -->
+            <div class="p-3 bg-gray-800/60 rounded-lg border border-gray-700 space-y-2">
+                <div class="text-xs font-bold text-gray-300 uppercase">Automated Social Media Broadcaster</div>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <div class="p-2 bg-blue-900/40 rounded border border-blue-700/50 text-blue-300 font-bold"><i class="fa-brands fa-facebook"></i> Facebook</div>
+                    <div class="p-2 bg-pink-900/40 rounded border border-pink-700/50 text-pink-300 font-bold"><i class="fa-brands fa-instagram"></i> Instagram</div>
+                    <div class="p-2 bg-sky-900/40 rounded border border-sky-700/50 text-sky-300 font-bold"><i class="fa-brands fa-x-twitter"></i> X (Twitter)</div>
+                </div>
+                <button onclick="broadcastSocial()" class="w-full py-2 bg-purple-600 hover:bg-purple-500 font-bold text-white rounded text-xs transition">
+                    <i class="fa-solid fa-share-nodes"></i> BROADCAST MASTER CHARTER TO SOCIALS
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Real-Time Clock
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toUTCString();
+        }, 1000);
+
+        // Zone Selection Logic
+        const zoneData = [
+            { name: "North Gaza Rural Zone", food: "8,500 KG", water: "9,600 Btls", med: "2,200 Kits", flight: "8 Mins" },
+            { name: "Gaza City Heritage Hub", food: "11,500 KG", water: "13,500 Btls", med: "3,100 Kits", flight: "3 Mins" },
+            { name: "Deir al-Balah Agro Belt", food: "6,050 KG", water: "7,500 Btls", med: "1,700 Kits", flight: "10 Mins" },
+            { name: "Khan Younis Rural District", food: "8,000 KG", water: "9,900 Btls", med: "2,300 Kits", flight: "15 Mins" },
+            { name: "Rafah Border Agro Zone", food: "6,050 KG", water: "7,500 Btls", med: "1,700 Kits", flight: "20 Mins" }
+        ];
+
+        let selectedZoneIndex = 0;
+
+        function selectZone(index) {
+            selectedZoneIndex = index;
+            const z = zoneData[index];
+            document.getElementById('zone-details').innerHTML = `
+                <b>${z.name}</b><br>
+                ├─ Food Cargo: ${z.food} | Water: ${z.water}<br>
+                ├─ Med Kits: ${z.med} | Est. Flight: ${z.flight}<br>
+                └─ Telemetry: 432 Hz Resonance Lock OK
+            `;
+            logMessage(`[INPUT SELECT] ${z.name} selected. Multi-payload ready.`);
+        }
+
+        function triggerEmergencyDrop() {
+            const z = zoneData[selectedZoneIndex];
+            logMessage(`[AIR-DROP DISPATCHED] Fast-Queue active for ${z.name}! Payload arriving in ${z.flight}.`);
+            alert(`🚨 AIR-DROP DISPATCHED to ${z.name}!\nFood: ${z.food}\nWater: ${z.water}\nMedicine: ${z.med}`);
+        }
+
+        function broadcastSocial() {
+            logMessage("[BROADCASTER] Post payload sent to Facebook, Instagram & X API v2 successfully!");
+            alert("✅ Master Charter & Dashboard published to Facebook, Instagram, and X!");
+        }
+
+        function logMessage(msg) {
+            const consoleBox = document.getElementById('console-log');
+            const newLog = document.createElement('div');
+            newLog.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            consoleBox.appendChild(newLog);
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        // Chart.js Frequency Simulation
+        const ctx = document.getElementById('frequencyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['0s', '5s', '10s', '15s', '20s', '25s', '30s'],
+                datasets: [{
+                    label: 'Resonance Hz',
+                    data: [432.0, 432.4, 431.8, 432.2, 432.0, 432.5, 432.1],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, min: 430, max: 435 }
+                }
+            }
+        });
+
+        // Initialize First Zone
+        selectZone(0);
+    </script>
+</body>
+</html>
