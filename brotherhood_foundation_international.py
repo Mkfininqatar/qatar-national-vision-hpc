@@ -1176,3 +1176,99 @@ if __name__ == "__main__":
     system = EmergencyFoodDeploymentSystem()
     mission_data = system.execute_airdrop_mission()
     system.live_countdown_timer(5)
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+===============================================================================
+TITLE       : Global Brotherhood Foundation - Tri-Payload Emergency Supply Engine
+FILE NAME   : emergency_tri_supply_deployer.py
+ORGANIZATION: Global Brotherhood Foundation
+VERSION     : 3.8.0 (FOOD, DRINKING WATER & EMERGENCY MEDICINE AIR-DROP)
+===============================================================================
+"""
+
+import time
+import json
+from datetime import datetime, timedelta
+
+class EmergencyTriSupplySystem:
+    def __init__(self):
+        self.organization = "Global Brotherhood Foundation"
+        self.commander = "Mazed Abdul"
+        self.target_zones = [
+            "North Gaza Rural Zone",
+            "Gaza City Heritage Hub",
+            "Deir al-Balah Agro Belt",
+            "Khan Younis Rural District",
+            "Rafah Border Agro Zone"
+        ]
+        
+        # Fleet Assets & Tri-Payload Config
+        self.drone_fleet_count = 350       # Heavy Payload Drones
+        self.helicopter_fleet_count = 25   # Air-drop Heavy Cargo Choppers
+        
+        # Payload Allocation per Unit
+        self.food_per_drone_kg = 25
+        self.water_bottles_per_drone = 30  # 1.5L Mineral Water Bottles
+        self.med_kits_per_drone = 10       # Trauma & Critical Med Kits
+        
+        self.food_per_chopper_kg = 1200
+        self.water_bottles_per_chopper = 1500
+        self.med_kits_per_chopper = 300
+
+    def calculate_tri_payload_matrix(self):
+        """Calculates total food, water bottles, and medicine deployed across all zones"""
+        total_food_kg = (self.drone_fleet_count * self.food_per_drone_kg) + \
+                        (self.helicopter_fleet_count * self.food_per_chopper_kg)
+                        
+        total_water_bottles = (self.drone_fleet_count * self.water_bottles_per_drone) + \
+                              (self.helicopter_fleet_count * self.water_bottles_per_chopper)
+                              
+        total_med_kits = (self.drone_fleet_count * self.med_kits_per_drone) + \
+                         (self.helicopter_fleet_count * self.med_kits_per_chopper)
+                         
+        return {
+            "total_food_kg": total_food_kg,
+            "total_water_bottles_1_5L": total_water_bottles,
+            "total_emergency_med_kits": total_med_kits
+        }
+
+    def execute_airdrop_mission(self):
+        """Executes full autonomous emergency air-drop protocol across 5 zones"""
+        payloads = self.calculate_tri_payload_matrix()
+        
+        print("\n=================================================================")
+        print("🚨 TRI-PAYLOAD EMERGENCY AIR-DROP ACTIVATED (FOOD + WATER + MEDICINE) 🚨")
+        print("=================================================================")
+        print(f"Commander: {self.commander}")
+        print(f"Fleet: {self.drone_fleet_count} Heavy Drones | {self.helicopter_fleet_count} Cargo Choppers")
+        print(f"📦 Total Emergency Ration Payload: {payloads['total_food_kg']:,} KG")
+        print(f"💧 Total Clean Drinking Water: {payloads['total_water_bottles_1_5L']:,} Bottles (1.5L)")
+        print(f"🏥 Total Emergency Medicine Kits: {payloads['total_emergency_med_kits']:,} Kits")
+        print("-----------------------------------------------------------------\n")
+
+        distances = [12.5, 5.0, 15.2, 22.8, 30.1] # Distances from Command Tower
+        
+        for i, zone in enumerate(self.target_zones):
+            flight_minutes = int((distances[i] / 90.0) * 60)
+            arrival_time = (datetime.now() + timedelta(minutes=flight_minutes)).strftime("%H:%M:%S")
+            
+            print(f"🚁 [DISPATCHING TRI-CARGO] Zone {i+1}: {zone}")
+            print(f"   ├─ Distance: {distances[i]} km | Flight Time: {flight_minutes} Mins")
+            print(f"   ├─ Est. Arrival Time: {arrival_time}")
+            print(f"   ├─ Cargo: Food + 1.5L Water Bottles + Cold-Chain Critical Medicine")
+            print(f"   └─ Sync Status: MAGNETIC FREQUENCY SYNCED (432 Hz)\n")
+
+    def live_countdown_timer(self, seconds=5):
+        """Simulates real-time countdown to impact/drop zone"""
+        print("⏱️ REAL-TIME DROP COUNTDOWN ACTIVATED:")
+        for remaining in range(seconds, 0, -1):
+            print(f"   [COUNTDOWN] Target Air-Drop in: {remaining} Seconds...", end="\r")
+            time.sleep(1)
+        print("\n📦💧🏥 [AIR-DROP SUCCESSFUL] Food, Water & Critical Medicine Dropped On-Site!")
+
+if __name__ == "__main__":
+    system = EmergencyTriSupplySystem()
+    system.execute_airdrop_mission()
+    system.live_countdown_timer(5)
