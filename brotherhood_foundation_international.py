@@ -1906,3 +1906,115 @@ if __name__ == "__main__":
     engine = AroshRoundTransitEngine()
     blueprint = engine.generate_arosh_master_blueprint()
     print(json.dumps(blueprint, indent=4, ensure_ascii=False))
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+===============================================================================
+TITLE       : AROSH - Central Circular Transit & Architectural Master Engine
+FILE NAME   : arosh_master_system_v5_1.py
+ORGANIZATION: Global Brotherhood Foundation
+VERSION     : 5.1.0 (IMMUTABLE PARLIAMENT SHADOW & RADIAL TRANSIT LOCK)
+===============================================================================
+"""
+
+import json
+import hashlib
+from datetime import datetime
+
+class AroshMasterSystemEngine:
+    def __init__(self):
+        self.brand_identity = {
+            "name": "AROSH",
+            "visual_anchor": "3D Metallic Architectural Shadow & Foreground Emblem",
+            "theme": "Qatar National Flag Theme (Maroon & Serrated White Pattern)",
+            "symbols": "Golden Crown, Diplomatic Shield & Al-Aqsa Directional Compass"
+        }
+        self.organization = "Global Brotherhood Foundation"
+        self.parliament_hub = "Gaza Brotherhood Parliament Complex (Ground Zero Focal Center)"
+        self.commander = "Mazed Abdul"
+        self.version = "v5.1.0"
+        self.security_state = "IMMUTABLY LOCKED"
+        
+        # 9 Sovereign Partner Nations
+        self.partner_nations = [
+            "China", "Japan", "India", "Pakistan", "Qatar", "UAE", "Turkey", "Jordan", "Egypt"
+        ]
+        
+        # Central Concentric Radial Architecture
+        self.concentric_layers = {
+            "center_anchor": {
+                "structure": "Gaza Brotherhood Parliament Building",
+                "alignment": "Al-Aqsa Promenade Spiritual Axis",
+                "front_monument": "AROSH 3D Architectural Shadow Emblem",
+                "coordinate": "(0, 0) Ground Zero Center"
+            },
+            "ring_01_inner": {
+                "name": "Presidential Hyper-Loop Ring",
+                "latency_mins": 3,
+                "coverage": "Parliament HQ ──> Direct Internal Bunkers & Command Pods",
+                "technology": "Zero-Latency Sub-Surface Maglev Pods",
+                "frequency": "432.0 Hz Baseline Resonance"
+            },
+            "ring_02_mid": {
+                "name": "International Diplomatic Pod Ring",
+                "latency_mins": 8,
+                "coverage": "Parliament HQ ──> 9-Nation Diplomatic Air-Evacuation Helipads",
+                "technology": "Automated Diplomatic Transit Pods"
+            },
+            "ring_03_outer": {
+                "name": "Sub-Surface Command & Solar Grid Loop",
+                "latency_mins": 12,
+                "coverage": "All 5 Gaza Zones (North Gaza, Gaza City, Deir al-Balah, Khan Younis, Rafah)",
+                "solar_microgrid_capacity": "355 MW (Points A1 to E1)",
+                "pipeline": "Fast I/O Bulk Logistics & Water Lines"
+            },
+            "outer_maritime_perimeter": {
+                "name": "4-Side Coastal & Airspace Guard",
+                "lcu_patrol_vessels": 12,
+                "naval_drones": 50,
+                "air_drop_drones": 350,
+                "coverage": "360-Degree Radial Sea/Air Defense System"
+            }
+        }
+
+    def compile_master_payload(self):
+        """Compiles the master system payload with SHA-256 cryptographic verification"""
+        payload = {
+            "brand_identity": self.brand_identity,
+            "system_version": self.version,
+            "commander": self.commander,
+            "timestamp_utc": datetime.utcnow().isoformat(),
+            "partner_nations": self.partner_nations,
+            "concentric_layers": self.concentric_layers,
+            "time_efficiency": "99.8% Time Saved via Concentric Radial Architecture",
+            "global_status": "WELCOME WORLD - AROSH MASTER BLUEPRINT ACTIVE"
+        }
+        
+        # Cryptographic Verification Hash
+        raw_string = json.dumps(payload, sort_keys=True)
+        sha256_hash = hashlib.sha256(raw_string.encode('utf-8')).hexdigest()
+        
+        return {
+            "system_status": self.security_state,
+            "sha256_lock": sha256_hash,
+            "master_data": payload
+        }
+
+    def export_lock_file(self, filename="arosh_master_v5_1_locked.json"):
+        """Exports the immutable master blueprint payload to a JSON file"""
+        compiled = self.compile_master_payload()
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(compiled, f, indent=4, ensure_ascii=False)
+        return filename, compiled['sha256_lock']
+
+if __name__ == "__main__":
+    engine = AroshMasterSystemEngine()
+    out_file, lock_hash = engine.export_lock_file()
+    print(f"=================================================================")
+    print(f"   AROSH CENTRAL CIRCULAR TRANSIT ENGINE ({engine.version})")
+    print(f"=================================================================")
+    print(f"[STATUS]   : {engine.security_state}")
+    print(f"[EXPORT]   : File saved to '{out_file}'")
+    print(f"[SHA-256]  : {lock_hash}")
+    print(f"=================================================================")
