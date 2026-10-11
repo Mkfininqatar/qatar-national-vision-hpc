@@ -3366,3 +3366,143 @@ if __name__ == "__main__":
         else:
             print(f"[+] {k}: {v}")
     print("=====================================================================")
+"""
+Global Brotherhood Foundation - Master Telemetry & Analytics Engine
+Portal: http://qatar-national-vision-hpc.com/
+Repository: Mkfininqatar
+"""
+
+import json
+from dataclasses import dataclass, field
+from typing import Dict, List
+
+
+@dataclass
+class GlobalBrotherhoodMasterEngine:
+  portal: str = "http://qatar-national-vision-hpc.com/"
+  github_repo: str = "Mkfininqatar"
+  total_population: int = 2200000
+  total_injured: int = 100000
+
+  def get_demographics(self) -> Dict[str, int]:
+    """Calculates age-vittik population breakdown"""
+    return {
+        "1-10 years": int(self.total_population * 0.30),
+        "10-20 years": int(self.total_population * 0.20),
+        "20-45 years": int(self.total_population * 0.30),
+        "45+ years": int(self.total_population * 0.20),
+    }
+
+  def calculate_emergency_cases(
+      self, pct_children: float = 0.28, pct_youth: float = 0.22, fs: float = 0.40
+  ) -> int:
+    """Calculates critical emergency evacuation cases: E = T * (p1 + p2) * fs"""
+    return int(self.total_injured * (pct_children + pct_youth) * fs)
+
+  def get_evacuation_allocations(self) -> List[Dict[str, str]]:
+    """Country-wise MedEvac matrix"""
+    return [
+        {
+            "country": "Qatar",
+            "capacity": "1,500 - 2,000+",
+            "focus": "Critical Trauma & Rehab",
+        },
+        {
+            "country": "UAE",
+            "capacity": "1,000 - 1,500",
+            "focus": "Pediatric & Reconstruction",
+        },
+        {
+            "country": "Turkey",
+            "capacity": "1,000+",
+            "focus": "Burn Units & Prosthetics",
+        },
+        {
+            "country": "Jordan",
+            "capacity": "500 - 800",
+            "focus": "Orthopedic Rehabilitation",
+        },
+        {
+            "country": "Egypt & EU",
+            "capacity": "Primary Gateway",
+            "focus": "Triage & ICU Quotas",
+        },
+    ]
+
+  def get_container_camp_matrix(self) -> List[Dict[str, str]]:
+    """Local Container Camp & Volunteer Doctor deployment matrix (80% cases)"""
+    remaining_local = int(self.total_injured * 0.80)
+    return [
+        {
+            "country": "Qatar",
+            "doctors": "150+",
+            "units": "30+ Mobile ICUs",
+            "cases_target": f"Managed within {remaining_local} local pool",
+        },
+        {
+            "country": "Turkey",
+            "doctors": "200+",
+            "units": "40+ Field Containers",
+            "focus": "Burn Care",
+        },
+        {
+            "country": "Egypt",
+            "doctors": "300+",
+            "units": "50+ Triage Hubs",
+            "focus": "Stabilization",
+        },
+        {
+            "country": "Jordan & NGOs",
+            "doctors": "250+",
+            "units": "45+ Health Containers",
+            "focus": "Orthopedics",
+        },
+    ]
+
+  def generate_master_json(self) -> str:
+    """Exports all points into a unified JSON telemetry structure"""
+    master_data = {
+        "command_center": {
+            "portal": self.portal,
+            "github": self.github_repo,
+            "satellite_rf": {
+                "sat_name": "QATARSAT-HPC-01",
+                "frequency": "35.5 kHz",
+                "ping_type": "Sonar Echo Ping",
+            },
+            "drone_escort": "HPC-AERO-SCOUT-X1 (RTK Precision)",
+        },
+        "demographics": self.get_demographics(),
+        "local_administration": {
+            "admin_head": "Essam al-Da'alis",
+            "security_head": "Major General Mahmoud Abu Watfa",
+            "health_director": "Dr. Munir al-Bursh",
+        },
+        "critical_evacuation_target": self.calculate_emergency_cases(),
+        "evacuation_matrix": self.get_evacuation_allocations(),
+        "container_camps": self.get_container_camp_matrix(),
+    }
+    return json.dumps(master_data, indent=4, ensure_ascii=False)
+
+
+# =========================================================================
+# Execution & Telemetry Output
+# =========================================================================
+if __name__ == "__main__":
+  engine = GlobalBrotherhoodMasterEngine()
+
+  print("=== GLOBAL BROTHERHOOD FOUNDATION TELEMETRY ENGINE ===")
+  print(f"Portal: {engine.portal} | GitHub: {engine.github_repo}\n")
+
+  print("Demographics Breakdown:")
+  for k, v in engine.get_demographics().items():
+    print(f" - {k}: {v:,} population")
+
+  critical_cases = engine.calculate_emergency_cases()
+  print(
+      f"\nCalculated Critical Emergency Cases (E): {critical_cases:,} patients"
+  )
+
+  print("\nExporting Master JSON Telemetry Payload...")
+  json_output = engine.generate_master_json()
+  print(json_output[:500] + "\n... [Payload Truncated for Display]")
