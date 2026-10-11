@@ -9663,3 +9663,201 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROSH — Central Circular Master Transit Dashboard (v5.1.0)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #060911; color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .qatar-border { border: 2px solid #8A1538; box-shadow: 0 0 25px rgba(138, 21, 56, 0.5); }
+        .gold-border { border: 1px solid #f59e0b; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+        .glass-panel { background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.25); }
+        .arosh-glow { text-shadow: 0 0 15px rgba(245, 158, 11, 0.8), 0 0 30px rgba(138, 21, 56, 0.6); }
+        .pulse-gold { animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body class="p-4 md:p-6 space-y-6">
+
+    <!-- AROSH Master Header -->
+    <header class="glass-panel rounded-2xl p-6 flex flex-wrap justify-between items-center qatar-border relative overflow-hidden">
+        <div class="flex items-center space-x-5 z-10">
+            <div class="p-4 bg-gradient-to-br from-amber-500/30 to-rose-900/50 rounded-2xl border border-amber-500/50">
+                <i class="fa-solid fa-crown text-amber-400 text-4xl"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-3">
+                    <h1 class="text-3xl font-black tracking-widest text-amber-300 arosh-glow">AROSH</h1>
+                    <span class="text-xs bg-rose-950 text-rose-300 px-3 py-1 rounded-full font-mono border border-rose-700/50">QATAR THEME v5.1.0</span>
+                </div>
+                <p class="text-xs text-amber-400/90 font-mono mt-1">GAZA BROTHERHOOD PARLIAMENT COMPLEX — CENTRAL CIRCULAR TRANSIT</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 font-mono text-sm z-10 mt-4 md:mt-0">
+            <div class="text-right">
+                <span class="text-gray-400 block text-xs">COMMANDER</span>
+                <span class="text-amber-300 font-bold">Mazed Abdul</span>
+            </div>
+            <div class="text-right">
+                <span class="text-gray-400 block text-xs">SYSTEM LOCK</span>
+                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-lock"></i> IMMUTABLE v5.1.0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Metrics Bar -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-amber-500">
+            <p class="text-xs text-gray-400 uppercase font-mono">Central Hub</p>
+            <h2 class="text-lg font-bold text-amber-300 mt-1">Parliament Complex</h2>
+            <p class="text-xs text-amber-400/80 mt-1"><i class="fa-solid fa-compass"></i> Al-Aqsa Axis Aligned</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-emerald-500">
+            <p class="text-xs text-gray-400 uppercase font-mono">Ring 1 — Presidential Loop</p>
+            <h2 class="text-lg font-bold text-emerald-300 mt-1">3 Mins Latency</h2>
+            <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-bolt"></i> 432 Hz Resonance Lock</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-blue-500">
+            <p class="text-xs text-gray-400 uppercase font-mono">Ring 2 — Diplomatic Ring</p>
+            <h2 class="text-lg font-bold text-blue-300 mt-1">8 Mins Round Pods</h2>
+            <p class="text-xs text-blue-400 mt-1"><i class="fa-solid fa-globe"></i> 9 Sovereign Partner Nations</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-purple-500">
+            <p class="text-xs text-gray-400 uppercase font-mono">Ring 3 — Outer Solar Grid</p>
+            <h2 class="text-lg font-bold text-purple-300 mt-1">355 MW Microgrid</h2>
+            <p class="text-xs text-purple-400 mt-1"><i class="fa-solid fa-solar-panel"></i> Points A1 to E1 Connected</p>
+        </div>
+    </div>
+
+    <!-- Main Live Concentric Display -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Concentric Layer Selector -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4">
+            <h3 class="text-md font-bold text-amber-400 flex items-center justify-between border-b border-gray-800 pb-3">
+                <span><i class="fa-solid fa-circle-nodes"></i> RADIAL TRANSIT LAYERS</span>
+                <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle pulse-gold"></i> ACTIVE</span>
+            </h3>
+
+            <div class="space-y-3">
+                <button onclick="selectRing(1)" class="w-full p-3 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-amber-500/30 text-left transition flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-amber-200">1. Ring 1 — Presidential Inner Ring</div>
+                        <div class="text-xs text-gray-400">HQ ──> Direct Bunkers & Pods</div>
+                    </div>
+                    <span class="text-xs bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-500/40">3 Mins</span>
+                </button>
+
+                <button onclick="selectRing(2)" class="w-full p-3 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-amber-500/30 text-left transition flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-amber-200">2. Ring 2 — Diplomatic Mid Ring</div>
+                        <div class="text-xs text-gray-400">9-Nation Helipads & Pod System</div>
+                    </div>
+                    <span class="text-xs bg-blue-500/20 text-blue-300 px-2.5 py-1 rounded-lg border border-blue-500/40">8 Mins</span>
+                </button>
+
+                <button onclick="selectRing(3)" class="w-full p-3 rounded-xl bg-gray-800/80 hover:bg-amber-950/40 border border-amber-500/30 text-left transition flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-amber-200">3. Ring 3 — Solar & Logistics Loop</div>
+                        <div class="text-xs text-gray-400">All 5 Operational Gaza Zones</div>
+                    </div>
+                    <span class="text-xs bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-lg border border-purple-500/40">12 Mins</span>
+                </button>
+
+                <button onclick="selectRing(4)" class="w-full p-3 rounded-xl bg-gray-800/80 hover:bg-rose-950/40 border border-rose-500/30 text-left transition flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-sm text-rose-200">4. Outer Maritime Perimeter Guard</div>
+                        <div class="text-xs text-gray-400">12 Vessels • 50 Drones • 350 Sky Air-Drops</div>
+                    </div>
+                    <span class="text-xs bg-rose-500/20 text-rose-300 px-2.5 py-1 rounded-lg border border-rose-500/40">24/7 Guard</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Visual Display Panel -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4 lg:col-span-2 flex flex-col justify-between gold-border">
+            <div>
+                <h3 class="text-md font-bold text-amber-400 flex items-center justify-between border-b border-gray-800 pb-3">
+                    <span><i class="fa-solid fa-shield-halved"></i> LIVE LAYER TELEMETRY & DISPATCH</span>
+                    <span id="layer-tag" class="text-xs text-amber-300 font-mono uppercase bg-amber-950/60 px-2.5 py-1 rounded border border-amber-600/40">RING 1 SELECTED</span>
+                </h3>
+
+                <div id="layer-details" class="mt-4 space-y-3 font-mono text-sm text-gray-300">
+                    <!-- Dynamic Data Injected Here -->
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-800 flex flex-wrap justify-between items-center gap-3">
+                <div class="text-xs text-amber-400/80 italic font-serif">
+                    "AROSH: Welcome World — The Heart of Unity & Historic Radial Blueprint"
+                </div>
+                <button onclick="dispatchTransit()" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-black font-extrabold rounded-xl text-xs tracking-wider transition shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-paper-plane"></i> DISPATCH AROSH TRANSIT
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const layers = {
+            1: {
+                title: "Ring 1 — Presidential Hyper-Loop Inner Ring",
+                coverage: "Gaza Brotherhood Parliament HQ ──> Emergency Bunkers & Pods",
+                tech: "Zero-Latency Sub-Surface Maglev Pods (1,200 km/h)",
+                frequency: "432 Hz Baseline Resonance Locked",
+                desc: "পার্লামেন্ট কমপ্লেক্সের মূল কেন্দ্রকে সুরক্ষিত রেখে সরাসরি কমান্ড ও কন্ট্রোল রুমে সংযোগকারী আল্ট্রা-ফাস্ট ইনার লুপ।"
+            },
+            2: {
+                title: "Ring 2 — International Diplomatic Pod Ring",
+                coverage: "HQ Center ──> 9 Sovereign Partner Nations Helipads & Pod System",
+                tech: "Automated Magnetic Levitation Circular Pods",
+                partners: "China, Japan, India, Pakistan, Qatar, UAE, Turkey, Jordan, Egypt",
+                desc: "আন্তর্জাতিক ৯টি বন্ধুপ্রতীম রাষ্ট্রের প্রতিনিধি ও রাষ্ট্রপ্রধানদের চলাচলের জন্য সংরক্ষিত মাগলেভ ট্রানজিট।"
+            },
+            3: {
+                title: "Ring 3 — Sub-Surface Command & Solar Grid Loop",
+                coverage: "All 5 Gaza Operational Zones (North, Gaza City, Deir al-Balah, Khan Younis, Rafah)",
+                tech: "355 MW Solar Microgrid Lines & Fast I/O Supply Pipelines",
+                points: "Solar Points A1, B1, C1, D1, E1",
+                desc: "গাজার ৫টি জোন ও সোলার গ্রিডকে পার্লামেন্ট সেন্টারের সাথে যুক্তকারী ভূগর্ভস্থ সার্কুলার লুপ।"
+            },
+            4: {
+                title: "Outer Maritime & Airspace Perimeter Guard",
+                coverage: "Coastal Waters & Gaza Airspace Perimeter",
+                tech: "12 LCU Patrol Vessels, 50 Naval Drones, 350 Air-Drop Drones",
+                desc: "চারপাশ থেকে সমুদ্র ও আকাশসীমা সম্পূর্ণ সুরক্ষিত রাখার জন্য ৩৬০-ডিগ্রি সিকিউরিটি সার্কেল।"
+            }
+        };
+
+        function selectRing(id) {
+            const layer = layers[id];
+            document.getElementById('layer-tag').innerText = `LAYER ${id} ACTIVE`;
+            document.getElementById('layer-details').innerHTML = `
+                <div class="p-4 bg-amber-950/20 rounded-xl border border-amber-500/30 space-y-3">
+                    <div class="text-amber-300 font-bold text-base">${layer.title}</div>
+                    <div class="text-xs text-gray-300">${layer.desc}</div>
+                    <div class="pt-2 text-xs text-emerald-400 space-y-1">
+                        <div><b>Path Coverage:</b> ${layer.coverage}</div>
+                        <div><b>Technology:</b> ${layer.tech}</div>
+                        ${layer.partners ? `<div><b>Sovereign Partners:</b> ${layer.partners}</div>` : ''}
+                        ${layer.points ? `<div><b>Microgrid Grid Points:</b> ${layer.points}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function dispatchTransit() {
+            alert("🚀 AROSH TRANSIT DISPATCHED!\nCentral Circular Route is clear. Welcome to the Golden Era of Unity!");
+        }
+
+        // Initialize with Layer 1
+        selectRing(1);
+    </script>
+</body>
+</html>
