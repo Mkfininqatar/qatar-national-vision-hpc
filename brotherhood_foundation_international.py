@@ -2215,3 +2215,116 @@ if __name__ == "__main__":
     engine = AroshParliamentHologramEngine()
     output = engine.generate_hologram_payload()
     print(json.dumps(output, indent=4, ensure_ascii=False))
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+===============================================================================
+TITLE       : AROSH - Social Media Posts & Deployment Pipeline
+FILE NAME   : arosh_social_posts.py
+ORGANIZATION: Global Brotherhood Foundation
+VERSION     : 5.1.0 (NIGHT MASTER PLAN & NEW WORLD LAUNCH)
+===============================================================================
+"""
+
+import json
+import hashlib
+from datetime import datetime
+
+class AroshSocialPostPipeline:
+    def __init__(self):
+        self.brand = "AROSH"
+        self.version = "v5.1.0"
+        self.architect = "Mazed Abdul"
+        self.portal = "qatar-national-vision-hpc.com"
+        self.repo = "Mkfininqatar/qatar-national-vision-hpc"
+
+        self.posts = {
+            "x_twitter": {
+                "platform": "X (Twitter)",
+                "character_count_limit": 280,
+                "caption": (
+                    "👑 AROSH: Advance New World Start 🌙✨\n"
+                    "Gaza Parliament HQ & 3D Holographic Master Plan glow under the starry night, "
+                    "framed in Qatar’s flag border.\n"
+                    "Unifying 9 sovereign nations for a golden era of peace & high-tech infrastructure! 🕊️"
+                ),
+                "hashtags": ["#AROSH", "#GazaBrotherhood", "#Qatar", "#NewWorld"]
+            },
+            "instagram": {
+                "platform": "Instagram",
+                "title": "👑 AROSH: Advance New World Start — Night Master Plan 🌙✨",
+                "caption": (
+                    "Under the luminous glow of the moon and stars, we proudly unveil the night-view "
+                    "master projection of the Gaza Brotherhood Parliament Complex framed in the iconic Qatar national flag border.\n\n"
+                    "Bound by unity, high-tech infrastructure, and our 9 sovereign partner nations, "
+                    "this night telemetry marks the golden dawn of a new era.\n\n"
+                    "🔑 Highlights:\n"
+                    "• 🌙 Moonlit Spatial Command: Gaza Ground Zero Parliament HQ glowing under a starry night sky.\n"
+                    "• 🇦🇶 Qatar Flag Border: Official maroon and white serrated framing the AROSH master spatial dashboard.\n"
+                    "• ⚡ Concentric Radial Network: 3-tier transit loops, 355 MW solar microgrids, and seamless zero-latency mobility.\n\n"
+                    "\"আমাদের যাতায়াতের সুবিধার জন্য ইতিহাস রচনার প্রথম ধাপে ভালোবাসার সোনালী দিন। Welcome to the New World!\""
+                ),
+                "metadata": {
+                    "location": "Gaza Central Ground Zero Complex",
+                    "tech_architect": self.architect,
+                    "portal": self.portal,
+                    "repository": self.repo
+                },
+                "hashtags": [
+                    "#AROSH", "#GlobalBrotherhoodFoundation", "#GazaBrotherhoodParliament",
+                    "#Qatar", "#RebuildGaza", "#NightView", "#AlAqsaAxis", "#DigitalTwin",
+                    "#HPC", "#MazedAbdul", "#ScientificGovernance", "#WelcomeWorld"
+                ]
+            },
+            "facebook_linkedin": {
+                "platform": "Facebook / LinkedIn",
+                "title": "👑 AROSH: Gaza Brotherhood Parliament & Central Circular Blueprint (v5.1.0) 🕊️",
+                "caption": (
+                    "আমরা অত্যন্ত গর্বের সাথে প্রকাশ করছি Gaza Brotherhood Parliament Complex-এর কেন্দ্রীয় "
+                    "বৃত্তাকার মাস্টার ট্রানজিট ব্লুপ্রিন্ট (AROSH Emblem Edition)।\n\n"
+                    "পবিত্র আল-আকসা মসজিদের আধ্যাত্মিক অক্ষকে কেন্দ্রে রেখে তৈরি করা এই ৩-স্তরের বৃত্তাকার "
+                    "হাইপার-লুপ নেটওয়ার্কটি কমান্ডার Mazed Abdul এবং ৯টি সার্বভৌম বন্ধুপ্রতীম রাষ্ট্রের প্রতিনিধি দলকে "
+                    "জিরো-ল্যাটেন্সিতে পৌঁছে দিতে প্রস্তুত।"
+                ),
+                "hashtags": [
+                    "#AROSH", "#GlobalBrotherhoodFoundation", "#GazaBrotherhoodParliament",
+                    "#Qatar", "#RebuildGaza", "#AlAqsaAxis", "#MazedAbdul", "#HPC"
+                ]
+            }
+        }
+
+    def export_posts_payload(self, filename="arosh_social_posts_v5_1.json"):
+        """Compiles and exports social media posts into an immutable JSON dataset."""
+        payload = {
+            "brand": self.brand,
+            "version": self.version,
+            "timestamp_utc": datetime.utcnow().isoformat(),
+            "posts_data": self.posts
+        }
+
+        # Cryptographic Verification Hash
+        raw_string = json.dumps(payload, sort_keys=True)
+        sha256_hash = hashlib.sha256(raw_string.encode('utf-8')).hexdigest()
+
+        export_data = {
+            "status": "IMMUTABLE POST DATASET LOCKED",
+            "sha256_lock": sha256_hash,
+            "payload": payload
+        }
+
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(export_data, f, indent=4, ensure_ascii=False)
+
+        return filename, sha256_hash
+
+if __name__ == "__main__":
+    pipeline = AroshSocialPostPipeline()
+    out_file, lock_hash = pipeline.export_posts_payload()
+    print("=================================================================")
+    print("   AROSH SOCIAL MEDIA POST PIPELINE (v5.1.0)")
+    print("=================================================================")
+    print(f"[STATUS]   : IMMUTABLY LOCKED")
+    print(f"[EXPORT]   : File saved to '{out_file}'")
+    print(f"[SHA-256]  : {lock_hash}")
+    print("=================================================================")
