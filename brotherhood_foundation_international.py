@@ -2328,3 +2328,107 @@ if __name__ == "__main__":
     print(f"[EXPORT]   : File saved to '{out_file}'")
     print(f"[SHA-256]  : {lock_hash}")
     print("=================================================================")
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROSH — Gaza Ground Action & Live Field Deployment Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #030712; color: #f9fafb; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .glow-gold { text-shadow: 0 0 15px rgba(245, 158, 11, 0.8); }
+        .pulse-emerald { animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body class="p-4 md:p-6 space-y-6">
+
+    <!-- Header Panel -->
+    <header class="glass-panel rounded-2xl p-6 flex flex-wrap justify-between items-center border-l-8 border-amber-500">
+        <div class="flex items-center space-x-4">
+            <div class="p-4 bg-amber-500/20 rounded-2xl border border-amber-500/40">
+                <i class="fa-solid fa-hard-hat text-amber-400 text-3xl"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-black text-amber-300 tracking-wider glow-gold">GAZA GROUND ACTION & DEPLOYMENT</h1>
+                <p class="text-xs text-gray-400 font-mono mt-1">DIRECT FIELD OPERATIONS — ZERO SOCIAL MEDIA / DIRECT REAL-TIME LOGS</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 font-mono text-sm mt-4 md:mt-0">
+            <div>
+                <span class="text-gray-400 block text-xs">FIELD COMMANDER</span>
+                <span class="text-amber-300 font-bold">Mazed Abdul</span>
+            </div>
+            <div>
+                <span class="text-gray-400 block text-xs">STATUS</span>
+                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle text-xs pulse-emerald"></i> WORK ACTIVE IN GAZA</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Real-time Work Metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-emerald-500">
+            <p class="text-xs text-gray-400 font-mono uppercase">Zone 1 & 2 Construction</p>
+            <h2 class="text-lg font-bold text-emerald-300 mt-1">Parliament Foundation</h2>
+            <p class="text-xs text-emerald-400 mt-1"><i class="fa-solid fa-truck-pickup"></i> Heavy Machinery Operational</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-amber-500">
+            <p class="text-xs text-gray-400 font-mono uppercase">Energy Grid Deployment</p>
+            <h2 class="text-lg font-bold text-amber-300 mt-1">355 MW Solar Panel Installation</h2>
+            <p class="text-xs text-amber-400 mt-1"><i class="fa-solid fa-solar-panel"></i> Points A1 to C1 Active</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-blue-500">
+            <p class="text-xs text-gray-400 font-mono uppercase">Sub-Surface Route</p>
+            <h2 class="text-lg font-bold text-blue-300 mt-1">Maglev Pod Tunnel Excavation</h2>
+            <p class="text-xs text-blue-400 mt-1"><i class="fa-solid fa-bore-hole"></i> Ring 1 & 2 Drilling Live</p>
+        </div>
+        <div class="glass-panel p-4 rounded-xl border-l-4 border-purple-500">
+            <p class="text-xs text-gray-400 font-mono uppercase">Field Supply Line</p>
+            <h2 class="text-lg font-bold text-purple-300 mt-1">Water & Food Distribution</h2>
+            <p class="text-xs text-purple-400 mt-1"><i class="fa-solid fa-boxes-packing"></i> Direct Delivery to 5 Zones</p>
+        </div>
+    </div>
+
+    <!-- Active Field Logs & Work Proof Panel -->
+    <div class="glass-panel p-6 rounded-2xl space-y-4">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+            <h3 class="text-lg font-bold text-amber-400 font-mono">
+                <i class="fa-solid fa-list-check"></i> GAZA FIELD WORK LOGS (NO TALK — DIRECT ACTION)
+            </h3>
+            <span class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded border border-emerald-600/50 font-mono">LIVE UPDATING</span>
+        </div>
+
+        <div class="space-y-3 font-mono text-sm text-gray-300">
+            <div class="p-3 bg-gray-900/80 rounded-xl border border-emerald-500/30 flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-emerald-400 font-bold">[Zone 1 - Gaza City]</span>
+                    <p class="text-sm text-gray-200 mt-0.5">পার্লামেন্ট কমপ্লেক্সের মূল কাঠামোর পাইলিং ও মাটির কাজ চলমান।</p>
+                </div>
+                <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded">ONGOING</span>
+            </div>
+
+            <div class="p-3 bg-gray-900/80 rounded-xl border border-amber-500/30 flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-amber-400 font-bold">[Zone 3 - Deir al-Balah]</span>
+                    <p class="text-sm text-gray-200 mt-0.5">৩৫৫ মেগাওয়াট সোলার গ্রিড পয়েন্ট A1 ও B1 সংযোগ সম্পন্ন, বিদ্যুৎ সরবরাহ চালু।</p>
+                </div>
+                <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded">CONNECTED</span>
+            </div>
+
+            <div class="p-3 bg-gray-900/80 rounded-xl border border-blue-500/30 flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-blue-400 font-bold">[Zone 4 & 5 - Khan Younis & Rafah]</span>
+                    <p class="text-sm text-gray-200 mt-0.5">ভূগর্ভস্থ ট্রানজিট টানেলের মূল লজিস্টিকস লাইন বসানোর কাজ দ্রুত গতিতে এগোচ্ছে।</p>
+                </div>
+                <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">IN PROGRESS</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
