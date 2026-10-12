@@ -10305,3 +10305,161 @@ console.log("Calculated Critical Evacuations:", calculateEmergencyCareNeed(10000
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AROSH — Master Time Management & Tube Route Dashboard (v5.1.0)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #030712; color: #f9fafb; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(245, 158, 11, 0.35); }
+        .glow-gold { text-shadow: 0 0 18px rgba(245, 158, 11, 0.8); }
+        .pulse-emerald { animation: pulseGlow 1.8s infinite alternate; }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); } 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); } }
+    </style>
+</head>
+<body class="p-4 md:p-6 space-y-6">
+
+    <!-- Header Panel -->
+    <header class="glass-panel rounded-2xl p-6 flex flex-wrap justify-between items-center border-l-8 border-amber-500 relative overflow-hidden">
+        <div class="flex items-center space-x-5 z-10">
+            <div class="p-4 bg-gradient-to-br from-amber-500/30 to-slate-900 rounded-2xl border border-amber-500/50">
+                <i class="fa-solid fa-clock text-amber-400 text-4xl"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-3">
+                    <h1 class="text-3xl font-black tracking-widest text-amber-300 glow-gold">AROSH TIME & ROUTE MATRIX</h1>
+                    <span class="text-xs bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full font-mono border border-emerald-600/50">ZERO-LATENCY TUBE</span>
+                </div>
+                <p class="text-xs text-amber-400/90 font-mono mt-1">TIME MANAGEMENT & 5-ZONE CAPSULE ROUTE MAP DASHBOARD (v5.1.0)</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 font-mono text-sm z-10 mt-4 md:mt-0">
+            <div class="text-right">
+                <span class="text-gray-400 block text-xs">CHIEF ARCHITECT</span>
+                <span class="text-amber-300 font-bold">Mazed Abdul</span>
+            </div>
+            <div class="text-right">
+                <span class="text-gray-400 block text-xs">NETWORK FLOW</span>
+                <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle text-xs text-emerald-400 animate-ping"></i> 23,400 PASSENGERS/HR</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Time Management Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-panel p-5 rounded-xl border-l-4 border-amber-500">
+            <div class="flex justify-between items-center">
+                <span class="text-xs text-amber-400 font-mono font-bold">RING 1 — EMERGENCY LOOP</span>
+                <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono">3 MINS</span>
+            </div>
+            <h2 class="text-2xl font-black text-amber-300 mt-2">Presidential Hyper-Loop</h2>
+            <p class="text-xs text-gray-400 mt-1">Parliament HQ ──> Emergency Bunkers & Command Pods.</p>
+        </div>
+
+        <div class="glass-panel p-5 rounded-xl border-l-4 border-blue-500">
+            <div class="flex justify-between items-center">
+                <span class="text-xs text-blue-400 font-mono font-bold">RING 2 — DIPLOMATIC MATRIX</span>
+                <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-mono">8 MINS</span>
+            </div>
+            <h2 class="text-2xl font-black text-blue-300 mt-2">9-Nation Maglev Loop</h2>
+            <p class="text-xs text-gray-400 mt-1">Continuous 2-minute departure interval for partner delegates.</p>
+        </div>
+
+        <div class="glass-panel p-5 rounded-xl border-l-4 border-emerald-500">
+            <div class="flex justify-between items-center">
+                <span class="text-xs text-emerald-400 font-mono font-bold">RING 3 — LOGISTICS MESH</span>
+                <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono">12 MINS</span>
+            </div>
+            <h2 class="text-2xl font-black text-emerald-300 mt-2">5-Zone Solar Grid Circuit</h2>
+            <p class="text-xs text-gray-400 mt-1">North Gaza to Rafah 355 MW microgrid & heavy freight line.</p>
+        </div>
+    </div>
+
+    <!-- Capsule Route Map & Station Telemetry -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Route Map Layout -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4 font-mono">
+            <h3 class="text-md font-bold text-amber-400 flex items-center justify-between border-b border-gray-800 pb-3">
+                <span><i class="fa-solid fa-route"></i> SUB-SURFACE TUBE ROUTE MAP</span>
+                <span class="text-xs text-emerald-400"><i class="fa-solid fa-check-double"></i> LINKED</span>
+            </h3>
+
+            <div class="space-y-3 text-xs">
+                <div class="p-3 bg-gray-900/90 rounded-xl border border-gray-800">
+                    <span class="text-amber-400 font-bold">STN 1: NORTH GAZA JUNCTION</span>
+                    <p class="text-gray-400 mt-1">Travel Time to Hub: <b>5 Mins</b> | Auto-Pass Active</p>
+                </div>
+
+                <div class="p-3 bg-gray-900/90 rounded-xl border border-amber-500/40">
+                    <span class="text-emerald-400 font-bold">STN 2: GAZA CITY CENTRAL HUB</span>
+                    <p class="text-gray-400 mt-1">Parliament Complex & Hologram Core Anchor | Piling Live</p>
+                </div>
+
+                <div class="p-3 bg-gray-900/90 rounded-xl border border-gray-800">
+                    <span class="text-blue-400 font-bold">STN 3: DEIR AL-BALAH NODE</span>
+                    <p class="text-gray-400 mt-1">Travel Time: <b>8 Mins</b> | 355 MW Solar Feed Connected</p>
+                </div>
+
+                <div class="p-3 bg-gray-900/90 rounded-xl border border-gray-800">
+                    <span class="text-purple-400 font-bold">STN 4: KHAN YOUNIS INTERCHANGE</span>
+                    <p class="text-gray-400 mt-1">Travel Time: <b>5 Mins</b> | Sub-surface Tunnel Drilled</p>
+                </div>
+
+                <div class="p-3 bg-gray-900/90 rounded-xl border border-gray-800">
+                    <span class="text-rose-400 font-bold">STN 5: RAFAH SOUTHERN TERMINUS</span>
+                    <p class="text-gray-400 mt-1">Southern Terminal | Direct Water & Cargo Conduit</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-Time Station Operational Status Panel -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4 lg:col-span-2 flex flex-col justify-between pulse-emerald">
+            <div>
+                <h3 class="text-md font-bold text-amber-400 flex items-center justify-between border-b border-gray-800 pb-3 font-mono">
+                    <span><i class="fa-solid fa-microchip"></i> SYSTEM TIME MANAGEMENT & ENERGY METRICS</span>
+                    <span class="text-xs text-amber-300 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-600/40">50% ENERGYLESS</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 font-mono text-xs">
+                    <div class="p-4 bg-gray-900/90 rounded-xl border border-amber-500/30 space-y-2">
+                        <div class="text-amber-300 font-bold text-sm">Passive Magnetic Glide</div>
+                        <p class="text-gray-300">৫০% ক্যাপসুল কোনো জ্বালানি ছাড়াই ম্যাগনেটিক গ্লাইড ও ইনার্শিয়া ড্রাইভে চলাচল করে।</p>
+                        <span class="text-emerald-400 block font-semibold">Zero Carbon Footprint</span>
+                    </div>
+
+                    <div class="p-4 bg-gray-900/90 rounded-xl border border-emerald-500/30 space-y-2">
+                        <div class="text-emerald-300 font-bold text-sm">Holographic Station Auto-Pass</div>
+                        <p class="text-gray-300">এক্সপ্রেস ক্যাপসুলগুলো থামানো ছাড়াই হলোগ্রাফিক গেটওয়ের মাধ্যমে অটো-পাস করানো হয়।</p>
+                        <span class="text-emerald-400 block font-semibold">Zero-Delay Clearance</span>
+                    </div>
+
+                    <div class="p-4 bg-gray-900/90 rounded-xl border border-blue-500/30 space-y-2">
+                        <div class="text-blue-300 font-bold text-sm">KERS Energy Recovery</div>
+                        <p class="text-gray-300">স্টেশনে থামার সময় ব্রেকিং এনার্জি রিচার্জ করে পরবর্তী যাত্রার জন্য শক্তি জমা রাখে।</p>
+                        <span class="text-emerald-400 block font-semibold">100% Efficiency Lock</span>
+                    </div>
+
+                    <div class="p-4 bg-gray-900/90 rounded-xl border border-purple-500/30 space-y-2">
+                        <div class="text-purple-300 font-bold text-sm">Dual Vacuum Safety Tube</div>
+                        <p class="text-gray-300">ভ্যাকুয়াম টিউবের ভেতর ফাইবারের যোগাযোগ ক্যাবল এবং ইমার্জেন্সি হাঁটার পথ সুরক্ষিত।</p>
+                        <span class="text-emerald-400 block font-semibold">Triple Structural Armor</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-800 flex justify-between items-center font-mono text-xs">
+                <span class="text-gray-400">Master Route Lock: <b class="text-amber-300">SHA-256 SECURED</b></span>
+                <span class="text-emerald-400"><i class="fa-solid fa-shield-halved"></i> SYSTEM OPERATIONAL v5.1.0</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
