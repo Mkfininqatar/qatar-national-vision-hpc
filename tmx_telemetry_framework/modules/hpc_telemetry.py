@@ -67,3 +67,12 @@ graph TD
     B -->|Structured State Logs| C[Spatial Engine & Cardio-Axial Twin]
     C -->|High-Density Vectors| D[Qatar National Vision HPC v5.1.0 Infrastructure]
     D -->|Compliance & Validation| E[Pytest / Sovereign Verification System]
+{
+  "framework_name": "Qatar National Vision HPC",
+  "version": "v5.1.0",
+  "node_id": "DOHA_HPC_SOVEREIGN_NODE",
+  "chief_commander": "Co-Principal Tamim (T)",
+  "active_modules": 14,
+  "compliance": "ISACA/MIT Aligned",
+  "status": "SECURE_ACTIVE"
+}
