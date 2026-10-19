@@ -62,3 +62,8 @@ if __name__ == "__main__":
         metrics={"cpu_load_pct": 11.8, "spatial_latency_ms": 0.95, "compliance": "ISACA/MIT Aligned"}
     )
     print(status_report).
+graph TD
+    A[TMX-1 Enclave 14 Modules] -->|Telemetry Streams| B[python-logger2 Core]
+    B -->|Structured State Logs| C[Spatial Engine & Cardio-Axial Twin]
+    C -->|High-Density Vectors| D[Qatar National Vision HPC v5.1.0 Infrastructure]
+    D -->|Compliance & Validation| E[Pytest / Sovereign Verification System]
