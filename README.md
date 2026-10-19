@@ -516,3 +516,27 @@ if __name__ == "__main__":
         else:
             print(f"[+] {key}: {val}")
     print("=====================================================================")
+# Qatar National Vision HPC Framework (v5.1.0)
+
+```text
+qatar-national-vision-hpc/
+│
+├── tmx_telemetry_framework/         # TMX-1 Sovereign Core Modules (14 Modules)
+│   ├── __init__.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── logger.py                # python-logger2 (Zero-Drift Engine)
+│   │   └── spatial_engine.py       # ৩ডি স্প্যাশিয়াল-টেম্পোরাল প্রসেসর
+│   │
+│   ├── modules/
+│   │   ├── __init__.py
+│   │   ├── hpc_telemetry.py         # ১৪-মডিউল অর্কেস্ট্রেশন ও হার্ডওয়্যার টেলিমেট্রি
+│   │   └── enclave_bridge.py       # ডাটা প্রটেকশন ও এনক্লেভ সিকিউরিটি
+│   │
+│   └── tests/
+│       ├── __init__.py
+│       ├── test_logger.py          # Pytest ভ্যালিডেশন স্যুট
+│       └── test_spatial.py
+│
+└── config/
+    └── qnv_hpc_policy.json          # কমপ্লায়েন্স ও কনফিগারেশন
