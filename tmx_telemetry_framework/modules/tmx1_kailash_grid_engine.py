@@ -181,3 +181,70 @@ if __name__ == "__main__":
     report = engine.generate_framework_report()
     print("=== TMX-1 Kailash to Sea Telemetry Framework ===")
     print(json.dumps(report, indent=2))
+import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class GeographicalNode:
+    direction: str
+    element_type: str
+    name_bn: str
+    name_en: str
+    details: str
+
+class KailashWatershedSystem:
+    """
+    Mount Kailash Center Grid & 4-Cardinal Direction River Framework.
+    Mapped directly from the directional spatial diagram.
+    """
+    def __init__(self):
+        self.center_node = {
+            "name_bn": "মাউন্ট কৈলাশ",
+            "name_en": "Mount Kailash",
+            "elevation": "৬,৬৩৮ মি."
+        }
+        
+        # Mapping the 4 directions as presented in the diagram
+        self.nodes = [
+            GeographicalNode(
+                direction="উত্তর (North)",
+                element_type="River",
+                name_bn="সিন্ধু নদী",
+                name_en="Indus River",
+                details="Northward outflow vector"
+            ),
+            GeographicalNode(
+                direction="দক্ষিণ (South)",
+                element_type="River",
+                name_bn="কার্নালি/ঘাগরা নদী",
+                name_en="Karnali / Ganga Tributary",
+                details="Southward flow into Ganges Basin"
+            ),
+            GeographicalNode(
+                direction="পূর্ব (East)",
+                element_type="River & Lake",
+                name_bn="ব্রহ্মপুত্র নদী (Yarlung Tsangpo) & মানস সরোবর",
+                name_en="Brahmaputra River & Manasarovar Lake",
+                details="Eastward flow | Freshwater Lake (মিষ্টি জল / শান্ত)"
+            ),
+            GeographicalNode(
+                direction="পশ্চিম (West)",
+                element_type="River & Lake",
+                name_bn="শতদ্রু নদী & রাক্ষস তাল",
+                name_en="Sutlej River & Rakshas Tal",
+                details="Westward flow | Saline / Turbulent Lake (লবণাক্ত / অশান্ত)"
+            )
+        ]
+
+    def get_framework_structure(self) -> dict:
+        return {
+            "center": self.center_node,
+            "cardinal_directions": [asdict(node) for node in self.nodes]
+        }
+
+if __name__ == "__main__":
+    system = KailashWatershedSystem()
+    data = system.get_framework_structure()
+    
+    print("=== Kailash Watershed & Cardinal Direction Framework ===")
+    print(json.dumps(data, indent=2, ensure_ascii=False))
