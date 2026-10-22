@@ -1,0 +1,27 @@
+{
+  "cad_schematic_specification": {
+    "title": "X-FRAMEWORK MOBILE PHONE HARDWARE ARCHITECTURE - CAD SCHEMATIC",
+    "division": "SCIENCE DIVISION / NASA",
+    "model": "X-FRAME",
+    "views": [
+      "EXPLODED ASSEMBLY VIEW",
+      "SECTION A-A: CHASSIS & SUB-SYSTEMS",
+      "PCB LAYOUT: MASTER BOARD"
+    ],
+    "hardware_components": {
+      "chassis": "Titanium Monocoque Chassis",
+      "processor": "3nm SoC Processor[cite: 5]",
+      "secure_enclave": "TMX-1 Telemetry Secure Enclave[cite: 5]",
+      "sensors": "Micro-LIDAR Spatial Sensors[cite: 5]"
+    },
+    "tolerances_and_materials": {
+      "tolerance_notation": "MW6NVG1UIM/00F.9S -10 °C[cite: 5]",
+      "material_spec": "SP03 - S 0.03[cite: 5]",
+      "tier_tolerance": "SCIF - S: +0.05[cite: 5]",
+      "assembly_standards": [
+        "Titanium Monocoque Chassis Precision SMT Alignment",
+        "Sub-millisecond Telemetry Loopback Tolerance"
+      ]
+    }
+  }
+}
