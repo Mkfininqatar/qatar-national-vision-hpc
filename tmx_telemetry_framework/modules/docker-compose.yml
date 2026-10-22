@@ -21,3 +21,41 @@ ENV MPLBACKEND=Agg
 
 # Define default command to execute the simulation & telemetry pipeline
 CMD ["python", "qatar_library_mqtt_streamer.py"]
+version: '3.8'
+
+services:
+  # MQTT Broker for real-time SCADA telemetry streaming
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0
+    container_name: qil-mqtt-broker
+    ports:
+      - "1883:1883"
+      - "8883:8883"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    networks:
+      - qil-net
+
+  # Qatar Islamic Library Simulation & Telemetry Pipeline
+  qil-simulation:
+    build: .
+    container_name: qil-simulation-engine
+    depends_on:
+      - mqtt-broker
+    environment:
+      - MQTT_BROKER_HOST=mqtt-broker
+      - MQTT_BROKER_PORT=1883
+    volumes:
+      - ./output_artifacts:/app/output
+    networks:
+      - qil-net
+    restart: unless-stopped
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
+
+networks:
+  qil-net:
+    driver: bridge
