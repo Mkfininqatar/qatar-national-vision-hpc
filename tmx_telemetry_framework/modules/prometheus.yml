@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  mqtt-broker:
+    image: eclipse-mosquitto:2.0
+    container_name: qil-mqtt-broker
+    ports:
+      - "1883:1883"
+    networks:
+      - qil-net
+
+  mqtt-exporter:
+    image: kpetrem/mqtt-exporter:latest
+    container_name: qil-mqtt-exporter
+    environment:
+      - MQTT_ADDRESS=mqtt-broker
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=qatar/library/telemetry/#
+      - PROMETHEUS_PORT=9000
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mqtt-broker
+    networks:
+      - qil-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: qil-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - mqtt-exporter
+    networks:
+      - qil-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: qil-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_storage:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - qil-net
+
+volumes:
+  grafana_storage:
+
+networks:
+  qil-net:
+    driver: bridge
