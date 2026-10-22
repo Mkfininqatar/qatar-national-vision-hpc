@@ -1174,3 +1174,76 @@ class TestQatarIslamicLibraryMasterMatrix:
         
         assert total_energy == 521.1
         assert isinstance(total_energy, float)
+import json
+import time
+from dataclasses import dataclass, asdict
+
+@dataclass
+class MQTTTelemetryPacket:
+    timestamp: float
+    station_id: str
+    metric_category: str
+    payload: dict
+
+class QatarIslamicLibraryMQTTStreamer:
+    """
+    Qatar Islamic Library - Real-Time MQTT Telemetry Streaming Client.
+    Streams sensor telemetry, HVAC metrics, thermal/humidity profiles, and vibrational 
+    resonance data to a central supervisory control and data acquisition (SCADA) dashboard.
+    """
+    def __init__(self, broker_host: str = "localhost", broker_port: int = 1883):
+        self.system_title = "QATAR ISLAMIC LIBRARY - MQTT TELEMETRY STREAMING CLIENT"
+        self.broker_host = broker_host
+        self.broker_port = broker_port
+        self.base_topic = "qatar/library/telemetry"
+        self.is_connected = False
+
+    def connect(self):
+        """Simulates secure connection handler (maps to paho-mqtt client in production)."""
+        print(f"Connecting to MQTT Broker at {self.broker_host}:{self.broker_port}...")
+        self.is_connected = True
+        print("Connection established: SECURE_TLS_ENCLAVE_ACTIVE")
+
+    def build_telemetry_payload(self, category: str, data: dict) -> str:
+        packet = MQTTTelemetryPacket(
+            timestamp=time.time(),
+            station_id="QIL-SUB-CORE-01",
+            metric_category=category,
+            payload=data
+        )
+        return json.dumps(asdict(packet), indent=2)
+
+    def publish_metrics_loop(self, iterations: int = 3, interval_sec: float = 1.0):
+        """Simulates streaming multi-domain telemetry packets over MQTT topics."""
+        categories = ["vibrational", "thermal_humidity", "hvac_pressure", "em_shielding"]
+        
+        for i in range(iterations):
+            print(f"\n--- Transmission Cycle [{i+1}/{iterations}] ---")
+            for cat in categories:
+                topic = f"{self.base_topic}/{cat}"
+                sample_data = self._get_sample_data_for_category(cat, i)
+                payload_str = self.build_telemetry_payload(cat, sample_data)
+                
+                # In production: client.publish(topic, payload_str, qos=1)
+                print(f"[MQTT PUBLISH] Topic: {topic}")
+                print(payload_str)
+            
+            if i < iterations - 1:
+                time.sleep(interval_sec)
+
+    def _get_sample_data_for_category(self, category: str, step: int) -> dict:
+        if category == "vibrational":
+            return {"base_frequency_hz": 432.0, "coherence_pct": round(98.5 + step * 0.1, 2), "status": "LOCKED"}
+        elif category == "thermal_humidity":
+            return {"zone": "ZONE-03: Subterranean Enclave Core", "temp_c": 22.5, "humidity_pct": 50.0}
+        elif category == "hvac_pressure":
+            return {"pressure_differential_pa": 30.0, "daily_energy_kwh": 98.4, "status": "STABLE_PRESSURIZED"}
+        elif category == "em_shielding":
+            return {"frequency_hz": 432.0, "shielding_effectiveness_db": 65.4, "dampening_ratio": 0.0003}
+        return {}
+
+if __name__ == "__main__":
+    streamer = QatarIslamicLibraryMQTTStreamer(broker_host="mqtt.qil-matrix.internal", broker_port=8883)
+    streamer.connect()
+    print(f"\n=== {streamer.system_title} ===")
+    streamer.publish_metrics_loop(iterations=2, interval_sec=0.5)
