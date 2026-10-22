@@ -290,3 +290,106 @@ def render_kailash_visualization(filename="kailash_watershed_map.png"):
 if __name__ == "__main__":
     saved_file = render_kailash_visualization()
     print(f"Visualization successfully rendered and saved as: {saved_file}")
+import numpy as np
+import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class BasinElevationMetric:
+    river_name: str
+    target_sea: str
+    total_distance_km: float
+    drainage_basin_area_sq_km: float
+    elevation_profile_samples: list
+
+class TMXKailashBasinElevationExpansion:
+    """
+    TMX-1 Master Matrix - Expanded Drainage Basin & Elevation Profile Module.
+    Calculates drainage basin areas and interpolated elevation profiles along
+    river outflows from Mount Kailash to respective sea outfalls.
+    """
+    def __init__(self):
+        self.kailash_coords = (31.0667, 81.3125)
+        self.kailash_elevation_m = 6638.0
+        self.sea_outfalls = {
+            "Indus": {
+                "sea": "Arabian Sea", 
+                "coords": (24.5383, 67.4221), 
+                "basin_area": 1165000.0
+            },
+            "Sutlej": {
+                "sea": "Arabian Sea (via Indus Basin)", 
+                "coords": (29.3560, 71.0180), 
+                "basin_area": 395000.0
+            },
+            "Brahmaputra": {
+                "sea": "Bay of Bengal", 
+                "coords": (22.2532, 91.8338), 
+                "basin_area": 651334.0
+            },
+            "Karnali": {
+                "sea": "Bay of Bengal (via Ganga Basin)", 
+                "coords": (25.3176, 83.0012), 
+                "basin_area": 127950.0
+            }
+        }
+        self.R = 6371.0  # Earth Radius in km
+
+    def compute_haversine(self, coord1, coord2) -> float:
+        lat1, lon1 = map(np.radians, coord1)
+        lat2, lon2 = map(np.radians, coord2)
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+        a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+        return round(self.R * (2 * np.arcsin(np.sqrt(a))), 2)
+
+    def generate_elevation_profile(self, start_coord, end_coord, num_samples=6) -> list:
+        """
+        Generates simulated non-linear terrain elevation samples along the geodetic vector from source to sea.
+        """
+        lats = np.linspace(start_coord[0], end_coord[0], num_samples)
+        lons = np.linspace(start_coord[1], end_coord[1], num_samples)
+        
+        # Non-linear descent curve modeling high alpine drop-off grading into alluvial plains
+        progress = np.linspace(0.0, 1.0, num_samples)
+        elevations = self.kailash_elevation_m * (1.0 - progress**0.65)
+        elevations[-1] = 0.0  # Sea level outfall terminal node
+
+        profile = []
+        for i in range(num_samples):
+            dist_from_source = self.compute_haversine(start_coord, (lats[i], lons[i]))
+            profile.append({
+                "sample_index": i + 1,
+                "latitude": round(float(lats[i]), 4),
+                "longitude": round(float(lons[i]), 4),
+                "distance_from_kailash_km": dist_from_source,
+                "elevation_m": round(float(elevations[i]), 2)
+            })
+        return profile
+
+    def generate_full_telemetry(self) -> dict:
+        results = []
+        for river, data in self.sea_outfalls.items():
+            total_dist = self.compute_haversine(self.kailash_coords, data["coords"])
+            profile = self.generate_elevation_profile(self.kailash_coords, data["coords"])
+            
+            metric = BasinElevationMetric(
+                river_name=river,
+                target_sea=data["sea"],
+                total_distance_km=total_dist,
+                drainage_basin_area_sq_km=data["basin_area"],
+                elevation_profile_samples=profile
+            )
+            results.append(asdict(metric))
+        
+        return {
+            "module": "TMX-1 Kailash Basin & Elevation Expansion",
+            "matrix_sync_status": "RATIFIED",
+            "outflows": results
+        }
+
+if __name__ == "__main__":
+    engine = TMXKailashBasinElevationExpansion()
+    report = engine.generate_full_telemetry()
+    print("=== TMX-1 Kailash Drainage Basin & Elevation Profile Telemetry ===")
+    print(json.dumps(report, indent=2))
