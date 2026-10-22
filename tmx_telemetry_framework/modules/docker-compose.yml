@@ -59,3 +59,27 @@ volumes:
 networks:
   qil-net:
     driver: bridge
+groups:
+  - name: qatar_islamic_library_vault_alerts
+    rules:
+      - alert: HVACPressureLoss
+        expr: mqtt_payload_pressure_differential_pa < 10.0
+        for: 1m
+        labels:
+          severity: critical
+          system: hvac
+          facility: qatar-islamic-library
+        annotations:
+          summary: "Critical HVAC pressure loss detected"
+          description: "Subterranean archive zone pressure differential has dropped below 10.0 Pa (current value: {{ $value }} Pa). Positive pressurization failure risks particulate and dust infiltration."
+
+      - alert: HumidityThresholdBreach
+        expr: mqtt_payload_humidity_pct < 45.0 or mqtt_payload_humidity_pct > 55.0
+        for: 2m
+        labels:
+          severity: warning
+          system: environment
+          facility: qatar-islamic-library
+        annotations:
+          summary: "Environmental humidity threshold breach"
+          description: "Subterranean relative humidity has drifted outside the optimal preservation window of 50% +/- 5% (current value: {{ $value }}%). Immediate HVAC regulation adjustment required."
