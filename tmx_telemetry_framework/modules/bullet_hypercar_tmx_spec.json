@@ -1,0 +1,23 @@
+{
+  "tmx_framework_version": "v1.0.2",
+  "vehicle_designation": "BULLET HYPERCAR / NIGHTRIDER TELEMETRY SPEC",
+  "engineering_blueprint": {
+    "aerodynamics": {
+      "active_aero_canopy": "Integrated active aerodynamic control surfaces and rear wing[cite: 7]",
+      "drag_coefficients": {
+        "alpha_min": 0.2,
+        "alpha_max": 0.8
+      }
+    },
+    "energy_subsystem": {
+      "integrated_energy_storage": "High-density solid-state quantum battery pack distributed across monocoque chassis[cite: 7]"
+    },
+    "holographic_navigation_ui": {
+      "interface_type": "AR Head-Up Display & Holographic Cockpit Projections[cite: 7]",
+      "telemetry_sync": "Sub-millisecond TMX secure enclave node link"
+    },
+    "night_telemetry_circuitry": {
+      "body_circuit_mapping": "External glowing PCB trace conduits for thermal dissipation and optical telemetry feedback[cite: 8]"
+    }
+  }
+}
