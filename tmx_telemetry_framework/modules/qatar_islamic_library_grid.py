@@ -653,3 +653,92 @@ if __name__ == "__main__":
     print(f"=== {generator.manifest_title} ===")
     print(f"CAD manifest successfully exported to: {output_path}\n")
     print(json.dumps(generator.generate_manifest(), indent=2, ensure_ascii=False))
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from dataclasses import dataclass, asdict
+
+@dataclass
+class VentilationMetric:
+    zone_id: str
+    depth_m: float
+    mean_velocity_m_s: float
+    air_changes_per_hour_ach: float
+    ventilation_status: str
+
+class QatarIslamicLibraryVentilationExpansion:
+    """
+    Qatar Islamic Library - Subterranean Air-Flow Velocity & Ventilation Exchange Module.
+    Simulates air velocity vectors, circulation streamlines, and air change rates (ACH)
+    across the subterranean enclave vault layers.
+    """
+    def __init__(self, enclave_depth_m: float = 15.0):
+        self.system_title = "QATAR ISLAMIC LIBRARY - AIR-FLOW & VENTILATION SIMULATION ENGINE"
+        self.enclave_depth = enclave_depth_m
+        self.target_ach = 4.0  # Recommended air changes per hour for archive vaults
+
+    def generate_ventilation_telemetry(self) -> dict:
+        zones = [
+            {"zone": "ZONE-01: Upper Vault Intake Plenum", "depth": 5.0, "vel": 0.85, "ach": 4.5},
+            {"zone": "ZONE-02: Intermediate Archive Corridors", "depth": 10.0, "vel": 0.42, "ach": 4.1},
+            {"zone": "ZONE-03: Subterranean Enclave Core", "depth": 15.0, "vel": 0.25, "ach": 4.0},
+            {"zone": "ZONE-04: Deep Exhaust Plenum", "depth": 20.0, "vel": 1.15, "ach": 6.2}
+        ]
+        
+        metrics = []
+        for z in zones:
+            status = "OPTIMAL_FLOW" if z["ach"] >= self.target_ach else "SUB_OPTIMAL"
+            metrics.append(asdict(VentilationMetric(
+                zone_id=z["zone"],
+                depth_m=z["depth"],
+                mean_velocity_m_s=z["vel"],
+                air_changes_per_hour_ach=z["ach"],
+                ventilation_status=status
+            )))
+            
+        return {
+            "title": self.system_title,
+            "subterranean_depth_m": self.enclave_depth,
+            "target_parameters": {
+                "recommended_ach": self.target_ach
+            },
+            "ventilation_metrics": metrics
+        }
+
+    def render_velocity_streamlines(self, output_file="qatar_library_ventilation_flow.png"):
+        """Renders a 2D velocity streamline and vector field map across the subterranean enclave cross-section."""
+        plt.style.use('dark_background')
+        fig, ax = plt.subplots(figsize=(10, 6))
+        fig.patch.set_facecolor('#080c14')
+        ax.set_facecolor('#05080f')
+
+        x = np.linspace(-20, 20, 100)
+        y = np.linspace(-15, 0, 80)
+        X, Y = np.meshgrid(x, y)
+        
+        # Simulated flow velocity components (convection current looping down and across archive levels)
+        U = -Y / 10.0 * np.sin(X / 5.0)
+        V = -np.cos(X / 5.0) * (1.0 - np.abs(Y) / 15.0)
+        Speed = np.sqrt(U**2 + V**2)
+
+        strm = ax.streamplot(X, Y, U, V, color=Speed, cmap='winter', linewidth=1.5, density=1.2)
+        cbar = fig.colorbar(strm.lines, ax=ax, pad=0.05)
+        cbar.set_label('Velocity Magnitude (m/s)', color='cyan')
+
+        ax.set_title("SUBTERRANEAN AIR-FLOW VELOCITY STREAMLINES", color='cyan', fontsize=12, pad=12)
+        ax.set_xlabel("Lateral Span (m)", color='gray')
+        ax.set_ylabel("Depth (m)", color='gray')
+        ax.grid(True, color='#112233', linestyle='--', alpha=0.5)
+
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, facecolor='#080c14')
+        plt.close()
+        return output_file
+
+if __name__ == "__main__":
+    engine = QatarIslamicLibraryVentilationExpansion()
+    print("=== " + engine.system_title + " ===")
+    print(json.dumps(engine.generate_ventilation_telemetry(), indent=2))
+    
+    saved_file = engine.render_velocity_streamlines()
+    print(f"\nVentilation flow velocity streamline map saved as: {saved_file}")
