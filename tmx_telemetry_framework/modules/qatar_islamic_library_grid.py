@@ -1247,3 +1247,52 @@ if __name__ == "__main__":
     streamer.connect()
     print(f"\n=== {streamer.system_title} ===")
     streamer.publish_metrics_loop(iterations=2, interval_sec=0.5)
+metrics = []
+        for z in zones:
+            status = "OPTIMAL_PRESSURE" if z["p_diff"] <= 35.0 else "HIGH_PRESSURE_ALERT"
+            metrics.append(asdict(HVACZoneMetric(
+                zone_id=z["zone"],
+                depth_m=z["depth"],
+                pressure_differential_pa=z["p_diff"],
+                energy_consumption_kwh_day=z["energy"],
+                hvac_operational_status=status
+            )))
+            
+        return {
+            "title": self.system_title,
+            "subterranean_depth_m": self.enclave_depth,
+            "target_parameters": {
+                "base_energy_rate_kwh": self.base_energy_rate_kwh
+            },
+            "hvac_telemetry_metrics": metrics
+        }
+
+    def render_hvac_pressure_map(self, output_file="qatar_library_hvac_pressure.png"):
+        """Renders subterranean pressure differential gradients across archive depth zones."""
+        plt.style.use('dark_background')
+        fig, ax = plt.subplots(figsize=(10, 5))
+        fig.patch.set_facecolor('#080c14')
+        ax.set_facecolor('#05080f')
+
+        depths = [5.0, 10.0, 15.0, 20.0]
+        pressures = [15.2, 22.5, 30.0, 8.5]
+        
+        ax.plot(depths, pressures, marker='o', color='cyan', linewidth=2, label='Pressure Differential (Pa)')
+        ax.set_title("SUBTERRANEAN HVAC - PRESSURE DIFFERENTIAL GRADIENT", color='cyan', fontsize=12, pad=12)
+        ax.set_xlabel("Enclave Depth (m)", color='gray')
+        ax.set_ylabel("Pressure Differential (Pa)", color='gray')
+        ax.grid(True, color='#112233', linestyle='--', alpha=0.7)
+        ax.legend(loc="upper right", facecolor='#080c14', edgecolor='cyan')
+
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, facecolor='#080c14')
+        plt.close()
+        return output_file
+
+if __name__ == "__main__":
+    engine = QatarIslamicLibraryHVACExpansion()
+    print("=== " + engine.system_title + " ===")
+    print(json.dumps(engine.generate_hvac_telemetry(), indent=2))
+    
+    saved_file = engine.render_hvac_pressure_map()
+    print(f"\nHVAC pressure telemetry map saved as: {saved_file}")
