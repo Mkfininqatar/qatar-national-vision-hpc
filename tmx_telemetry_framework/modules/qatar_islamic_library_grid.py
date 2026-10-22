@@ -913,3 +913,114 @@ if __name__ == "__main__":
     print(f"=== {generator.manifest_title} ===")
     print(f"CAD manifest successfully exported to: {output_path}\n")
     print(json.dumps(generator.generate_manifest(), indent=2, ensure_ascii=False))
+import numpy as np
+import plotly.graph_objects as go
+
+def render_library_3d_wireframe():
+    # Architectural parameters for Qatar Islamic Library wireframe
+    # Central geodesic dome (hemisphere)
+    phi = np.linspace(0, np.pi / 2, 20)
+    theta = np.linspace(0, 2 * np.pi, 30)
+    PHI, THETA = np.meshgrid(phi, theta)
+    
+    R_dome = 15.0
+    X_dome = R_dome * np.sin(PHI) * np.cos(THETA)
+    Y_dome = R_dome * np.sin(PHI) * np.sin(THETA)
+    Z_dome = R_dome * np.cos(PHI) + 20.0  # Elevated central dome structure
+    
+    # Outer base podium & architectural footprint
+    box_x = np.linspace(-25, 25, 15)
+    box_y = np.linspace(-25, 25, 15)
+    BX, BY = np.meshgrid(box_x, box_y)
+    BZ = np.zeros_like(BX)
+
+    # Geodesic vibrational nodes mapped across architectural coordinates
+    nodes = {
+        "Central Dome Apex": (0.0, 0.0, 35.0, 432.0, "OPTIMAL"),
+        "Dome Periphery North": (15.0, 0.0, 20.0, 432.0, "ACTIVE"),
+        "Dome Periphery South": (-15.0, 0.0, 20.0, 432.0, "ACTIVE"),
+        "Dome Periphery East": (0.0, 15.0, 20.0, 432.0, "ACTIVE"),
+        "Dome Periphery West": (0.0, -15.0, 20.0, 432.0, "ACTIVE"),
+        "Outer Archway NW": (20.0, 20.0, 5.0, 216.0, "RESONANT"),
+        "Outer Archway NE": (20.0, -20.0, 5.0, 216.0, "RESONANT"),
+        "Outer Archway SW": (-20.0, 20.0, 5.0, 216.0, "RESONANT"),
+        "Outer Archway SE": (-20.0, -20.0, 5.0, 216.0, "RESONANT"),
+        "Subterranean Enclave Core": (0.0, 0.0, -10.0, 528.0, "LOCKED")
+    }
+
+    node_names = list(nodes.keys())
+    nx = [nodes[n][0] for n in node_names]
+    ny = [nodes[n][1] for n in node_names]
+    nz = [nodes[n][2] for n in node_names]
+    n_freq = [nodes[n][3] for n in node_names]
+    n_status = [nodes[n][4] for n in node_names]
+
+    fig = go.Figure()
+
+    # Add Central Geodesic Dome Surface Wireframe
+    fig.add_trace(go.Surface(
+        x=X_dome, y=Y_dome, z=Z_dome,
+        colorscale='Viridis',
+        opacity=0.6,
+        name="Central Geodesic Dome",
+        showscale=False
+    ))
+
+    # Add Base Podium Wireframe
+    fig.add_trace(go.Surface(
+        x=BX, y=BY, z=BZ,
+        colorscale='Blues',
+        opacity=0.3,
+        name="Library Base Podium",
+        showscale=False
+    ))
+
+    # Add Geodesic Vibrational Nodes Scatter Layer
+    fig.add_trace(go.Scatter3d(
+        x=nx, y=ny, z=nz,
+        mode='markers+text',
+        text=node_names,
+        textposition="top center",
+        marker=dict(
+            size=10,
+            color=n_freq,
+            colorscale='Plasma',
+            colorbar=dict(title="Resonance Frequency (Hz)"),
+            showscale=True,
+            line=dict(width=2, color='white')
+        ),
+        name="Geodesic Vibrational Nodes"
+    ))
+
+    # Add Energy Vector Conduits (connecting apex to perimeter and subterranean nodes)
+    for name, coords in nodes.items():
+        if name != "Central Dome Apex":
+            fig.add_trace(go.Scatter3d(
+                x=[0.0, coords[0]],
+                y=[0.0, coords[1]],
+                z=[35.0, coords[2]],
+                mode='lines',
+                line=dict(color='cyan', width=2),
+                opacity=0.5,
+                showlegend=False
+            ))
+
+    # Configure dark-mode architectural CAD layout
+    fig.update_layout(
+        title="Qatar Islamic Library: 3D Architectural Wireframe & Geodesic Vibrational Nodes",
+        title_x=0.5,
+        scene=dict(
+            xaxis=dict(backgroundcolor="#05080f", gridcolor="#112233", zerolinecolor="#112233", color="white"),
+            yaxis=dict(backgroundcolor="#05080f", gridcolor="#112233", zerolinecolor="#112233", color="white"),
+            zaxis=dict(backgroundcolor="#05080f", gridcolor="#112233", zerolinecolor="#112233", color="white"),
+            bgcolor="#080c14"
+        ),
+        paper_bgcolor="#080c14",
+        font=dict(color="white")
+    )
+
+    return fig
+
+if __name__ == "__main__":
+    fig = render_library_3d_wireframe()
+    fig.show()
