@@ -1,0 +1,46 @@
+{
+  "tmx_master_enclave": "GREAT PYRAMID SECURE DIAGRAM",
+  "grid_version": "Giza_Grid_v2.1",
+  "authorization": {
+    "amh_signatory": "Abdul Mazed Hossain (Verified)",
+    "t_signatory": "Tamim (Verified)",
+    "protocol": "Protocol 7.3 - Active & SHA-512 Verified"
+  },
+  "pyramid_pipelines_and_chambers": [
+    {
+      "category": "Passages",
+      "nodes": [
+        "North Entrance", 
+        "Descending Passage", 
+        "Ascending Passage", 
+        "Horizontal Passage"
+      ]
+    },
+    {
+      "category": "Core Chambers",
+      "nodes": [
+        "King's Chamber", 
+        "Queen's Chamber", 
+        "Subterranean Chamber", 
+        "Ring's Chamber"
+      ]
+    },
+    {
+      "category": "Superstructures & Vaults",
+      "nodes": [
+        "Grand Gallery", 
+        "Relieving Chambers", 
+        "Campbell's Chamber", 
+        "Sarcophagus"
+      ]
+    },
+    {
+      "category": "Ventilation & Telemetry",
+      "nodes": [
+        "King's Air Shafts", 
+        "Queen's Air Shafts", 
+        "GATN Active Nodes"
+      ]
+    }
+  ]
+}
