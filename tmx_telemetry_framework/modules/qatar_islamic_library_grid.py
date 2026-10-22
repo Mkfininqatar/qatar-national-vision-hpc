@@ -742,3 +742,91 @@ if __name__ == "__main__":
     
     saved_file = engine.render_velocity_streamlines()
     print(f"\nVentilation flow velocity streamline map saved as: {saved_file}")
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from dataclasses import dataclass, asdict
+
+@dataclass
+class HVACZoneMetric:
+    zone_id: str
+    depth_m: float
+    pressure_differential_pa: float
+    energy_consumption_kwh_day: float
+    hvac_operational_status: str
+
+class QatarIslamicLibraryHVACExpansion:
+    """
+    Qatar Islamic Library - Multi-Zone HVAC Energy Consumption & Pressure Differential Engine.
+    Simulates static pressure gradients, airflow pressure drops, and daily HVAC energy
+    consumption across subterranean archive zones.
+    """
+    def __init__(self, enclave_depth_m: float = 15.0):
+        self.system_title = "QATAR ISLAMIC LIBRARY - HVAC ENERGY & PRESSURE SIMULATION ENGINE"
+        self.enclave_depth = enclave_depth_m
+        self.base_energy_rate_kwh = 120.0
+
+    def generate_hvac_telemetry(self) -> dict:
+        zones = [
+            {"zone": "ZONE-01: Upper Vault Intake Plenum", "depth": 5.0, "p_diff": 15.2, "energy": 145.5},
+            {"zone": "ZONE-02: Intermediate Archive Corridors", "depth": 10.0, "p_diff": 22.5, "energy": 112.0},
+            {"zone": "ZONE-03: Subterranean Enclave Core", "depth": 15.0, "p_diff": 30.0, "energy": 98.4},
+            {"zone": "ZONE-04: Deep Exhaust Plenum", "depth": 20.0, "p_diff": 8.5, "energy": 165.2}
+        ]
+        
+        metrics = []
+        for z in zones:
+            status = "STABLE_PRESSURIZED" if z["p_diff"] >= 10.0 else "NOMINAL"
+            metrics.append(asdict(HVACZoneMetric(
+                zone_id=z["zone"],
+                depth_m=z["depth"],
+                pressure_differential_pa=z["p_diff"],
+                energy_consumption_kwh_day=z["energy"],
+                hvac_operational_status=status
+            )))
+            
+        return {
+            "title": self.system_title,
+            "subterranean_depth_m": self.enclave_depth,
+            "total_daily_energy_kwh": sum(z["energy"] for z in zones),
+            "hvac_metrics": metrics
+        }
+
+    def render_hvac_profiles(self, output_file="qatar_library_hvac_energy_pressure.png"):
+        """Renders a dual-panel plot showing pressure differentials and energy consumption profiles."""
+        plt.style.use('dark_background')
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+        fig.patch.set_facecolor('#080c14')
+
+        depths = np.array([5.0, 10.0, 15.0, 20.0])
+        pressures = np.array([15.2, 22.5, 30.0, 8.5])
+        energy = np.array([145.5, 112.0, 98.4, 165.2])
+
+        # Plot 1: Pressure Differential Profile
+        ax1.set_facecolor('#05080f')
+        ax1.plot(pressures, -depths, marker='o', color='cyan', linewidth=2, markersize=8)
+        ax1.set_title("ZONE PRESSURE DIFFERENTIAL (Pa)", color='cyan', fontsize=11, pad=10)
+        ax1.set_xlabel("Pressure Delta (Pa)", color='gray')
+        ax1.set_ylabel("Depth (m)", color='gray')
+        ax1.grid(True, color='#112233', linestyle='--', alpha=0.5)
+
+        # Plot 2: Daily Energy Consumption Bar Profile
+        ax2.set_facecolor('#05080f')
+        ax2.barh(np.array([-5.0, -10.0, -15.0, -20.0]), energy, height=2.0, color='magenta', alpha=0.8)
+        ax2.set_title("DAILY HVAC ENERGY CONSUMPTION (kWh)", color='cyan', fontsize=11, pad=10)
+        ax2.set_xlabel("Energy (kWh/day)", color='gray')
+        ax2.set_ylabel("Depth (m)", color='gray')
+        ax2.grid(True, color='#112233', linestyle='--', alpha=0.5)
+
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, facecolor='#080c14')
+        plt.close()
+        return output_file
+
+if __name__ == "__main__":
+    engine = QatarIslamicLibraryHVACExpansion()
+    print("=== " + engine.system_title + " ===")
+    print(json.dumps(engine.generate_hvac_telemetry(), indent=2))
+    
+    saved_file = engine.render_hvac_profiles()
+    print(f"\nHVAC energy and pressure profile visualization saved as: {saved_file}")
