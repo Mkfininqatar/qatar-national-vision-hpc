@@ -1,0 +1,28 @@
+{
+  "device_architecture": {
+    "title": "X-FRAMEWORK MOBILE PHONE HARDWARE ARCHITECTURE",
+    "project": "X-FRAMEWORK / NASA SCIENCE DIVISION",
+    "chassis": {
+      "type": "Titanium Monocoque Chassis",
+      "material": "Grade 5 Titanium / Forged Carbon Composite",
+      "tolerance_notation": "MW6NVG1UIM/00F.9S -10°C",
+      "thermal_dissipation": "Vapor Chamber Liquid Cooling + Graphene Heat Spreader"
+    },
+    "processor_and_enclave": {
+      "main_ap": "3nm Octa-Core SoC Processor",
+      "telemetry_coprocessor": "TMX-1 Telemetry Secure Enclave",
+      "npu": "32-Core Spatial Neural Engine",
+      "security_protocol": "Quantum-Resistant Token Exchange & Cryptographic HSM"
+    },
+    "spatial_sensors": {
+      "optical_array": "Micro-LIDAR Spatial Sensors",
+      "ar_indicators": [
+        "SPATIAL MAPPING ACTIVE",
+        "OBJECT RECOGNITION ON",
+        "SPATIAL MAPPING ON"
+      ],
+      "depth_tracking_range_meters": 15.0,
+      "latency_target_ms": 1.0
+    }
+  }
+}
