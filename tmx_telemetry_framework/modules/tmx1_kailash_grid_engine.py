@@ -393,3 +393,95 @@ if __name__ == "__main__":
     report = engine.generate_full_telemetry()
     print("=== TMX-1 Kailash Drainage Basin & Elevation Profile Telemetry ===")
     print(json.dumps(report, indent=2))
+import numpy as np
+import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class WavePropagationNodeResult:
+    node_name: str
+    coordinates: tuple
+    distance_from_kailash_km: float
+    instantaneous_amplitude: float
+    phase_delay_rad: float
+    harmonic_frequency_hz: float
+    resonance_status: str
+
+class Kailash528HzWaveSimulator:
+    """
+    TMX-1 Master Matrix - Advanced 528 Hz Harmonic Wave Propagation Engine.
+    Models wave attenuation, phase velocity, and resonance across global hydrological nodes
+    linked to the Mount Kailash central transmitter.
+    """
+    def __init__(self, frequency_hz: float = 528.0):
+        self.frequency = frequency_hz
+        self.kailash_coords = (31.0667, 81.3125)
+        self.R = 6371.0  # Earth Radius in km
+        
+        # Key regional and global water nodes in the TMX-1 network
+        self.global_nodes = {
+            "Manasarovar Lake (Sacred Grid)": (30.6650, 81.5333),
+            "Rakshas Tal (Tectonic Grid)": (30.7417, 81.1833),
+            "Indus Delta (Arabian Sea)": (24.5383, 67.4221),
+            "Brahmaputra Delta (Bay of Bengal)": (22.2532, 91.8338),
+            "Lake Baikal": (53.5587, 108.1650),
+            "Lake Victoria": (-1.0000, 33.0000),
+            "Amazon Basin Outfall": (-0.1500, -49.0000)
+        }
+        
+        # Simulated transmission medium wave speed (km/s) and attenuation damping factor
+        self.wave_speed_km_s = 2.5 
+        self.attenuation_coefficient = 0.0008  # km^-1 geometric/medium damping factor
+
+    def compute_haversine(self, coord1, coord2) -> float:
+        lat1, lon1 = map(np.radians, coord1)
+        lat2, lon2 = map(np.radians, coord2)
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+        a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+        return float(self.R * (2 * np.arcsin(np.sqrt(a))))
+
+    def simulate_propagation(self, time_t: float = 1.0) -> dict:
+        angular_frequency = 2 * np.pi * self.frequency
+        # Wave number k = omega / v
+        wave_number = angular_frequency / self.wave_speed_km_s
+        
+        node_results = []
+        
+        for name, coords in self.global_nodes.items():
+            dist = self.compute_haversine(self.kailash_coords, coords)
+            
+            # Damped wave equation: A(r, t) = (1 / (1 + alpha * r)) * cos(k * r - omega * t)
+            attenuation_factor = 1.0 / (1.0 + self.attenuation_coefficient * dist)
+            phase_rad = (wave_number * dist) % (2 * np.pi)
+            amplitude = attenuation_factor * np.cos(wave_number * dist - angular_frequency * time_t)
+            
+            status = "RESONANT_LOCKED" if abs(amplitude) > 0.4 else "HARMONIC_DECAY"
+            
+            result = WavePropagationNodeResult(
+                node_name=name,
+                coordinates=coords,
+                distance_from_kailash_km=round(dist, 2),
+                instantaneous_amplitude=round(float(amplitude), 4),
+                phase_delay_rad=round(float(phase_rad), 4),
+                harmonic_frequency_hz=self.frequency,
+                resonance_status=status
+            )
+            node_results.append(asdict(result))
+            
+        return {
+            "simulation_module": "TMX-1 528 Hz Global Wave Propagation",
+            "simulation_parameters": {
+                "source_node": "Mount Kailash Transceiver (31.0667° N, 81.3125° E)",
+                "frequency_hz": self.frequency,
+                "simulation_time_s": time_t,
+                "wave_speed_km_s": self.wave_speed_km_s
+            },
+            "nodes": node_results
+        }
+
+if __name__ == "__main__":
+    simulator = Kailash528HzWaveSimulator()
+    telemetry = simulator.simulate_propagation(time_t=2.5)
+    print("=== TMX-1 528 Hz Global Wave Propagation Simulation ===")
+    print(json.dumps(telemetry, indent=2))
