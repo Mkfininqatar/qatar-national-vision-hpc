@@ -485,3 +485,90 @@ if __name__ == "__main__":
     telemetry = simulator.simulate_propagation(time_t=2.5)
     print("=== TMX-1 528 Hz Global Wave Propagation Simulation ===")
     print(json.dumps(telemetry, indent=2))
+import numpy as np
+import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class DARTSensorReading:
+    sensor_id: str
+    location_node: str
+    seismic_magnitude_richter: float
+    bottom_pressure_psi: float
+    magnetic_anomaly_nT: float
+    sensor_status: str
+
+@dataclass
+class EnhancedKailashVortexTelemetry:
+    enclave_node: str
+    vortex_type: str
+    magnetic_intensity_tesla: float
+    temporal_dilation_factor: float
+    aging_anomaly_index: float
+    dart_sensor_telemetry: list
+    matrix_protocol_status: str
+
+class KailashEnhancedVortexEngine:
+    """
+    TMX-1 Master Matrix - Subterranean Temporal & Magnetic Vortex Engine 
+    with Integrated DART Seismic & Magnetic Anomaly Sensor Telemetry (Module 15-Extended).
+    """
+    def __init__(self):
+        self.node_id = "KAILASH-VORTEX-01"
+        
+    def simulate_dart_sensors(self) -> list:
+        """
+        Simulates live readings from deployed DART seismic-magnetic anomaly sensors
+        surrounding the Kailash hydrological and tectonic fault grid.
+        """
+        sensors = [
+            DARTSensorReading(
+                sensor_id="DART-SEISMIC-01",
+                location_node="Manasarovar Tectonic Fault Interface",
+                seismic_magnitude_richter=1.82,
+                bottom_pressure_psi=4820.5,
+                magnetic_anomaly_nT=42.8,
+                sensor_status="ACTIVE_NOMINAL"
+            ),
+            DARTSensorReading(
+                sensor_id="DART-SEISMIC-02",
+                location_node="Rakshas Tal Tectonic Saltwater Fault",
+                seismic_magnitude_richter=2.15,
+                bottom_pressure_psi=4910.2,
+                magnetic_anomaly_nT=68.4,
+                sensor_status="ACTIVE_ANOMALY_DETECTED"
+            ),
+            DARTSensorReading(
+                sensor_id="DART-SEISMIC-03",
+                location_node="Indus-Sutlej Watershed Convergence Node",
+                seismic_magnitude_richter=1.45,
+                bottom_pressure_psi=4650.0,
+                magnetic_anomaly_nT=29.1,
+                sensor_status="ACTIVE_NOMINAL"
+            )
+        ]
+        return [asdict(s) for s in sensors]
+
+    def simulate_enhanced_vortex_metrics(self) -> dict:
+        magnetic_flux = 142.5  # High-density field index
+        temporal_shift = 3.1415  # Temporal distortion multiplier
+        aging_factor = 4.28      # Accelerated biological marker index
+        
+        dart_data = self.simulate_dart_sensors()
+        
+        payload = EnhancedKailashVortexTelemetry(
+            enclave_node=self.node_id,
+            vortex_type="Subterranean Gurnayon Chokro & 4-River Confluence Grid",
+            magnetic_intensity_tesla=magnetic_flux,
+            temporal_dilation_factor=temporal_shift,
+            aging_anomaly_index=aging_factor,
+            dart_sensor_telemetry=dart_data,
+            matrix_protocol_status="TMX1-VORTEX-DART-RATIFIED"
+        )
+        return asdict(payload)
+
+if __name__ == "__main__":
+    engine = KailashEnhancedVortexEngine()
+    report = engine.simulate_enhanced_vortex_metrics()
+    print("=== TMX-1 Kailash Vortex & DART Sensor Telemetry Report ===")
+    print(json.dumps(report, indent=2))
