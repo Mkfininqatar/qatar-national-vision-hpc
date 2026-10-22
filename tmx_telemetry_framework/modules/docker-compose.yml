@@ -1,0 +1,23 @@
+# Use lightweight Python 3.11 image
+FROM python:3.11-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Install system dependencies (required for scientific computing packages if needed)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire simulation framework source code into the container
+COPY . /app
+
+# Set environment variables for headless Matplotlib rendering
+ENV MPLBACKEND=Agg
+
+# Define default command to execute the simulation & telemetry pipeline
+CMD ["python", "qatar_library_mqtt_streamer.py"]
