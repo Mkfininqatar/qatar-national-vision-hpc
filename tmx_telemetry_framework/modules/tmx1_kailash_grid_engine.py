@@ -248,3 +248,45 @@ if __name__ == "__main__":
     
     print("=== Kailash Watershed & Cardinal Direction Framework ===")
     print(json.dumps(data, indent=2, ensure_ascii=False))
+import matplotlib.pyplot as plt
+
+def render_kailash_visualization(filename="kailash_watershed_map.png"):
+    plt.style.use('dark_background')
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.set_facecolor('#05050a')
+
+    # Center Node: Mount Kailash
+    ax.plot(0, 0, marker='o', markersize=22, color='cyan', markeredgecolor='white')
+    ax.text(0, 0.15, "মাউন্ট কৈলাশ (৬,৬৩৮ মি.)\n(Mount Kailash)", color='cyan', fontsize=12, fontweight='bold', ha='center')
+
+    # Cardinal Directions and Nodes Mapping
+    nodes = {
+        "উত্তর (North)\nসিন্ধু নদী (Indus River)": (0, 1.5),
+        "দক্ষিণ (South)\nকার্নালি/ঘাগরা নদী (Karnali)": (0, -1.5),
+        "পূর্ব (East)\nব্রহ্মপুত্র ও মানস সরোবর\n(East Grid)": (2.0, 0),
+        "পশ্চিম (West)\nশতদ্রু নদী ও রাক্ষস তাল\n(West Grid)": (-2.0, 0)
+    }
+
+    for label, (x, y) in nodes.items():
+        # Draw connection arrow from center
+        ax.annotate("", xy=(x, y), xytext=(0, 0),
+                    arrowprops=dict(arrowstyle="->", color="cyan", lw=2, mutation_scale=15))
+        # Plot node marker
+        ax.plot(x, y, marker='s', markersize=12, color='deepskyblue')
+        # Add text box for each node
+        ax.text(x, y + 0.18 if y >= 0 else y - 0.35, label, color='white', fontsize=10, ha='center', 
+                bbox=dict(boxstyle='round,pad=0.4', facecolor='#111122', edgecolor='cyan', alpha=0.9))
+
+    ax.set_xlim(-3.0, 3.0)
+    ax.set_ylim(-2.5, 2.5)
+    ax.axis('off')
+    ax.set_title("TMX-1 Master Matrix: Kailash Cardinal Watershed Visualizer", color='cyan', fontsize=14, pad=20)
+    
+    plt.tight_layout()
+    plt.savefig(filename, dpi=300, facecolor='#05050a', edgecolor='none')
+    plt.close()
+    return filename
+
+if __name__ == "__main__":
+    saved_file = render_kailash_visualization()
+    print(f"Visualization successfully rendered and saved as: {saved_file}")
