@@ -572,3 +572,115 @@ if __name__ == "__main__":
     report = engine.simulate_enhanced_vortex_metrics()
     print("=== TMX-1 Kailash Vortex & DART Sensor Telemetry Report ===")
     print(json.dumps(report, indent=2))
+import numpy as np
+import plotly.graph_objects as go
+
+def render_kailash_globe_visualization():
+    # Mount Kailash source coordinates
+    kailash_lat, kailash_lon = 31.0667, 81.3125
+
+    # Global and regional hydrological nodes
+    nodes = {
+        "Mount Kailash (Source)": (31.0667, 81.3125),
+        "Manasarovar Lake": (30.6650, 81.5333),
+        "Rakshas Tal": (30.7417, 81.1833),
+        "Indus Delta": (24.5383, 67.4221),
+        "Brahmaputra Delta": (22.2532, 91.8338),
+        "Lake Baikal": (53.5587, 108.1650),
+        "Lake Victoria": (-1.0000, 33.0000),
+        "Amazon Basin": (-0.1500, -49.0000)
+    }
+
+    # Haversine great-circle distance calculator (km)
+    def compute_haversine(coord1, coord2):
+        R = 6371.0
+        lat1, lon1 = map(np.radians, coord1)
+        lat2, lon2 = map(np.radians, coord2)
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+        a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+        return float(R * (2 * np.arcsin(np.sqrt(a))))
+
+    # 528 Hz Wave Simulation Parameters
+    frequency = 528.0
+    wave_speed = 2.5  # km/s
+    alpha = 0.0008    # Damping factor
+    omega = 2 * np.pi * frequency
+    k = omega / wave_speed
+    time_t = 1.0      # Instantaneous time checkpoint (s)
+
+    node_names, lats, lons, amplitudes, hover_texts = [], [], [], [], []
+
+    for name, coords in nodes.items():
+        dist = compute_haversine((kailash_lat, kailash_lon), coords)
+        attenuation = 1.0 / (1.0 + alpha * dist)
+        amp = attenuation * np.cos(k * dist - omega * time_t)
+        
+        node_names.append(name)
+        lats.append(coords[0])
+        lons.append(coords[1])
+        amplitudes.append(amp)
+        hover_texts.append(f"<b>{name}</b><br>Distance: {dist:.2f} km<br>528 Hz Amplitude: {amp:.4f}")
+
+    # Build Plotly 3D Globe Figure
+    fig = go.Figure()
+
+    # Add great-circle propagation vector arcs from Kailash to global nodes
+    for name, coords in nodes.items():
+        if name == "Mount Kailash (Source)":
+            continue
+        fig.add_trace(go.Scattergeo(
+            lat=[kailash_lat, coords[0]],
+            lon=[kailash_lon, coords[1]],
+            mode='lines',
+            line=dict(width=2, color='cyan'),
+            opacity=0.5,
+            showlegend=False
+        ))
+
+    # Add hydrological nodes scatter layer
+    fig.add_trace(go.Scattergeo(
+        lat=lats,
+        lon=lons,
+        mode='markers+text',
+        text=node_names,
+        textposition="top center",
+        marker=dict(
+            size=[18 if "Kailash" in n else 12 for n in node_names],
+            color=amplitudes,
+            colorscale='Viridis',
+            colorbar=dict(title="528 Hz Amplitude"),
+            showscale=True,
+            line=dict(width=1, color='white')
+        ),
+        hoverinfo='text',
+        hovertext=hover_texts
+    ))
+
+    # Configure globe layout aesthetics
+    fig.update_layout(
+        title_text="TMX-1 Master Matrix: 528 Hz Harmonic Wave Propagation from Mount Kailash",
+        title_x=0.5,
+        geo=dict(
+            showland=True,
+            landcolor="rgb(18, 20, 32)",
+            subunitcolor="rgb(45, 50, 75)",
+            countrycolor="rgb(45, 50, 75)",
+            showocean=True,
+            oceancolor="rgb(5, 7, 15)",
+            showlakes=True,
+            lakecolor="rgb(10, 15, 30)",
+            projection_type="orthographic",
+            center=dict(lat=kailash_lat, lon=kailash_lon),
+            lataxis=dict(showgrid=True, gridcolor='rgb(30, 35, 55)'),
+            lonaxis=dict(showgrid=True, gridcolor='rgb(30, 35, 55)')
+        ),
+        paper_bgcolor='rgb(8, 10, 18)',
+        font=dict(color='white')
+    )
+
+    return fig
+
+if __name__ == "__main__":
+    fig = render_kailash_globe_visualization()
+    fig.show()
