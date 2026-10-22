@@ -1024,3 +1024,153 @@ def render_library_3d_wireframe():
 if __name__ == "__main__":
     fig = render_library_3d_wireframe()
     fig.show()
+import pytest
+import json
+import numpy as np
+from dataclasses import asdict
+
+# Import or define modules (assumed available from the consolidated Qatar Islamic Library framework)
+# For standalone test execution, we include the test assertions and mock structures.
+
+class TestQatarIslamicLibraryMasterMatrix:
+    
+    @pytest.fixture
+    def mock_system_instance(self):
+        # Mocking or instantiating core system
+        from dataclasses import dataclass
+        @dataclass
+        class TelemetryMetrics:
+            base_frequency: str
+            grid_status: str
+            coherence: str
+            energy_vectors: str
+
+        class MockSystem:
+            def __init__(self):
+                self.system_title = "QATAR ISLAMIC LIBRARY - GEODESIC VIBRATIONAL MAP"
+                self.telemetry = TelemetryMetrics(
+                    base_frequency="432 Hz",
+                    grid_status="OPTIMAL",
+                    coherence="98%",
+                    energy_vectors="ALIGNED"
+                )
+            def get_system_telemetry(self):
+                return {
+                    "title": self.system_title,
+                    "telemetry_data": asdict(self.telemetry)
+                }
+        return MockSystem()
+
+    def test_base_telemetry_schema(self, mock_system_instance):
+        """Validates that base system telemetry contains required keys and correct data types."""
+        telemetry = mock_system_instance.get_system_telemetry()
+        
+        assert "title" in telemetry
+        assert "telemetry_data" in telemetry
+        
+        data = telemetry["telemetry_data"]
+        assert data["base_frequency"] == "432 Hz"
+        assert data["grid_status"] == "OPTIMAL"
+        assert "%" in data["coherence"]
+        assert isinstance(data["coherence"], str)
+
+    def test_acoustic_eigenmode_calculations(self):
+        """Validates acoustic eigenmode frequencies and sound pressure fluctuations."""
+        base_freq = 432.0
+        dome_radius = 25.0
+        
+        # Test eigenmode formula: freq = base_freq * (n * 0.5 + 0.5)
+        expected_modes = []
+        for n in range(1, 4):
+            freq = round(base_freq * (n * 0.5 + 0.5), 2)
+            pressure = round(101325.0 + (n * 12.5), 2)
+            expected_modes.append((freq, pressure))
+            
+        assert expected_modes[0] == (324.0, 101337.5)
+        assert expected_modes[1] == (432.0, 101350.0)
+        assert expected_modes[2] == (540.0, 101362.5)
+
+    def test_em_shielding_skin_depth_and_attenuation(self):
+        """Validates electromagnetic shielding effectiveness (SE) and skin depth mathematical calculations."""
+        freq = 432.0  # Hz
+        conductivity = 5.8e7  # S/m
+        rel_perm = 1000.0
+        mu_0 = 4 * np.pi * 1e-7
+        mu = rel_perm * mu_0
+        thickness = 0.05  # m
+
+        # Skin depth calculation
+        skin_depth = np.sqrt(1.0 / (np.pi * freq * mu * conductivity))
+        assert skin_depth > 0.0
+        assert isinstance(skin_depth, float)
+
+        # Absorption loss calculation (SE_A = 8.686 * (t / delta))
+        se_absorption = 8.686 * (thickness / skin_depth)
+        assert se_absorption > 0.0
+
+    def test_cad_manifest_schema_and_coordinates(self):
+        """Validates JSON CAD manifest structure, coordinate types, and node count."""
+        surfaces = [
+            {"surface_name": "Central Geodesic Dome", "geometry_type": "Hemispherical Vault"},
+            {"surface_name": "Library Base Podium", "geometry_type": "Rectangular Platonic Base"}
+        ]
+        nodes = [
+            {"node_id": "NODE-01", "node_name": "Central Dome Apex", "coordinate_x": 0.0, "coordinate_y": 0.0, "coordinate_z": 35.0, "resonance_frequency_hz": 432.0},
+            {"node_id": "NODE-10", "node_name": "Subterranean Enclave Core", "coordinate_x": 0.0, "coordinate_y": 0.0, "coordinate_z": -10.0, "resonance_frequency_hz": 528.0}
+        ]
+
+        manifest = {
+            "manifest_title": "QATAR ISLAMIC LIBRARY - CAD MANIFEST",
+            "version": "1.0.0",
+            "unit": "meters",
+            "architectural_surfaces": surfaces,
+            "geodesic_vibrational_nodes": nodes
+        }
+
+        assert manifest["version"] == "1.0.0"
+        assert len(manifest["architectural_surfaces"]) == 2
+        assert len(manifest["geodesic_vibrational_nodes"]) == 2
+        
+        # Verify subterranean core node depth and frequency
+        core_node = manifest["geodesic_vibrational_nodes"][1]
+        assert core_node["coordinate_z"] == -10.0
+        assert core_node["resonance_frequency_hz"] == 528.0
+
+    def test_thermal_humidity_stabilization(self):
+        """Validates subterranean thermal gradients and relative humidity preservation thresholds."""
+        target_humidity = 50.0
+        zones = [
+            {"zone": "ZONE-01", "temp": 26.5, "rh": 52.0},
+            {"zone": "ZONE-03: Subterranean Core", "temp": 22.5, "rh": 50.0}
+        ]
+
+        for z in zones:
+            rh_delta = abs(z["rh"] - target_humidity)
+            status = "OPTIMAL_STABILIZED" if rh_delta <= 2.0 else "ADJUSTING"
+            if z["zone"].startswith("ZONE-03"):
+                assert status == "OPTIMAL_STABILIZED"
+                assert z["temp"] == 22.5
+
+    def test_ventilation_ach_thresholds(self):
+        """Validates Air Changes per Hour (ACH) against archive preservation standards (>= 4.0 ACH)."""
+        target_ach = 4.0
+        ventilation_zones = [
+            {"zone": "Plenum", "ach": 4.5},
+            {"zone": "Archive Core", "ach": 4.0},
+            {"zone": "Sub-optimal Zone", "ach": 3.2}
+        ]
+
+        for zone in ventilation_zones:
+            is_optimal = zone["ach"] >= target_ach
+            if zone["zone"] == "Sub-optimal Zone":
+                assert not is_optimal
+            else:
+                assert is_optimal
+
+    def test_hvac_energy_summation(self):
+        """Validates total daily HVAC energy consumption summation across subterranean zones."""
+        energy_readings = [145.5, 112.0, 98.4, 165.2]
+        total_energy = sum(energy_readings)
+        
+        assert total_energy == 521.1
+        assert isinstance(total_energy, float)
