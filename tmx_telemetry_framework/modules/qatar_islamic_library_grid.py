@@ -384,3 +384,86 @@ if __name__ == "__main__":
     
     saved_file = engine.render_shielding_curve()
     print(f"\nEM shielding telemetry curve saved as: {saved_file}")
+import json
+from dataclasses import dataclass, asdict
+
+@dataclass
+class CADNode:
+    node_id: str
+    node_name: str
+    coordinate_x: float
+    coordinate_y: float
+    coordinate_z: float
+    resonance_frequency_hz: float
+    status: str
+
+@dataclass
+class CADMeshSurface:
+    surface_name: str
+    geometry_type: str
+    parameters: dict
+
+class QatarIslamicLibraryCADManifestGenerator:
+    """
+    Qatar Islamic Library - CAD Manifest Generator.
+    Exports architectural wireframe geometries and geodesic vibrational node coordinates
+    into a standardized, structured JSON CAD manifest.
+    """
+    def __init__(self):
+        self.manifest_title = "QATAR ISLAMIC LIBRARY - CAD MANIFEST & GEODESIC TOPOLOGY"
+        self.version = "1.0.0"
+
+    def generate_manifest(self) -> dict:
+        surfaces = [
+            asdict(CADMeshSurface(
+                surface_name="Central Geodesic Dome",
+                geometry_type="Hemispherical Vault",
+                parameters={"radius_m": 15.0, "apex_elevation_m": 35.0, "mesh_resolution": [20, 30]}
+            )),
+            asdict(CADMeshSurface(
+                surface_name="Library Base Podium",
+                geometry_type="Rectangular Platonic Base",
+                parameters={"dimension_x_m": 50.0, "dimension_y_m": 50.0, "elevation_m": 0.0, "mesh_resolution": [15, 15]}
+            ))
+        ]
+
+        nodes = [
+            asdict(CADNode("NODE-01", "Central Dome Apex", 0.0, 0.0, 35.0, 432.0, "OPTIMAL")),
+            asdict(CADNode("NODE-02", "Dome Periphery North", 15.0, 0.0, 20.0, 432.0, "ACTIVE")),
+            asdict(CADNode("NODE-03", "Dome Periphery South", -15.0, 0.0, 20.0, 432.0, "ACTIVE")),
+            asdict(CADNode("NODE-04", "Dome Periphery East", 0.0, 15.0, 20.0, 432.0, "ACTIVE")),
+            asdict(CADNode("NODE-05", "Dome Periphery West", 0.0, -15.0, 20.0, 432.0, "ACTIVE")),
+            asdict(CADNode("NODE-06", "Outer Archway NW", 20.0, 20.0, 5.0, 216.0, "RESONANT")),
+            asdict(CADNode("NODE-07", "Outer Archway NE", 20.0, -20.0, 5.0, 216.0, "RESONANT")),
+            asdict(CADNode("NODE-08", "Outer Archway SW", -20.0, 20.0, 5.0, 216.0, "RESONANT")),
+            asdict(CADNode("NODE-09", "Outer Archway SE", -20.0, -20.0, 5.0, 216.0, "RESONANT")),
+            asdict(CADNode("NODE-10", "Subterranean Enclave Core", 0.0, 0.0, -10.0, 528.0, "LOCKED"))
+        ]
+
+        manifest = {
+            "manifest_title": self.manifest_title,
+            "version": self.version,
+            "unit": "meters",
+            "coordinate_system": "Cartesian (XYZ)",
+            "architectural_surfaces": surfaces,
+            "geodesic_vibrational_nodes": nodes,
+            "energy_conduits": {
+                "source_node": "NODE-01",
+                "target_nodes": [f"NODE-{i:02d}" for i in range(2, 11)],
+                "conduit_type": "Harmonic Resonance Vector"
+            }
+        }
+        return manifest
+
+    def export_to_json(self, filename="qatar_library_cad_manifest.json") -> str:
+        manifest_data = self.generate_manifest()
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(manifest_data, f, indent=2, ensure_ascii=False)
+        return filename
+
+if __name__ == "__main__":
+    generator = QatarIslamicLibraryCADManifestGenerator()
+    output_path = generator.export_to_json()
+    print(f"=== {generator.manifest_title} ===")
+    print(f"CAD manifest successfully exported to: {output_path}\n")
+    print(json.dumps(generator.generate_manifest(), indent=2, ensure_ascii=False))
