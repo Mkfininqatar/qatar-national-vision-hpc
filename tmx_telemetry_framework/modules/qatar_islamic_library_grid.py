@@ -281,3 +281,106 @@ def render_library_3d_wireframe():
 if __name__ == "__main__":
     fig = render_library_3d_wireframe()
     fig.show()
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from dataclasses import dataclass, asdict
+
+@dataclass
+class EMShieldingMetric:
+    enclave_depth_m: float
+    frequency_hz: float
+    shielding_effectiveness_db: float
+    harmonic_dampening_ratio: float
+    shielding_status: str
+
+class QatarIslamicLibraryEMShieldingExpansion:
+    """
+    Qatar Islamic Library - Electromagnetic Shielding & Harmonic Dampening Subterranean Module.
+    Simulates electromagnetic shielding effectiveness (SE) and harmonic dampening
+    across the subterranean enclave core layers.
+    """
+    def __init__(self, enclave_depth_m: float = 15.0):
+        self.system_title = "QATAR ISLAMIC LIBRARY - SUBTERRANEAN EM SHIELDING & DAMPENING ENGINE"
+        self.enclave_depth = enclave_depth_m
+        self.conductivity_sigma = 5.8e7     # Copper-equivalent mesh conductivity (S/m)
+        self.relative_permeability_mu = 1000.0  # High-mu magnetic shielding alloy factor
+        self.barrier_thickness_m = 0.05     # Shielding barrier thickness in meters
+
+    def compute_shielding_effectiveness(self, frequency_hz: np.ndarray) -> np.ndarray:
+        """
+        Calculates total Shielding Effectiveness (SE = Absorption + Reflection) in dB.
+        """
+        mu_0 = 4 * np.pi * 1e-7
+        mu = self.relative_permeability_mu * mu_0
+        
+        # Skin depth calculation: delta = sqrt(1 / (pi * f * mu * sigma))
+        skin_depth = np.sqrt(1.0 / (np.pi * frequency_hz * mu * self.conductivity_sigma))
+        
+        # Absorption loss (SE_A) in dB
+        se_absorption = 8.686 * (self.barrier_thickness_m / skin_depth)
+        
+        # Reflection loss (SE_R) in dB
+        se_reflection = 39.5 - 10 * np.log10(frequency_hz * self.relative_permeability_mu / self.conductivity_sigma)
+        
+        total_se = se_absorption + se_reflection
+        return np.maximum(total_se, 0.0)
+
+    def generate_enclave_telemetry(self) -> dict:
+        test_frequencies = [50.0, 432.0, 528.0, 1000.0, 10000.0, 100000.0]
+        freq_array = np.array(test_frequencies)
+        se_values = self.compute_shielding_effectiveness(freq_array)
+        
+        metrics = []
+        for i, f in enumerate(test_frequencies):
+            se = float(se_values[i])
+            # Dampening ratio derived from dB attenuation: Amplitude_out / Amplitude_in = 10^(-SE / 20)
+            dampening_ratio = round(10.0 ** (-se / 20.0), 8)
+            status = "OPTIMAL_SHIELDED" if se > 60.0 else "NOMINAL_SHIELDED"
+            
+            metrics.append(asdict(EMShieldingMetric(
+                enclave_depth_m=self.enclave_depth,
+                frequency_hz=f,
+                shielding_effectiveness_db=round(se, 2),
+                harmonic_dampening_ratio=dampening_ratio,
+                shielding_status=status
+            )))
+            
+        return {
+            "title": self.system_title,
+            "subterranean_enclave_depth_m": self.enclave_depth,
+            "em_shielding_metrics": metrics
+        }
+
+    def render_shielding_curve(self, output_file="qatar_library_em_shielding.png"):
+        """Renders the electromagnetic shielding effectiveness vs frequency curve in dark mode."""
+        plt.style.use('dark_background')
+        fig, ax = plt.subplots(figsize=(10, 5))
+        fig.patch.set_facecolor('#080c14')
+        ax.set_facecolor('#05080f')
+
+        freqs = np.logspace(1, 6, 500)  # 10 Hz to 1 MHz log space
+        se = self.compute_shielding_effectiveness(freqs)
+
+        ax.semilogx(freqs, se, color='cyan', linewidth=2, label='Total Shielding Effectiveness (dB)')
+        ax.axvline(x=432.0, color='magenta', linestyle='--', alpha=0.8, label='Base Harmonic (432 Hz)')
+        ax.axvline(x=528.0, color='yellow', linestyle='--', alpha=0.8, label='Resonance Frequency (528 Hz)')
+
+        ax.set_title("SUBTERRANEAN ENCLAVE - EM SHIELDING & HARMONIC DAMPENING", color='cyan', fontsize=12, pad=12)
+        ax.set_xlabel("Frequency (Hz, Log Scale)", color='gray')
+        ax.set_ylabel("Shielding Effectiveness (dB)", color='gray')
+        ax.grid(True, color='#112233', linestyle='--', alpha=0.7)
+        ax.legend(loc="upper right", facecolor='#080c14', edgecolor='cyan')
+
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, facecolor='#080c14')
+        plt.close()
+        return output_file
+
+if __name__ == "__main__":
+    engine = QatarIslamicLibraryEMShieldingExpansion()
+    print("=== " + engine.system_title + " ===")
+    print(json.dumps(engine.generate_enclave_telemetry(), indent=2))
+    
+    saved_file = engine.render_shielding_curve()
+    print(f"\nEM shielding telemetry curve saved as: {saved_file}")
