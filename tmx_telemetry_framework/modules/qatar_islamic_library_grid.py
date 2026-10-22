@@ -467,3 +467,106 @@ if __name__ == "__main__":
     print(f"=== {generator.manifest_title} ===")
     print(f"CAD manifest successfully exported to: {output_path}\n")
     print(json.dumps(generator.generate_manifest(), indent=2, ensure_ascii=False))
+import json
+import numpy as np
+import matplotlib.pyplot as plt
+from dataclasses import dataclass, asdict
+
+@dataclass
+class ThermalHumidityMetric:
+    zone_id: str
+    depth_m: float
+    temperature_celsius: float
+    relative_humidity_percent: float
+    hvac_status: str
+
+class QatarIslamicLibraryThermalHumidityExpansion:
+    """
+    Qatar Islamic Library - Subterranean Thermal Distribution & Humidity Regulation Module.
+    Simulates temperature gradients, geothermal thermal stability, and relative humidity (RH)
+    control across the subterranean enclave vault layers.
+    """
+    def __init__(self, enclave_depth_m: float = 15.0):
+        self.system_title = "QATAR ISLAMIC LIBRARY - THERMAL & HUMIDITY REGULATION ENGINE"
+        self.enclave_depth = enclave_depth_m
+        self.ambient_surface_temp_c = 35.0  # Doha external surface baseline
+        self.geothermal_stable_temp_c = 22.5 # Subterranean stable bedrock temp
+        self.target_humidity_pct = 50.0      # Optimal preservation humidity for rare texts
+
+    def generate_enclave_telemetry(self) -> dict:
+        zones = [
+            {"zone": "ZONE-01: Upper Vault Perimeter", "depth": 5.0, "temp": 26.5, "rh": 52.0},
+            {"zone": "ZONE-02: Intermediate Archive Deck", "depth": 10.0, "temp": 23.8, "rh": 50.5},
+            {"zone": "ZONE-03: Subterranean Enclave Core", "depth": 15.0, "temp": 22.5, "rh": 50.0},
+            {"zone": "ZONE-04: Deep Geothermal Heat Sink", "depth": 20.0, "temp": 22.1, "rh": 49.5}
+        ]
+        
+        metrics = []
+        for z in zones:
+            status = "OPTIMAL_STABILIZED" if abs(z["rh"] - self.target_humidity_pct) <= 2.0 else "ADJUSTING"
+            metrics.append(asdict(ThermalHumidityMetric(
+                zone_id=z["zone"],
+                depth_m=z["depth"],
+                temperature_celsius=z["temp"],
+                relative_humidity_percent=z["rh"],
+                hvac_status=status
+            )))
+            
+        return {
+            "title": self.system_title,
+            "subterranean_depth_m": self.enclave_depth,
+            "target_parameters": {
+                "baseline_surface_temp_c": self.ambient_surface_temp_c,
+                "target_humidity_pct": self.target_humidity_pct
+            },
+            "thermal_humidity_metrics": metrics
+        }
+
+    def render_thermal_humidity_map(self, output_file="qatar_library_thermal_humidity.png"):
+        """Renders a spatial 2D thermal distribution and humidity contour map across the vault cross-section."""
+        plt.style.use('dark_background')
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+        fig.patch.set_facecolor('#080c14')
+
+        x = np.linspace(-20, 20, 200)
+        y = np.linspace(-15, 0, 150) # Depth down to -15m
+        X, Y = np.meshgrid(x, y)
+        
+        # Thermal distribution simulation (warmer near surface Y=0, stable at bottom Y=-15)
+        Z_temp = self.geothermal_stable_temp_c + (self.ambient_surface_temp_c - self.geothermal_stable_temp_c) * np.exp(Y / 5.0) + 1.5 * np.cos(X / 5.0) * np.exp(Y / 10.0)
+        
+        # Humidity distribution simulation (regulated tightly around 50%)
+        Z_rh = 50.0 + 3.0 * np.sin(X / 4.0) * (Y / 15.0)
+
+        # Plot 1: Temperature Gradient
+        ax1.set_facecolor('#05080f')
+        c1 = ax1.contourf(X, Y, Z_temp, levels=20, cmap='inferno')
+        cb1 = fig.colorbar(c1, ax=ax1, pad=0.05)
+        cb1.set_label('Temperature (°C)', color='cyan')
+        ax1.set_title("SUBTERRANEAN THERMAL GRADIENT (°C)", color='cyan', fontsize=11, pad=10)
+        ax1.set_xlabel("Lateral Span (m)", color='gray')
+        ax1.set_ylabel("Depth (m)", color='gray')
+        ax1.grid(True, color='#112233', linestyle='--', alpha=0.5)
+
+        # Plot 2: Relative Humidity Distribution
+        ax2.set_facecolor('#05080f')
+        c2 = ax2.contourf(X, Y, Z_rh, levels=20, cmap='viridis')
+        cb2 = fig.colorbar(c2, ax=ax2, pad=0.05)
+        cb2.set_label('Relative Humidity (%)', color='cyan')
+        ax2.set_title("RELATIVE HUMIDITY REGULATION (%)", color='cyan', fontsize=11, pad=10)
+        ax2.set_xlabel("Lateral Span (m)", color='gray')
+        ax2.set_ylabel("Depth (m)", color='gray')
+        ax2.grid(True, color='#112233', linestyle='--', alpha=0.5)
+
+        plt.tight_layout()
+        plt.savefig(output_file, dpi=300, facecolor='#080c14')
+        plt.close()
+        return output_file
+
+if __name__ == "__main__":
+    engine = QatarIslamicLibraryThermalHumidityExpansion()
+    print("=== " + engine.system_title + " ===")
+    print(json.dumps(engine.generate_enclave_telemetry(), indent=2))
+    
+    saved_file = engine.render_thermal_humidity_map()
+    print(f"\nThermal & humidity telemetry map saved as: {saved_file}")
