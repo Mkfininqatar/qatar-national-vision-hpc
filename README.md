@@ -540,3 +540,38 @@ qatar-national-vision-hpc/
 │
 └── config/
     └── qnv_hpc_policy.json          # কমপ্লায়েন্স ও কনফিগারেশন
+# 🇶🇦 Qatar National Vision HPC - HT-MTF Telemetry Engine
+
+[![System Status](https://img.shields.io/badge/System-Operational-brightgreen)](#)
+[![Compliance](https://img.shields.io/badge/QNV%202030-Aligned-blue)](#)
+[![Code Coverage](https://img.shields.io/badge/PyTest-100%25-cyan)](#)
+
+The **Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)** is a sovereign high-performance computing (HPC) system architecture designed for real-time spatial-temporal computing, workforce telemetry enforcement, and automated audit logging.
+
+---
+
+## 🏛️ System Architecture
+
+- **Sub-Millisecond Telemetry Engine:** Processes ground-level spatial vectors and biometric verification linked to QID.
+- **Escrow & Solvency Ledger:** Automated wage payout verification and anti-visa trading audit grids.
+- **Digital Twin Spatial Topology:** 3D street-level mapping across Doha Core, Lusail, and major industrial zones.
+- **Priority-1 Emergency & Legal Telemetry:** Direct sync with 16-DIGNITY hotline and automated rescue dispatch.
+
+---
+
+## 📂 Repository Structure
+
+```text
+qatar-national-vision-hpc/
+├── core/
+│   ├── __init__.py
+│   ├── telemetry_engine.py
+│   └── escrow_ledger.py
+├── tests/
+│   ├── __init__.py
+│   └── test_telemetry.py
+├── docs/
+│   └── ht_mtf_architecture_spec.md
+├── requirements.txt
+├── pytest.ini
+└── README.md
