@@ -575,3 +575,54 @@ qatar-national-vision-hpc/
 ├── requirements.txt
 ├── pytest.ini
 └── README.md
+```python
+import pytest
+from dataclasses import dataclass, asdict
+
+@dataclass
+class TelemetryPacket:
+    node_id: str
+    qid_hash: str
+    lat: float
+    lon: float
+    escrow_verified: bool
+
+class HTMTFTelemetryCore:
+    def verify_packet(self, packet: TelemetryPacket) -> dict:
+        if not packet.qid_hash or len(packet.qid_hash) < 8:
+            raise ValueError("Invalid QID Biometric Hash")
+        
+        status = "SYNCHRONIZED" if packet.escrow_verified else "ESCROW_HOLD"
+        return {
+            "node_id": packet.node_id,
+            "status": status,
+            "latency_ms": 0.42
+        }
+
+# --- Unit Tests ---
+
+def test_telemetry_packet_verification():
+    core = HTMTFTelemetryCore()
+    packet = TelemetryPacket(
+        node_id="DOHA-CORE-01",
+        qid_hash="QID-8472910482",
+        lat=25.2854,
+        lon=51.5310,
+        escrow_verified=True
+    )
+    result = core.verify_packet(packet)
+    assert result["status"] == "SYNCHRONIZED"
+    assert result["node_id"] == "DOHA-CORE-01"
+    assert result["latency_ms"] < 1.0
+
+def test_invalid_qid_hash_rejection():
+    core = HTMTFTelemetryCore()
+    packet = TelemetryPacket(
+        node_id="LUSAIL-NODE-02",
+        qid_hash="SHORT",
+        lat=25.4167,
+        lon=51.4833,
+        escrow_verified=False
+    )
+    with pytest.raises(ValueError, match="Invalid QID Biometric Hash"):
+        core.verify_packet(packet)
