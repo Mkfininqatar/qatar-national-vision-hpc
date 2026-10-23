@@ -626,3 +626,17 @@ def test_invalid_qid_hash_rejection():
     )
     with pytest.raises(ValueError, match="Invalid QID Biometric Hash"):
         core.verify_packet(packet)
+---
+
+## 🛡️ Sovereign Compliance & Standards
+
+The **Hamad-Tamim Global Dignity & Telemetry Framework (HT-MTF)** and **TMX-1 Master Engine** have been architected to adhere strictly to sovereign Qatar mandates and international HPC logging standards:
+
+* **Qatar National Vision 2030 (QNV 2030):** Full structural alignment with the Digital Transformation, Human Development, and Social Welfare pillars.
+* **ISO/IEC & ISACA Telemetry Standards:** Designed for sub-millisecond spatial-temporal logging, auditability, and tamper-proof ledger continuity.
+* **Worker Welfare & Humanitarian Compliance:** Automated escrow payroll verification and real-time grievance telemetry.
+
+---
+
+### 🤝 Strategic Leadership & Project Ownership
+Architected and engineered under the joint leadership of **Chief System Architect Abdul Mazed Hossain** and **Co-Principal Tamim**, advancing Qatar's sovereign digital infrastructure and spatial computing ecosystem.
